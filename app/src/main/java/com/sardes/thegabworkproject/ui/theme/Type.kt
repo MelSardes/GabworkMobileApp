@@ -8,7 +8,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.sardes.thegabworkproject.R
 
-val fonts = FontFamily(
+val yanone = FontFamily(
     Font(R.font.yanone_kaffeesatz_regular, weight = FontWeight.Normal),
     Font(R.font.yanone_kaffeesatz_bold, weight = FontWeight.Bold),
     Font(R.font.yanone_kaffeesatz_semi_bold, weight = FontWeight.SemiBold),
@@ -20,28 +20,28 @@ val fonts = FontFamily(
 // Set of Material typography styles to start with
 val Typography = Typography(
     body1 = TextStyle(
-        fontFamily = fonts,
+        fontFamily = yanone,
         fontWeight = FontWeight.Light,
         fontSize = 24.sp
     ),
 
     body2 = TextStyle(
-        fontFamily = fonts,
+        fontFamily = yanone,
         fontWeight = FontWeight.Medium,
         fontSize = 24.sp
     ),
 
 
     button = TextStyle(
-        fontFamily = fonts,
+        fontFamily = yanone,
         fontWeight = FontWeight.Medium,
         fontSize = 24.sp
     ),
 
     h1 = TextStyle(
-            fontFamily = fonts,
+            fontFamily = yanone,
             fontWeight = FontWeight.SemiBold,
-            fontSize = 50.sp
+            fontSize = 26.sp
     )
 
     /*
