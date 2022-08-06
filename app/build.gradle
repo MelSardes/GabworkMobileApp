@@ -50,6 +50,14 @@ android {
         }
     }
     buildToolsVersion '32.1.0-rc1'
+
+    applicationVariants.all { variant ->
+        kotlin.sourceSets {
+            getByName(variant.name) {
+                kotlin.srcDir("build/generated/ksp/${variant.name}/kotlin")
+            }
+        }
+    }
 }
 apply plugin: 'com.google.gms.google-services'
 
