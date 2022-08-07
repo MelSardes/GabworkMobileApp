@@ -23,10 +23,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.sardes.thegabworkproject.navigation.Screen
 import com.sardes.thegabworkproject.ui.theme.*
 
 @Composable
-fun Login_Account_Selected(){
+fun LoginAccountSelected(navController:NavHostController){
 
     Column(
         modifier = Modifier.fillMaxSize()
@@ -75,20 +78,22 @@ fun Login_Account_Selected(){
                 .weight(1f)
                 .fillMaxWidth()
                 .background(GrayPic)
-                .clickable { /* TODO: ASSOCIER A LA PAGE DE CONNEXION POUR LES COMPTES ENTREPRISES   */ },
 
         ) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .clip(RoundedCornerShape(0.dp, 60.dp, 60.dp, 0.dp))
-                    .background(BlueFlag),
+                    .background(BlueFlag)
+                    .clickable { /* TODO: ASSOCIER A LA PAGE DE CONNEXION POUR LES COMPTES ENTREPRISES   */ },
             ){
                 Row(
                     modifier = Modifier
                         .padding(10.dp)
                 ){
-                    Column (modifier = Modifier.fillMaxWidth(0.54f).fillMaxHeight()){
+                    Column (modifier = Modifier
+                        .fillMaxWidth(0.54f)
+                        .fillMaxHeight()){
                         Text(
                             text = "Compte Entreprise",
                             fontFamily = yanone,
@@ -114,7 +119,8 @@ fun Login_Account_Selected(){
                     Image(
                         painter = painterResource(id = R.drawable.tall_building),
                         contentDescription = "Building",
-                        Modifier.fillMaxSize(1f)
+                        Modifier
+                            .fillMaxSize(1f)
                             .clip(RoundedCornerShape(0.dp, 60.dp, 60.dp, 0.dp)),
                     )
                 }
@@ -127,14 +133,16 @@ fun Login_Account_Selected(){
                 .weight(1f)
                 .fillMaxWidth()
                 .background(BlueFlag)
-                .clickable { /* TODO: ASSOCIER A LA PAGE DE CONNEXION POUR LES COMPTES STANDARDS   */ },
 
             ) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .clip(RoundedCornerShape(60.dp, 0.dp, 0.dp, 60.dp))
-                    .background(GrayPic),
+                    .background(GrayPic)
+                    .clickable {
+                        navController.navigate(route = Screen.StandardLogin.route)
+                    },
             ){
                 Row{
                     Image(
@@ -179,19 +187,21 @@ fun Login_Account_Selected(){
                 .weight(1f)
                 .fillMaxWidth()
                 .background(GrayPic)
-                .clickable { /* TODO: ASSOCIER A LA PAGE DE CONNEXION POUR LES COMPTES INDEPENDANTS   */ },
             ) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .clip(RoundedCornerShape(0.dp, 60.dp, 0.dp, 0.dp))
-                    .background(BlueFlag),
+                    .background(BlueFlag)
+                    .clickable { /* TODO: ASSOCIER A LA PAGE DE CONNEXION POUR LES COMPTES INDEPENDANTS   */ },
             ){
                 Row(
                     modifier = Modifier
                         .padding(10.dp)
                 ){
-                    Column (modifier = Modifier.fillMaxWidth(0.54f).fillMaxHeight()){
+                    Column (modifier = Modifier
+                        .fillMaxWidth(0.54f)
+                        .fillMaxHeight()){
                         Text(
                             text = "Compte Independant",
                             fontFamily = yanone,
@@ -215,7 +225,9 @@ fun Login_Account_Selected(){
                     Image(
                         painter = painterResource(id = R.drawable.black_man_plumber),
                         contentDescription = "Building",
-                        Modifier.fillMaxHeight(1f).fillMaxWidth(1f)
+                        Modifier
+                            .fillMaxHeight(1f)
+                            .fillMaxWidth(1f)
                             .clip(RoundedCornerShape(0.dp, 60.dp, 60.dp, 0.dp)),
                     )
                 }
@@ -224,10 +236,12 @@ fun Login_Account_Selected(){
     }
 }
 
-@Preview(showSystemUi = true, device = Devices.PIXEL, name = "PIXEL")
-@Preview(showSystemUi = true, device = Devices.PIXEL_3A_XL, name = "PIXEL 3A XL")
+
+//@Preview(showSystemUi = true, device = Devices.PIXEL, name = "PIXEL")
+//@Preview(showSystemUi = true, device = Devices.PIXEL_3A_XL, name = "PIXEL 3A XL")
 @Preview(showSystemUi = true, device = Devices.PIXEL_4_XL, name = "PIXEL 4 XL")
 @Composable
 fun Login_Account_Selected_Preview(){
-    Login_Account_Selected()
+    LoginAccountSelected(navController = rememberNavController())
 }
+
