@@ -8,14 +8,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.sardes.thegabworkproject.Login_Account_Selected
-import com.sardes.thegabworkproject.Register_account_selected
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.sardes.thegabworkproject.LoginAccountSelected
+import com.sardes.thegabworkproject.RegisterAccountSelected
 import com.sardes.thegabworkproject.ui.theme.GrayPic
 
-
-@Preview(showSystemUi = true)
 @Composable
-fun Tabs() {
+fun LoginOrRegister(navController :NavHostController) {
     var tabIndex by remember { mutableStateOf(0) } // 1.
     val tabTitles = listOf("Connexion", "Inscription")
     Column { // 2.
@@ -29,8 +29,14 @@ fun Tabs() {
             }
         }
         when (tabIndex) { // 6.
-            0 -> Login_Account_Selected()
-            1 -> Register_account_selected()
+            0 -> LoginAccountSelected(navController = navController)
+            1 -> RegisterAccountSelected()
         }
     }
+}
+
+@Preview(showSystemUi = true)
+@Composable
+fun Login_Or_Register_Preview(){
+    LoginOrRegister(navController = rememberNavController())
 }
