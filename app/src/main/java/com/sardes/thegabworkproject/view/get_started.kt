@@ -24,10 +24,14 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.sardes.thegabworkproject.navigation.Screen
 import com.sardes.thegabworkproject.ui.theme.*
 
+
 @Composable
-fun Get_Started_Screen() {
+fun GetStartedScreen(navController:NavController) {
     Box(modifier = Modifier
         .fillMaxWidth()
         .fillMaxHeight(0.8f),
@@ -41,8 +45,29 @@ fun Get_Started_Screen() {
         ){
             Get_Started_top_box()
             Get_Started_Text()
-            Button_Get_Started()
+            Button(
+                onClick = { navController.navigate(route = Screen.LoginOrRegister.route) },
+                colors = ButtonDefaults.buttonColors(backgroundColor = BlueFlag),
+                shape = RoundedCornerShape(30.dp),
+            ) {
+                Text(
+                    "Commencer",
+                    color = YellowFlag,
+                    textAlign = TextAlign.Center,
+                    fontFamily = yanone,
+                    fontWeight = FontWeight.Medium
+                )
+                Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+                Icon(
+                    Icons.Filled.ArrowForward,
+                    tint = YellowFlag,
+                    contentDescription = "Arrow",
+                    modifier = Modifier.size(ButtonDefaults.IconSize)
+                )
+            }
+
         }
+//                onClick = navController.navigate(route = Screen.LoginOrRegister.route))
     }
 }
 
@@ -104,35 +129,15 @@ fun Get_Started_Text(){
     }
 }
 
-@Composable
-fun Button_Get_Started() {
-    Button(
-        onClick = { /*TODO*/ },
-        colors = ButtonDefaults.buttonColors(backgroundColor = BlueFlag),
-        shape = RoundedCornerShape(30.dp),
-    ) {
-        Text(
-            "Commencer",
-            color = YellowFlag,
-            textAlign = TextAlign.Center,
-            fontFamily = yanone,
-            fontWeight = FontWeight.Medium
-        )
-        Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-        Icon(
-            Icons.Filled.ArrowForward,
-            tint = YellowFlag,
-            contentDescription = "Arrow",
-            modifier = Modifier.size(ButtonDefaults.IconSize)
-        )
-    }
-}
-@Preview
-@Preview(showSystemUi = true, showBackground = true, device = Devices.NEXUS_6)
-@Preview(showSystemUi = true, showBackground = true, device = Devices.PIXEL)
-@Preview(showSystemUi = true, showBackground = true, device = Devices.PHONE)
+
+//@Preview
+//@Preview(showSystemUi = true, showBackground = true, device = Devices.NEXUS_6)
+//@Preview(showSystemUi = true, showBackground = true, device = Devices.PIXEL)
+//@Preview(showSystemUi = true, showBackground = true, device = Devices.PHONE)
 @Preview(showSystemUi = true, showBackground = true, device = Devices.PIXEL_3A)
 @Composable
-fun Preview_Text(){
-    Get_Started_Screen()
+fun PreviewGetStartedScreen(){
+    GetStartedScreen(
+        navController = rememberNavController()
+    )
 }
