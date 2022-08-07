@@ -69,20 +69,20 @@ class LoginViewModel(
                 loginUiState.userNameSignUp,
                 loginUiState.passwordSignUp
             ){ isSuccessful ->
-                loginUiState = if (isSuccessful){
+                if (isSuccessful){
                     Toast.makeText(
                         context,
                         "Connexion au compte réussie",
                         Toast.LENGTH_SHORT
                     ).show()
-                    loginUiState.copy(isSuccessLogin = true)
+                    loginUiState = loginUiState.copy(isSuccessLogin = true)
                 }else{
                     Toast.makeText(
                         context,
                         "Erreur lors de la connexion à votre compte",
                         Toast.LENGTH_SHORT
                     ).show()
-                    loginUiState.copy(isSuccessLogin = false)
+                    loginUiState = loginUiState.copy(isSuccessLogin = false)
                 }
             }
         }catch (e:Exception){

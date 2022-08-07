@@ -23,7 +23,24 @@ fun SetupNavGraph(
     ){
 
         composable(route = Screen.Start.route){
-            GetStartedScreen(navController = navController)
+            GetStartedScreen(
+                onNavToHomePage = {
+                    navController.navigate(Screen.Home.route) {
+                        launchSingleTop = true
+                        popUpTo(route = Screen.StandardLogin.route) {
+                            inclusive = true
+                        }
+                    }
+                },
+                loginViewModel = loginViewModel
+            ){
+                navController.navigate(Screen.LoginOrRegister.route){
+                    launchSingleTop = true
+                    popUpTo(Screen.Start.route){
+                        inclusive = true
+                    }
+                }
+            }
         }
 
         composable(route = Screen.LoginOrRegister.route){
