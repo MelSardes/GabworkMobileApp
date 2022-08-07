@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "732138891007-ae4l540mvo4ob22ecpn0ro1da2kvsf1k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sardes.thegabworkproject",
+            "certificate_hash": "09fd71a8568ec9a625846ad04e028f316b454299"
+          }
+        },
+        {
           "client_id": "732138891007-cd272etkj8s3vnggsgfuoanqkoeatkg1.apps.googleusercontent.com",
           "client_type": 3
         }
