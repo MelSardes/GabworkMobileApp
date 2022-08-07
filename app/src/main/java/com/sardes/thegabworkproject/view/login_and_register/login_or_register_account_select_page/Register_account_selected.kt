@@ -24,9 +24,7 @@ import androidx.compose.ui.unit.sp
 import com.sardes.thegabworkproject.ui.theme.*
 
 @Composable
-fun Register_account_selected(
-    modifier: Modifier = Modifier
-) {
+fun RegisterAccountSelected() {
     Column(
         modifier = Modifier.fillMaxSize()
     ){
@@ -228,5 +226,5 @@ fun Register_account_selected(
 @Preview(name = "Register_account_selected")
 @Composable
 private fun PreviewRegister_account_selected() {
-    Register_account_selected()
+    RegisterAccountSelected()
 }
