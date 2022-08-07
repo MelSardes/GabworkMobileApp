@@ -58,7 +58,7 @@ class LoginViewModel(
                 throw IllegalArgumentException("Les champs email et mot de passe ne peuvent pas être vide")
             }
             loginUiState = loginUiState.copy(isLoading = true)
-            if (loginUiState.password !=
+            if (loginUiState.passwordSignUp !=
                     loginUiState.confirmPasswordSignUp){
                 throw  IllegalArgumentException(
                     "Les mots de passe ne correspondent pas"
@@ -69,20 +69,20 @@ class LoginViewModel(
                 loginUiState.userNameSignUp,
                 loginUiState.passwordSignUp
             ){ isSuccessful ->
-                if (isSuccessful){
+                loginUiState = if (isSuccessful){
                     Toast.makeText(
                         context,
                         "Connexion au compte réussie",
                         Toast.LENGTH_SHORT
                     ).show()
-                    loginUiState = loginUiState.copy(isSuccessLogin = true)
+                    loginUiState.copy(isSuccessLogin = true)
                 }else{
                     Toast.makeText(
                         context,
                         "Erreur lors de la connexion à votre compte",
                         Toast.LENGTH_SHORT
                     ).show()
-                    loginUiState = loginUiState.copy(isSuccessLogin = false)
+                    loginUiState.copy(isSuccessLogin = false)
                 }
             }
         }catch (e:Exception){
