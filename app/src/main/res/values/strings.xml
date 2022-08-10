@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Gabwork</string>
+    <string name="look_for">Que cherche t-on aujourd\'hui ?</string>
 </resources>

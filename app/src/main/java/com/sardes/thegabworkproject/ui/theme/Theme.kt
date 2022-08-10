@@ -1,5 +1,6 @@
 package com.sardes.thegabworkproject.ui.theme
 
+import android.annotation.SuppressLint
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.darkColors
@@ -13,14 +14,17 @@ private val DarkColorPalette = darkColors(
     secondary = Teal200
 )
 
+@SuppressLint("ConflictingOnColor")
 private val LightColorPalette = lightColors(
     primary = BlueFlag,
     primaryVariant = BlueVariant,
-    background = BlueFlag,
+    background = BlueBackground,
     surface = Color.White,
     onPrimary = Color.White,
     onBackground = Color.White,
     onSurface = BlueVariant,
+    secondary = Color.White,
+    onSecondary = YellowFlag
 )
 @Composable
 fun TheGabworkProjectTheme(

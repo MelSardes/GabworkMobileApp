@@ -8,10 +8,10 @@ data class Compte_Standard(
     val sexe_compte_standard: String,
     val telephone_compte_standard: String,
     val email_compte_standard: String,
-    val id_ville: Int,
+    val ville: Int,
     val nationalite_compte_standard: String,
     val adress_compte_standard: String,
-    val photo_de_profil_compte_standard: String,
+    val url_photo_de_profil_compte_standard: String,
     val coordonnees_geographique_compte_standard: String?,
     val date_creation_compte_standard: String
 ){

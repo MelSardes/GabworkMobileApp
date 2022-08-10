@@ -14,3 +14,6 @@ val BlueFlag = Color(0xFF3469B1)
 val BlueVariant = Color(0xFF0D499A)
 val YellowVariant = Color(0xFFFFC727)
 val GrayPic = Color(0xFFEBEBEB)
+
+
+val BlueBackground = Color(0xFF03A9F4)

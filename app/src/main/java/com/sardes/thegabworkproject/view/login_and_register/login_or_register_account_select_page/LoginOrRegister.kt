@@ -12,7 +12,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.sardes.thegabworkproject.LoginAccountSelected
 import com.sardes.thegabworkproject.RegisterAccountSelected
+import com.sardes.thegabworkproject.ui.theme.BlueFlag
 import com.sardes.thegabworkproject.ui.theme.GrayPic
+import com.sardes.thegabworkproject.ui.theme.YellowFlag
 
 @Composable
 fun LoginOrRegister(navController :NavHostController) {
@@ -25,7 +27,10 @@ fun LoginOrRegister(navController :NavHostController) {
                     selected = tabIndex == index, // 4.
                     modifier = Modifier.background(GrayPic),
                     onClick = { tabIndex = index },
-                    text = { Text(text = title) }) // 5.
+                    text = { Text(text = title) },
+                    selectedContentColor = YellowFlag,
+                    unselectedContentColor = BlueFlag
+                )
             }
         }
         when (tabIndex) { // 6.

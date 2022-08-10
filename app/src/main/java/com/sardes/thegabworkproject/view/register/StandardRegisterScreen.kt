@@ -33,7 +33,6 @@ fun StandardSignUp(
     loginViewModel: LoginViewModel? = null,
     onNavToHomePage:() -> Unit,
     onNavToStandardLoginPage:() -> Unit,
-//    navController: NavController
 ) {
 
     val loginUiState = loginViewModel?.loginUiState
@@ -47,9 +46,6 @@ fun StandardSignUp(
     var isPasswordVisible by remember {
         mutableStateOf(false)
     }
-//    val isFormValid by derivedStateOf {
-//        userEmail.isNotBlank() && password.length >= 7
-//    }
 
     Scaffold(backgroundColor = MaterialTheme.colors.primary) {
         Column(Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Top) {
@@ -71,7 +67,7 @@ fun StandardSignUp(
                         .fillMaxSize()
                         .padding(32.dp)
                 ) {
-                    Text(text = "Les insciptions c'est par içi", fontWeight = FontWeight.Bold, fontSize = 32.sp)
+                    Text(text = "Les insciptions c'est par içi", fontWeight = FontWeight.Bold, fontSize = 2.sp)
 
                     if (isError) Text(
                         loginUiState?.signUpError ?: "Erreur inconnue",
@@ -156,23 +152,7 @@ fun StandardSignUp(
 
                         Spacer(modifier = Modifier.height(16.dp))
                         Button(
-                            onClick = { loginViewModel?.createUser(context)
-
-/*                                auth.signInWithEmailAndPassword(
-                                    userEmail.trim(),
-                                    password.trim()
-                                )
-                                    .addOnCompleteListener(){ task->
-                                        if (task.isSuccessful){
-                                            Log.d("AUTH", "Success!")
-                                            navController.navigate("${Screen.Home.route}/$mel")
-
-                                        } else {
-                                            Log.d("AUTH", "Failed: ${task.exception}")
-                                        }
-                                    }*/
-                            },
-//                            enabled = isFormValid,
+                            onClick = { loginViewModel?.createUser(context)},
                             modifier = Modifier.fillMaxWidth(),
                             shape = RoundedCornerShape(162.dp)
                         ) {

@@ -49,7 +49,11 @@ fun StandardLogin(
 //    }
 
     Scaffold(backgroundColor = MaterialTheme.colors.primary) {
-        Column(Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Top) {
+        Column(
+            Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Top
+        ) {
             Image(
                 painter = painterResource(id = R.drawable.gabwork_logo),
                 contentDescription = "App Logo",
@@ -129,19 +133,6 @@ fun StandardLogin(
                         Button(
                             onClick = { loginViewModel?.loginUser(context)
 
-/*                                auth.signInWithEmailAndPassword(
-                                    userEmail.trim(),
-                                    password.trim()
-                                )
-                                    .addOnCompleteListener(){ task->
-                                        if (task.isSuccessful){
-                                            Log.d("AUTH", "Success!")
-                                            navController.navigate("${Screen.Home.route}/$mel")
-
-                                        } else {
-                                            Log.d("AUTH", "Failed: ${task.exception}")
-                                        }
-                                    }*/
                             },
 //                            enabled = isFormValid,
                             modifier = Modifier.fillMaxWidth(),
@@ -165,7 +156,7 @@ fun StandardLogin(
                         if (loginUiState?.isLoading == true){
                             CircularProgressIndicator()
                         }
-                        
+
                         LaunchedEffect(key1 = loginViewModel?.hasUser){
                             if (loginViewModel?.hasUser == true){
                                 onNavToHomePage.invoke()
