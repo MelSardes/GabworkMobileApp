@@ -1,4 +1,4 @@
-package com.sardes.thegabworkproject.model
+package com.sardes.thegabworkproject.models
 
 data class Compte_Entreprise(
     val id_compte_entreprise: Int,

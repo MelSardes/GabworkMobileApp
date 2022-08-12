@@ -1,4 +1,4 @@
-package com.sardes.thegabworkproject.model
+package com.sardes.thegabworkproject.models
 
 data class Universite(
     val id_universite: Int,

@@ -72,7 +72,7 @@ class LoginViewModel(
                 if (isSuccessful){
                     Toast.makeText(
                         context,
-                        "Connexion au compte réussie",
+                        "Compte créé avec succès",
                         Toast.LENGTH_SHORT
                     ).show()
                     loginUiState = loginUiState.copy(isSuccessLogin = true)

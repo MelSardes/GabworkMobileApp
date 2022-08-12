@@ -1,4 +1,4 @@
-package com.sardes.thegabworkproject.model
+package com.sardes.thegabworkproject.models
 
 data class Compte_Independant(
     val id_compte_independant: Int,

@@ -1,4 +1,4 @@
-package com.sardes.thegabworkproject.model
+package com.sardes.thegabworkproject.models
 
 data class Secteur_d_Activite(
     val id_secteur_d_activite: Int,

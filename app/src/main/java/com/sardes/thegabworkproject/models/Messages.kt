@@ -1,4 +1,4 @@
-package com.sardes.thegabworkproject.model
+package com.sardes.thegabworkproject.models
 
 class Messages(){
     data class Message_Independant_Entreprise(
