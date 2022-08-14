@@ -6,11 +6,11 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseUser
-import com.sardes.thegabworkproject.models.Compte_Standard
+import com.sardes.thegabworkproject.models.Competences_Profil_Etudiant
 import com.sardes.thegabworkproject.repository.StorageRepository
 
 class SkillViewModel (
-    private val repository: StorageRepository
+    private val repository: StorageRepository = StorageRepository()
 ): ViewModel(){
     var skillUiState by mutableStateOf(SkillUiState())
     private set
@@ -44,10 +44,10 @@ class SkillViewModel (
     }
 
 
-    fun setEditFields(competence: Compte_Standard.Profil_Etudiant.Competances_Profil_Etudiant){
+    fun setEditFields(competence: Competences_Profil_Etudiant){
         skillUiState = skillUiState.copy(
-            competence = competence.competance,
-            niveau_de_competence = competence.niveau_de_competance
+            competence = competence.competence,
+            niveau_de_competence = competence.niveau_de_competence
         )
     }
 
@@ -92,5 +92,5 @@ data class SkillUiState(
     val niveau_de_competence: String = "",
     val skillAddedStatus: Boolean = false,
     val updateAddedSkill: Boolean = false,
-    val selectedSkill: Compte_Standard.Profil_Etudiant.Competances_Profil_Etudiant? = null,
+    val selectedSkill: Competences_Profil_Etudiant? = null,
 )

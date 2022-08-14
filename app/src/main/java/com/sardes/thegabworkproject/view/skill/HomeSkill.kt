@@ -1,5 +1,6 @@
 package com.sardes.thegabworkproject.view.skill
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
@@ -19,7 +20,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.firebase.Timestamp
-import com.sardes.thegabworkproject.models.Compte_Standard
+import com.sardes.thegabworkproject.models.Competences_Profil_Etudiant
 import com.sardes.thegabworkproject.repository.Ressources
 import java.text.SimpleDateFormat
 import java.util.*
@@ -37,17 +38,22 @@ fun HomeSkill(
         mutableStateOf(false)
     }
 
-    var selectedSkill: Compte_Standard.Profil_Etudiant.Competances_Profil_Etudiant? by remember {
+    var selectedSkill: Competences_Profil_Etudiant? by remember {
         mutableStateOf(null)
     }
 
     val scope = rememberCoroutineScope()
     val scaffoldState = rememberScaffoldState()
 
+    LaunchedEffect(key1 = Unit){
+        homeSkillViewModel?.loadSkills()
+    }
+
+
     Scaffold(
         scaffoldState = scaffoldState,
         floatingActionButton = {
-            FloatingActionButton(onClick = { /*TODO*/ }) {
+            FloatingActionButton(onClick = { navToSkillPage.invoke() }) {
                 Icon(
                     imageVector = Icons.Default.Add,
                     contentDescription = null
@@ -99,18 +105,45 @@ fun HomeSkill(
                                     selectedSkill = skill
                                 }
                             ) {
-                                onSkillClick.invoke(skill.id_competance_etudiant)
+                                onSkillClick.invoke(skill.id_competence_etudiant)
                             }
                         }
                     }
-                }
-                    else -> {
-                        Text(
-                            text = homeSkillUiState
-                            .skillList.throwable?.localizedMessage ?: "Probleme inconnue",
-                        color = Color.Red
+                    AnimatedVisibility(visible = openDialog) {
+                        AlertDialog(onDismissRequest = {
+                            openDialog= false
+                        },
+                            title = {Text(text = "Supprimer la note ?")},
+                            confirmButton = {
+                                Button(
+                                    onClick = {
+                                        selectedSkill?.id_competence_etudiant?.let{
+                                            homeSkillViewModel?.deleteSkill(it)
+                                        }
+                                        openDialog = false
+                                    },
+                                    colors = ButtonDefaults.buttonColors(
+                                        backgroundColor = Color.Red
+                                    )
+                                ) {
+                                    Text(text = "Supprimer")
+                                }
+                            },
+                            dismissButton = {
+                                Button(onClick = {openDialog = false }) {
+                                    Text(text = "Anuller")
+                                }
+                            }
                         )
                     }
+                }
+                else -> {
+                    Text(
+                        text = homeSkillUiState
+                            .skillList.throwable?.localizedMessage ?: "Probleme inconnue",
+                        color = Color.Red
+                    )
+                }
             }
 
         }
@@ -128,7 +161,7 @@ fun HomeSkill(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SkillItem(
-    competences: Compte_Standard.Profil_Etudiant.Competances_Profil_Etudiant,
+    competences: Competences_Profil_Etudiant,
     onLongClick: () -> Unit,
     onClick: () -> Unit
 ) {
@@ -143,7 +176,7 @@ fun SkillItem(
     ) {
         Column {
             Text(
-                text = competences.competance,
+                text = competences.competence,
                 style = MaterialTheme.typography.h6,
                 fontWeight = FontWeight.Bold,
                 maxLines = 1,
@@ -155,7 +188,7 @@ fun SkillItem(
                 LocalContentAlpha provides ContentAlpha.disabled
             ){
                 Text(
-                    text = competences.niveau_de_competance,
+                    text = competences.niveau_de_competence,
                     style = MaterialTheme.typography.body1,
                     overflow = TextOverflow.Ellipsis,
                     modifier = Modifier

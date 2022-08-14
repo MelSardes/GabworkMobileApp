@@ -39,13 +39,6 @@ data class Compte_Standard(
         )
 
 
-        data class Competances_Profil_Etudiant(
-            val id_compte_standard: String = "",
-            val id_competance_etudiant : String = "",
-            val competance : String = "",
-            val niveau_de_competance : String = "",
-            val timestamp: Timestamp
-        )
 
 
         data class Experience_Profil_Etudiant(
@@ -81,11 +74,11 @@ data class Compte_Standard(
         )
 
 
-        data class Competances_Profil_Demandeur(
-            val id_competance_demandeur: Int,
+        data class Competences_Profil_Demandeur(
+            val id_competence_demandeur: Int,
             val id_profil_demandeur: Int,
-            val id_competance: Int?,
-            val niveau_de_competance: String,
+            val id_competence: Int?,
+            val niveau_de_competence: String,
         )
     }
 }

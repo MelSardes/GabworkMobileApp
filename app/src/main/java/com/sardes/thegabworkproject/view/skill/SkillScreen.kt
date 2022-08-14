@@ -1,6 +1,7 @@
 package com.sardes.thegabworkproject.view.skill
 
 import android.annotation.SuppressLint
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -21,7 +22,6 @@ import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.sardes.thegabworkproject.view.skill.Utils
 import com.sardes.thegabworkproject.ui.theme.BlueFlag
 import com.sardes.thegabworkproject.ui.theme.TheGabworkProjectTheme
 import kotlinx.coroutines.launch
@@ -40,7 +40,7 @@ fun SkillScreen(
 
 
     val isSkillNotBlanck = skillId.isNotBlank()
-    val icon = if (isFormNotBlanck) Icons.Default.Refresh
+    val icon = if (isSkillNotBlanck) Icons.Default.Refresh
     else Icons.Default.Check
 
     LaunchedEffect(key1 = Unit){
@@ -60,16 +60,18 @@ fun SkillScreen(
     Scaffold(
         scaffoldState = scaffoldState,
         floatingActionButton = {
-            FloatingActionButton(
-                onClick = {
-                    if (isSkillNotBlanck){
-                        skillViewModel?.updateSkill(skillId)
-                    }else{
-                        skillViewModel?.addSkill()
+            AnimatedVisibility(visible = isFormNotBlanck) {
+                FloatingActionButton(
+                    onClick = {
+                        if (isSkillNotBlanck){
+                            skillViewModel?.updateSkill(skillId)
+                        }else{
+                            skillViewModel?.addSkill()
+                        }
                     }
+                ) {
+                    Icon(imageVector = icon, contentDescription  = null)
                 }
-            ) {
-                Icon(imageVector = icon, contentDescription  = null)
             }
         },
     ) { padding ->

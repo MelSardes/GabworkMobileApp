@@ -27,10 +27,10 @@ data class Compte_Entreprise(
         val actif: Boolean,
         val legitimite: String
     ){
-        data class Competances_Du_Post(
-            val id_competance: Int,
+        data class Competences_Du_Post(
+            val id_competence: Int,
             val id_post_emploi: Int,
-            val niveau_de_competance: String,
+            val niveau_de_competence: String,
         )
 
 

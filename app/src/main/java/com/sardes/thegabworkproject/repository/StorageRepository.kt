@@ -6,7 +6,7 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.sardes.thegabworkproject.models.Compte_Standard
+import com.sardes.thegabworkproject.models.Competences_Profil_Etudiant
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -24,17 +24,17 @@ class StorageRepository(){
         .firestore.collection(COMPETENCES_COLLECTION_REF)
 
     fun getUserSkills(userId:String):Flow<Ressources<List
-            <Compte_Standard.Profil_Etudiant.Competances_Profil_Etudiant>>> = callbackFlow{
+            <Competences_Profil_Etudiant>>> = callbackFlow{
 
         var snapshotStateListener : ListenerRegistration? = null
 
         try {
             snapshotStateListener = competencesRef
                 .orderBy("competence")
-                .whereEqualTo("userId", userId)
+                .whereEqualTo("id_compte_standard", userId)
                 .addSnapshotListener{ snapshot, e ->
                     val response = if (snapshot != null){
-                        val competences = snapshot.toObjects(Compte_Standard.Profil_Etudiant.Competances_Profil_Etudiant::class.java)
+                        val competences = snapshot.toObjects(Competences_Profil_Etudiant::class.java)
                         Ressources.Success(data = competences)
                     }else{
                         Ressources.Error(throwable = e?.cause)
@@ -56,13 +56,13 @@ class StorageRepository(){
     fun getSkill(
         skillId: String,
         onError: (Throwable) -> Unit,
-        onSuccess: (Compte_Standard.Profil_Etudiant.Competances_Profil_Etudiant?) -> Unit
+        onSuccess: (Competences_Profil_Etudiant?) -> Unit
     ){
         competencesRef
             .document(skillId)
             .get()
             .addOnSuccessListener {
-                onSuccess.invoke(it?.toObject(Compte_Standard.Profil_Etudiant.Competances_Profil_Etudiant::class.java))
+                onSuccess.invoke(it?.toObject(Competences_Profil_Etudiant::class.java))
             }
             .addOnFailureListener{result ->
                 result.cause?.let { onError.invoke(it) }
@@ -78,7 +78,7 @@ class StorageRepository(){
         onComplete: (Boolean) -> Unit
     ){
         val documentId = competencesRef.document().id
-        val skill = Compte_Standard.Profil_Etudiant.Competances_Profil_Etudiant(
+        val skill = Competences_Profil_Etudiant(
             userId,
             documentId,
             competence,
