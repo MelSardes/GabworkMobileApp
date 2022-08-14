@@ -1,4 +1,4 @@
-package com.sardes.thegabworkproject.view.login
+package com.sardes.thegabworkproject.ui.Screens.login
 
 import android.content.Context
 import android.widget.Toast

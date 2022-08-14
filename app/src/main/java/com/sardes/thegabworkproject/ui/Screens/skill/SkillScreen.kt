@@ -1,4 +1,4 @@
-package com.sardes.thegabworkproject.view.skill
+package com.sardes.thegabworkproject.ui.Screens.skill
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility

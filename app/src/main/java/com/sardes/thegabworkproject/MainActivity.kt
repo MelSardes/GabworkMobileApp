@@ -5,10 +5,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sardes.thegabworkproject.navigation.SetupNavGraph
+import com.sardes.thegabworkproject.ui.Screens.login.LoginViewModel
+import com.sardes.thegabworkproject.ui.Screens.skill.HomeSkillViewModel
+import com.sardes.thegabworkproject.ui.Screens.skill.SkillViewModel
 import com.sardes.thegabworkproject.ui.theme.TheGabworkProjectTheme
-import com.sardes.thegabworkproject.view.login.LoginViewModel
-import com.sardes.thegabworkproject.view.skill.HomeSkillViewModel
-import com.sardes.thegabworkproject.view.skill.SkillViewModel
 
 
 class MainActivity : ComponentActivity() {

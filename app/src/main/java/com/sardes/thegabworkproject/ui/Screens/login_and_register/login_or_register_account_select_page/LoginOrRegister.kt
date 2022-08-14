@@ -1,4 +1,4 @@
-package com.sardes.thegabworkproject.view.login_and_register.login_or_register_account_select_page
+package com.sardes.thegabworkproject.ui.Screens.login_and_register.login_or_register_account_select_page
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column

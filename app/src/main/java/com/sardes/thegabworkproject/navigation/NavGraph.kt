@@ -8,13 +8,13 @@ import androidx.navigation.compose.rememberNavController
 import com.sardes.thegabworkproject.GetStartedScreen
 import com.sardes.thegabworkproject.StandardLogin
 import com.sardes.thegabworkproject.repository.StorageRepository
-import com.sardes.thegabworkproject.view.login.LoginViewModel
-import com.sardes.thegabworkproject.view.login_and_register.login_or_register_account_select_page.LoginOrRegister
-import com.sardes.thegabworkproject.view.register.StandardSignUp
-import com.sardes.thegabworkproject.view.skill.HomeSkill
-import com.sardes.thegabworkproject.view.skill.HomeSkillViewModel
-import com.sardes.thegabworkproject.view.skill.SkillScreen
-import com.sardes.thegabworkproject.view.skill.SkillViewModel
+import com.sardes.thegabworkproject.ui.Screens.login.LoginViewModel
+import com.sardes.thegabworkproject.ui.Screens.login_and_register.login_or_register_account_select_page.LoginOrRegister
+import com.sardes.thegabworkproject.ui.Screens.signup.StandardSignUp
+import com.sardes.thegabworkproject.ui.Screens.skill.HomeSkill
+import com.sardes.thegabworkproject.ui.Screens.skill.HomeSkillViewModel
+import com.sardes.thegabworkproject.ui.Screens.skill.SkillScreen
+import com.sardes.thegabworkproject.ui.Screens.skill.SkillViewModel
 
 @Composable
 fun SetupNavGraph(

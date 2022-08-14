@@ -24,7 +24,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sardes.thegabworkproject.ui.theme.*
-import com.sardes.thegabworkproject.view.login.LoginViewModel
+import com.sardes.thegabworkproject.ui.Screens.login.LoginViewModel
 
 
 @Composable
