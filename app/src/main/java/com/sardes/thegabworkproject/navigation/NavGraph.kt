@@ -1,55 +1,66 @@
 package com.sardes.thegabworkproject.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.*
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navigation
 import com.sardes.thegabworkproject.GetStartedScreen
-import com.sardes.thegabworkproject.repository.SkillsStorageRepository
+import com.sardes.thegabworkproject.ui.screens.home.Home
 import com.sardes.thegabworkproject.ui.screens.login.LoginScreen
 import com.sardes.thegabworkproject.ui.screens.login.LoginViewModel
-import com.sardes.thegabworkproject.ui.screens.login_and_register.login_or_signup.LoginOrSignUp
-import com.sardes.thegabworkproject.ui.screens.signup.SignUpViewModel
-import com.sardes.thegabworkproject.ui.screens.signup.StandardSignUp
-import com.sardes.thegabworkproject.ui.screens.skill.HomeSkill
-import com.sardes.thegabworkproject.ui.screens.skill.HomeSkillViewModel
-import com.sardes.thegabworkproject.ui.screens.skill.SkillScreen
-import com.sardes.thegabworkproject.ui.screens.skill.SkillViewModel
+import com.sardes.thegabworkproject.ui.screens.login_and_signup.LoginOrSignUp
+import com.sardes.thegabworkproject.ui.screens.login_and_signup.SelectSignUpAccount
+import com.sardes.thegabworkproject.ui.screens.signup.entreprisesignup.EntrepriseAccountSignUpScreen
+import com.sardes.thegabworkproject.ui.screens.signup.entreprisesignup.EntrepriseAccountSignUpViewModel
+import com.sardes.thegabworkproject.ui.screens.signup.independantsignup.IndependantAccountSignUpSceen
+import com.sardes.thegabworkproject.ui.screens.signup.independantsignup.IndependantAccountSignUpViewModel
+import com.sardes.thegabworkproject.ui.screens.signup.standardsignup.StandardAccountSignUpViewModel
+import com.sardes.thegabworkproject.ui.screens.signup.standardsignup.StandardSignUpScreen
 
 @Composable
 fun SetupNavGraph(
     navController: NavHostController = rememberNavController(),
     loginViewModel: LoginViewModel,
-    skillViewModel: SkillViewModel,
-    homeSkillViewModel: HomeSkillViewModel
 ){
     NavHost(
         navController = navController,
-        startDestination = Screen.Start.route
+        startDestination = Screen.Home.route
     ){
 
-        authGraph(navController, loginViewModel)
-
+/*
         homeGraph(
             navController = navController,
-            SkillViewModel(repository = SkillsStorageRepository()),
-            HomeSkillViewModel(repository = SkillsStorageRepository())
         )
+*/
+        composable(Screen.Home.route){
+            Home(
+                onNavToLoginOrSignUpPage = {
+                    navController.navigate(Screen.LoginOrSignUp.route){
+                        launchSingleTop = true
+                        popUpTo(Screen.Home.route){inclusive = true}
+                    }
+                }
+            )
+        }
+
+        authGraph(navController, loginViewModel)
 
         composable(route = Screen.Start.route){
             GetStartedScreen(
                 onNavToHomePage = {
                     navController.navigate(Screen.Home.route) {
                         launchSingleTop = true
-                        popUpTo(route = Screen.StandardLogin.route) {
+                        popUpTo(route = Screen.Login.route) {
                             inclusive = true
                         }
                     }
                 },
                 loginViewModel = loginViewModel
             ){
-                navController.navigate(Screen.LoginOrRegister.route){
+                navController.navigate(Screen.LoginOrSignUp.route){
                     launchSingleTop = true
                     popUpTo(Screen.Start.route){
                         inclusive = true
@@ -58,8 +69,22 @@ fun SetupNavGraph(
             }
         }
 
-        composable(route = Screen.LoginOrRegister.route){
+        composable(Screen.LoginOrSignUp.route){
             LoginOrSignUp()
+        }
+
+        composable(route = Screen.SelectSignUpAccount.route){
+            SelectSignUpAccount(
+                onNavToEntrepriseSignUpAccount = {
+                    navController.navigate(Screen.EntrepriseSignUp.route)
+                },
+                onNavToIndependantSignUpAccount = {
+                    navController.navigate(Screen.IndependantSignUp.route)
+                },
+                onNavToStandardSignUpAccount = {
+                    navController.navigate(Screen.StandardSignUp.route)
+                }
+            )
         }
 
 /*        composable(route = Screen.Home.route){
@@ -74,25 +99,25 @@ fun NavGraphBuilder.authGraph(
     loginViewModel: LoginViewModel
 ){
     navigation(
-        startDestination = Screen.StandardLogin.route,
+        startDestination = Screen.Login.route,
         route = NestedRoutes.Login.name
     ){
 
-        composable(route = Screen.StandardLogin.route){
+        composable(route = Screen.Login.route){
             LoginScreen(
                 onNavToHomePage = {
-                    navController.navigate(NestedRoutes.Main.name){
+                    navController.navigate(Screen.Home.route){
                         launchSingleTop = true
-                        popUpTo(route = Screen.StandardLogin.route){
+                        popUpTo(route = Screen.Login.route){
                             inclusive = true
                         }
                     }
                 },
                 loginViewModel = loginViewModel
             ) {
-                navController.navigate(Screen.StandardSignUp.route){
+                navController.navigate(Screen.SelectSignUpAccount.route){
                     launchSingleTop = true
-                    popUpTo(Screen.StandardLogin.route){
+                    popUpTo(Screen.Login.route){
                         inclusive = true
                     }
                 }
@@ -100,17 +125,49 @@ fun NavGraphBuilder.authGraph(
         }
 
         composable(route = Screen.StandardSignUp.route){
-            StandardSignUp(
+            StandardSignUpScreen(
                 onNavToHomePage = {
-                    navController.navigate(NestedRoutes.Main.name){
-                        popUpTo(Screen.StandardLogin.route){
+                    navController.navigate(Screen.Home.route){
+                        launchSingleTop = true
+                        popUpTo(Screen.StandardSignUp.route){
                             inclusive = true
                         }
                     }
                 },
-                signUpViewModel = SignUpViewModel()
+                signUpViewModel = StandardAccountSignUpViewModel()
             ){
-                navController.navigate(Screen.StandardLogin.route)
+                navController.navigate(Screen.Login.route)
+            }
+        }
+
+        composable(route = Screen.IndependantSignUp.route){
+            IndependantAccountSignUpSceen(
+                onNavToHomePage = {
+                    navController.navigate(Screen.Home.route){
+                        launchSingleTop = true
+                        popUpTo(Screen.IndependantSignUp.route){
+                            inclusive = true
+                        }
+                    }
+                },
+                viewModel = IndependantAccountSignUpViewModel()
+            ){
+                navController.navigate(Screen.Login.route)
+            }
+        }
+
+        composable(route = Screen.EntrepriseSignUp.route){
+            EntrepriseAccountSignUpScreen(
+                onNavToHomePage = {
+                    navController.navigate(Screen.Home.route){
+                        popUpTo(Screen.Login.route){
+                            inclusive = true
+                        }
+                    }
+                },
+                viewModel = EntrepriseAccountSignUpViewModel()
+            ){
+                navController.navigate(Screen.Login.route)
             }
         }
 
@@ -118,6 +175,29 @@ fun NavGraphBuilder.authGraph(
 }
 
 
+/*fun NavGraphBuilder.homeGraph(
+    navController: NavHostController,
+){
+    navigation(
+        startDestination = Screen.Home.route,
+        route = Screen.Home.route
+    ){
+        composable(Screen.Home.route){
+            Home(
+                onNavToLoginPage = {
+                    navController.navigate(Screen.Login.route){
+                        popUpTo(Screen.Home.route){inclusive = false}
+                    }
+                }
+            )
+        }
+
+
+    }
+
+}*/
+
+/*
 fun NavGraphBuilder.homeGraph(
     navController: NavHostController,
     skillViewModel: SkillViewModel,
@@ -166,4 +246,4 @@ fun NavGraphBuilder.homeGraph(
         }
     }
 
-}
+}*/

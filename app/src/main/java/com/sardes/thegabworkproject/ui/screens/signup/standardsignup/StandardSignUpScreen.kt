@@ -1,11 +1,9 @@
-package com.sardes.thegabworkproject.ui.screens.signup
+package com.sardes.thegabworkproject.ui.screens.signup.standardsignup
 
 //package com.sardes.thegabworkproject
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -32,15 +30,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sardes.thegabworkproject.R
-import com.sardes.thegabworkproject.ui.theme.BlueFlag
+import com.sardes.thegabworkproject.ui.screens.signup.Utils
+import com.sardes.thegabworkproject.ui.screens.signup.components.SexItem
 
 
 @SuppressLint("UnrememberedMutableState", "UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun StandardSignUp(
-    signUpViewModel: SignUpViewModel? = null,
+fun StandardSignUpScreen(
+    signUpViewModel: StandardAccountSignUpViewModel? = null,
     onNavToHomePage:() -> Unit,
-    onNavToStandardLoginPage:() -> Unit,
+    onNavToLoginPage:() -> Unit,
 ) {
 
     val signUpUiState = signUpViewModel?.signUpUiState
@@ -193,7 +192,7 @@ fun StandardSignUp(
                                 modifier = Modifier.fillMaxWidth(),
                                 value = signUpUiState?.userName ?: "",
                                 onValueChange = { signUpViewModel?.onUserNameChange(it) },
-                                label = { Text(text = "Votre nom") },
+                                label = { Text(text = "Nom") },
                                 singleLine = true,
                                 leadingIcon = {
                                     Icon(
@@ -221,7 +220,7 @@ fun StandardSignUp(
                                 modifier = Modifier.fillMaxWidth(),
                                 value = signUpUiState?.foreName ?: "",
                                 onValueChange = { signUpViewModel?.onForeNameChange(it) },
-                                label = { Text(text = "Votre prénom") },
+                                label = { Text(text = "Prénom") },
                                 singleLine = true,
                                 leadingIcon = {
                                     Icon(
@@ -244,26 +243,26 @@ fun StandardSignUp(
 
                         // SEX
                         item {
-                            LazyRow(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceEvenly,
+                            Column(modifier = Modifier.fillMaxWidth()) {
+                                Text(text = "Genre", textAlign = TextAlign.Center)
+                                LazyRow(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.SpaceEvenly,
 
-                                contentPadding = PaddingValues(
-                                    vertical = 10.dp,
-                                    horizontal = 10.dp
-                                )
-                            ){
-                                itemsIndexed(Utils.sex){_, sex ->
-                                    SexItem(sexItem = sex) {
-                                        signUpViewModel?.onUserSexChange(sex)
+                                    contentPadding = PaddingValues(
+                                        vertical = 10.dp,
+                                        horizontal = 10.dp
+                                    )
+                                ) {
+                                    itemsIndexed(Utils.sex) { _, sex ->
+                                        SexItem(sexItem = sex) {
+                                            signUpViewModel?.onUserSexChange(sex)
+                                        }
                                     }
                                 }
+
                             }
-
                             Spacer(modifier = Modifier.height(16.dp))
-
-
-
                         }
 
                         // PHONE
@@ -326,7 +325,7 @@ fun StandardSignUp(
                                 modifier = Modifier.fillMaxWidth(),
                                 value = signUpUiState?.nationality ?: "",
                                 onValueChange = { signUpViewModel?.onNationalityChange(it) },
-                                label = { Text(text = "Votre nationalité") },
+                                label = { Text(text = "Nationalité") },
                                 singleLine = true,
                                 leadingIcon = {
                                     Icon(
@@ -383,7 +382,7 @@ fun StandardSignUp(
                                 modifier = Modifier.fillMaxWidth(),
                                 shape = RoundedCornerShape(162.dp)
                             ) {
-                                Text(text = "Inscription")
+                                Text(text = "Je m'inscit")
                             }
 
                         Spacer(modifier = Modifier.weight(1f))
@@ -394,8 +393,8 @@ fun StandardSignUp(
                                 modifier = Modifier.fillMaxWidth(),
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
-                                TextButton(onClick = {onNavToStandardLoginPage.invoke()}) {
-                                    Text(text = "Connexion")
+                                TextButton(onClick = {onNavToLoginPage.invoke()}) {
+                                    Text(text = "J'ai déjà un compte \n Je me connecte")
                                 }
                             }
 
@@ -421,25 +420,6 @@ fun StandardSignUp(
 
 
 
-@Composable
-fun SexItem(
-    sexItem: String,
-    onClick:()->Unit
-){
-    Surface(
-        modifier = Modifier
-            .padding(8.dp)
-            .fillMaxWidth()
-            .clickable {
-                onClick.invoke()
-            },
-        shape = RoundedCornerShape(30.dp),
-        border = BorderStroke(1.dp, BlueFlag)
-    )
-    {
-        Text(text = sexItem, modifier = Modifier.fillMaxSize(), textAlign = TextAlign.Center)
-    }
-}
 
 
 
@@ -449,7 +429,7 @@ fun SexItem(
 @Preview("SignUp", showBackground = true, showSystemUi = true)
 @Composable
 fun PreviewLogIn() {
-    StandardSignUp(onNavToHomePage = { /*TODO*/ }) {
+    StandardSignUpScreen(onNavToHomePage = { /*TODO*/ }) {
     }
 }
 

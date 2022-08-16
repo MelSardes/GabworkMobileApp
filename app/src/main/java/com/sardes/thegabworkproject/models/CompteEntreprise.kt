@@ -1,20 +1,23 @@
 package com.sardes.thegabworkproject.models
 
-data class Compte_Entreprise(
-    val id_compte_entreprise: Int,
+import com.google.firebase.Timestamp
+
+data class CompteEntreprise(
+    val id_compte_entreprise: String,
     val nom_entreprise: String,
     val mot_de_passe_compte_entreprise: String,
-    val id_secteur_d_activite: Int,
+    val secteur_d_activite: String,
     val description_entreprise: String,
-    val id_ville: Int,
+    val ville: String,
     val email_entreprise: String,
+    val telephone: String,
     val adress_entreprise: String,
     val site_web_entreprise: String?,
-    val date_creation_entreprise: String?,
-    val coordonnees_geographiques_entreprise: String?
+    val url_logo_entreprise: String?,
+    val date_creation_entreprise: Timestamp?,
 ){
 
-    data class Post_Emploi(
+    data class PostEmploi(
         val id_emploi: Int,
         val id_entreprise: Int,
         val date_creation_post: String,
@@ -27,20 +30,20 @@ data class Compte_Entreprise(
         val actif: Boolean,
         val legitimite: String
     ){
-        data class Competences_Du_Post(
+        data class CompetencesDuPost(
             val id_competence: Int,
             val id_post_emploi: Int,
             val niveau_de_competence: String,
         )
 
 
-        data class Liste_Demandeurs(
+        data class ListeDemandeurs(
             val id_post_emploi: Int,
             val id_profil_demandeur: Int,
             val date_soumission: String,
         )
 
-        data class Liste_Etudiants(
+        data class ListeEtudiants(
             val id_post_emploi: Int,
             val id_profil_etudiant: Int,
             val date_soumission: String,

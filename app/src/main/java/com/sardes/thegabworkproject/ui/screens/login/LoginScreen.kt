@@ -12,6 +12,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -23,7 +24,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sardes.thegabworkproject.R
-import com.sardes.thegabworkproject.ui.theme.BlueFlag
 
 
 @SuppressLint("UnrememberedMutableState", "UnusedMaterialScaffoldPaddingParameter")
@@ -31,7 +31,7 @@ import com.sardes.thegabworkproject.ui.theme.BlueFlag
 fun LoginScreen(
     loginViewModel: LoginViewModel? = null,
     onNavToHomePage:() -> Unit,
-    onNavToStandardSignUpPage:() -> Unit,
+    onNavToSelectSignUpPage:() -> Unit,
 //    navController: NavController
 ) {
 
@@ -50,131 +50,144 @@ fun LoginScreen(
 //        userEmail.isNotBlank() && password.length >= 7
 //    }
 
-    Scaffold(backgroundColor = BlueFlag) {
-        Column(
-            Modifier.fillMaxSize(),
-            horizontalAlignment = CenterHorizontally,
-            verticalArrangement = Arrangement.Top
-        ) {
+    Scaffold {
+        Box{
             Image(
-                painter = painterResource(id = R.drawable.gabwork_logo),
-                contentDescription = "App Logo",
-                modifier = Modifier
-                    .weight(1f)
-                    .size(150.dp),
-            )
-            Card(
+                painter = painterResource(id = R.drawable.blue_background_circles_frosty_1080x2340),
+                contentDescription = "blue background circles frosty",
                 Modifier
-                    .weight(4f)
-                    .padding(8.dp),
-                shape = RoundedCornerShape(32.dp)
+                    .fillMaxSize(1f),
+                contentScale = ContentScale.Crop
+            )
+            Column(
+                Modifier
+                    .fillMaxSize(),
+                horizontalAlignment = CenterHorizontally,
+                verticalArrangement = Arrangement.Top,
+
             ) {
-                Column(
+                Image(
+                    painter = painterResource(id = R.drawable.gabwork_logo),
+                    contentDescription = "App Logo",
+                    modifier = Modifier
+                        .weight(1f)
+                        .size(150.dp),
+                )
+                Card(
                     Modifier
-                        .fillMaxSize()
-                        .padding(32.dp)
-                        .align(CenterHorizontally)
+                        .weight(4f)
+                        .padding(8.dp),
+                    shape = RoundedCornerShape(32.dp),
+                    backgroundColor = Color.White.copy(alpha = 0.6f)
                 ) {
-                    Text(
-                        text = "Bon retour parmi nous",
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 28.sp,
-                        color = Color.Black
-                    )
-
-                    if (isError) Text(
-                        loginUiState?.loginError ?: "Erreur inconnue",
-                        color = Color.Red
-                    )
-
                     Column(
-                        Modifier.fillMaxSize(),
-                        horizontalAlignment = CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
+                        Modifier
+                            .fillMaxSize()
+                            .padding(32.dp)
+                            .align(CenterHorizontally)
                     ) {
-                        Spacer(modifier = Modifier.weight(1f))
-                        OutlinedTextField(
-                            modifier = Modifier.fillMaxWidth(),
-                            value = loginUiState?.userMail ?: "",
-                            onValueChange = { loginViewModel?.onUserEmailChange(it) },
-                            label = { Text(text = "Email") },
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email, imeAction = ImeAction.Next),
-                            singleLine = true,
-                            leadingIcon = {
-                                Icon(
-                                    imageVector = Icons.Default.Person,
-                                    contentDescription = null
-                                )
-                            },
-                            trailingIcon = {
-                                if (userEmail.isNotBlank())
-                                    IconButton(onClick = { userEmail = "" }) {
-                                        Icon(imageVector = Icons.Filled.Clear, contentDescription = "")
-                                    }
-                            },
-                            isError = isError
+                        Text(
+                            text = "Bon retour parmi nous",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 28.sp,
+                            color = Color.Black
                         )
 
-                        Spacer(modifier = Modifier.height(8.dp))
-                        OutlinedTextField(
-                            modifier = Modifier.fillMaxWidth(),
-                            value = loginUiState?.password ?: "",
-                            onValueChange = { loginViewModel?.onPasswordChange(it) },
-                            label = { Text(text = "Mot de passe") },
-                            singleLine = true,
-                            leadingIcon = {
-                                Icon(
-                                    imageVector = Icons.Default.Lock,
-                                    contentDescription = null
-                                )
-                            },
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Done),
-                            visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-                            trailingIcon = {
-                                IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
+                        if (isError) Text(
+                            loginUiState?.loginError ?: "Erreur inconnue",
+                            color = Color.Red
+                        )
+
+                        Column(
+                            Modifier.fillMaxSize(),
+                            horizontalAlignment = CenterHorizontally,
+                            verticalArrangement = Arrangement.Center
+                        ) {
+                            Spacer(modifier = Modifier.weight(1f))
+                            OutlinedTextField(
+                                modifier = Modifier.fillMaxWidth(),
+                                value = loginUiState?.userMail ?: "",
+                                onValueChange = { loginViewModel?.onUserEmailChange(it) },
+                                label = { Text(text = "Email") },
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email, imeAction = ImeAction.Next),
+                                singleLine = true,
+                                leadingIcon = {
                                     Icon(
-                                        imageVector = if (isPasswordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
-                                        contentDescription = "Password Toggle"
+                                        imageVector = Icons.Default.Person,
+                                        contentDescription = null
                                     )
+                                },
+                                trailingIcon = {
+                                    if (userEmail.isNotBlank())
+                                        IconButton(onClick = { userEmail = "" }) {
+                                            Icon(imageVector = Icons.Filled.Clear, contentDescription = "")
+                                        }
+                                },
+                                isError = isError
+                            )
+
+                            Spacer(modifier = Modifier.height(8.dp))
+                            OutlinedTextField(
+                                modifier = Modifier.fillMaxWidth(),
+                                value = loginUiState?.password ?: "",
+                                onValueChange = { loginViewModel?.onPasswordChange(it) },
+                                label = { Text(text = "Mot de passe") },
+                                singleLine = true,
+                                leadingIcon = {
+                                    Icon(
+                                        imageVector = Icons.Default.Lock,
+                                        contentDescription = null
+                                    )
+                                },
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Done),
+                                visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                                trailingIcon = {
+                                    IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
+                                        Icon(
+                                            imageVector = if (isPasswordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
+                                            contentDescription = "Password Toggle"
+                                        )
+                                    }
+                                },
+                                isError = isError
+                            )
+
+                            Spacer(modifier = Modifier.height(16.dp))
+                            Button(
+                                onClick = { loginViewModel?.loginUser(context)},
+                                shape = RoundedCornerShape(162.dp),
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Text(text = "Connexion")
+                            }
+                            Spacer(modifier = Modifier.weight(1f))
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                TextButton(onClick = {onNavToSelectSignUpPage.invoke()}) {
+                                    Text(text = "Inscription")
                                 }
-                            },
-                            isError = isError
-                        )
-
-                        Spacer(modifier = Modifier.height(16.dp))
-                        Button(
-                            onClick = { loginViewModel?.loginUser(context)},
-                            shape = RoundedCornerShape(162.dp),
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Text(text = "Connexion")
-                        }
-                        Spacer(modifier = Modifier.weight(1f))
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            TextButton(onClick = {onNavToStandardSignUpPage.invoke()}) {
-                                Text(text = "Inscription")
+                                TextButton(onClick = { }) {
+                                    Text(text = "J'ai oublié mon mot de passe", color = Color.Gray)
+                                }
                             }
-                            TextButton(onClick = { }) {
-                                Text(text = "J'ai oublié mon mot de passe", color = Color.Gray)
+
+                            if (loginUiState?.isLoading == true){
+                                CircularProgressIndicator()
                             }
-                        }
 
-                        if (loginUiState?.isLoading == true){
-                            CircularProgressIndicator()
-                        }
-
-                        LaunchedEffect(key1 = loginViewModel?.hasUser){
-                            if (loginViewModel?.hasUser == true){
-                                onNavToHomePage.invoke()
+                            LaunchedEffect(key1 = loginViewModel?.hasUser){
+                                if (loginViewModel?.hasUser == true){
+                                    onNavToHomePage.invoke()
+                                }
                             }
                         }
                     }
                 }
             }
         }
+
     }
 }
 

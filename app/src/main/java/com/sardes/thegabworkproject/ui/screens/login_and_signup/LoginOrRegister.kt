@@ -1,4 +1,4 @@
-package com.sardes.thegabworkproject.ui.screens.login_and_register.login_or_signup
+package com.sardes.thegabworkproject.ui.screens.login_and_signup
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -31,8 +31,8 @@ fun LoginOrSignUp() {
             }
         }
         when (tabIndex) { // 6.
-            0 -> LoginScreen(onNavToHomePage = {}, onNavToStandardSignUpPage = {})
-            1 -> SelectSignUpAccount()
+            0 -> LoginScreen(onNavToHomePage = {}, onNavToSelectSignUpPage = {})
+            1 -> SelectSignUpAccount({},{}, {})
         }
     }
 }

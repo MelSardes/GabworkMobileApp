@@ -22,14 +22,24 @@ import coil.request.ImageRequest
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.sardes.thegabworkproject.R
+import com.sardes.thegabworkproject.ui.screens.login.LoginViewModel
 import com.sardes.thegabworkproject.ui.theme.BlueFlag
 import com.sardes.thegabworkproject.ui.theme.TheGabworkProjectTheme
 import com.sardes.thegabworkproject.ui.theme.YellowFlag
 
-
-//@Preview(showSystemUi = true, showBackground = true)
 @Composable
-fun Home(){
+fun Home(
+    loginViewModel: LoginViewModel? = null,
+    onNavToLoginOrSignUpPage: () -> Unit
+){
+
+    LaunchedEffect(key1 = loginViewModel?.hasUser){
+        if (loginViewModel?.hasUser != true){
+            onNavToLoginOrSignUpPage.invoke()
+        }
+    }
+
+
     TheGabworkProjectTheme {
         Column(
             modifier = Modifier

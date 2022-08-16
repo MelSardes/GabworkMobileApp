@@ -1,4 +1,4 @@
-package com.sardes.thegabworkproject.ui.screens.login_and_register.login_or_signup
+package com.sardes.thegabworkproject.ui.screens.login_and_signup
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -25,7 +25,11 @@ import com.sardes.thegabworkproject.R
 import com.sardes.thegabworkproject.ui.theme.*
 
 @Composable
-fun SelectSignUpAccount() {
+fun SelectSignUpAccount(
+    onNavToEntrepriseSignUpAccount: () -> Unit,
+    onNavToIndependantSignUpAccount: () -> Unit,
+    onNavToStandardSignUpAccount: () -> Unit,
+) {
     Column(
         modifier = Modifier.fillMaxSize()
     ){
@@ -71,6 +75,7 @@ fun SelectSignUpAccount() {
                         fontWeight = FontWeight.Medium,
                         fontSize = 30.sp,
                         textAlign = TextAlign.Center,
+                        color = Color.White
                     )
                 }
             }
@@ -82,7 +87,7 @@ fun SelectSignUpAccount() {
                 .weight(1f)
                 .fillMaxWidth()
                 .background(BlueFlag)
-                .clickable { /* TODO: ASSOCIER A LA PAGE D'INSCRIPTION POUR LES COMPTES ENTREPRISES   */ }
+                .clickable { onNavToEntrepriseSignUpAccount.invoke() }
                 .weight(1f)
         ) {
             Box(
@@ -139,7 +144,7 @@ fun SelectSignUpAccount() {
                 .weight(1f)
                 .fillMaxWidth()
                 .background(GrayPic)
-                .clickable { /* TODO: ASSOCIER A LA PAGE D'INSCRIPTION POUR LES STANDARD   */ }
+                .clickable { onNavToStandardSignUpAccount.invoke() }
                 .weight(1f),
         ) {
             Box(
@@ -196,7 +201,7 @@ fun SelectSignUpAccount() {
                 .weight(1f)
                 .fillMaxWidth()
                 .background(BlueFlag)
-                .clickable { /* TODO: ASSOCIER A LA PAGE D'INSCRIPTION POUR LES INDEPENDANT   */ }
+                .clickable { onNavToIndependantSignUpAccount.invoke()}
                 .weight(1f),
         ) {
             Box(
@@ -246,5 +251,5 @@ fun SelectSignUpAccount() {
 @Preview(name = "Register_account_selected")
 @Composable
 private fun PreviewRegister_account_selected() {
-    SelectSignUpAccount()
+    SelectSignUpAccount({}, {}, {})
 }

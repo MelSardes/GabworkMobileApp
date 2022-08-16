@@ -1,4 +1,4 @@
-package com.sardes.thegabworkproject.ui.screens.signup
+package com.sardes.thegabworkproject.ui.screens.signup.independantsignup
 
 import android.content.Context
 import android.widget.Toast
@@ -9,20 +9,22 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseUser
-import com.sardes.thegabworkproject.repository.SignUpRepository
+import com.sardes.thegabworkproject.repository.signuprepository.IndependantSignUpRepository
+import com.sardes.thegabworkproject.repository.signuprepository.common.CommonSignUpRepository
 import kotlinx.coroutines.launch
 
-class SignUpViewModel(
-    private val repository: SignUpRepository = SignUpRepository()
+class IndependantAccountSignUpViewModel (
+    private val repository: IndependantSignUpRepository = IndependantSignUpRepository(),
+    private val commonSignUpRepository: CommonSignUpRepository = CommonSignUpRepository()
 ): ViewModel() {
 
-    val currenUser = repository.currentUser
+    val currentUser = commonSignUpRepository.currentUser
 
     val hasUser: Boolean
-        get() = repository.hasUser()
+        get() = commonSignUpRepository.hasUser()
 
     private val user: FirebaseUser?
-        get() = repository.user()
+        get() = commonSignUpRepository.user()
 
 
     var signUpUiState by mutableStateOf(SignUpUiState())
@@ -40,13 +42,14 @@ class SignUpViewModel(
                 signUpUiState.city.isNotBlank() &&
                 signUpUiState.sex.isNotBlank() &&
                 signUpUiState.phone.isNotBlank() &&
+                signUpUiState.skills.isNotBlank() &&
                 signUpUiState.nationality.isNotBlank()
 
 
     fun createUser(context: Context) = viewModelScope.launch {
         try {
             if (!validateSignUpForm()){
-                throw IllegalArgumentException("Les champs email et mot de passe doivent être rempli")
+                throw IllegalArgumentException("Les champs marqués d'étoile (*) doivent être rempli")
             }
 
             signUpUiState = signUpUiState.copy(isLoading = true)
@@ -60,7 +63,7 @@ class SignUpViewModel(
 
             signUpUiState = signUpUiState.copy(signUpError = null)
 
-            repository.createUser(
+            commonSignUpRepository.createUser(
                 signUpUiState.userMail,
                 signUpUiState.password
             ){ isSuccessful ->
@@ -106,6 +109,8 @@ class SignUpViewModel(
                 city = signUpUiState.city,
                 nationality = signUpUiState.nationality,
                 address = signUpUiState.address,
+                competences = signUpUiState.skills,
+                website = signUpUiState.webisite,
                 urlPhoto = signUpUiState.urlProfilePicture,
                 timestamp = Timestamp.now()
             ){
@@ -156,31 +161,41 @@ class SignUpViewModel(
         signUpUiState = signUpUiState.copy(address = address)
     }
 
+    fun onSkillsChange(competemces: String){
+        signUpUiState = signUpUiState.copy(skills = competemces)
+    }
+
+    fun onWebsiteChange(webisite: String){
+        signUpUiState = signUpUiState.copy(webisite = webisite)
+    }
+
     fun onUrlProfilPictureChange(urlProfilePicture: String){
         signUpUiState = signUpUiState.copy(urlProfilePicture = urlProfilePicture)
     }
 }
 
 
-data class SignUpUiState(
-    val userMail: String = "",
-    val password: String = "",
-    val confirmPassword: String = "",
+    data class SignUpUiState(
+        val userMail: String = "",
+        val password: String = "",
+        val confirmPassword: String = "",
 
-    val userName: String = "",
-    val foreName: String = "",
-    val sex: String = "",
-    val phone: String = "",
-    val city: String = "",
-    val nationality: String = "",
-    val address: String = "",
-    val urlProfilePicture: String = "",
+        val userName: String = "",
+        val foreName: String = "",
+        val sex: String = "",
+        val phone: String = "",
+        val city: String = "",
+        val nationality: String = "",
+        val address: String = "",
+        val skills: String = "",
+        val webisite: String = "",
+        val urlProfilePicture: String = "",
 
-    val isLoading: Boolean = false,
-    val isSuccessLogin: Boolean = false,
-    val signUpError: String? = null,
-    val loginError: String? = null,
+        val isLoading: Boolean = false,
+        val isSuccessLogin: Boolean = false,
+        val signUpError: String? = null,
+        val loginError: String? = null,
 
-    val informationsAddedStatus: Boolean = false,
+        val informationsAddedStatus: Boolean = false,
 
-    )
+        )
