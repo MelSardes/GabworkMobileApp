@@ -1,4 +1,4 @@
-package com.sardes.thegabworkproject.ui.Screens.login_and_register.login_or_register_account_select_page
+package com.sardes.thegabworkproject.ui.screens.login_and_register.login_or_signup
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -8,16 +8,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
-import com.sardes.thegabworkproject.LoginAccountSelected
-import com.sardes.thegabworkproject.RegisterAccountSelected
+import com.sardes.thegabworkproject.ui.screens.login.LoginScreen
 import com.sardes.thegabworkproject.ui.theme.BlueFlag
 import com.sardes.thegabworkproject.ui.theme.GrayPic
 import com.sardes.thegabworkproject.ui.theme.YellowFlag
 
 @Composable
-fun LoginOrRegister(navController :NavHostController) {
+fun LoginOrSignUp() {
     var tabIndex by remember { mutableStateOf(0) } // 1.
     val tabTitles = listOf("Connexion", "Inscription")
     Column { // 2.
@@ -34,8 +31,8 @@ fun LoginOrRegister(navController :NavHostController) {
             }
         }
         when (tabIndex) { // 6.
-            0 -> LoginAccountSelected(navController = navController)
-            1 -> RegisterAccountSelected()
+            0 -> LoginScreen(onNavToHomePage = {}, onNavToStandardSignUpPage = {})
+            1 -> SelectSignUpAccount()
         }
     }
 }
@@ -43,5 +40,5 @@ fun LoginOrRegister(navController :NavHostController) {
 @Preview(showSystemUi = true)
 @Composable
 fun Login_Or_Register_Preview(){
-    LoginOrRegister(navController = rememberNavController())
+    LoginOrSignUp()
 }

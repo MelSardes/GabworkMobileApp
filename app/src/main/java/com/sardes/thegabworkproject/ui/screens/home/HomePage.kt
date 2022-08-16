@@ -1,4 +1,4 @@
-package com.sardes.thegabworkproject.ui.Screens.home
+package com.sardes.thegabworkproject.ui.screens.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

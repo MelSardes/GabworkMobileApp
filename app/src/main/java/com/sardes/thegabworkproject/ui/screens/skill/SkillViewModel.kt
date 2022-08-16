@@ -1,4 +1,4 @@
-package com.sardes.thegabworkproject.ui.Screens.skill
+package com.sardes.thegabworkproject.ui.screens.skill
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -7,19 +7,19 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseUser
 import com.sardes.thegabworkproject.models.Competences_Profil_Etudiant
-import com.sardes.thegabworkproject.repository.StorageRepository
+import com.sardes.thegabworkproject.repository.SkillsStorageRepository
 
 class SkillViewModel (
-    private val repository: StorageRepository = StorageRepository()
+    private val repository: SkillsStorageRepository = SkillsStorageRepository()
 ): ViewModel(){
     var skillUiState by mutableStateOf(SkillUiState())
-    private set
+        private set
 
     private val hasUser: Boolean
-    get() = repository.hasUser()
+        get() = repository.hasUser()
 
     private val user: FirebaseUser?
-    get() = repository.user()
+        get() = repository.user()
 
     fun onCompetenceChange(competence: String){
         skillUiState = skillUiState.copy(competence = competence)

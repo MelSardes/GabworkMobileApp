@@ -1,6 +1,4 @@
-package com.sardes.thegabworkproject.ui.Screens.signup
-
-//package com.sardes.thegabworkproject
+package com.sardes.thegabworkproject.ui.screens.login
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
@@ -11,7 +9,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -21,22 +19,24 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sardes.thegabworkproject.R
-import com.sardes.thegabworkproject.ui.Screens.login.LoginViewModel
+import com.sardes.thegabworkproject.ui.theme.BlueFlag
 
 
 @SuppressLint("UnrememberedMutableState", "UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun StandardSignUp(
+fun LoginScreen(
     loginViewModel: LoginViewModel? = null,
     onNavToHomePage:() -> Unit,
-    onNavToStandardLoginPage:() -> Unit,
+    onNavToStandardSignUpPage:() -> Unit,
+//    navController: NavController
 ) {
 
     val loginUiState = loginViewModel?.loginUiState
-    val isError = loginUiState?.signUpError != null
+    val isError = loginUiState?.loginError != null
     val context = LocalContext.current
 
     var userEmail by remember {
@@ -46,19 +46,26 @@ fun StandardSignUp(
     var isPasswordVisible by remember {
         mutableStateOf(false)
     }
+//    val isFormValid by derivedStateOf {
+//        userEmail.isNotBlank() && password.length >= 7
+//    }
 
-    Scaffold(backgroundColor = MaterialTheme.colors.primary) {
-        Column(Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Top) {
+    Scaffold(backgroundColor = BlueFlag) {
+        Column(
+            Modifier.fillMaxSize(),
+            horizontalAlignment = CenterHorizontally,
+            verticalArrangement = Arrangement.Top
+        ) {
             Image(
                 painter = painterResource(id = R.drawable.gabwork_logo),
                 contentDescription = "App Logo",
                 modifier = Modifier
                     .weight(1f)
-                    .size(200.dp),
+                    .size(150.dp),
             )
             Card(
                 Modifier
-                    .weight(2f)
+                    .weight(4f)
                     .padding(8.dp),
                 shape = RoundedCornerShape(32.dp)
             ) {
@@ -66,20 +73,30 @@ fun StandardSignUp(
                     Modifier
                         .fillMaxSize()
                         .padding(32.dp)
+                        .align(CenterHorizontally)
                 ) {
-                    Text(text = "Les insciptions c'est par içi", fontWeight = FontWeight.Bold, fontSize = 2.sp)
+                    Text(
+                        text = "Bon retour parmi nous",
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 28.sp,
+                        color = Color.Black
+                    )
 
                     if (isError) Text(
-                        loginUiState?.signUpError ?: "Erreur inconnue",
+                        loginUiState?.loginError ?: "Erreur inconnue",
                         color = Color.Red
                     )
 
-                    Column(Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+                    Column(
+                        Modifier.fillMaxSize(),
+                        horizontalAlignment = CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
                         Spacer(modifier = Modifier.weight(1f))
                         OutlinedTextField(
                             modifier = Modifier.fillMaxWidth(),
-                            value = loginUiState?.userNameSignUp ?: "",
-                            onValueChange = { loginViewModel?.onUserNameChangeSignUp(it) },
+                            value = loginUiState?.userMail ?: "",
+                            onValueChange = { loginViewModel?.onUserEmailChange(it) },
                             label = { Text(text = "Email") },
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email, imeAction = ImeAction.Next),
                             singleLine = true,
@@ -101,35 +118,9 @@ fun StandardSignUp(
                         Spacer(modifier = Modifier.height(8.dp))
                         OutlinedTextField(
                             modifier = Modifier.fillMaxWidth(),
-                            value = loginUiState?.passwordSignUp ?: "",
-                            onValueChange = { loginViewModel?.onPasswordChangeSignUp(it) },
+                            value = loginUiState?.password ?: "",
+                            onValueChange = { loginViewModel?.onPasswordChange(it) },
                             label = { Text(text = "Mot de passe") },
-                            singleLine = true,
-                            leadingIcon = {
-                                Icon(
-                                    imageVector = Icons.Default.Lock,
-                                    contentDescription = null
-                                )
-                            },
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Next),
-                            visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-                            trailingIcon = {
-                                IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
-                                    Icon(
-                                        imageVector = if (isPasswordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
-                                        contentDescription = "Password Toggle"
-                                    )
-                                }
-                            },
-                            isError = isError
-                        )
-
-                        Spacer(modifier = Modifier.height(8.dp))
-                        OutlinedTextField(
-                            modifier = Modifier.fillMaxWidth(),
-                            value = loginUiState?.confirmPasswordSignUp ?: "",
-                            onValueChange = { loginViewModel?.onConfirmPasswordChange(it) },
-                            label = { Text(text = "Confirmer le mot de passe") },
                             singleLine = true,
                             leadingIcon = {
                                 Icon(
@@ -152,19 +143,22 @@ fun StandardSignUp(
 
                         Spacer(modifier = Modifier.height(16.dp))
                         Button(
-                            onClick = { loginViewModel?.createUser(context)},
-                            modifier = Modifier.fillMaxWidth(),
-                            shape = RoundedCornerShape(162.dp)
+                            onClick = { loginViewModel?.loginUser(context)},
+                            shape = RoundedCornerShape(162.dp),
+                            modifier = Modifier.fillMaxWidth()
                         ) {
-                            Text(text = "Inscription")
+                            Text(text = "Connexion")
                         }
                         Spacer(modifier = Modifier.weight(1f))
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
-                            TextButton(onClick = {onNavToStandardLoginPage.invoke()}) {
-                                Text(text = "Connexion")
+                            TextButton(onClick = {onNavToStandardSignUpPage.invoke()}) {
+                                Text(text = "Inscription")
+                            }
+                            TextButton(onClick = { }) {
+                                Text(text = "J'ai oublié mon mot de passe", color = Color.Gray)
                             }
                         }
 
@@ -185,26 +179,10 @@ fun StandardSignUp(
 }
 
 
-@Composable
-fun StandardSignUpAccoutInformations() {
-
-
-
-
-}
-
-
-
-
-
-
-
-
-
-/*
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
-fun StandardSignUpRebuildPreview() {
-    StandardSignUpRebuild()
-
-}*/
+fun PreviewLogIn(){
+    LoginScreen(onNavToHomePage = { /*TODO*/ }) {
+        
+    }
+}

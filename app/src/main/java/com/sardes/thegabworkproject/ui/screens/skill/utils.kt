@@ -1,4 +1,4 @@
-package com.sardes.thegabworkproject.ui.Screens.skill
+package com.sardes.thegabworkproject.ui.screens.skill
 
 object Utils {
     val niveau_de_competence = listOf<String>(

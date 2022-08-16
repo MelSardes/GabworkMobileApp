@@ -3,27 +3,27 @@ package com.sardes.thegabworkproject.models
 import com.google.firebase.Timestamp
 
 data class Compte_Standard(
-    val id_compte_standard: String = "",
-    val nom_compte_standard: String = "",
-    val prenom_compte_standard: String = "",
-    val mot_de_passe_compte_standard: String = "",
-    val sexe_compte_standard: String = "",
-    val telephone_compte_standard: String = "",
+    val id_compte_standard: String,
+    val nom_compte_standard: String,
+    val prenom_compte_standard: String,
+    val mot_de_passe_compte_standard: String,
+    val sexe_compte_standard: String,
+    val telephone_compte_standard: String,
     val email_compte_standard: String= "",
-    val ville: String = "",
-    val nationalite_compte_standard: String = "",
-    val adress_compte_standard: String = "",
-    val url_photo_de_profil_compte_standard: String = "",
-    val coordonnees_geographique_compte_standard: String? = "",
-    val date_creation_compte_standard: Timestamp = Timestamp.now()
+    val ville: String,
+    val nationalite_compte_standard: String,
+    val adress_compte_standard: String,
+    val url_photo_de_profil_compte_standard: String,
+//    val coordonnees_geographique_compte_standard: String?,
+    val date_creation_compte_standard: Timestamp
 ){
 
     data class Profil_Etudiant(
-        val id_compte_standard: String = "",
-        val universite_actuelle: String = "",
-        val date_debut: Timestamp = Timestamp.now(),
-        val cycle_actuel: String = "",
-        val filliere_actuelle: String = "",
+        val id_compte_standard: String,
+        val universite_actuelle: String,
+        val date_debut: Timestamp,
+        val cycle_actuel: String,
+        val filliere_actuelle: String,
     ) {
         data class Parcours_Etudiant(
             val id_profil_etudiant: Int,

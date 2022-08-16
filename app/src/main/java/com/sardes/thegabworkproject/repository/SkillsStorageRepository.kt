@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.callbackFlow
 
 const val COMPETENCES_COLLECTION_REF = "Competences"
 
-class StorageRepository(){
+class SkillsStorageRepository(){
 
     fun user() = Firebase.auth.currentUser
     fun hasUser(): Boolean = Firebase.auth.currentUser != null
@@ -122,18 +122,6 @@ class StorageRepository(){
     }
 
     fun signOut() = Firebase.auth.signOut()
-
-
-}
-
-
-sealed class Ressources<T>(
-    val data: T? = null,
-    val throwable: Throwable? = null,
-){
-    class Loading<T>: Ressources<T>()
-    class Success<T>(data: T?):Ressources<T>(data = data)
-    class Error<T>(throwable: Throwable?):Ressources<T>(throwable = throwable)
 
 
 }

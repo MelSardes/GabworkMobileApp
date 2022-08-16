@@ -58,6 +58,7 @@ apply plugin: 'com.google.gms.google-services'
 dependencies {
     implementation 'com.google.android.gms:play-services-mlkit-text-recognition-common:17.0.0'
     implementation 'com.google.firebase:firebase-storage-ktx:20.0.1'
+    implementation 'com.google.firebase:firebase-storage:20.0.1'
     def nav_version = "2.5.1"
     implementation("androidx.navigation:navigation-compose:$nav_version")
 

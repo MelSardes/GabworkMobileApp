@@ -16,22 +16,6 @@ class AuthRepository {
     // GET THE USER ID
     fun getUserId(): String = Firebase.auth.currentUser?.uid.orEmpty()
 
-    // FUNCTION FOR CREATE A USER
-    suspend fun createUser(
-        email: String,
-        password: String,
-        onComplete:(Boolean) -> Unit
-    ) = withContext(Dispatchers.IO){
-        Firebase.auth
-            .createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener {
-                if (it.isSuccessful){
-                    onComplete.invoke(true)
-                }else
-                    onComplete.invoke(false)
-            }
-    }.await()
-
     // FUNCTION FOR LOGIN A USER
     suspend fun login(
         email: String,

@@ -6,15 +6,16 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sardes.thegabworkproject.GetStartedScreen
-import com.sardes.thegabworkproject.StandardLogin
-import com.sardes.thegabworkproject.repository.StorageRepository
-import com.sardes.thegabworkproject.ui.Screens.login.LoginViewModel
-import com.sardes.thegabworkproject.ui.Screens.login_and_register.login_or_register_account_select_page.LoginOrRegister
-import com.sardes.thegabworkproject.ui.Screens.signup.StandardSignUp
-import com.sardes.thegabworkproject.ui.Screens.skill.HomeSkill
-import com.sardes.thegabworkproject.ui.Screens.skill.HomeSkillViewModel
-import com.sardes.thegabworkproject.ui.Screens.skill.SkillScreen
-import com.sardes.thegabworkproject.ui.Screens.skill.SkillViewModel
+import com.sardes.thegabworkproject.repository.SkillsStorageRepository
+import com.sardes.thegabworkproject.ui.screens.login.LoginScreen
+import com.sardes.thegabworkproject.ui.screens.login.LoginViewModel
+import com.sardes.thegabworkproject.ui.screens.login_and_register.login_or_signup.LoginOrSignUp
+import com.sardes.thegabworkproject.ui.screens.signup.SignUpViewModel
+import com.sardes.thegabworkproject.ui.screens.signup.StandardSignUp
+import com.sardes.thegabworkproject.ui.screens.skill.HomeSkill
+import com.sardes.thegabworkproject.ui.screens.skill.HomeSkillViewModel
+import com.sardes.thegabworkproject.ui.screens.skill.SkillScreen
+import com.sardes.thegabworkproject.ui.screens.skill.SkillViewModel
 
 @Composable
 fun SetupNavGraph(
@@ -32,8 +33,8 @@ fun SetupNavGraph(
 
         homeGraph(
             navController = navController,
-            SkillViewModel(repository = StorageRepository()),
-            HomeSkillViewModel(repository = StorageRepository())
+            SkillViewModel(repository = SkillsStorageRepository()),
+            HomeSkillViewModel(repository = SkillsStorageRepository())
         )
 
         composable(route = Screen.Start.route){
@@ -58,7 +59,7 @@ fun SetupNavGraph(
         }
 
         composable(route = Screen.LoginOrRegister.route){
-            LoginOrRegister(navController = navController)
+            LoginOrSignUp()
         }
 
 /*        composable(route = Screen.Home.route){
@@ -78,7 +79,7 @@ fun NavGraphBuilder.authGraph(
     ){
 
         composable(route = Screen.StandardLogin.route){
-            StandardLogin(
+            LoginScreen(
                 onNavToHomePage = {
                     navController.navigate(NestedRoutes.Main.name){
                         launchSingleTop = true
@@ -107,7 +108,7 @@ fun NavGraphBuilder.authGraph(
                         }
                     }
                 },
-                loginViewModel = loginViewModel
+                signUpViewModel = SignUpViewModel()
             ){
                 navController.navigate(Screen.StandardLogin.route)
             }
@@ -156,7 +157,7 @@ fun NavGraphBuilder.homeGraph(
             })
         ){entry ->
             SkillScreen(
-                skillViewModel = SkillViewModel(repository = StorageRepository()),
+                skillViewModel = SkillViewModel(repository = SkillsStorageRepository()),
                 skillId = entry.arguments?.getString("id") as String
             ) {
                 navController.navigateUp()

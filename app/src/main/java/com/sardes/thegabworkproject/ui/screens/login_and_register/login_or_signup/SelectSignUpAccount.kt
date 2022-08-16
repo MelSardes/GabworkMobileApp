@@ -1,4 +1,4 @@
-package com.sardes.thegabworkproject
+package com.sardes.thegabworkproject.ui.screens.login_and_register.login_or_signup
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -21,10 +21,11 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.sardes.thegabworkproject.R
 import com.sardes.thegabworkproject.ui.theme.*
 
 @Composable
-fun RegisterAccountSelected() {
+fun SelectSignUpAccount() {
     Column(
         modifier = Modifier.fillMaxSize()
     ){
@@ -33,6 +34,7 @@ fun RegisterAccountSelected() {
                 .weight(1f)
                 .fillMaxWidth()
                 .background(GrayPic)
+                .weight(1f)
         ) {
             Box(
                 modifier = Modifier
@@ -60,10 +62,16 @@ fun RegisterAccountSelected() {
                             }                        },
                         fontFamily = yanone,
                         fontWeight = FontWeight.SemiBold,
-                        fontSize = 60.sp,
+                        fontSize = 40.sp,
                         textAlign = TextAlign.Center,
 
                         )
+                    Text(
+                        text = "Sélectionnez le type de compte que vous souhaitez créer",                        fontFamily = yanone,
+                        fontWeight = FontWeight.Medium,
+                        fontSize = 30.sp,
+                        textAlign = TextAlign.Center,
+                    )
                 }
             }
         }
@@ -74,23 +82,32 @@ fun RegisterAccountSelected() {
                 .weight(1f)
                 .fillMaxWidth()
                 .background(BlueFlag)
-                .clickable { /* TODO: ASSOCIER A LA PAGE D'INSCRIPTION POUR LES COMPTES ENTREPRISES   */ },
+                .clickable { /* TODO: ASSOCIER A LA PAGE D'INSCRIPTION POUR LES COMPTES ENTREPRISES   */ }
+                .weight(1f)
         ) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .clip(RoundedCornerShape(60.dp, 0.dp, 0.dp, 60.dp))
+                    .clip(RoundedCornerShape(60.dp, 0.dp, 60.dp, 0.dp))
                     .background(GrayPic),
             ){
-                Row(modifier = Modifier.align(Center).padding(5.dp)){
+                Row(modifier = Modifier
+                    .align(Center)
+                    .padding(5.dp)){
                     Image(
                         painter = painterResource(id = R.drawable.tall_building),
                         contentDescription = "Building",
-                        Modifier.fillMaxHeight(1f).fillMaxWidth(0.44f)
-                            .clip(RoundedCornerShape(60.dp, 0.dp, 0.dp, 60.dp))
+                        Modifier
+                            .fillMaxHeight(1f)
+                            .fillMaxWidth(0.44f)
+                            .clip(RoundedCornerShape(60.dp, 0.dp, 0.dp, 0.dp))
                     )
+                    
+                    Spacer(modifier = Modifier.width(10.dp))
 
-                    Column (modifier = Modifier.fillMaxWidth(1f).fillMaxHeight()){
+                    Column (modifier = Modifier
+                        .fillMaxWidth(1f)
+                        .fillMaxHeight()){
                         Text(
                             text = "Compte Entreprise",
                             fontFamily = yanone,
@@ -122,19 +139,23 @@ fun RegisterAccountSelected() {
                 .weight(1f)
                 .fillMaxWidth()
                 .background(GrayPic)
-                .clickable { /* TODO: ASSOCIER A LA PAGE D'INSCRIPTION POUR LES STANDARD   */ },
+                .clickable { /* TODO: ASSOCIER A LA PAGE D'INSCRIPTION POUR LES STANDARD   */ }
+                .weight(1f),
         ) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .clip(RoundedCornerShape(0.dp, 60.dp, 60.dp,0.dp))
-                    .background(BlueFlag),
+                    .clip(RoundedCornerShape(60.dp, 0.dp, 60.dp, 0.dp))
+                    .background(BlueFlag)
+                    .padding(10.dp),
             ){
                 Row(
                     modifier = Modifier
                         .padding(10.dp)
                 ){
-                    Column (modifier = Modifier.fillMaxWidth(0.54f).fillMaxHeight()){
+                    Column (modifier = Modifier
+                        .fillMaxWidth(0.54f)
+                        .fillMaxHeight()){
                         Text(
                             text = "Compte Standard",
                             fontFamily = yanone,
@@ -161,7 +182,8 @@ fun RegisterAccountSelected() {
                     Image(
                         painter = painterResource(id = R.drawable.business_3d),
                         contentDescription = "Building",
-                        Modifier.fillMaxSize(1f)
+                        Modifier
+                            .fillMaxSize(1f)
                             .clip(RoundedCornerShape(0.dp, 60.dp, 60.dp, 0.dp)),
                     )
                 }
@@ -174,48 +196,46 @@ fun RegisterAccountSelected() {
                 .weight(1f)
                 .fillMaxWidth()
                 .background(BlueFlag)
-                .clickable { /* TODO: ASSOCIER A LA PAGE D'INSCRIPTION POUR LES INDEPENDANT   */ },
+                .clickable { /* TODO: ASSOCIER A LA PAGE D'INSCRIPTION POUR LES INDEPENDANT   */ }
+                .weight(1f),
         ) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .clip(RoundedCornerShape(60.dp, 0.dp, 0.dp, 0.dp))
                     .background(GrayPic),
-            ){
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .clip(RoundedCornerShape(0.dp, 60.dp, 60.dp, 0.dp))
-                        .background(GrayPic),
-                ){
-                    Row{
-                        Image(
-                            painter = painterResource(id = R.drawable.black_man_plumber),
-                            contentDescription = "Building",
-                            Modifier
-                                .fillMaxHeight(1f)
-                                .fillMaxWidth(0.44f)
+            ) {
+                Row{
+                    Image(
+                        painter = painterResource(id = R.drawable.black_man_plumber),
+                        contentDescription = "Building",
+                        Modifier
+                            .fillMaxHeight(1f)
+                            .fillMaxWidth(0.44f)
+                    )
+                    Spacer(modifier = Modifier.width(20.dp))
+                    
+                    Column (modifier = Modifier
+                        .fillMaxSize(1f)
+                        .align(CenterVertically)){
+                        Text(
+                            text = "Compte Independant",
+                            fontFamily = yanone,
+                            fontWeight = FontWeight.SemiBold,
+                            fontSize = 30.sp,
+                            textAlign = TextAlign.Center,
+                            color = BlueFlag
                         )
-                        Column (modifier = Modifier.fillMaxSize(1f).align(CenterVertically)){
-                            Text(
-                                text = "Compte Independant",
-                                fontFamily = yanone,
-                                fontWeight = FontWeight.SemiBold,
-                                fontSize = 30.sp,
-                                textAlign = TextAlign.Center,
-                                color = BlueFlag
-                            )
-                            Text(
-                                text = "Proposez vos services \n" +
-                                        "autour de vous et \n" +
-                                        "gagnez en visibilité",
-                                fontFamily = yanone,
-                                fontWeight = FontWeight.Light,
-                                fontSize = 20.sp,
-                                color = BlueFlag,
-                                maxLines = 6
-                            )
-                        }
+                        Text(
+                            text = "Proposez vos services \n" +
+                                    "autour de vous et \n" +
+                                    "gagnez en visibilité",
+                            fontFamily = yanone,
+                            fontWeight = FontWeight.Light,
+                            fontSize = 20.sp,
+                            color = BlueFlag,
+                            maxLines = 6
+                        )
                     }
                 }
             }
@@ -226,5 +246,5 @@ fun RegisterAccountSelected() {
 @Preview(name = "Register_account_selected")
 @Composable
 private fun PreviewRegister_account_selected() {
-    RegisterAccountSelected()
+    SelectSignUpAccount()
 }

@@ -5,9 +5,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sardes.thegabworkproject.navigation.SetupNavGraph
-import com.sardes.thegabworkproject.ui.Screens.login.LoginViewModel
-import com.sardes.thegabworkproject.ui.Screens.skill.HomeSkillViewModel
-import com.sardes.thegabworkproject.ui.Screens.skill.SkillViewModel
+import com.sardes.thegabworkproject.ui.screens.login.LoginViewModel
+import com.sardes.thegabworkproject.ui.screens.skill.HomeSkillViewModel
+import com.sardes.thegabworkproject.ui.screens.skill.SkillViewModel
 import com.sardes.thegabworkproject.ui.theme.TheGabworkProjectTheme
 
 

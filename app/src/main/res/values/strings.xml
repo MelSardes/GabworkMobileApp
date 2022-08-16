@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Gabwork</string>
     <string name="look_for">Que cherche t-on aujourd\'hui ?</string>
+    <string name="select_account_type">Sélectionnez le type de compte que vous voulez créer</string>
 </resources>

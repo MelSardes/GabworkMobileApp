@@ -1,4 +1,4 @@
-package com.sardes.thegabworkproject.ui.Screens.skill
+package com.sardes.thegabworkproject.ui.screens.skill
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -7,11 +7,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sardes.thegabworkproject.models.Competences_Profil_Etudiant
 import com.sardes.thegabworkproject.repository.Ressources
-import com.sardes.thegabworkproject.repository.StorageRepository
+import com.sardes.thegabworkproject.repository.SkillsStorageRepository
 import kotlinx.coroutines.launch
 
 class HomeSkillViewModel(
-    private val repository: StorageRepository = StorageRepository()
+    private val repository: SkillsStorageRepository = SkillsStorageRepository()
 ): ViewModel() {
     var homeSkillUiState by mutableStateOf(HomeSkillUiState())
 
