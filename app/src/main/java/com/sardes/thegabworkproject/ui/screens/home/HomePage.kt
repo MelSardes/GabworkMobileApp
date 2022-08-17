@@ -22,23 +22,15 @@ import coil.request.ImageRequest
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.sardes.thegabworkproject.R
-import com.sardes.thegabworkproject.ui.screens.login.LoginViewModel
 import com.sardes.thegabworkproject.ui.theme.BlueFlag
+import com.sardes.thegabworkproject.ui.theme.BlueVariant
 import com.sardes.thegabworkproject.ui.theme.TheGabworkProjectTheme
 import com.sardes.thegabworkproject.ui.theme.YellowFlag
 
 @Composable
 fun Home(
-    loginViewModel: LoginViewModel? = null,
-    onNavToLoginOrSignUpPage: () -> Unit
+    onNavToLoginOrSignUp : () -> Unit
 ){
-
-    LaunchedEffect(key1 = loginViewModel?.hasUser){
-        if (loginViewModel?.hasUser != true){
-            onNavToLoginOrSignUpPage.invoke()
-        }
-    }
-
 
     TheGabworkProjectTheme {
         Column(
@@ -48,7 +40,10 @@ fun Home(
         ) {
             LazyColumn (Modifier.weight(0.9f)){
                 item {
-                    TopBar(avatarUrl = "https://cdn.dribbble.com/users/8060558/avatars/normal/data?1622508563")
+                    TopBar(
+                        avatarUrl = "https://cdn.dribbble.com/users/8060558/avatars/normal/data?1622508563",
+                        onNavToLoginOrSignUp
+                    )
                 }
                 item{
                     SearchBar(
@@ -63,7 +58,7 @@ fun Home(
 }
 
 @Composable
-fun TopBar(avatarUrl: String) {
+fun TopBar(avatarUrl: String, onNavToLoginOrSignUp: () -> Unit) {
 
     Surface{
         Row(modifier = Modifier
@@ -82,6 +77,7 @@ fun TopBar(avatarUrl: String) {
                     .clip(CircleShape)
                     .clickable {
                         Firebase.auth.signOut()
+                        onNavToLoginOrSignUp.invoke()
                     }
             )
         }
@@ -97,8 +93,8 @@ fun SearchBar(onTextChange: (String) -> Unit){
         Row{
             TextField(
                 colors = TextFieldDefaults.textFieldColors(
-                    backgroundColor = Color.White,
-                    focusedIndicatorColor = Color.Transparent,
+                    backgroundColor = Color.Black.copy(alpha = 0.2f),
+                    focusedIndicatorColor = BlueVariant,
                     unfocusedIndicatorColor = Color.Transparent,
                     cursorColor = YellowFlag,
                     textColor = BlueFlag

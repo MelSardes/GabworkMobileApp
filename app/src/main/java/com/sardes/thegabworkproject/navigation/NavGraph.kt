@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import com.sardes.thegabworkproject.GetStartedScreen
+import com.sardes.thegabworkproject.Verification
 import com.sardes.thegabworkproject.ui.screens.home.Home
 import com.sardes.thegabworkproject.ui.screens.login.LoginScreen
 import com.sardes.thegabworkproject.ui.screens.login.LoginViewModel
@@ -27,7 +28,7 @@ fun SetupNavGraph(
 ){
     NavHost(
         navController = navController,
-        startDestination = Screen.Home.route
+        startDestination = Screen.Verification.route
     ){
 
 /*
@@ -37,10 +38,27 @@ fun SetupNavGraph(
 */
         composable(Screen.Home.route){
             Home(
-                onNavToLoginOrSignUpPage = {
+                onNavToLoginOrSignUp = {
                     navController.navigate(Screen.LoginOrSignUp.route){
                         launchSingleTop = true
-                        popUpTo(Screen.Home.route){inclusive = true}
+                        popUpTo(Screen.Home.route){
+                            inclusive = true
+                        }
+                    }
+                }
+            )
+        }
+
+        composable(Screen.Verification.route){
+            Verification(
+                onNavToStartPage = {
+                    navController.navigate(Screen.Start.route){
+                        launchSingleTop = true
+                    }
+                },
+                onNavToHomePage = {
+                    navController.navigate(Screen.Home.route){
+                        launchSingleTop = true
                     }
                 }
             )
@@ -53,7 +71,7 @@ fun SetupNavGraph(
                 onNavToHomePage = {
                     navController.navigate(Screen.Home.route) {
                         launchSingleTop = true
-                        popUpTo(route = Screen.Login.route) {
+                        popUpTo(route = Screen.Start.route) {
                             inclusive = true
                         }
                     }

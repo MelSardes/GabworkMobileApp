@@ -53,8 +53,8 @@ fun LoginScreen(
     Scaffold {
         Box{
             Image(
-                painter = painterResource(id = R.drawable.blue_background_circles_frosty_1080x2340),
-                contentDescription = "blue background circles frosty",
+                painter = painterResource(id = R.drawable.perroquet),
+                contentDescription = "perroquet",
                 Modifier
                     .fillMaxSize(1f),
                 contentScale = ContentScale.Crop
@@ -78,7 +78,7 @@ fun LoginScreen(
                         .weight(4f)
                         .padding(8.dp),
                     shape = RoundedCornerShape(32.dp),
-                    backgroundColor = Color.White.copy(alpha = 0.6f)
+                    backgroundColor = Color.White.copy(alpha = 0.7f)
                 ) {
                     Column(
                         Modifier

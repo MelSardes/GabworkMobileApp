@@ -3,6 +3,8 @@ package com.sardes.thegabworkproject
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sardes.thegabworkproject.navigation.SetupNavGraph
 import com.sardes.thegabworkproject.ui.screens.login.LoginViewModel
@@ -18,14 +20,30 @@ class MainActivity : ComponentActivity() {
 
             TheGabworkProjectTheme{
 
-                SetupNavGraph(
+                Verification(
                     loginViewModel = loginViewModel,
+                    onNavToStartPage = {},
+                    onNavToHomePage = {}
                 )
+
+                SetupNavGraph(loginViewModel = loginViewModel)
 
             }
         }
     }
 }
 
+@Composable
+fun Verification(
+    loginViewModel: LoginViewModel? = null,
+    onNavToStartPage: () -> Unit,
+    onNavToHomePage: () -> Unit
+){
 
-
+    LaunchedEffect(key1 = loginViewModel?.hasUser){
+        if (loginViewModel?.hasUser != true){
+            onNavToStartPage.invoke()
+        }else
+            onNavToHomePage.invoke()
+    }
+}
