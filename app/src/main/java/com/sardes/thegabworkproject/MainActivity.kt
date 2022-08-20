@@ -19,15 +19,13 @@ class MainActivity : ComponentActivity() {
             val loginViewModel = viewModel(modelClass = LoginViewModel::class.java)
 
             TheGabworkProjectTheme{
-
                 Verification(
                     loginViewModel = loginViewModel,
                     onNavToStartPage = {},
-                    onNavToHomePage = {}
+                    onNavToMainPage = {}
                 )
 
                 SetupNavGraph(loginViewModel = loginViewModel)
-
             }
         }
     }
@@ -37,13 +35,12 @@ class MainActivity : ComponentActivity() {
 fun Verification(
     loginViewModel: LoginViewModel? = null,
     onNavToStartPage: () -> Unit,
-    onNavToHomePage: () -> Unit
+    onNavToMainPage: () -> Unit
 ){
-
     LaunchedEffect(key1 = loginViewModel?.hasUser){
         if (loginViewModel?.hasUser != true){
             onNavToStartPage.invoke()
         }else
-            onNavToHomePage.invoke()
+            onNavToMainPage.invoke()
     }
 }

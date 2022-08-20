@@ -31,7 +31,7 @@ fun LoginOrSignUp() {
             }
         }
         when (tabIndex) { // 6.
-            0 -> LoginScreen(onNavToHomePage = {}, onNavToSelectSignUpPage = {})
+            0 -> LoginScreen(onNavToMainPage = {}, onNavToSelectSignUpPage = {})
             1 -> SelectSignUpAccount({},{}, {})
         }
     }

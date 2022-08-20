@@ -24,13 +24,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sardes.thegabworkproject.R
+import kiwi.orbit.compose.ui.controls.Scaffold
 
 
-@SuppressLint("UnrememberedMutableState", "UnusedMaterialScaffoldPaddingParameter")
+@SuppressLint("UnrememberedMutableState", "UnusedMaterialScaffoldPaddingParameter",
+    "MaterialDesignInsteadOrbitDesign"
+)
 @Composable
 fun LoginScreen(
     loginViewModel: LoginViewModel? = null,
-    onNavToHomePage:() -> Unit,
+    onNavToMainPage:() -> Unit,
     onNavToSelectSignUpPage:() -> Unit,
 //    navController: NavController
 ) {
@@ -179,7 +182,7 @@ fun LoginScreen(
 
                             LaunchedEffect(key1 = loginViewModel?.hasUser){
                                 if (loginViewModel?.hasUser == true){
-                                    onNavToHomePage.invoke()
+                                    onNavToMainPage.invoke()
                                 }
                             }
                         }
@@ -195,7 +198,7 @@ fun LoginScreen(
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun PreviewLogIn(){
-    LoginScreen(onNavToHomePage = { /*TODO*/ }) {
+    LoginScreen(onNavToMainPage = { /*TODO*/ }) {
         
     }
 }

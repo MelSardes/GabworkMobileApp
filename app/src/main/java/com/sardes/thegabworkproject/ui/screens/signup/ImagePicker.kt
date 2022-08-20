@@ -2,6 +2,7 @@
 
 package com.sardes.thegabworkproject.ui.screens.signup
 
+import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
@@ -33,7 +34,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import coil.compose.rememberImagePainter
+import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -50,6 +51,7 @@ val httpsReference = storageRef.child("users/me/${UID}__profile.png").downloadUr
 var userUrl by mutableStateOf("")
 
 
+@SuppressLint("MaterialDesignInsteadOrbitDesign")
 @Suppress("DEPRECATION")
 @Composable
 fun ImagePicker(
@@ -109,6 +111,7 @@ var imageUri = mutableStateOf<Uri?>(null)
 
 
 //@OptIn(DelicateCoroutinesApi::class)
+@SuppressLint("MaterialDesignInsteadOrbitDesign")
 @Composable
 fun Picker(context: ComponentActivity) {
 val selectImage =
@@ -142,8 +145,7 @@ val selectImage =
                         if (imageUri.value != null) {
                             Image(
                                 modifier = Modifier.fillMaxSize(),
-                                painter = rememberImagePainter(
-                                    data = imageUri.value
+                                painter = rememberAsyncImagePainter(model = imageUri.value
                                 ),
                                 contentDescription = "image"
                             )
@@ -157,7 +159,7 @@ val selectImage =
                                     storageRef.child("userProfile/${UID}__profile.jpg")
                                         .putFile(imageUri.value!!)
 
-                                    userUrl = storageRef.child("userProfile/${UID}__profile.jpg").downloadUrl.toString()
+//                                    userUrl = storageRef.child("userProfile/${UID}__profile.jpg").downloadUrl.toString()
                                 }
                             ) {
                                 Icon(
@@ -182,7 +184,7 @@ val selectImage =
                     ) {
                         AsyncImage(model = ImageRequest
                             .Builder(LocalContext.current)
-                            .data("https://firebasestorage.googleapis.com/v0/b/thegabworkprojecttest.appspot.com/o/userProfile%2Fmel_monogram_logo_by_infinity_r_deibmn0.png?alt=media&token=d73eb381-db47-4d47-813c-f39b28116478")
+                            .data("https://firebasestorage.googleapis.com/v0/b/thegabworkprojecttest.appspot.com/o/userProfile%2Fmel_monogram_logo_by_infinity_r_deibmn0.png?alt=media")
                             .crossfade(true).build(),
                             contentScale = Crop,
                             contentDescription = null,

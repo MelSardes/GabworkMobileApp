@@ -1,5 +1,6 @@
 package com.sardes.thegabworkproject.ui.screens.skill
 
+import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
@@ -25,6 +26,7 @@ import com.sardes.thegabworkproject.repository.Ressources
 import java.text.SimpleDateFormat
 import java.util.*
 
+@SuppressLint("MaterialDesignInsteadOrbitDesign", "UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun HomeSkill(
     homeSkillViewModel: HomeSkillViewModel?,
@@ -42,7 +44,7 @@ fun HomeSkill(
         mutableStateOf(null)
     }
 
-    val scope = rememberCoroutineScope()
+//    val scope = rememberCoroutineScope()
     val scaffoldState = rememberScaffoldState()
 
     LaunchedEffect(key1 = Unit){
@@ -79,7 +81,7 @@ fun HomeSkill(
                 }
             )
         }
-    ) { padding ->
+    ) {
         Column(modifier = Modifier.padding()) {
             when(homeSkillUiState.skillList){
                 is Ressources.Loading -> {
@@ -105,7 +107,7 @@ fun HomeSkill(
                                     selectedSkill = skill
                                 }
                             ) {
-                                onSkillClick.invoke(skill.id_competence_etudiant)
+                                onSkillClick.invoke(skill.idCompetenceEtudiant)
                             }
                         }
                     }
@@ -117,7 +119,7 @@ fun HomeSkill(
                             confirmButton = {
                                 Button(
                                     onClick = {
-                                        selectedSkill?.id_competence_etudiant?.let{
+                                        selectedSkill?.idCompetenceEtudiant?.let{
                                             homeSkillViewModel?.deleteSkill(it)
                                         }
                                         openDialog = false
@@ -158,6 +160,7 @@ fun HomeSkill(
 }
 
 
+@SuppressLint("MaterialDesignInsteadOrbitDesign")
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SkillItem(
@@ -188,7 +191,7 @@ fun SkillItem(
                 LocalContentAlpha provides ContentAlpha.disabled
             ){
                 Text(
-                    text = competences.niveau_de_competence,
+                    text = competences.niveauDeCompetence,
                     style = MaterialTheme.typography.body1,
                     overflow = TextOverflow.Ellipsis,
                     modifier = Modifier
@@ -219,8 +222,6 @@ private fun formatDate(timestamp: Timestamp):String{
     val sdf = SimpleDateFormat("MM-dd-yy-hh:mm", Locale.getDefault())
     return sdf.format(timestamp.toDate())
 }
-
-
 
 @Preview(name = "HomeSkill")
 @Composable

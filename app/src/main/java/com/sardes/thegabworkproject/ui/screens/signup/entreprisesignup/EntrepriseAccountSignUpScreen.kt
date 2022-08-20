@@ -1,9 +1,15 @@
 package com.sardes.thegabworkproject.ui.screens.signup.entreprisesignup
 
 import android.annotation.SuppressLint
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -14,6 +20,7 @@ import androidx.compose.material.icons.rounded.Description
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -24,15 +31,18 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberAsyncImagePainter
+import com.sardes.thegabworkproject.R.drawable
+import com.sardes.thegabworkproject.ui.screens.signup.imageUri
+import com.sardes.thegabworkproject.ui.theme.YellowFlag
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter", "MaterialDesignInsteadOrbitDesign")
 @Composable
 fun EntrepriseAccountSignUpScreen(
     viewModel: EntrepriseAccountSignUpViewModel? = null,
-    onNavToHomePage:() -> Unit,
+    onNavToMainPage:() -> Unit,
     onNavToLoginPage:() -> Unit,
 ) {
 
@@ -42,13 +52,18 @@ fun EntrepriseAccountSignUpScreen(
 
     var entrepriseEmail by remember { mutableStateOf("") }
     var entrepriseName by remember { mutableStateOf("") }
-    var entreprisedDescription by remember { mutableStateOf("") }
+    var entrepriseDescription by remember { mutableStateOf("") }
     var entrepriseActivityArea by remember { mutableStateOf("") }
     var entrepriseCity by remember { mutableStateOf("") }
     var entreprisePhone by remember { mutableStateOf("") }
     var entrepriseAddress by remember { mutableStateOf("") }
     var entrepriseWebsite by remember { mutableStateOf("") }
 
+//    var imageUri = mutableStateOf<Uri?>(null)
+    val selectImage = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()) { uri: Uri? ->
+        imageUri.value = uri
+    }
 
     val context = LocalContext.current
 
@@ -58,14 +73,11 @@ fun EntrepriseAccountSignUpScreen(
 
     Scaffold(backgroundColor = MaterialTheme.colors.primary) {
 
-        if (entrepriseUiState?.isLoading == true){
-            CircularProgressIndicator()
-        }
 
-        Box() {
 
+        Box {
             Image(
-                painter = painterResource(id = com.sardes.thegabworkproject.R.drawable.perroquet),
+                painter = painterResource(id = drawable.perroquet),
                 contentDescription = "perroquet",
                 Modifier
                     .fillMaxSize(1f),
@@ -77,12 +89,54 @@ fun EntrepriseAccountSignUpScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Top
             ) {
-                Image(
-                    painter = painterResource(id = com.sardes.thegabworkproject.R.drawable.gabwork_logo),
-                    contentDescription = "App Logo",
+                Box(
                     modifier = Modifier
                         .weight(1f)
-                )
+                ){
+                    Box(modifier = Modifier
+                        .size(102.dp)
+                        .clip(CircleShape)
+                        .background(Color.Gray)
+                        .align(Alignment.Center)
+                        .border(width = 2.dp, color = Color.White, shape = CircleShape)
+                    ) {
+
+                        if (imageUri.value != null) {
+                            TextButton(
+                                onClick = { selectImage.launch("image/*") },
+                                modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.2f))
+                            ) {
+                                Text("Choisir un logo", color = YellowFlag, textAlign = TextAlign.Center)
+
+                            }
+                            Image(
+                                modifier = Modifier.fillMaxSize(),
+                                painter = rememberAsyncImagePainter(model = imageUri.value),
+                                contentScale = ContentScale.Crop,
+                                contentDescription = "image",
+                            )
+                        }else{
+                            Image(
+                                modifier = Modifier.fillMaxSize(),
+                                painter = painterResource(id = drawable.ic_business_100),
+                                contentScale = ContentScale.Crop,
+                                contentDescription = "image"
+                            )
+                            TextButton(
+                                onClick = { selectImage.launch("image/*") },
+                                modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.2f))
+                            ) {
+                                Text("Choisir une image", color = YellowFlag, textAlign = TextAlign.Center)
+                            }
+                        }
+
+                        viewModel?.onLogoChange(imageUri.value)
+
+                    }
+                }
+
+
+                // FORM CONTAINER
                 Card(
                     Modifier
                         .weight(6f)
@@ -101,7 +155,8 @@ fun EntrepriseAccountSignUpScreen(
                             text = "Rejoingnez la communauté Gabwork",
                             fontWeight = FontWeight.Bold,
                             fontSize = 28.sp,
-                            textAlign = TextAlign.Center
+                            textAlign = TextAlign.Center,
+                            color = YellowFlag
                         )
 
                         if (isError) Text(
@@ -236,7 +291,7 @@ fun EntrepriseAccountSignUpScreen(
                                 OutlinedTextField(
                                     modifier = Modifier.fillMaxWidth(),
                                     value = entrepriseUiState?.activityArea ?: "",
-                                    onValueChange = { viewModel?.onEntrerpiseActivityAreaChange(it) },
+                                    onValueChange = { viewModel?.onEntrepriseActivityAreaChange(it) },
                                     label = { Text(text = "Secteur d'activité *") },
                                     singleLine = true,
                                     leadingIcon = {
@@ -274,8 +329,8 @@ fun EntrepriseAccountSignUpScreen(
                                     },
                                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Next),
                                     trailingIcon = {
-                                        if (entreprisedDescription.isNotBlank())
-                                            IconButton(onClick = { entreprisedDescription = "" }) {
+                                        if (entrepriseDescription.isNotBlank())
+                                            IconButton(onClick = { entrepriseDescription = "" }) {
                                                 Icon(imageVector = Icons.Filled.Clear, contentDescription = "")
                                             }
                                     },
@@ -372,7 +427,7 @@ fun EntrepriseAccountSignUpScreen(
                                 OutlinedTextField(
                                     modifier = Modifier.fillMaxWidth(),
                                     value = entrepriseUiState?.website ?: "",
-                                    onValueChange = { viewModel?.onEntrepriseWebsitehange(it) },
+                                    onValueChange = { viewModel?.onEntrepriseWebsiteChange(it) },
                                     label = { Text(text = "Site web de l'entreprise") },
                                     singleLine = true,
                                     leadingIcon = {
@@ -422,9 +477,14 @@ fun EntrepriseAccountSignUpScreen(
 
                         }
 
+
+                        if (entrepriseUiState?.isLoading == true){
+                            CircularProgressIndicator()
+                        }
+
                         LaunchedEffect(key1 = viewModel?.hasUser){
                             if (viewModel?.hasUser == true){
-                                onNavToHomePage.invoke()
+                                onNavToMainPage.invoke()
                             }
                         }
                     }
@@ -437,9 +497,11 @@ fun EntrepriseAccountSignUpScreen(
 }
 
 
-@Preview
-@Composable
-private fun EntrepriseAccountSignUpScreenPreview() {
-    EntrepriseAccountSignUpScreen(null, {}, {})
-}
+
+//@SuppressLint("MaterialDesignInsteadOrbitDesign")
+//@Preview(showBackground = true, showSystemUi = true, name = "Picker")
+//@Composable
+//private fun EntrepriseAccountSignUpScreenPreview() {
+//    ImagePicker()
+//}
 

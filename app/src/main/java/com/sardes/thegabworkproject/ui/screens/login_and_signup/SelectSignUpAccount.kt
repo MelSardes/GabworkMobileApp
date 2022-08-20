@@ -68,10 +68,11 @@ fun SelectSignUpAccount(
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 40.sp,
                         textAlign = TextAlign.Center,
+                    )
 
-                        )
                     Text(
-                        text = "Sélectionnez le type de compte que vous souhaitez créer",                        fontFamily = yanone,
+                        text = "Sélectionnez le type de compte que vous souhaitez créer",
+                        fontFamily = yanone,
                         fontWeight = FontWeight.Medium,
                         fontSize = 30.sp,
                         textAlign = TextAlign.Center,
@@ -87,14 +88,14 @@ fun SelectSignUpAccount(
                 .weight(1f)
                 .fillMaxWidth()
                 .background(BlueFlag)
-                .clickable { onNavToEntrepriseSignUpAccount.invoke() }
                 .weight(1f)
         ) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .clip(RoundedCornerShape(60.dp, 0.dp, 60.dp, 0.dp))
-                    .background(GrayPic),
+                    .background(GrayPic)
+                    .clickable { onNavToEntrepriseSignUpAccount.invoke() }
             ){
                 Row(modifier = Modifier
                     .align(Center)
@@ -144,7 +145,6 @@ fun SelectSignUpAccount(
                 .weight(1f)
                 .fillMaxWidth()
                 .background(GrayPic)
-                .clickable { onNavToStandardSignUpAccount.invoke() }
                 .weight(1f),
         ) {
             Box(
@@ -152,7 +152,8 @@ fun SelectSignUpAccount(
                     .fillMaxSize()
                     .clip(RoundedCornerShape(60.dp, 0.dp, 60.dp, 0.dp))
                     .background(BlueFlag)
-                    .padding(10.dp),
+                    .padding(10.dp)
+                    .clickable { onNavToStandardSignUpAccount.invoke() }
             ){
                 Row(
                     modifier = Modifier
@@ -201,14 +202,14 @@ fun SelectSignUpAccount(
                 .weight(1f)
                 .fillMaxWidth()
                 .background(BlueFlag)
-                .clickable { onNavToIndependantSignUpAccount.invoke()}
                 .weight(1f),
         ) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .clip(RoundedCornerShape(60.dp, 0.dp, 0.dp, 0.dp))
-                    .background(GrayPic),
+                    .background(GrayPic)
+                    .clickable { onNavToIndependantSignUpAccount.invoke()}
             ) {
                 Row{
                     Image(

@@ -25,7 +25,7 @@ class SkillViewModel (
         skillUiState = skillUiState.copy(competence = competence)
     }
 
-    fun onNiveauDeCompetenceChange(niveau_de_competence: String){
+    fun onSkillLevelChange(niveau_de_competence: String){
         skillUiState = skillUiState.copy(niveau_de_competence = niveau_de_competence)
     }
 
@@ -47,7 +47,7 @@ class SkillViewModel (
     fun setEditFields(competence: Competences_Profil_Etudiant){
         skillUiState = skillUiState.copy(
             competence = competence.competence,
-            niveau_de_competence = competence.niveau_de_competence
+            niveau_de_competence = competence.niveauDeCompetence
         )
     }
 

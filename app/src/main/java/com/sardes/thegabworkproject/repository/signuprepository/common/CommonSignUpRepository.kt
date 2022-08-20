@@ -3,9 +3,13 @@ package com.sardes.thegabworkproject.repository.signuprepository.common
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+
+
+
 
 class CommonSignUpRepository {
 
@@ -32,5 +36,11 @@ class CommonSignUpRepository {
                     onComplete.invoke(false)
             }
     }.await()
+
+
+
+
+
+
 
 }

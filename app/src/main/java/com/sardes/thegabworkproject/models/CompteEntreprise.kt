@@ -3,20 +3,20 @@ package com.sardes.thegabworkproject.models
 import com.google.firebase.Timestamp
 
 data class CompteEntreprise(
-    val id_compte_entreprise: String,
-    val nom_entreprise: String,
-    val mot_de_passe_compte_entreprise: String,
-    val secteur_d_activite: String,
-    val description_entreprise: String,
+    val idCompteEntreprise: String,
+    val nomEntreprise: String,
+    val motDePasseCompteEntreprise: String,
+    val secteurDActivite: String,
+    val descriptionEntreprise: String,
     val ville: String,
-    val email_entreprise: String,
+    val emailEntreprise: String,
     val telephone: String,
-    val adress_entreprise: String,
-    val site_web_entreprise: String?,
-    val url_logo_entreprise: String?,
-    val date_creation_entreprise: Timestamp?,
+    val adressEntreprise: String,
+    val siteWebEntreprise: String?,
+    val urlLogoEntreprise: String?,
+    val dateCreationEntreprise: Timestamp?,
+    val typeDeCompte:String = "Entreprise",
 ){
-
     data class PostEmploi(
         val id_emploi: Int,
         val id_entreprise: Int,

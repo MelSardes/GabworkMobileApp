@@ -26,7 +26,7 @@ import com.sardes.thegabworkproject.ui.theme.BlueFlag
 import com.sardes.thegabworkproject.ui.theme.TheGabworkProjectTheme
 import kotlinx.coroutines.launch
 
-@SuppressLint("CoroutineCreationDuringComposition")
+@SuppressLint("CoroutineCreationDuringComposition", "MaterialDesignInsteadOrbitDesign")
 @Composable
 fun SkillScreen(
     skillViewModel: SkillViewModel?,
@@ -135,7 +135,7 @@ fun SkillScreen(
             ){
                 itemsIndexed(Utils.niveau_de_competence){ _, skill ->
                     SkillLevelItem(skillLevel = skill){
-                        skillViewModel?.onNiveauDeCompetenceChange(skill)
+                        skillViewModel?.onSkillLevelChange(skill)
                     }
                 }
             }
@@ -144,6 +144,7 @@ fun SkillScreen(
 }
 
 
+@SuppressLint("MaterialDesignInsteadOrbitDesign")
 @Composable
 fun SkillLevelItem(
     skillLevel: String,

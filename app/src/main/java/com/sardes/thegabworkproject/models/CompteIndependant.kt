@@ -2,7 +2,7 @@ package com.sardes.thegabworkproject.models
 
 import com.google.firebase.Timestamp
 
-data class Compte_Independant(
+data class CompteIndependant(
     val id_compte_independant: String,
     val nom_compte_independant: String,
     val prenom_compte_independant: String,
@@ -17,4 +17,5 @@ data class Compte_Independant(
     val competances: String,
     val site_web: String,
     val date_creation_compte_independant: Timestamp,
+    val typeDeCompte:String = "Independant"
 )

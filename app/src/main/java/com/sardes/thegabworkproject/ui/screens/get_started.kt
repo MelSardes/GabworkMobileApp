@@ -1,14 +1,15 @@
-package com.sardes.thegabworkproject
+package com.sardes.thegabworkproject.ui.screens
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.ButtonDefaults.IconSpacing
+import androidx.compose.material.ButtonDefaults.buttonColors
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -23,20 +24,24 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.sardes.thegabworkproject.ui.theme.*
+import com.sardes.thegabworkproject.R
 import com.sardes.thegabworkproject.ui.screens.login.LoginViewModel
+import com.sardes.thegabworkproject.ui.theme.*
+import kiwi.orbit.compose.icons.Icons
+import kiwi.orbit.compose.ui.controls.ButtonDefaults
 
 
+@SuppressLint("MaterialDesignInsteadOrbitDesign")
 @Composable
 fun GetStartedScreen(
     loginViewModel: LoginViewModel? = null,
-    onNavToHomePage:() -> Unit,
+    onNavToMainPage:() -> Unit,
     onNavigateToLoginOrRegisterPage:() -> Unit
 ) {
 
     LaunchedEffect(key1 = loginViewModel?.hasUser){
         if (loginViewModel?.hasUser == true){
-            onNavToHomePage.invoke()
+            onNavToMainPage.invoke()
         }
     }
 
@@ -56,7 +61,7 @@ fun GetStartedScreen(
             Get_Started_Text()
             Button(
                 onClick = { onNavigateToLoginOrRegisterPage.invoke()},
-                colors = ButtonDefaults.buttonColors(backgroundColor = BlueFlag),
+                colors = buttonColors(backgroundColor = BlueFlag),
                 shape = RoundedCornerShape(30.dp),
             ) {
                 Text(
@@ -66,7 +71,7 @@ fun GetStartedScreen(
                     fontFamily = yanone,
                     fontWeight = FontWeight.Medium
                 )
-                Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+                Spacer(Modifier.size(IconSpacing))
                 Icon(
                     Icons.Filled.ArrowForward,
                     tint = YellowFlag,
@@ -98,6 +103,7 @@ fun Get_Started_top_box() {
     }
 }
 
+@SuppressLint("MaterialDesignInsteadOrbitDesign")
 @Composable
 fun Get_Started_Text(){
     Column(horizontalAlignment = Alignment.CenterHorizontally) {

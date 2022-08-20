@@ -7,13 +7,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
-import com.sardes.thegabworkproject.GetStartedScreen
+import com.sardes.thegabworkproject.ui.screens.GetStartedScreen
 import com.sardes.thegabworkproject.Verification
-import com.sardes.thegabworkproject.ui.screens.home.Home
+import com.sardes.thegabworkproject.ui.screens.Main
 import com.sardes.thegabworkproject.ui.screens.login.LoginScreen
 import com.sardes.thegabworkproject.ui.screens.login.LoginViewModel
 import com.sardes.thegabworkproject.ui.screens.login_and_signup.LoginOrSignUp
 import com.sardes.thegabworkproject.ui.screens.login_and_signup.SelectSignUpAccount
+import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.home.HomeEntrepriseScreen
 import com.sardes.thegabworkproject.ui.screens.signup.entreprisesignup.EntrepriseAccountSignUpScreen
 import com.sardes.thegabworkproject.ui.screens.signup.entreprisesignup.EntrepriseAccountSignUpViewModel
 import com.sardes.thegabworkproject.ui.screens.signup.independantsignup.IndependantAccountSignUpSceen
@@ -36,17 +37,8 @@ fun SetupNavGraph(
             navController = navController,
         )
 */
-        composable(Screen.Home.route){
-            Home(
-                onNavToLoginOrSignUp = {
-                    navController.navigate(Screen.LoginOrSignUp.route){
-                        launchSingleTop = true
-                        popUpTo(Screen.Home.route){
-                            inclusive = true
-                        }
-                    }
-                }
-            )
+        composable(Screen.Main.route){
+            Main()
         }
 
         composable(Screen.Verification.route){
@@ -56,8 +48,8 @@ fun SetupNavGraph(
                         launchSingleTop = true
                     }
                 },
-                onNavToHomePage = {
-                    navController.navigate(Screen.Home.route){
+                onNavToMainPage = {
+                    navController.navigate(Screen.Main.route){
                         launchSingleTop = true
                     }
                 }
@@ -68,8 +60,8 @@ fun SetupNavGraph(
 
         composable(route = Screen.Start.route){
             GetStartedScreen(
-                onNavToHomePage = {
-                    navController.navigate(Screen.Home.route) {
+                onNavToMainPage = {
+                    navController.navigate(Screen.Main.route) {
                         launchSingleTop = true
                         popUpTo(route = Screen.Start.route) {
                             inclusive = true
@@ -78,7 +70,7 @@ fun SetupNavGraph(
                 },
                 loginViewModel = loginViewModel
             ){
-                navController.navigate(Screen.LoginOrSignUp.route){
+                navController.navigate(Screen.Login.route){
                     launchSingleTop = true
                     popUpTo(Screen.Start.route){
                         inclusive = true
@@ -104,10 +96,6 @@ fun SetupNavGraph(
                 }
             )
         }
-
-/*        composable(route = Screen.Home.route){
-                Home()
-        }*/
     }
 }
 
@@ -121,10 +109,14 @@ fun NavGraphBuilder.authGraph(
         route = NestedRoutes.Login.name
     ){
 
+        composable(Screen.MainEntreprise.route){
+            HomeEntrepriseScreen()
+        }
+
         composable(route = Screen.Login.route){
             LoginScreen(
-                onNavToHomePage = {
-                    navController.navigate(Screen.Home.route){
+                onNavToMainPage = {
+                    navController.navigate(Screen.MainEntreprise.route){
                         launchSingleTop = true
                         popUpTo(route = Screen.Login.route){
                             inclusive = true
@@ -144,15 +136,15 @@ fun NavGraphBuilder.authGraph(
 
         composable(route = Screen.StandardSignUp.route){
             StandardSignUpScreen(
-                onNavToHomePage = {
-                    navController.navigate(Screen.Home.route){
+                onNavToMainPage = {
+                    navController.navigate(Screen.Main.route){
                         launchSingleTop = true
                         popUpTo(Screen.StandardSignUp.route){
                             inclusive = true
                         }
                     }
                 },
-                signUpViewModel = StandardAccountSignUpViewModel()
+                viewModel = StandardAccountSignUpViewModel()
             ){
                 navController.navigate(Screen.Login.route)
             }
@@ -160,8 +152,8 @@ fun NavGraphBuilder.authGraph(
 
         composable(route = Screen.IndependantSignUp.route){
             IndependantAccountSignUpSceen(
-                onNavToHomePage = {
-                    navController.navigate(Screen.Home.route){
+                onNavToMainPage = {
+                    navController.navigate(Screen.Main.route){
                         launchSingleTop = true
                         popUpTo(Screen.IndependantSignUp.route){
                             inclusive = true
@@ -176,8 +168,8 @@ fun NavGraphBuilder.authGraph(
 
         composable(route = Screen.EntrepriseSignUp.route){
             EntrepriseAccountSignUpScreen(
-                onNavToHomePage = {
-                    navController.navigate(Screen.Home.route){
+                onNavToMainPage = {
+                    navController.navigate(Screen.Main.route){
                         popUpTo(Screen.Login.route){
                             inclusive = true
                         }

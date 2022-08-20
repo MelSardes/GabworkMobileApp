@@ -1,6 +1,7 @@
 package com.sardes.thegabworkproject.ui.screens.signup.entreprisesignup
 
 import android.content.Context
+import android.net.Uri
 import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,10 +27,8 @@ class EntrepriseAccountSignUpViewModel(
     private val entreprise: FirebaseUser?
         get() = commonSignUpRepository.user()
 
-
     var signUpUiState by mutableStateOf(SignupUiState())
         private set
-
 
 
     private fun validateEntrepriseForm() =
@@ -94,7 +93,7 @@ class EntrepriseAccountSignUpViewModel(
     }
 
 
-    fun addUserInformations(){
+    private fun addUserInformations(){
         if (hasUser){
             repository.addEntrepriseInformations(
                 entrepriseId = entreprise!!.uid,
@@ -107,14 +106,19 @@ class EntrepriseAccountSignUpViewModel(
                 description = signUpUiState.description,
                 address = signUpUiState.address,
                 website = signUpUiState.website,
-                urlLogo = signUpUiState.urlLogo,
+                urlLogo = "https://" +
+                        "firebasestorage.googleapis.com/v0/b/" +
+                        "thegabworkprojecttest.appspot.com/o/" +
+                        "userProfile%2Fentreprise%2F" +
+                        "${entreprise!!.uid}__profile__entreprise.jpg" +
+                        "?alt=media",
+                Logo = signUpUiState.logo,
                 timestamp = Timestamp.now()
             ){
                 signUpUiState = signUpUiState.copy(informationsAddedStatus = it)
             }
         }
     }
-
 
 
     fun onEntrepriseEmailChangeSignUp(entrepriseMail: String){
@@ -145,7 +149,7 @@ class EntrepriseAccountSignUpViewModel(
         signUpUiState = signUpUiState.copy(address = address)
     }
 
-    fun onEntrerpiseActivityAreaChange(activityArea: String){
+    fun onEntrepriseActivityAreaChange(activityArea: String){
         signUpUiState = signUpUiState.copy(activityArea = activityArea)
     }
 
@@ -153,13 +157,13 @@ class EntrepriseAccountSignUpViewModel(
         signUpUiState = signUpUiState.copy(description = description)
     }
 
-    fun onEntrepriseWebsitehange(website: String){
+    fun onEntrepriseWebsiteChange(website: String){
         signUpUiState = signUpUiState.copy(website = website)
     }
 
 
-    fun onUrlLogoChange(urlProfilePicture: String){
-        signUpUiState = signUpUiState.copy(urlLogo = urlProfilePicture)
+    fun onLogoChange(logo: Uri?){
+        signUpUiState = signUpUiState.copy(logo = logo)
     }
 }
 
@@ -176,7 +180,7 @@ data class SignupUiState(
     val website: String = "",
     val city: String = "",
     val address: String = "",
-    val urlLogo: String = "",
+    val logo: Uri? = null,
 
 //STATES
     val isLoading: Boolean = false,

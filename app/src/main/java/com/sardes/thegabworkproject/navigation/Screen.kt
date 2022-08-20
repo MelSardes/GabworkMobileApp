@@ -9,7 +9,8 @@ sealed class Screen(val route: String){
         object StandardSignUp: Screen(route = "Standard_signup_screen")
         object EntrepriseSignUp: Screen(route = "Entreprise_signup_screen")
         object IndependantSignUp: Screen(route = "Independant_signup_screen")
-        object Home: Screen(route = "home_screen")
+        object Main: Screen(route = "main_screen")
+        object MainEntreprise: Screen(route = "main_entreprise_screen")
         object SkillEdit: Screen(route = "skill_edit")
 }
 

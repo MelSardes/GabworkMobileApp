@@ -1,10 +1,12 @@
 package com.sardes.thegabworkproject.repository.signuprepository
 
+import android.net.Uri
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.sardes.thegabworkproject.models.Compte_Standard
+import com.google.firebase.storage.ktx.storage
+import com.sardes.thegabworkproject.models.CompteStandard
 
 
 const val COMPTES_STANDARD_COLLECTION_REF = "ComptesStandard"
@@ -12,6 +14,7 @@ const val COMPTES_STANDARD_COLLECTION_REF = "ComptesStandard"
 
 class StandardSignUpRepository {
 
+    var storageRef = Firebase.storage.reference
 
     private val comptesStandardRef: CollectionReference = Firebase
         .firestore.collection(COMPTES_STANDARD_COLLECTION_REF)
@@ -28,10 +31,11 @@ class StandardSignUpRepository {
         nationality: String,
         address: String,
         urlPhoto: String,
+        photo: Uri?,
         timestamp: Timestamp,
         onComplete: (Boolean) -> Unit
     ){
-        val standardUser = Compte_Standard(
+        val standardUser = CompteStandard(
             userId,
             userName,
             userForeName,
@@ -45,6 +49,11 @@ class StandardSignUpRepository {
             urlPhoto,
             timestamp
         )
+        if (photo != null) {
+            storageRef.child(
+                "userProfile/standard/${userId}__profile__standard.jpg")
+                .putFile(photo)
+        }
 
         comptesStandardRef
             .document(userId)

@@ -8,12 +8,12 @@ plugins {
 }
 
 android {
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.sardes.thegabworkproject"
-        minSdk 21
-        targetSdk 32
+        minSdk 23
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -50,30 +50,36 @@ android {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
-    buildToolsVersion '32.1.0-rc1'
+    buildToolsVersion '33.0.0'
 
 }
-apply plugin: 'com.google.gms.google-services'
 
 dependencies {
-    implementation 'com.google.android.gms:play-services-mlkit-text-recognition-common:17.0.0'
+    implementation platform('com.google.firebase:firebase-bom:30.3.2')
+    implementation "com.google.firebase:firebase-core:21.1.0"
+    implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.google.firebase:firebase-storage-ktx:20.0.1'
-    implementation 'com.google.firebase:firebase-storage:20.0.1'
+    implementation 'com.google.firebase:firebase-firestore-ktx:24.2.2'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+//    implementation 'com.google.firebase:firebase-storage:20.0.1'
+//    implementation platform('com.google.firebase:firebase-bom:30.3.2')
+//    implementation 'com.google.firebase:firebase-analytics'
+
+
+
+//    implementation("com.google.android.gms:play-services-auth:20.2.0")
+    implementation 'com.google.android.gms:play-services-auth:20.2.0'
+    implementation 'com.google.android.gms:play-services-mlkit-text-recognition-common:17.1.0'
+
     def nav_version = "2.5.1"
     implementation("androidx.navigation:navigation-compose:$nav_version")
 
 
-    implementation "androidx.compose.animation:animation:1.3.0-alpha02"
-    implementation "androidx.compose.foundation:foundation:1.3.0-alpha02"
-
-
-    implementation 'com.google.android.gms:play-services-auth:20.2.0'
-    debugImplementation "androidx.compose.ui:ui-tooling:1.2.0"
-    implementation "androidx.compose.ui:ui-tooling-preview:1.2.0"
-
-    implementation platform('com.google.firebase:firebase-bom:30.3.2')
-    implementation 'com.google.firebase:firebase-analytics'
-    implementation("com.google.android.gms:play-services-auth:20.2.0")
+    implementation 'androidx.compose.ui:ui:1.3.0-alpha03'
+    implementation "androidx.compose.animation:animation:1.3.0-alpha03"
+    implementation "androidx.compose.foundation:foundation:1.3.0-alpha03"
+    debugImplementation "androidx.compose.ui:ui-tooling:1.2.1"
+    implementation "androidx.compose.ui:ui-tooling-preview:1.2.1"
 
 
     // COROUTINES
@@ -83,16 +89,12 @@ dependencies {
 
 
 
-    implementation 'com.google.firebase:firebase-firestore-ktx:24.2.2'
     implementation 'androidx.core:core-ktx:1.8.0'
-    //noinspection GradleDependency
-    implementation 'androidx.compose.ui:ui:1.3.0-alpha02'
-    //noinspection GradleDependency
-    implementation 'androidx.compose.material:material:1.3.0-alpha02'
-    implementation "androidx.compose.material:material-icons-extended:1.3.0-alpha02"
-    implementation "androidx.compose.material3:material3:1.0.0-alpha15"
-    implementation "androidx.compose.material3:material3-window-size-class:1.0.0-alpha15"
-    implementation "androidx.compose.runtime:runtime:1.3.0-alpha02"
+    implementation 'androidx.compose.material:material:1.3.0-alpha03'
+    implementation "androidx.compose.material:material-icons-extended:1.3.0-alpha03"
+    implementation "androidx.compose.material3:material3:1.0.0-alpha16"
+    implementation "androidx.compose.material3:material3-window-size-class:1.0.0-alpha16"
+    implementation "androidx.compose.runtime:runtime:1.3.0-alpha03"
     //noinspection GradleDependency
     implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
@@ -109,13 +111,10 @@ dependencies {
 
 
     // Import the Firebase BoM
-    implementation platform('com.google.firebase:firebase-bom:30.3.2')
 
     // Declare the dependency for the Firebase SDK for Google Analytics
-    implementation 'com.google.firebase:firebase-analytics-ktx'
 
     // Declare the dependencies for any other desired Firebase products
-     implementation 'com.google.firebase:firebase-auth-ktx'
 //    implementation 'com.google.firebase:firebase-firestore-ktx'
 
     implementation('org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4')
@@ -125,9 +124,18 @@ dependencies {
     implementation "com.google.accompanist:accompanist-pager:0.25.0"
     implementation "com.google.accompanist:accompanist-pager-indicators:0.25.0"
 
-    implementation "com.google.accompanist:accompanist-systemuicontroller:0.26.0-alpha"
+    implementation 'com.google.accompanist:accompanist-systemuicontroller:0.26.1-alpha'
 
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.0-alpha01")
 
-    implementation("io.coil-kt:coil-compose:2.1.0")
+    implementation('io.coil-kt:coil-compose:2.2.0')
+
+    def orbitVersion = "0.18.0"
+    implementation "kiwi.orbit.compose:ui:$orbitVersion"
+    implementation "kiwi.orbit.compose:icons:$orbitVersion"
+    implementation "kiwi.orbit.compose:illustrations:$orbitVersion"
+
+    implementation "androidx.constraintlayout:constraintlayout-compose:1.0.1"
 }
+
+apply plugin: 'com.google.gms.google-services'

@@ -1,6 +1,7 @@
 package com.sardes.thegabworkproject.ui.screens.signup.standardsignup
 
 import android.content.Context
+import android.net.Uri
 import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -95,7 +96,7 @@ class StandardAccountSignUpViewModel(
     }
 
 
-    fun addUserInformations(){
+    private fun addUserInformations(){
         if (hasUser){
             repository.addUserInformations(
                 userId = user!!.uid,
@@ -108,7 +109,13 @@ class StandardAccountSignUpViewModel(
                 city = signUpUiState.city,
                 nationality = signUpUiState.nationality,
                 address = signUpUiState.address,
-                urlPhoto = signUpUiState.urlProfilePicture,
+                urlPhoto = "https://" +
+                        "firebasestorage.googleapis.com/v0/b/" +
+                        "thegabworkprojecttest.appspot.com/o/" +
+                        "userProfile%2Fstandard%2F" +
+                        "${user!!.uid}__profile__standard.jpg" +
+                        "?alt=media",
+                photo = signUpUiState.photo,
                 timestamp = Timestamp.now()
             ){
                 signUpUiState = signUpUiState.copy(informationsAddedStatus = it)
@@ -158,8 +165,8 @@ class StandardAccountSignUpViewModel(
         signUpUiState = signUpUiState.copy(address = address)
     }
 
-    fun onUrlProfilPictureChange(urlProfilePicture: String){
-        signUpUiState = signUpUiState.copy(urlProfilePicture = urlProfilePicture)
+    fun onPhotoChange(photo: Uri?){
+        signUpUiState = signUpUiState.copy(photo = photo)
     }
 }
 
@@ -176,7 +183,7 @@ data class SignUpUiState(
     val city: String = "",
     val nationality: String = "",
     val address: String = "",
-    val urlProfilePicture: String = "",
+    val photo: Uri? = null,
 
     val isLoading: Boolean = false,
     val isSuccessLogin: Boolean = false,

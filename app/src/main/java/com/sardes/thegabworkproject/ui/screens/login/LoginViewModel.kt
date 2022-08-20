@@ -32,10 +32,6 @@ class LoginViewModel(
 
 
 
-
-
-
-
     private fun validateLoginForm() =
         loginUiState.userMail.isNotBlank() &&
                 loginUiState.password.isNotBlank()

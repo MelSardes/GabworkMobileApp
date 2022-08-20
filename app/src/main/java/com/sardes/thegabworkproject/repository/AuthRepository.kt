@@ -30,5 +30,5 @@ class AuthRepository {
                 }else
                     onComplete.invoke(false)
             }
-    }.await()
+    }.await()!!
 }

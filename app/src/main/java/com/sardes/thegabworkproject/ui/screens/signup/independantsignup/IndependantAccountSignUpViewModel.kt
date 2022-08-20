@@ -1,6 +1,7 @@
 package com.sardes.thegabworkproject.ui.screens.signup.independantsignup
 
 import android.content.Context
+import android.net.Uri
 import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -111,7 +112,13 @@ class IndependantAccountSignUpViewModel (
                 address = signUpUiState.address,
                 competences = signUpUiState.skills,
                 website = signUpUiState.webisite,
-                urlPhoto = signUpUiState.urlProfilePicture,
+                urlPhoto = "https://" +
+                        "firebasestorage.googleapis.com/v0/b/" +
+                        "thegabworkprojecttest.appspot.com/o/" +
+                        "userProfile%2Findependant%2F" +
+                        "${user!!.uid}__profile__independant.jpg" +
+                        "?alt=media",
+                photo = signUpUiState.photo,
                 timestamp = Timestamp.now()
             ){
                 signUpUiState = signUpUiState.copy(informationsAddedStatus = it)
@@ -169,8 +176,8 @@ class IndependantAccountSignUpViewModel (
         signUpUiState = signUpUiState.copy(webisite = webisite)
     }
 
-    fun onUrlProfilPictureChange(urlProfilePicture: String){
-        signUpUiState = signUpUiState.copy(urlProfilePicture = urlProfilePicture)
+    fun onPhotoChange(photo: Uri?){
+        signUpUiState = signUpUiState.copy(photo = photo)
     }
 }
 
@@ -189,7 +196,8 @@ class IndependantAccountSignUpViewModel (
         val address: String = "",
         val skills: String = "",
         val webisite: String = "",
-        val urlProfilePicture: String = "",
+        val urlPhoto: String = "",
+        val photo: Uri? = null,
 
         val isLoading: Boolean = false,
         val isSuccessLogin: Boolean = false,
