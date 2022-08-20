@@ -6,11 +6,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults.IconSpacing
 import androidx.compose.material.ButtonDefaults.buttonColors
-import androidx.compose.material.Icon
 import androidx.compose.material.Text
-import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -27,8 +24,6 @@ import androidx.compose.ui.unit.sp
 import com.sardes.thegabworkproject.R
 import com.sardes.thegabworkproject.ui.screens.login.LoginViewModel
 import com.sardes.thegabworkproject.ui.theme.*
-import kiwi.orbit.compose.icons.Icons
-import kiwi.orbit.compose.ui.controls.ButtonDefaults
 
 
 @SuppressLint("MaterialDesignInsteadOrbitDesign")
@@ -70,13 +65,6 @@ fun GetStartedScreen(
                     textAlign = TextAlign.Center,
                     fontFamily = yanone,
                     fontWeight = FontWeight.Medium
-                )
-                Spacer(Modifier.size(IconSpacing))
-                Icon(
-                    Icons.Filled.ArrowForward,
-                    tint = YellowFlag,
-                    contentDescription = "Arrow",
-                    modifier = Modifier.size(ButtonDefaults.IconSize)
                 )
             }
 
