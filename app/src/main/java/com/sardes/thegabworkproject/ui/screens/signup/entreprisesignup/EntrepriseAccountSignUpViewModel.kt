@@ -113,7 +113,8 @@ class EntrepriseAccountSignUpViewModel(
                         "${entreprise!!.uid}__profile__entreprise.jpg" +
                         "?alt=media",
                 Logo = signUpUiState.logo,
-                timestamp = Timestamp.now()
+                timestamp = Timestamp.now(),
+                creationDate = signUpUiState.creationDate!!,
             ){
                 signUpUiState = signUpUiState.copy(informationsAddedStatus = it)
             }
@@ -165,6 +166,10 @@ class EntrepriseAccountSignUpViewModel(
     fun onLogoChange(logo: Uri?){
         signUpUiState = signUpUiState.copy(logo = logo)
     }
+
+    fun onCreationDateChange(creationDate: Timestamp?){
+        signUpUiState = signUpUiState.copy(creationDate = creationDate)
+    }
 }
 
 
@@ -181,6 +186,7 @@ data class SignupUiState(
     val city: String = "",
     val address: String = "",
     val logo: Uri? = null,
+    val creationDate: Timestamp? = null,
 
 //STATES
     val isLoading: Boolean = false,

@@ -14,39 +14,40 @@ data class CompteEntreprise(
     val adressEntreprise: String,
     val siteWebEntreprise: String?,
     val urlLogoEntreprise: String?,
+    val dateCreationCompte: Timestamp?,
     val dateCreationEntreprise: Timestamp?,
     val typeDeCompte:String = "Entreprise",
 ){
-    data class PostEmploi(
-        val id_emploi: Int,
-        val id_entreprise: Int,
-        val date_creation_post: String,
-        val description_emploi: String,
+    data class PostVacant(
+        val EmploiId: String,
+        val EntrepriseId: String,
+        val dateCreationPost: String,
+        val descriptionEmploi: String,
         val salaire: Int,
-        val temps_de_travail: Int,
-        val type_d_emploi: Int,
-        val nombre_de_posts: Int,
-        val date_limite: String,
-        val actif: Boolean,
-        val legitimite: String
+        val typeDEmploi: String,
+        val lieu: String,
+        val dateLimite: Timestamp,
+        val prerequis: List<String>,
+        val emploiOuStage: String,
+        val actif: Boolean
     ){
         data class CompetencesDuPost(
-            val id_competence: Int,
-            val id_post_emploi: Int,
-            val niveau_de_competence: String,
+            val competenceId: String,
+            val PostEmploiId: String,
+            val niveauDeCompetence: String,
         )
 
 
         data class ListeDemandeurs(
-            val id_post_emploi: Int,
-            val id_profil_demandeur: Int,
-            val date_soumission: String,
+            val PostEmploiId: String,
+            val profilDemandeurId: String,
+            val dateSoumission: String,
         )
 
         data class ListeEtudiants(
-            val id_post_emploi: Int,
-            val id_profil_etudiant: Int,
-            val date_soumission: String,
+            val PostEmploiId: String,
+            val ProfilEtudiantId: String,
+            val dateSoumission: String,
         )
     }
 

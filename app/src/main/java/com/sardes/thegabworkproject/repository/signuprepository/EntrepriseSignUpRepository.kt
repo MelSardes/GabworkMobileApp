@@ -34,7 +34,8 @@ class EntrepriseSignUpRepository {
         website: String,
         urlLogo: String,
         Logo: Uri?,
-        timestamp: Timestamp,
+        creationDate: Timestamp,
+        timestamp: Timestamp?,
         onComplete: (Boolean) -> Unit
     ){
         val entreprise = CompteEntreprise(
@@ -50,6 +51,7 @@ class EntrepriseSignUpRepository {
             website,
             urlLogo,
             timestamp,
+            creationDate,
         )
 
         if (Logo != null) {
