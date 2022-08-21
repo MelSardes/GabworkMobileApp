@@ -98,7 +98,6 @@ class EntrepriseAccountSignUpViewModel(
             repository.addEntrepriseInformations(
                 entrepriseId = entreprise!!.uid,
                 entrepriseName = signUpUiState.entrepriseName,
-                entreprisePassword = signUpUiState.password,
                 phone = signUpUiState.phone,
                 email = signUpUiState.entrepriseMail,
                 city = signUpUiState.city,

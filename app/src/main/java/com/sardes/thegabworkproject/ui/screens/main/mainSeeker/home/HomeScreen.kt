@@ -20,7 +20,7 @@ import com.google.firebase.ktx.Firebase
 import com.sardes.thegabworkproject.R
 
 @Composable
-fun HomeScreen(
+fun HomeSeekerScreen(
     modifier: Modifier = Modifier,
     onNavToLoginOrSignUp: () -> Unit
 ) {
@@ -69,5 +69,5 @@ fun TopBar(avatarUrl: String, onNavToLoginOrSignUp: () -> Unit) {
 @Preview(name = "HomeScreen", showBackground = true)
 @Composable
 private fun PreviewHomeScreen() {
-    HomeScreen(Modifier) {}
+    HomeSeekerScreen(Modifier) {}
 }

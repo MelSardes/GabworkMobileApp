@@ -30,8 +30,8 @@ fun HomeEntrepriseScreen(
 
     Column{
         TopBar(
-            avatarUrl = homeUiState.entrepriseInformations?.urlLogoEntreprise!!,
-            homeUiState.entrepriseInformations.nomEntreprise
+            avatarUrl = "${homeUiState.entrepriseInformations?.urlLogoEntreprise}",
+            homeUiState.entrepriseInformations?.nomEntreprise
         )
     }
 }

@@ -1,4 +1,4 @@
-package com.sardes.thegabworkproject.ui.screens.main.mainSeeker.profile
+package com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.applications.post
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Box
@@ -9,16 +9,16 @@ import androidx.compose.ui.tooling.preview.Preview
 
 @SuppressLint("MaterialDesignInsteadOrbitDesign")
 @Composable
-fun ProfileSeekerScreen(
+fun PostDetails(
     modifier: Modifier = Modifier,
 ) {
     Box(modifier) {
-        Text(text = "ProfileScreen")
+        Text(text = "PostDetails")
     }
 }
 
-@Preview(name = "ProfileScreen")
+@Preview(name = "PostDetails")
 @Composable
-private fun PreviewProfileScreen() {
-    ProfileSeekerScreen()
+private fun PreviewPostDetails() {
+    PostDetails()
 }

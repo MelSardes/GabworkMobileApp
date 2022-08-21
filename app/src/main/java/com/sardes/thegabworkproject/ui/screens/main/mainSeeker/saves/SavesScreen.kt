@@ -9,7 +9,7 @@ import androidx.compose.ui.tooling.preview.Preview
 
 @SuppressLint("MaterialDesignInsteadOrbitDesign")
 @Composable
-fun SavesScreen(
+fun SavesSeekerScreen(
     modifier: Modifier = Modifier,
 ) {
     Box(modifier) {
@@ -20,5 +20,5 @@ fun SavesScreen(
 @Preview(name = "SavesScreen")
 @Composable
 private fun PreviewSavesScreen() {
-    SavesScreen()
+    SavesSeekerScreen()
 }

@@ -68,7 +68,6 @@ fun HomeSkill(
                 actions = {
                           IconButton(onClick = {
                               homeSkillViewModel?.signOut()
-                              navToSkillPage.invoke()
                           }) {
                               Icon(
                                   imageVector = Icons.Default.ExitToApp,
@@ -142,7 +141,7 @@ fun HomeSkill(
                 else -> {
                     Text(
                         text = homeSkillUiState
-                            .skillList.throwable?.localizedMessage ?: "Probleme inconnue",
+                            .skillList.throwable?.localizedMessage ?: "OOPS!\nUne erreur s'est produite",
                         color = Color.Red
                     )
                 }
@@ -226,9 +225,5 @@ private fun formatDate(timestamp: Timestamp):String{
 @Preview(name = "HomeSkill")
 @Composable
 private fun PreviewHomeSkill() {
-    HomeSkill(
-        homeSkillViewModel = null,
-        onSkillClick = {},
-        navToSkillPage = {/*TODO*/ }
-    ){}
+    SkillItem(Competences_Profil_Etudiant(),{},{} )
 }

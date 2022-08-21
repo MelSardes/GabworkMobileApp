@@ -12,7 +12,6 @@ import com.sardes.thegabworkproject.ui.theme.TheGabworkProjectTheme
 
 
 class MainActivity : ComponentActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {

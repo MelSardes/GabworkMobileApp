@@ -1,4 +1,4 @@
-package com.sardes.thegabworkproject.ui.screens
+package com.sardes.thegabworkproject.ui.screens.main.mainEntreprise
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
@@ -16,11 +16,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.sardes.thegabworkproject.ui.screens.main.mainSeeker.home.HomeScreen
-import com.sardes.thegabworkproject.ui.screens.main.mainSeeker.message.MessagesScreen
-import com.sardes.thegabworkproject.ui.screens.main.mainSeeker.profile.ProfileScreen
-import com.sardes.thegabworkproject.ui.screens.main.mainSeeker.saves.SavesScreen
-import com.sardes.thegabworkproject.ui.screens.main.mainSeeker.search.SearchScreen
+import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.applications.ApplicationsEntrepriseScreen
+import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.home.HomeEntrepriseScreen
+import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.message.MessagesEntrepriseScreen
+import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.profile.ProfileEntrepriseScreen
+import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.search.SearchEntrepriseScreen
 import com.sardes.thegabworkproject.ui.theme.TheGabworkProjectTheme
 import com.sardes.thegabworkproject.ui.theme.YellowFlag
 
@@ -31,7 +31,7 @@ import com.sardes.thegabworkproject.ui.theme.YellowFlag
     showSystemUi = true
 )
 @Composable
-fun Main(){
+fun EntrepriseMainPage(){
     data class TabItem(
         val icon: ImageVector,
         val contentDescription: String
@@ -39,11 +39,11 @@ fun Main(){
 
     var tabIndex by remember { mutableStateOf(0) }
     val homeScreens = listOf(
-        TabItem(Icons.Rounded.Home, ""),
-        TabItem(Icons.Rounded.Folder, ""),
-        TabItem(Icons.Rounded.Search, ""),
-        TabItem(Icons.Rounded.Message, ""),
-        TabItem(Icons.Rounded.Person, ""),
+        TabItem(Icons.Rounded.Home, "Home"),
+        TabItem(Icons.Rounded.FormatListBulleted, "Applications"),
+        TabItem(Icons.Rounded.Search, "Search"),
+        TabItem(Icons.Rounded.Message, "Messages"),
+        TabItem(Icons.Rounded.Person, "Profile"),
     )
 
     TheGabworkProjectTheme {
@@ -57,11 +57,15 @@ fun Main(){
                 .fillMaxWidth()
                 .weight(0.9f).align(Alignment.Start)) {
                 when (tabIndex) {
-                    0 -> HomeScreen() {}
-                    1 -> SavesScreen()
-                    2 -> SearchScreen()
-                    3 -> MessagesScreen()
-                    4 -> ProfileScreen()
+                    0 -> HomeEntrepriseScreen()
+                    1 -> ApplicationsEntrepriseScreen(
+                        onPostClick = {},
+                        navToNewPostPage = {},
+                        navToPostPage = {}
+                    )
+                    2 -> SearchEntrepriseScreen()
+                    3 -> MessagesEntrepriseScreen()
+                    4 -> ProfileEntrepriseScreen()
                 }
             }
 

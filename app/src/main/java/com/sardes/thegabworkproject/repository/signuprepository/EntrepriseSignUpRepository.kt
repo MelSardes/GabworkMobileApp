@@ -24,7 +24,6 @@ class EntrepriseSignUpRepository {
     fun addEntrepriseInformations(
         entrepriseId: String,
         entrepriseName: String,
-        entreprisePassword: String,
         activityArea: String,
         description: String,
         city: String,
@@ -41,7 +40,6 @@ class EntrepriseSignUpRepository {
         val entreprise = CompteEntreprise(
             entrepriseId,
             entrepriseName,
-            entreprisePassword,
             activityArea,
             description,
             city,

@@ -19,7 +19,7 @@ import com.sardes.thegabworkproject.ui.theme.BlueVariant
 import com.sardes.thegabworkproject.ui.theme.YellowFlag
 
 @Composable
-fun SearchScreen(
+fun SearchSeekerScreen(
     modifier: Modifier = Modifier,
 ) {
     SearchBar(onTextChange = {/* TODO */})
@@ -59,5 +59,5 @@ fun SearchBar(onTextChange: (String) -> Unit){
 @Preview(name = "SavesScreen")
 @Composable
 private fun PreviewSavesScreen() {
-    SearchScreen()
+    SearchSeekerScreen()
 }

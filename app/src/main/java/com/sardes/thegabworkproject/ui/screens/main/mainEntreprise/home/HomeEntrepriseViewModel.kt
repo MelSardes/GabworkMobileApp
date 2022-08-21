@@ -18,7 +18,7 @@ class HomeEntrepriseViewModel(
     val hasUser: Boolean
         get() = repository.hasUser()
 
-    val entrepriseId: String
+    private val entrepriseId: String
         get() = repository.getUserId()
 
 
@@ -26,7 +26,6 @@ class HomeEntrepriseViewModel(
         if (hasUser) {
             if (entrepriseId.isNotBlank()) {
                 repository.getInformations(
-                    entrepriseId = entrepriseId,
                     onError = {}
                 ) {
                     homeEntrepriseUiState = homeEntrepriseUiState.copy(entrepriseInformations = it)
