@@ -22,13 +22,13 @@ import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.applications.
 
 @SuppressLint("MaterialDesignInsteadOrbitDesign", "UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun ApplicationsEntrepriseScreen(
-    applicationsViewModel: ApplicationsEntrepriseViewModel? = ApplicationsEntrepriseViewModel(),
+fun PostsEntrepriseScreen(
+    applicationsViewModel: PostsEntrepriseViewModel? = PostsEntrepriseViewModel(),
     onPostClick: (id: String) -> Unit,
     navToPostPage: () -> Unit,
     navToNewPostPage: () -> Unit,
 ) {
-    val applicationUiState = applicationsViewModel?.applicationsUiState ?: ApplicationsEntrepriseUiState()
+    val applicationUiState = applicationsViewModel?.applicationsUiState ?: PostsEntrepriseUiState()
 
     val scaffoldState = rememberScaffoldState()
 
@@ -89,7 +89,7 @@ fun ApplicationsEntrepriseScreen(
 @Composable
 @Preview(showSystemUi = true, showBackground = true)
 private fun ApplicationsScreenPreview() {
-    ApplicationsEntrepriseScreen(
+    PostsEntrepriseScreen(
         null,{},{}, {}
     )
 }

@@ -76,10 +76,9 @@ class ApplicartionsEntrepriseRepository {
     }
 
     fun addPost(
-        postId: String,
         postName: String,
         entrepriseId: String,
-        EntrepriseName: String,
+        entrepriseName: String,
         dateCreationPost: Timestamp,
         descriptionEmploi: String,
         salaire: Int,
@@ -93,10 +92,10 @@ class ApplicartionsEntrepriseRepository {
     ){
         val documentId = applicationsRef.document().id
         val post = CompteEntreprise.PostVacant(
-            postId,
+            documentId,
             postName,
             entrepriseId,
-            EntrepriseName,
+            entrepriseName,
             dateCreationPost,
             descriptionEmploi,
             salaire,
@@ -137,7 +136,7 @@ class ApplicartionsEntrepriseRepository {
         typeDEmploi: String,
         adresse: String,
         dateLimite: Timestamp,
-        prerequis: List<String>,
+        prerequis: String,
         emploiOuStage: String,
         actif: Boolean,
         onResult: (Boolean) -> Unit

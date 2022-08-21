@@ -10,11 +10,11 @@ import com.sardes.thegabworkproject.repository.Ressources
 import com.sardes.thegabworkproject.repository.main.entreprise.ApplicartionsEntrepriseRepository
 import kotlinx.coroutines.launch
 
-class ApplicationsEntrepriseViewModel(
+class PostsEntrepriseViewModel(
     private val repository: ApplicartionsEntrepriseRepository = ApplicartionsEntrepriseRepository()
 ) : ViewModel() {
 
-    var applicationsUiState by mutableStateOf(ApplicationsEntrepriseUiState())
+    var applicationsUiState by mutableStateOf(PostsEntrepriseUiState())
 
     val user = repository.user()
     val hasUser: Boolean
@@ -44,6 +44,6 @@ class ApplicationsEntrepriseViewModel(
 }
 
 
-data class ApplicationsEntrepriseUiState(
+data class PostsEntrepriseUiState(
     val postList: Ressources<List<CompteEntreprise.PostVacant>> = Ressources.Loading(),
 )
