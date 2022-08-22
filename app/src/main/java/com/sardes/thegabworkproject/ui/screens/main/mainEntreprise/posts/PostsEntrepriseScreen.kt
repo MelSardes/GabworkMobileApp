@@ -1,4 +1,4 @@
-package com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.applications
+package com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,22 +18,22 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sardes.thegabworkproject.repository.Ressources
-import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.applications.components.PostCardComponent
+import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.components.PostCardComponent
 
 @SuppressLint("MaterialDesignInsteadOrbitDesign", "UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun PostsEntrepriseScreen(
-    applicationsViewModel: PostsEntrepriseViewModel? = PostsEntrepriseViewModel(),
+    postsViewModel: PostsEntrepriseViewModel? = PostsEntrepriseViewModel(),
     onPostClick: (id: String) -> Unit,
     navToPostPage: () -> Unit,
     navToNewPostPage: () -> Unit,
 ) {
-    val applicationUiState = applicationsViewModel?.applicationsUiState ?: PostsEntrepriseUiState()
+    val applicationUiState = postsViewModel?.postsUiState ?: PostsEntrepriseUiState()
 
     val scaffoldState = rememberScaffoldState()
 
     LaunchedEffect(key1 = Unit){
-        applicationsViewModel?.loadPosts()
+        postsViewModel?.loadPosts()
     }
 
     Scaffold(
@@ -69,7 +69,7 @@ fun PostsEntrepriseScreen(
                 LazyColumn(modifier = Modifier.padding(6.dp)){
                     items(applicationUiState.postList.data ?: emptyList()) {
                         post ->
-                        PostCardComponent(post)
+                        PostCardComponent(post, onClick = { onPostClick.invoke(post.postId) })
                     }
                 }
             }

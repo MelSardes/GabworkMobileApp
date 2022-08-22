@@ -1,4 +1,4 @@
-package com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.applications.components
+package com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.components
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
@@ -21,7 +21,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.sardes.thegabworkproject.R
@@ -66,7 +65,7 @@ fun SeekerCardComponent(
                     Column {
                         Text(
                             text = demandeur.nom + " " + demandeur.prenom,
-                            style = typography.h5.copy(fontSize = 20.sp),
+                            style = typography.h6,
                             modifier = Modifier.padding(horizontal = 8.dp),
                             overflow = TextOverflow.Ellipsis,
                             maxLines = 1
@@ -74,7 +73,7 @@ fun SeekerCardComponent(
                         Text(
                             text = demandeur.occupation,
                             color = Color.Black.copy(alpha = 0.5f),
-                            style = typography.h6.copy(fontSize = 14.sp),
+                            style = typography.body2,
                             modifier = Modifier.padding(horizontal = 8.dp)
                         )
                     }
@@ -86,7 +85,7 @@ fun SeekerCardComponent(
                             modifier = Modifier
                                 .clip(RoundedCornerShape(10.dp))
                                 .background(Color(0xFFEAF1FF))
-                                .padding(5.dp),
+                                .padding(10.dp),
                             tint = Color(0xFF6B9EFF)
                         )
                     }
@@ -108,7 +107,11 @@ fun SeekerCardComponent(
                         shape = RoundedCornerShape(20.dp),
                         colors = ButtonDefaults.buttonColors(Color(0xFF2972FE))
                     ) {
-                        Text(text = stringResource(id = R.string.seeCv), color = Color.White)
+                        Text(
+                            text = stringResource(id = R.string.seeCv),
+                            color = Color.White,
+                            style = typography.body2
+                        )
                     }
                     OutlinedButton(
                         onClick = {},
@@ -127,5 +130,9 @@ fun SeekerCardComponent(
 @Preview(name = "SeekerCardComponent")
 @Composable
 private fun PreviewSeekerCardComponent() {
-    SeekerCardComponent(demandeur = CompteDemandeur())
+    SeekerCardComponent(demandeur = CompteDemandeur(
+        nom = "SARDES",
+        prenom = "Mel",
+        occupation = "Developpeur Android"
+    ))
 }

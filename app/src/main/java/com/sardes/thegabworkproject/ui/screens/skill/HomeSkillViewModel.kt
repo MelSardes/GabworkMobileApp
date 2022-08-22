@@ -51,6 +51,6 @@ class HomeSkillViewModel(
 }
 
 data class HomeSkillUiState(
-    val skillList:Ressources<List<Competences_Profil_Etudiant>> = Ressources.Loading(),
+    val skillList: Ressources<List<Competences_Profil_Etudiant>> = Ressources.Loading(),
     val skillDeleteStatus: Boolean = false
 )

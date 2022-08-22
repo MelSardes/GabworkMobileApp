@@ -1,4 +1,4 @@
-package com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.applications.components
+package com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.components
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @SuppressLint("MaterialDesignInsteadOrbitDesign")
@@ -28,9 +29,9 @@ fun CustomTopAppBar(title: String) {
                     Icons.Filled.ArrowBackIos,
                     "backIcon",
                     modifier = Modifier
+                        .clip(RoundedCornerShape(10.dp))
                         .background(Color(0xFFEAF1FF))
-                        .padding(5.dp)
-                        .clip(RoundedCornerShape(5.dp)),
+                        .padding(start = 5.dp),
                     tint = Color(0xFF6B9EFF)
                 )
             }
@@ -40,4 +41,10 @@ fun CustomTopAppBar(title: String) {
         elevation = 10.dp
     )
 
+}
+
+@Preview
+@Composable
+fun PreviewCustomAppBar() {
+    CustomTopAppBar(title = "Top Bar")
 }

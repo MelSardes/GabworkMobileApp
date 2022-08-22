@@ -16,9 +16,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.applications.PostsEntrepriseScreen
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.home.HomeEntrepriseScreen
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.message.MessagesEntrepriseScreen
+import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.components.BottomSheetModalScreen
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.profile.ProfileEntrepriseScreen
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.search.SearchEntrepriseScreen
 import com.sardes.thegabworkproject.ui.theme.TheGabworkProjectTheme
@@ -58,10 +58,8 @@ fun EntrepriseMainPage(){
                 .weight(0.9f).align(Alignment.Start)) {
                 when (tabIndex) {
                     0 -> HomeEntrepriseScreen()
-                    1 -> PostsEntrepriseScreen(
-                        onPostClick = {},
+                    1 -> BottomSheetModalScreen(
                         navToNewPostPage = {},
-                        navToPostPage = {}
                     )
                     2 -> SearchEntrepriseScreen()
                     3 -> MessagesEntrepriseScreen()

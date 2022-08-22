@@ -24,7 +24,7 @@ class SkillsStorageRepository(){
         .firestore.collection(COMPETENCES_COLLECTION_REF)
 
     fun getUserSkills(userId:String):Flow<Ressources<List
-            <Competences_Profil_Etudiant>>> = callbackFlow{
+    <Competences_Profil_Etudiant>>> = callbackFlow{
 
         var snapshotStateListener : ListenerRegistration? = null
 

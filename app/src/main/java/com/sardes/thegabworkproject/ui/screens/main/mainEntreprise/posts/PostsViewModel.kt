@@ -1,4 +1,4 @@
-package com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.applications
+package com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -7,14 +7,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sardes.thegabworkproject.models.CompteEntreprise
 import com.sardes.thegabworkproject.repository.Ressources
-import com.sardes.thegabworkproject.repository.main.entreprise.ApplicartionsEntrepriseRepository
+import com.sardes.thegabworkproject.repository.main.entreprise.PostsEntrepriseRepository
 import kotlinx.coroutines.launch
 
 class PostsEntrepriseViewModel(
-    private val repository: ApplicartionsEntrepriseRepository = ApplicartionsEntrepriseRepository()
+    private val repository: PostsEntrepriseRepository = PostsEntrepriseRepository()
 ) : ViewModel() {
 
-    var applicationsUiState by mutableStateOf(PostsEntrepriseUiState())
+    var postsUiState by mutableStateOf(PostsEntrepriseUiState())
 
     val user = repository.user()
     val hasUser: Boolean
@@ -30,7 +30,7 @@ class PostsEntrepriseViewModel(
                 getEntreprisePosts(entrepriseId)
         }
         else{
-            applicationsUiState = applicationsUiState.copy(postList = Ressources.Error(
+            postsUiState = postsUiState.copy(postList = Ressources.Error(
                 throwable = Throwable(message = "Utilisateur non connecté")
             ))
         }
@@ -38,7 +38,7 @@ class PostsEntrepriseViewModel(
 
     private fun getEntreprisePosts(entrepriseId : String) = viewModelScope.launch {
         repository.getEntreprisePosts(entrepriseId).collect{
-            applicationsUiState = applicationsUiState.copy(postList = it)
+            postsUiState = postsUiState.copy(postList = it)
         }
     }
 }

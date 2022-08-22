@@ -5,8 +5,8 @@ sealed class Ressources<T>(
     val throwable: Throwable? = null,
 ){
     class Loading<T>: Ressources<T>()
-    class Success<T>(data: T?):Ressources<T>(data = data)
-    class Error<T>(throwable: Throwable?):Ressources<T>(throwable = throwable)
+    class Success<T>(data: T?): Ressources<T>(data = data)
+    class Error<T>(throwable: Throwable?): Ressources<T>(throwable = throwable)
 
 
 }

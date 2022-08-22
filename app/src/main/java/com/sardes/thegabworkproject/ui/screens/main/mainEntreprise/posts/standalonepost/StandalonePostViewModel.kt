@@ -1,4 +1,4 @@
-package com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.applications.post
+package com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.standalonepost
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -7,10 +7,10 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseUser
 import com.sardes.thegabworkproject.models.CompteEntreprise
-import com.sardes.thegabworkproject.repository.main.entreprise.ApplicartionsEntrepriseRepository
+import com.sardes.thegabworkproject.repository.main.entreprise.PostsEntrepriseRepository
 
-class PostViewModel (
-    private val repository: ApplicartionsEntrepriseRepository = ApplicartionsEntrepriseRepository()
+class StandalonePostViewModel (
+    private val repository: PostsEntrepriseRepository = PostsEntrepriseRepository()
 ): ViewModel(){
 
     var postUiState by mutableStateOf(PostUiState())
@@ -154,4 +154,8 @@ data class PostUiState(
     val postAddedStatus: Boolean = false,
     val updateAddedPost: Boolean = false,
     val selectedPost: CompteEntreprise.PostVacant? = null,
+
+    val isLoading: Boolean = false,
+
+    val postError: String? = null,
 )
