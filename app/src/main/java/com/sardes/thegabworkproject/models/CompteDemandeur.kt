@@ -2,21 +2,21 @@ package com.sardes.thegabworkproject.models
 
 import com.google.firebase.Timestamp
 
-data class ProfilDemandeur(
-    val idCompteDemandeur: String,
-    val nomCompteDemandeur: String,
-    val prenomCompteDemandeur: String,
-    val motDePasseCompteDemandeur: String,
-    val sexeCompteDemandeur: String,
-    val telephoneCompteDemandeur: String,
-    val emailCompteDemandeur: String= "",
-    val ville: String,
-    val nationaliteCompteDemandeur: String,
-    val adressCompteDemandeur: String,
-    val urlPhotoProfilCompteDemandeur: String,
-    val dateCreationCompteDemandeur: Timestamp,
-    val idCompteStandard: Int,
-    val cvScanee: String?,
+data class CompteDemandeur(
+    val idCompteDemandeur: String = "",
+    val nom: String = "",
+    val prenom: String = "",
+    val motDePasse: String = "",
+    val sexe: String = "",
+    val telephone: String = "",
+    val email: String= "",
+    val ville: String = "",
+    val nationalite: String = "",
+    val adress: String = "",
+    val urlPhotoProfil: String = "",
+    val dateCreation: Timestamp = Timestamp.now(),
+    val urlCV: String? = "",
+    val occupation: String = "",
     val typeDeCompte:String = "Demandeur",
 ){
     data class Experience_Profil_Demandeur(

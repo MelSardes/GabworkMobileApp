@@ -13,7 +13,7 @@ class PostViewModel (
     private val repository: ApplicartionsEntrepriseRepository = ApplicartionsEntrepriseRepository()
 ): ViewModel(){
 
-    private var postUiState by mutableStateOf(PostUiState())
+    var postUiState by mutableStateOf(PostUiState())
 
     private val hasUser: Boolean
         get() = repository.hasUser()
