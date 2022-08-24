@@ -8,6 +8,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sardes.thegabworkproject.navigation.SetupNavGraph
 import com.sardes.thegabworkproject.ui.screens.login.LoginViewModel
+import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.PostsEntrepriseViewModel
 import com.sardes.thegabworkproject.ui.theme.TheGabworkProjectTheme
 
 
@@ -24,7 +25,10 @@ class MainActivity : ComponentActivity() {
                     onNavToMainPage = {}
                 )
 
-                SetupNavGraph(loginViewModel = loginViewModel)
+                SetupNavGraph(
+                    loginViewModel = loginViewModel,
+                    postsEntrepriseViewModel = PostsEntrepriseViewModel()
+                )
             }
         }
     }

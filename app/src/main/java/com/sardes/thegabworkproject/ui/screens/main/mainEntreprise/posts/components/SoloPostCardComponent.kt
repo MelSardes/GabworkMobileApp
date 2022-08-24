@@ -10,6 +10,7 @@ import androidx.compose.material.Text
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -18,21 +19,31 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sardes.thegabworkproject.models.CompteEntreprise
+import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.standalonepost.PostUiState
+import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.standalonepost.StandalonePostViewModel
 import com.sardes.thegabworkproject.ui.theme.NewBlue
 import com.sardes.thegabworkproject.ui.theme.SoftBlue
 
 @SuppressLint("MaterialDesignInsteadOrbitDesign")
 @Composable
-fun PostCardComponent(
-    Post: CompteEntreprise.PostVacant,
-    onCardClick: () -> Unit,
+fun SoloPostCardComponent(
+    standalonePostViewModel: StandalonePostViewModel?,
+    postId: String,
+    onClick: () -> Unit,
 ) {
+
+    val postUiState = standalonePostViewModel?.postUiState ?: PostUiState()
+
+    LaunchedEffect(key1 = Unit){
+        standalonePostViewModel?.getPost(postId)
+    }
+
     Card(
         modifier = Modifier
             .padding(10.dp)
             .fillMaxWidth()
             .height(160.dp)
-            .clickable { onCardClick.invoke() },
+            .clickable { onClick.invoke() },
         colors = CardDefaults.cardColors(containerColor = SoftBlue),
         shape = RoundedCornerShape(10.dp),
         elevation = CardDefaults.cardElevation(10.dp),
@@ -50,17 +61,17 @@ fun PostCardComponent(
                 horizontalAlignment = Alignment.Start
             ) {
                 Text(
-                    text = Post.postName,
+                    text = postUiState.postName,
                     style = MaterialTheme.typography.h5.copy(fontWeight = FontWeight.Bold),
                     color = NewBlue
                 )
                 Text(
-                    text = Post.typeDEmploi,
+                    text = postUiState.typeEmploi,
                     style = MaterialTheme.typography.h6,
                     color = NewBlue
                 )
                 Text(
-                    text = Post.adresse,
+                    text = postUiState.adresse,
                     style = MaterialTheme.typography.body2,
                     color = NewBlue
                 )
@@ -74,9 +85,9 @@ fun PostCardComponent(
                 horizontalAlignment = Alignment.End
             ) {
                 Text(
-                    text = if (Post.actif) "Actif" else "Inactif",
-                    color = if (Post.actif) Color(0xFF0F730C) else Color(0xFFDB1E1E),
-                    modifier = if (Post.actif) {
+                    text = if (postUiState.actif) "Actif" else "Inactif",
+                    color = if (postUiState.actif) Color(0xFF0F730C) else Color(0xFFDB1E1E),
+                    modifier = if (postUiState.actif) {
                         Modifier
                             .clip(RoundedCornerShape(20.dp))
                             .background(Color(0xFFEDF9F0))
@@ -91,7 +102,7 @@ fun PostCardComponent(
 
                 )
                 Text(
-                    text = "${Post.salaire} Fcfa/mois",
+                    text = "${postUiState.salaire} Fcfa/mois",
                     color = NewBlue,
                     style = MaterialTheme.typography.h6,
                 )
@@ -103,7 +114,7 @@ fun PostCardComponent(
 
 @Preview
 @Composable
-fun PreviewPostCard() {
+fun PreviewSoloPostCard() {
     PostCardComponent(
         Post = CompteEntreprise.PostVacant(
             postName = "Developpeur Mobile",

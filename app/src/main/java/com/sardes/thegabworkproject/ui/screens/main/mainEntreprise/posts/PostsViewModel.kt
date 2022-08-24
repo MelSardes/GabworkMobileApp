@@ -43,7 +43,6 @@ class PostsEntrepriseViewModel(
     }
 }
 
-
 data class PostsEntrepriseUiState(
     val postList: Ressources<List<CompteEntreprise.PostVacant>> = Ressources.Loading(),
 )

@@ -13,7 +13,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 
 
-const val ENTREPRISE_COLLECTION_REF = "ComptesEntreprise"
 const val POSTS_COLLECTION_REF = "PostsVacant"
 
 class PostsEntrepriseRepository {
@@ -23,9 +22,8 @@ class PostsEntrepriseRepository {
 
     fun getUserId(): String = Firebase.auth.currentUser?.uid.orEmpty()
 
-    private val applicationsRef: CollectionReference = Firebase
+    private val postsRef: CollectionReference = Firebase
         .firestore.collection(POSTS_COLLECTION_REF)
-
 
 
     fun getEntreprisePosts(entrepriseId:String): Flow<Ressources<List
@@ -34,7 +32,7 @@ class PostsEntrepriseRepository {
         var snapshotStateListener : ListenerRegistration? = null
 
         try {
-            snapshotStateListener = applicationsRef
+            snapshotStateListener = postsRef
                 .orderBy("dateCreationPost")
                 .whereEqualTo("entrepriseId", entrepriseId)
                 .addSnapshotListener{ snapshot, e ->
@@ -63,7 +61,7 @@ class PostsEntrepriseRepository {
         onError: (Throwable) -> Unit,
         onSuccess: (CompteEntreprise.PostVacant?) -> Unit
     ){
-        applicationsRef
+        postsRef
             .document(postId)
             .get()
             .addOnSuccessListener {
@@ -90,7 +88,7 @@ class PostsEntrepriseRepository {
         actif: Boolean,
         onComplete: (Boolean) -> Unit
     ){
-        val documentId = applicationsRef.document().id
+        val documentId = postsRef.document().id
         val post = CompteEntreprise.PostVacant(
             documentId,
             postName,
@@ -108,7 +106,7 @@ class PostsEntrepriseRepository {
         )
 
 
-        applicationsRef
+        postsRef
             .document(documentId)
             .set(post)
             .addOnCompleteListener {result ->
@@ -117,7 +115,7 @@ class PostsEntrepriseRepository {
     }
 
     fun deletePost(postId: String, onComplete: (Boolean) -> Unit){
-        applicationsRef.document(postId)
+        postsRef.document(postId)
             .delete()
             .addOnCompleteListener {
                 onComplete.invoke(it.isSuccessful)
@@ -157,7 +155,7 @@ class PostsEntrepriseRepository {
             "actif" to actif,
         )
 
-        applicationsRef.document(entrepriseId)
+        postsRef.document(entrepriseId)
             .update(updateData)
             .addOnCompleteListener {
                 onResult(it.isSuccessful)

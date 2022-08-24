@@ -119,7 +119,11 @@ fun SeekerCardComponent(
                         shape = RoundedCornerShape(20.dp),
                         colors = ButtonDefaults.outlinedButtonColors(contentColor = Color(0xFF2972FE))
                     ) {
-                        Text(text = stringResource(id = R.string.seeProfile), color = Color(0xFF2972FE))
+                        Text(
+                            text = stringResource(id = R.string.seeProfile),
+                            color = Color(0xFF2972FE),
+                            style = typography.body2
+                        )
                     }
                 }
             }
