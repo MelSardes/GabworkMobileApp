@@ -184,7 +184,7 @@ fun BottomNavigationBar(navController: NavController) {
     BottomNavigation(
         backgroundColor = BlueVariant,
         contentColor = Color.White,
-        modifier = Modifier.clip(RoundedCornerShape(bottomEnd = 10.dp, bottomStart = 10.dp))
+        modifier = Modifier.clip(RoundedCornerShape(topEnd = 10.dp, topStart = 10.dp))
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
