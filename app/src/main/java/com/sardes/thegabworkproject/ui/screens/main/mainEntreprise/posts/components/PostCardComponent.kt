@@ -17,7 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.sardes.thegabworkproject.models.CompteEntreprise
+import com.sardes.thegabworkproject.data.models.CompteEntreprise
 import com.sardes.thegabworkproject.ui.theme.NewBlue
 import com.sardes.thegabworkproject.ui.theme.SoftBlue
 

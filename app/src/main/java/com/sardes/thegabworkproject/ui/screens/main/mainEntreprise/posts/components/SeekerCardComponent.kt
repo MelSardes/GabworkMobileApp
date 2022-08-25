@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.sardes.thegabworkproject.R
-import com.sardes.thegabworkproject.models.CompteDemandeur
+import com.sardes.thegabworkproject.data.models.CompteDemandeur
 
 @SuppressLint("MaterialDesignInsteadOrbitDesign")
 @Composable
@@ -138,5 +138,6 @@ private fun PreviewSeekerCardComponent() {
         nom = "SARDES",
         prenom = "Mel",
         occupation = "Developpeur Android"
-    ))
+    )
+    )
 }

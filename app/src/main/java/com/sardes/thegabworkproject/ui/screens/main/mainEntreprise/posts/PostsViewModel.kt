@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sardes.thegabworkproject.models.CompteEntreprise
+import com.sardes.thegabworkproject.data.models.CompteEntreprise
 import com.sardes.thegabworkproject.repository.Ressources
 import com.sardes.thegabworkproject.repository.main.entreprise.PostsEntrepriseRepository
 import kotlinx.coroutines.launch

@@ -136,6 +136,8 @@ dependencies {
     implementation "kiwi.orbit.compose:illustrations:$orbitVersion"
 
     implementation "androidx.constraintlayout:constraintlayout-compose:1.0.1"
+
+    implementation "androidx.palette:palette:1.0.0"
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -21,8 +21,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sardes.thegabworkproject.R
-import com.sardes.thegabworkproject.models.CompteDemandeur
-import com.sardes.thegabworkproject.models.CompteEntreprise
+import com.sardes.thegabworkproject.data.models.CompteDemandeur
+import com.sardes.thegabworkproject.data.models.CompteEntreprise
 import com.sardes.thegabworkproject.repository.Ressources
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.PostsEntrepriseUiState
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.PostsEntrepriseViewModel

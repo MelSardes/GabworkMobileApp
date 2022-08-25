@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.sardes.thegabworkproject.R
-import com.sardes.thegabworkproject.models.CompteDemandeur
+import com.sardes.thegabworkproject.data.models.CompteDemandeur
 import com.sardes.thegabworkproject.repository.Ressources
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.components.PostCardComponent
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.components.SeekerCardComponent

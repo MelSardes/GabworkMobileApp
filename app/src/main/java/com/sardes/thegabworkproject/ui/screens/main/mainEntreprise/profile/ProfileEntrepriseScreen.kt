@@ -24,7 +24,6 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.sardes.thegabworkproject.R
-import com.sardes.thegabworkproject.ui.theme.BlueFlag
 import kotlinx.coroutines.launch
 
 @SuppressLint("MaterialDesignInsteadOrbitDesign", "UnusedMaterialScaffoldPaddingParameter")
@@ -159,15 +158,17 @@ fun Body() {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White),
+            .background(Color(0xFFFFFFFF))
+            .padding(20.dp),
+        verticalArrangement = Arrangement.SpaceAround
     ) {
         item {
             Box (
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(300.dp)
-                    .padding(20.dp)
-                    .clip(RoundedCornerShape(30.dp))
+                    .padding(top = 20.dp)
+                    .clip(RoundedCornerShape(15.dp))
             ){
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
@@ -195,26 +196,29 @@ fun Body() {
             }
 
             Card(
+                elevation = (15.dp),
+                backgroundColor = Color.White,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(100.dp)
-                    .background(BlueFlag)
-                    .clip(
-                        RoundedCornerShape(30.dp)
-                    ),
-                elevation = (15.dp)
+                    .clip(RoundedCornerShape(30.dp)),
             ){
-                Row(modifier = Modifier.fillMaxSize()){
+                Row(
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalArrangement = Arrangement.SpaceAround
+                ){
                     Column {
-                        Text(text = "27", style = MaterialTheme.typography.body2.copy(fontWeight = FontWeight.Bold))
+                        Text(text = "27", style = MaterialTheme.typography.body1.copy(fontWeight = FontWeight.Bold))
+                        Spacer(modifier = Modifier.height(10.dp))
                         Text(text = "Posts \n publiés", style = MaterialTheme.typography.body2)
                     }
                     Column {
-                        Text(text = "19", style = MaterialTheme.typography.body2.copy(fontWeight = FontWeight.Bold))
+                        Text(text = "19", style = MaterialTheme.typography.body1.copy(fontWeight = FontWeight.Bold))
+                        Spacer(modifier = Modifier.height(10.dp))
                         Text(text = "Personnes \n recrutées", style = MaterialTheme.typography.body2)
                     }
                     Column {
-                        Text(text = "7", style = MaterialTheme.typography.body2.copy(fontWeight = FontWeight.Bold))
+                        Text(text = "7", style = MaterialTheme.typography.body1.copy(fontWeight = FontWeight.Bold))
+                        Spacer(modifier = Modifier.height(10.dp))
                         Text(text = "Étudiants \n recrutés", style = MaterialTheme.typography.body2)
                     }
                 }
@@ -222,57 +226,40 @@ fun Body() {
         }
 
         item{
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp)
-                    .background(BlueFlag)
-                    .clip(
-                        RoundedCornerShape(30.dp)
-                    )
-            ) {
-                Column(
-                ) {
-                    Text("A propos")
-                    Text(""+LoremIpsum(50))
-                }
-            }
-        }
-
-        item {
-            Column {
-                Text("Site web")
-                Text("https://www.sardes-corp.com")
-            }
-
+            InfoCardComponent(title = "A propos", infos = ""+ LoremIpsum(50).toString())
         }
         item {
-            Column {
-                Text("Ville")
-                Text("Sardesville")
-            }
-
+            InfoCardComponent(title = "Site web", infos = "https://www.sardes-corp.com")
         }
         item {
-            Column {
-                Text("Secteur d'activité")
-                Text("Nouvelles technologies")
-            }
-
+            InfoCardComponent(title = "Ville", infos = "Sardesville")
         }
         item {
-            Column {
-                Text("Existe depuis")
-                Text("2042")
-            }
-
+            InfoCardComponent(title = "Secteur d'activité", infos = "Nouvelles technologies")
         }
         item {
-            Column {
-                Text("Adresse")
-                Text("99 Boulevard Sardes, Sardesville")
-            }
+            InfoCardComponent(title = "Existe depuis", infos = "2042")
+        }
+        item {
+            InfoCardComponent(title = "Adresse", infos = "99 Boulevard Sardes, Sardesville")
+        }
+    }
+}
 
+@SuppressLint("MaterialDesignInsteadOrbitDesign")
+@Composable
+private fun InfoCardComponent(title: String, infos: String) {
+    Card(
+        elevation = 5.dp,
+        backgroundColor = Color.White,
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(15.dp))
+            .padding(10.dp)
+    ) {
+        Column(verticalArrangement = Arrangement.SpaceBetween) {
+            Text(title, style = MaterialTheme.typography.body1.copy(fontWeight = FontWeight.Bold))
+            Text(infos, style = MaterialTheme.typography.body2)
         }
     }
 }

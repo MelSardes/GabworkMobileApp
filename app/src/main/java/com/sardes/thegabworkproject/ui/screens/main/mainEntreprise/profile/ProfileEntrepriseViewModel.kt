@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.google.firebase.Timestamp
-import com.sardes.thegabworkproject.models.CompteEntreprise
+import com.sardes.thegabworkproject.data.models.CompteEntreprise
 import com.sardes.thegabworkproject.repository.main.entreprise.ProfileEntreprisseRepository
 
 class ProfileEntrepriseViewModel(

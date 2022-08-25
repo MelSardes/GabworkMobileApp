@@ -13,7 +13,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sardes.thegabworkproject.R
-import com.sardes.thegabworkproject.models.CompteDemandeur
+import com.sardes.thegabworkproject.data.models.CompteDemandeur
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.components.CustomTopAppBar
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.components.SeekerCardComponent
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.components.SoloPostCardComponent
@@ -56,7 +56,8 @@ fun PostApplicants(
                             prenom = "Mel",
                             occupation = "Developpeur blockchain",
                             urlPhotoProfil = "${R.drawable.black_businessman_in_blue_suit_waving_hello}"
-                    ))
+                    )
+                    )
                 }
                 item {
                     SeekerCardComponent(
@@ -65,7 +66,8 @@ fun PostApplicants(
                             prenom = "Loïck",
                             occupation = "Developpeur android",
                             urlPhotoProfil = "${R.drawable.business_3d}"
-                    ))
+                    )
+                    )
                 }
             }
         }

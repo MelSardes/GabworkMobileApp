@@ -6,7 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseUser
-import com.sardes.thegabworkproject.models.Competences_Profil_Etudiant
+import com.sardes.thegabworkproject.data.models.Competences_Profil_Etudiant
 import com.sardes.thegabworkproject.repository.SkillsStorageRepository
 
 class SkillViewModel (

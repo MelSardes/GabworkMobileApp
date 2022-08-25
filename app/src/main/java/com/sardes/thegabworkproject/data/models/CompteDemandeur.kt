@@ -1,4 +1,4 @@
-package com.sardes.thegabworkproject.models
+package com.sardes.thegabworkproject.data.models
 
 import com.google.firebase.Timestamp
 

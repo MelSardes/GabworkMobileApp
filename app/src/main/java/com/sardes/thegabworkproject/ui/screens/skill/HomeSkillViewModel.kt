@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sardes.thegabworkproject.models.Competences_Profil_Etudiant
+import com.sardes.thegabworkproject.data.models.Competences_Profil_Etudiant
 import com.sardes.thegabworkproject.repository.Ressources
 import com.sardes.thegabworkproject.repository.SkillsStorageRepository
 import kotlinx.coroutines.launch
