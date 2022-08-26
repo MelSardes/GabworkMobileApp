@@ -1,290 +1,360 @@
 package com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.profile
 
 import android.annotation.SuppressLint
+import androidx.annotation.DrawableRes
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Gray
+import androidx.compose.ui.graphics.Color.Companion.LightGray
+import androidx.compose.ui.graphics.Color.Companion.Transparent
+import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.google.accompanist.insets.LocalWindowInsets
 import com.sardes.thegabworkproject.R
-import kotlinx.coroutines.launch
+import com.sardes.thegabworkproject.ui.theme.AppBarCollapsedHeight
+import com.sardes.thegabworkproject.ui.theme.AppBarExpendedHeight
+import com.sardes.thegabworkproject.ui.theme.BlueFlag
+import kotlin.math.max
+import kotlin.math.min
 
-@SuppressLint("MaterialDesignInsteadOrbitDesign", "UnusedMaterialScaffoldPaddingParameter")
+@SuppressLint("MaterialDesignInsteadOrbitDesign")
 @Composable
 fun ProfileEntrepriseScreen(
-    profileViewModel: ProfileEntrepriseViewModel? = ProfileEntrepriseViewModel()
+    profileViewModel: ProfileEntrepriseViewModel? = ProfileEntrepriseViewModel(),
 ) {
-    val informationsUiState = profileViewModel?.informationsUiState ?: InformationsUiState()
+    val scrollState = rememberLazyListState()
 
-    LaunchedEffect(key1 = Unit){
+    val profileUiState = profileViewModel?.informationsUiState ?: InformationsUiState()
+
+    LaunchedEffect(Unit){
         profileViewModel?.loadInformations()
     }
 
-
-    // create a scaffold state, set it to close by default
-    val scaffoldState = rememberScaffoldState(rememberDrawerState(DrawerValue.Closed))
-
-    // Create a coroutine scope. Opening of Drawer
-    // and snackbar should happen in background
-    // thread without blocking main thread
-    val coroutineScope = rememberCoroutineScope()
-
-    // Scaffold Composable
-    Scaffold(
-
-        // pass the scaffold state
-        scaffoldState = scaffoldState,
-
-        // pass the topbar we created
-/*
-        topBar = {
-            TopBar(
-                // When menu is clicked open the
-                // drawer in coroutine scope
-                onMenuClicked = {
-                    coroutineScope.launch {
-                        // to close use -> scaffoldState.drawerState.close()
-                        scaffoldState.drawerState.open()
-                    }
-                })
-        },
-*/
-
-        // pass the bottomBar we created
-//        bottomBar = { BottomBar() },
-
-        // Pass the body in
-        // content parameter
-        content = {
-            Body()
-        },
-
-        // pass the drawer
-        drawerContent = {
-            Drawer()
-        },
-
-        floatingActionButton = {
-            // Create a floating action button in
-            // floatingActionButton parameter of scaffold
-            FloatingActionButton(
-                onClick = {
-                    // When clicked open Snackbar
-                    coroutineScope.launch {
-                        when (scaffoldState.snackbarHostState.showSnackbar(
-                            // Message In the snackbar
-                            message = "Snack Bar",
-                            actionLabel = "Dismiss"
-                        )) {
-                            SnackbarResult.Dismissed -> {
-                                // do something when
-                                // snack bar is dismissed
-                            }
-
-                            SnackbarResult.ActionPerformed -> {
-                                // when it appears
-                            }
-
-                        }
-                    }
-                }) {
-                // Simple Text inside FAB
-                Text(text = "Modifier les informations")
-            }
-        }
-    )
+    Box {
+        Content(scrollState, profileUiState)
+        ParallaxToolbar(scrollState, profileUiState)
+    }
 }
 
-// A function which will receive a
-// callback to trigger to opening the drawer
-@SuppressLint("MaterialDesignInsteadOrbitDesign")
+
+@SuppressLint("FrequentlyChangedStateReadInComposition", "MaterialDesignInsteadOrbitDesign")
 @Composable
-fun TopBar(onMenuClicked: () -> Unit) {
-    // TopAppBar Composable
+fun ParallaxToolbar(
+    scrollState: LazyListState,
+    profileUiState: InformationsUiState,
+) {
+    val imageHeight = AppBarExpendedHeight - AppBarCollapsedHeight
+
+    val maxOffset =
+        with(LocalDensity.current) { imageHeight.roundToPx() } - LocalWindowInsets.current.systemBars.layoutInsets.top
+
+    val offset = min(scrollState.firstVisibleItemScrollOffset, maxOffset)
+
+    val offsetProgress = max(0f, offset * 3f - 2f * maxOffset) / maxOffset
+
     TopAppBar(
-        // Provide Title
-        title = {
-            Text(text = "Scaffold||GFG", color = Color.White)
-        },
-        // Provide the navigation Icon ( Icon on the left to toggle drawer)
-        navigationIcon = {
-            IconButton(onClick = { onMenuClicked }) {
-                Icon(
-                    imageVector = Icons.Default.Menu,
-                    contentDescription = "Menu",
-
-                    // When clicked trigger onClick
-                    // Callback to trigger drawer open
-                    tint = Color.White
-                )
-            }
-        },
-        // background color of topAppBar
-        backgroundColor = Color(0xFF0F9D58)
-    )
-}
-
-@SuppressLint("MaterialDesignInsteadOrbitDesign")
-@Composable
-fun BottomBar() {
-    // BottomAppBar Composable
-    BottomAppBar(
-        backgroundColor = Color(0xFF0F9D58)
-    ) {
-        Text(text = "Bottom App Bar", color = Color.White)
-    }
-}
-
-@SuppressLint("MaterialDesignInsteadOrbitDesign")
-@Composable
-fun Body() {
-    LazyColumn(
+        contentPadding = PaddingValues(),
+        backgroundColor = White,
         modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFFFFFFFF))
-            .padding(20.dp),
-        verticalArrangement = Arrangement.SpaceAround
+            .height(AppBarExpendedHeight)
+            .offset { IntOffset(x = 0, y = -offset) },
+        elevation = if (offset == maxOffset) 4.dp else 0.dp
     ) {
-        item {
-            Box (
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(300.dp)
-                    .padding(top = 20.dp)
-                    .clip(RoundedCornerShape(15.dp))
-            ){
-                AsyncImage(
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(R.drawable.perroquet)
-                        .crossfade(true)
-                        .placeholder(R.drawable.ic_account_100)
-                        .build(),
-                    contentDescription = null,
-                    modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Crop
+        Column {
+            Box(
+                Modifier
+                    .height(imageHeight)
+                    .graphicsLayer {
+                        alpha = 1f - offsetProgress
+                    }
+            ) {
+
+                if(profileUiState.currentUserEntreprise!!.urlLogoEntreprise != null) {
+                    AsyncImage(
+                        model = ImageRequest
+                            .Builder(LocalContext.current)
+                            .data("${profileUiState.currentUserEntreprise.urlLogoEntreprise}")
+                            .crossfade(true)
+                            .crossfade(1000)
+                            .placeholder(R.drawable.ic_image)
+                            .error(R.drawable.ic_broken_image)
+                            .build(),
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
+                else {
+                    Image(
+                        painter = painterResource(id = R.drawable.perroquet),
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(
+                            Brush.verticalGradient(
+                                colorStops = arrayOf(
+                                    Pair(0.5f, Transparent),
+                                    Pair(1f, White)
+                                )
+                            )
+                        )
                 )
 
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .align(Alignment.BottomCenter)
-                        .background(color = Color.Black.copy(alpha = 0.2f)),
-                    verticalArrangement = Arrangement.Bottom,
-                    horizontalAlignment = Alignment.CenterHorizontally,
-
-                ){
-                    Text(text = "SARDES CORP", color = Color.White, style = MaterialTheme.typography.h6)
-                    Text(text = "Entreprise de technologies", color = Color.White, style = MaterialTheme.typography.body1)
-                }
-            }
-
-            Card(
-                elevation = (15.dp),
-                backgroundColor = Color.White,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(30.dp)),
-            ){
                 Row(
-                    modifier = Modifier.fillMaxSize(),
-                    horizontalArrangement = Arrangement.SpaceAround
-                ){
-                    Column {
-                        Text(text = "27", style = MaterialTheme.typography.body1.copy(fontWeight = FontWeight.Bold))
-                        Spacer(modifier = Modifier.height(10.dp))
-                        Text(text = "Posts \n publiés", style = MaterialTheme.typography.body2)
-                    }
-                    Column {
-                        Text(text = "19", style = MaterialTheme.typography.body1.copy(fontWeight = FontWeight.Bold))
-                        Spacer(modifier = Modifier.height(10.dp))
-                        Text(text = "Personnes \n recrutées", style = MaterialTheme.typography.body2)
-                    }
-                    Column {
-                        Text(text = "7", style = MaterialTheme.typography.body1.copy(fontWeight = FontWeight.Bold))
-                        Spacer(modifier = Modifier.height(10.dp))
-                        Text(text = "Étudiants \n recrutés", style = MaterialTheme.typography.body2)
-                    }
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                    verticalAlignment = Alignment.Bottom
+                ) {
+                    Text(
+                        "${profileUiState.currentUserEntreprise?.secteurDActivite}",
+                        fontWeight = FontWeight.Medium,
+                        color = BlueFlag,
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(10.dp))
+                            .background(LightGray)
+                            .padding(vertical = 6.dp, horizontal = 16.dp)
+                    )
                 }
             }
-        }
-
-        item{
-            InfoCardComponent(title = "A propos", infos = ""+ LoremIpsum(50).toString())
-        }
-        item {
-            InfoCardComponent(title = "Site web", infos = "https://www.sardes-corp.com")
-        }
-        item {
-            InfoCardComponent(title = "Ville", infos = "Sardesville")
-        }
-        item {
-            InfoCardComponent(title = "Secteur d'activité", infos = "Nouvelles technologies")
-        }
-        item {
-            InfoCardComponent(title = "Existe depuis", infos = "2042")
-        }
-        item {
-            InfoCardComponent(title = "Adresse", infos = "99 Boulevard Sardes, Sardesville")
+            Column(
+                Modifier
+                    .fillMaxWidth()
+                    .height(AppBarCollapsedHeight),
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    "${profileUiState.currentUserEntreprise?.nomEntreprise}",
+                    style = typography.h5.copy(fontWeight = FontWeight.Bold),
+                    color = BlueFlag,
+                    modifier = Modifier
+                        .padding(horizontal = (16 + 28 * offsetProgress).dp)
+                        .scale(1f - 0.25f * offsetProgress)
+                )
+            }
         }
     }
-}
 
-@SuppressLint("MaterialDesignInsteadOrbitDesign")
-@Composable
-private fun InfoCardComponent(title: String, infos: String) {
-    Card(
-        elevation = 5.dp,
-        backgroundColor = Color.White,
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(15.dp))
-            .padding(10.dp)
+            .statusBarsPadding()
+            .height(AppBarCollapsedHeight)
+            .padding(horizontal = 16.dp)
     ) {
-        Column(verticalArrangement = Arrangement.SpaceBetween) {
-            Text(title, style = MaterialTheme.typography.body1.copy(fontWeight = FontWeight.Bold))
-            Text(infos, style = MaterialTheme.typography.body2)
-        }
+        CircularButton(R.drawable.ic_arrow_back)
+        CircularButton(R.drawable.ic_more_vert)
     }
 }
-
 
 @SuppressLint("MaterialDesignInsteadOrbitDesign")
 @Composable
-fun Drawer() {
-    // Column Composable
-    Column(
+fun CircularButton(
+    @DrawableRes iconResouce: Int,
+    color: Color = Gray,
+    elevation: ButtonElevation? = ButtonDefaults.elevation(),
+    onClick: () -> Unit = {},
+) {
+    Button(
+        onClick = onClick,
+        contentPadding = PaddingValues(),
+        shape = RoundedCornerShape(10.dp),
+        colors = ButtonDefaults.buttonColors(backgroundColor = White, contentColor = color),
+        elevation = elevation,
         modifier = Modifier
-            .background(Color.White)
-            .fillMaxSize()
+            .width(38.dp)
+            .height(38.dp)
     ) {
-        // Repeat is a loop which
-        // takes count as argument
-        repeat(5) { item ->
-            Text(text = "Item number $item", modifier = Modifier.padding(8.dp), color = Color.Black)
+        Icon(painterResource(id = iconResouce), null)
+    }
+}
+
+@Composable
+fun Content(
+    scrollState: LazyListState,
+    profileUiState: InformationsUiState,
+) {
+    LazyColumn(
+        contentPadding = PaddingValues(top = AppBarExpendedHeight),
+        state = scrollState
+    ) {
+        item {
+            Description(profileUiState)
+            BasicInfo(profileUiState)
+            Address(profileUiState)
         }
     }
 }
 
-
-@Preview(device = "id:TECNO POP3")
+@SuppressLint("MaterialDesignInsteadOrbitDesign")
 @Composable
-fun PreviewProfileEntrepriseScreen() {
+fun Address(profileUiState: InformationsUiState) {
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.SpaceAround,
+        horizontalAlignment = Alignment.Start
+    ) {
+        Text(
+            text = "Adresse de bureau",
+            fontWeight = FontWeight.Bold,
+            color = Gray,
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 16.dp),
+        )
+        Text(
+            text = "${profileUiState.currentUserEntreprise?.adressEntreprise}",
+            fontWeight = FontWeight.Medium,
+            modifier = Modifier.padding(horizontal = 16.dp),
+        )
+    }
+}
+
+@SuppressLint("MaterialDesignInsteadOrbitDesign")
+@Composable
+fun Description(profileUiState: InformationsUiState) {
+    Text(
+        text = "${profileUiState.currentUserEntreprise?.descriptionEntreprise}",
+        style = typography.body1,
+        modifier = Modifier.padding(horizontal = 16.dp, vertical = 16.dp),
+    )
+}
+
+@Composable
+fun BasicInfo(profileUiState: InformationsUiState) {
+    Column {
+        Row(
+            horizontalArrangement = Arrangement.SpaceAround,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp)
+        ) {
+            InfoColumn(R.drawable.ic_post, "27", "posts")
+            InfoColumn(R.drawable.ic_people, "30", "recrutements")
+        }
+        Spacer(modifier = Modifier.height(5.dp))
+        Row(
+            horizontalArrangement = Arrangement.SpaceAround,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp)
+
+        ) {
+            InfoColumn(R.drawable.ic_student, "8", "étudiants")
+            InfoColumn(R.drawable.ic_employees, "Entre 1 et 50", "employés")
+        }
+        Spacer(modifier = Modifier.height(5.dp))
+        Row(
+            horizontalArrangement = Arrangement.SpaceAround,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp)
+        ) {
+            InfoColumn(
+                R.drawable.ic_web,
+                "Visitez",
+                "${profileUiState.currentUserEntreprise?.siteWebEntreprise}"
+            )
+            InfoColumn(
+                R.drawable.ic_industry,
+                "Oeuvre dans le/la/les",
+                "${profileUiState.currentUserEntreprise?.secteurDActivite}"
+            )
+        }
+        Spacer(modifier = Modifier.height(5.dp))
+        Row(
+            horizontalArrangement = Arrangement.SpaceAround,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp)
+        ) {
+            InfoColumn(
+                R.drawable.ic_employees,
+                "Existe depuis",
+                "2042"
+            )
+            InfoColumn(
+                kiwi.orbit.compose.ui.R.drawable.ic_orbit_city,
+                "Rendez vous à",
+                "${profileUiState.currentUserEntreprise?.ville}"
+            )
+        }
+        Spacer(modifier = Modifier.height(5.dp))
+        Row(
+            horizontalArrangement = Arrangement.SpaceAround,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp)
+        ) {
+            InfoColumn(
+                R.drawable.ic_email,
+                "Contactez",
+                "${profileUiState.currentUserEntreprise?.emailEntreprise}"
+            )
+            InfoColumn(
+                kiwi.orbit.compose.ui.R.drawable.ic_orbit_phone,
+                "Appelez le",
+                "${profileUiState.currentUserEntreprise?.telephone}"
+            )
+        }
+    }
+}
+
+@SuppressLint("MaterialDesignInsteadOrbitDesign")
+@Composable
+fun InfoColumn(@DrawableRes iconResouce: Int, text1: String, text2: String) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Icon(
+            painter = painterResource(id = iconResouce),
+            contentDescription = null,
+            tint = BlueFlag,
+            modifier = Modifier.height(24.dp)
+        )
+        Text(text = text1, fontWeight = FontWeight.Bold, color = Gray)
+        Text(text = text2, fontWeight = FontWeight.SemiBold)
+    }
+}
+
+@Preview(showSystemUi = true, device = "id:TECNO POP3")
+@Preview(showSystemUi = true, device = "spec:width=1280dp,height=800dp,dpi=480")
+@Preview(showSystemUi = true, device = "id:pixel")
+@Preview(showSystemUi = true, device = "id:pixel_3")
+@Composable
+fun ScreenConcept() {
     ProfileEntrepriseScreen()
 }

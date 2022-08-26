@@ -15,7 +15,7 @@ class ProfileEntrepriseViewModel(
     var informationsUiState by mutableStateOf(InformationsUiState())
         private set
 
-    private val hasUser: Boolean
+    val hasUser: Boolean
         get() = repository.hasUser()
 
     private val userId: String
@@ -75,13 +75,13 @@ class ProfileEntrepriseViewModel(
         }
     }
 
-    fun getInformations(entrepriseId: String){
+    private fun getInformations(entrepriseId: String){
         repository.getEntrepriseInformations(
             entrepriseId = entrepriseId,
             onError = {}
         ){
             informationsUiState = informationsUiState.copy(currentUserEntreprise = it)
-            informationsUiState.currentUserEntreprise?.let{it1 -> setEditFields(it1)}
+//            informationsUiState.currentUserEntreprise?.let{it1 -> setEditFields(it1)}
         }
     }
 
@@ -118,6 +118,7 @@ data class InformationsUiState(
     val urlLogoEntreprise: String? = "",
     val dateCreationCompte: Timestamp? = null,
     val dateCreationEntreprise: Timestamp? = null,
+
     val currentUserEntreprise: CompteEntreprise? = null,
 
     val updatedAddedInformations: Boolean = false,

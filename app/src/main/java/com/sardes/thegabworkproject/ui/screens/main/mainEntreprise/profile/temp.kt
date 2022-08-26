@@ -1,4 +1,6 @@
+/*
 package com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.profile
+
 
 import android.annotation.SuppressLint
 import androidx.annotation.DrawableRes
@@ -10,6 +12,7 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,11 +31,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.google.accompanist.insets.LocalWindowInsets
 import com.sardes.thegabworkproject.R
 import com.sardes.thegabworkproject.data.models.CompteEntreprise
@@ -42,10 +43,9 @@ import com.sardes.thegabworkproject.ui.theme.BlueFlag
 import kotlin.math.max
 import kotlin.math.min
 
-@SuppressLint("MaterialDesignInsteadOrbitDesign")
 @Composable
-fun ProfileEntrepriseConceptScreen(
-    modifier: Modifier = Modifier, entreprise: CompteEntreprise
+fun ProfileEntrepriseScreen(
+    modifier: Modifier = Modifier, entreprise: CompteEntreprise,
 ) {
     val scrollState = rememberLazyListState()
 
@@ -54,8 +54,6 @@ fun ProfileEntrepriseConceptScreen(
         ParallaxToolbar(entreprise, scrollState)
     }
 }
-
-
 
 
 @SuppressLint("FrequentlyChangedStateReadInComposition", "MaterialDesignInsteadOrbitDesign")
@@ -117,6 +115,7 @@ fun ParallaxToolbar(entreprise: CompteEntreprise, scrollState: LazyListState) {
                     Text(
                         entreprise.secteurDActivite,
                         fontWeight = FontWeight.Medium,
+                        color = BlueFlag,
                         modifier = Modifier
                             .clip(RoundedCornerShape(10.dp))
                             .background(LightGray)
@@ -132,13 +131,12 @@ fun ParallaxToolbar(entreprise: CompteEntreprise, scrollState: LazyListState) {
             ) {
                 Text(
                     entreprise.nomEntreprise,
-                    fontSize = 26.sp,
-                    fontWeight = FontWeight.Bold,
+                    style = typography.h5.copy(fontWeight = FontWeight.Bold),
+                    color = BlueFlag,
                     modifier = Modifier
                         .padding(horizontal = (16 + 28 * offsetProgress).dp)
                         .scale(1f - 0.25f * offsetProgress)
                 )
-
             }
         }
     }
@@ -163,7 +161,7 @@ fun CircularButton(
     @DrawableRes iconResouce: Int,
     color: Color = Gray,
     elevation: ButtonElevation? = ButtonDefaults.elevation(),
-    onClick: () -> Unit = {}
+    onClick: () -> Unit = {},
 ) {
     Button(
         onClick = onClick,
@@ -197,14 +195,23 @@ fun Content(entreprise: CompteEntreprise, scrollState: LazyListState) {
 @SuppressLint("MaterialDesignInsteadOrbitDesign")
 @Composable
 fun Address(entreprise: CompteEntreprise) {
-    Text(
-        text = entreprise.adressEntreprise,
-        fontWeight = FontWeight.Medium,
-        modifier = Modifier.padding(horizontal = 16.dp, vertical = 16.dp),
-        maxLines = 3,
-        softWrap = true,
-        overflow = TextOverflow.Ellipsis
-    )
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.SpaceAround,
+        horizontalAlignment = Alignment.Start
+    ) {
+        Text(
+            text = "Adresse de bureau",
+            fontWeight = FontWeight.Bold,
+            color = Gray,
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 16.dp),
+        )
+        Text(
+            text = entreprise.adressEntreprise,
+            fontWeight = FontWeight.Medium,
+            modifier = Modifier.padding(horizontal = 16.dp),
+        )
+    }
 }
 
 @Composable
@@ -243,13 +250,13 @@ fun Reviews(entreprise: CompteEntreprise) {
                 Column {
                     Text("27", color = Black)
                     Text("Posts publiés", color = DarkGray)
-
                 }
+
                 Column {
                     Text("17", color = Black)
                     Text("personnes rescrutées", color = DarkGray)
-
                 }
+
                 Column {
                     Text("8", color = Black)
                     Text("Stagiaires rescrutées", color = DarkGray)
@@ -295,6 +302,7 @@ fun ShoppingListButton() {
 
 }
 
+*/
 /*
 @Composable
 fun IngredientsList(entreprise: CompteEntreprise) {
@@ -324,9 +332,11 @@ fun <T> EasyGrid(nColumns: Int, items: List<T>, content: @Composable (T) -> Unit
         }
     }
 }
+*//*
+
+
+
 */
-
-
 /*
 @SuppressLint("MaterialDesignInsteadOrbitDesign")
 @Composable
@@ -359,7 +369,8 @@ fun IngredientCard(
         Text(text = subtitle, color = DarkGray, modifier = Modifier.width(100.dp), fontSize = 14.sp)
     }
 }
-*/
+*//*
+
 
 @Composable
 fun IngredientsHeader() {
@@ -398,6 +409,7 @@ fun TabButton(text: String, active: Boolean, modifier: Modifier) {
     }
 }
 
+*/
 /*
 @SuppressLint("MaterialDesignInsteadOrbitDesign")
 @Composable
@@ -418,18 +430,16 @@ fun ServingCalculator() {
         CircularButton(iconResouce = R.drawable.ic_plus, elevation = null, color = BlueFlag) { value++ }
     }
 }
-*/
+*//*
+
 
 @SuppressLint("MaterialDesignInsteadOrbitDesign")
 @Composable
 fun Description(entreprise: CompteEntreprise) {
     Text(
         text = entreprise.descriptionEntreprise,
-        fontWeight = FontWeight.Medium,
+        style = typography.body1,
         modifier = Modifier.padding(horizontal = 16.dp, vertical = 16.dp),
-        maxLines = 3,
-        softWrap = true,
-        overflow = TextOverflow.Ellipsis
     )
 }
 
@@ -437,7 +447,8 @@ fun Description(entreprise: CompteEntreprise) {
 fun BasicInfo(entreprise: CompteEntreprise) {
     Column {
         Row(
-            horizontalArrangement = Arrangement.SpaceEvenly,
+            horizontalArrangement = Arrangement.SpaceAround,
+            verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp)
@@ -445,25 +456,62 @@ fun BasicInfo(entreprise: CompteEntreprise) {
             InfoColumn(R.drawable.ic_post, "27", "posts")
             InfoColumn(R.drawable.ic_people, "30", "recrutements")
         }
+        Spacer(modifier = Modifier.height(5.dp))
         Row(
-            horizontalArrangement = Arrangement.SpaceEvenly,
+            horizontalArrangement = Arrangement.SpaceAround,
+            verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp)
 
         ) {
             InfoColumn(R.drawable.ic_student, "8", "étudiants")
-            InfoColumn(R.drawable.ic_web, entreprise.urlLogoEntreprise!!, "")
+            InfoColumn(R.drawable.ic_employees, "Entre 1 et 50", "employés")
         }
+        Spacer(modifier = Modifier.height(5.dp))
         Row(
-            horizontalArrangement = Arrangement.SpaceEvenly,
+            horizontalArrangement = Arrangement.SpaceAround,
+            verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp)
-
         ) {
-            InfoColumn(R.drawable.ic_industry, entreprise.secteurDActivite, "")
-            InfoColumn(R.drawable.ic_employees, "1-50 employés", "")
+            InfoColumn(R.drawable.ic_web, "Visitez", entreprise.siteWebEntreprise!!)
+            InfoColumn(R.drawable.ic_industry, "Oeuvre dans le/la/les", entreprise.secteurDActivite)
+        }
+        Spacer(modifier = Modifier.height(5.dp))
+        Row(
+            horizontalArrangement = Arrangement.SpaceAround,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp)
+        ) {
+            InfoColumn(
+                R.drawable.ic_employees,
+                "Existe depuis",
+                "2042"
+            )
+            InfoColumn(
+                kiwi.orbit.compose.ui.R.drawable.ic_orbit_city,
+                "Rendez vous à",
+                entreprise.ville
+            )
+        }
+        Spacer(modifier = Modifier.height(5.dp))
+        Row(
+            horizontalArrangement = Arrangement.SpaceAround,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp)
+        ) {
+            InfoColumn(R.drawable.ic_email, "Contactez", entreprise.emailEntreprise)
+            InfoColumn(
+                kiwi.orbit.compose.ui.R.drawable.ic_orbit_phone,
+                "Appelez le",
+                entreprise.telephone
+            )
         }
     }
 }
@@ -478,11 +526,10 @@ fun InfoColumn(@DrawableRes iconResouce: Int, text1: String, text2: String) {
             tint = BlueFlag,
             modifier = Modifier.height(24.dp)
         )
-        Text(text = text1, fontWeight = FontWeight.Bold)
-        Text(text = text2, fontWeight = FontWeight.Bold)
+        Text(text = text1, fontWeight = FontWeight.Bold, color = Gray)
+        Text(text = text2, fontWeight = FontWeight.SemiBold)
     }
 }
-
 
 @Preview(showSystemUi = true, device = "id:TECNO POP3")
 @Preview(showSystemUi = true, device = "spec:width=1280dp,height=800dp,dpi=480")
@@ -490,14 +537,17 @@ fun InfoColumn(@DrawableRes iconResouce: Int, text1: String, text2: String) {
 @Preview(showSystemUi = true, device = "id:pixel_3")
 @Composable
 fun ScreenConcept() {
-    ProfileEntrepriseConceptScreen(entreprise = CompteEntreprise(
-        nomEntreprise = "SARDES CORP.",
-        secteurDActivite = "Nouvelles Technologies",
-        descriptionEntreprise = "Lorem ipsum jwhvjv jfwejfwe9fwe8fwe fuwe9fiwe8f 9fu fu9fi wefuwe uf9fu wf fuf uf09ufh9 fuwugwg uwv w8uv suv8sjv vjr 8vrv hvj r8ver9ue",
-        ville = "Sardesville",
-        urlLogoEntreprise = "https://www.sardes-corp.com",
-        adressEntreprise = "42 Boulvard Sardes, Sardesville, Estuaire, Gabon"
-    )
+    ProfileEntrepriseScreen(
+        entreprise = CompteEntreprise(
+            nomEntreprise = "SARDES CORP.",
+            secteurDActivite = "Nouvelles Technologies",
+            descriptionEntreprise = "Lorem ipsum jwhvjv jfwejfwe9fwe8fwe  =kwesv kev vew[vkwv kw[pvi qv0w-evw-evjwv wevw v-wev we-viw-e vwe-v we-vfuwe9fiwe8f 9fu fu9fi wefuwe uf9fu wf fuf uf09ufh9 fuwugwg uwv w8uv suv8sjv vjr 8vrv hvj r8ver9ue",
+            ville = "Sardesville",
+            adressEntreprise = "42 Boulvard Sardes, Sardesville, Estuaire, Gabon",
+            emailEntreprise = "sardescorp@sardes.com",
+            telephone = "+42 99-772-472-472",
+            siteWebEntreprise = "www.sardes-corp.com",
+        )
     )
 
-}
+}*/
