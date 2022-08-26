@@ -1,4 +1,4 @@
-package com.sardes.thegabworkproject.verticalgrid
+package com.sardes.thegabworkproject.ui.verticalgrid
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier

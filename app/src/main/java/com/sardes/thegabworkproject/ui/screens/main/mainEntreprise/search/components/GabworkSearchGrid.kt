@@ -25,7 +25,7 @@ import com.sardes.thegabworkproject.data.OccupationsDataProvider
 import com.sardes.thegabworkproject.data.models.SecteursDActivite
 import com.sardes.thegabworkproject.ui.theme.extensions.generateDominantColorState
 import com.sardes.thegabworkproject.ui.theme.modifiers.horizontalGradientBackground
-import com.sardes.thegabworkproject.verticalgrid.VerticalGrid
+import com.sardes.thegabworkproject.ui.verticalgrid.VerticalGrid
 
 @Composable
 fun GabworkSearchGrid() {

@@ -6,8 +6,8 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sardes.thegabworkproject.data.models.CompteEntreprise
-import com.sardes.thegabworkproject.repository.Ressources
 import com.sardes.thegabworkproject.repository.main.entreprise.PostsEntrepriseRepository
+import com.sardes.thegabworkproject.repository.ressources.PostsRessources
 import kotlinx.coroutines.launch
 
 class PostsEntrepriseViewModel(
@@ -30,7 +30,7 @@ class PostsEntrepriseViewModel(
                 getEntreprisePosts(entrepriseId)
         }
         else{
-            postsUiState = postsUiState.copy(postList = Ressources.Error(
+            postsUiState = postsUiState.copy(postList = PostsRessources.Error(
                 throwable = Throwable(message = "Utilisateur non connecté")
             ))
         }
@@ -44,5 +44,7 @@ class PostsEntrepriseViewModel(
 }
 
 data class PostsEntrepriseUiState(
-    val postList: Ressources<List<CompteEntreprise.PostVacant>> = Ressources.Loading(),
+    val isLoading: Boolean = false,
+
+    val postList: PostsRessources<List<CompteEntreprise.PostVacant>> = PostsRessources.Loading(),
 )

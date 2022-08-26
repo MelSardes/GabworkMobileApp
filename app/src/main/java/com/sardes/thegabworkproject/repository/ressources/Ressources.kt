@@ -1,4 +1,4 @@
-package com.sardes.thegabworkproject.repository
+package com.sardes.thegabworkproject.repository.ressources
 
 sealed class Ressources<T>(
     val data: T? = null,

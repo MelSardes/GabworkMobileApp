@@ -20,7 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.sardes.thegabworkproject.navigation.NavigationItem
-import com.sardes.thegabworkproject.repository.Ressources
+import com.sardes.thegabworkproject.repository.ressources.PostsRessources
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.components.PostCardComponent
 import com.sardes.thegabworkproject.ui.theme.BlueFlag
 import com.sardes.thegabworkproject.ui.theme.YellowFlag
@@ -35,7 +35,7 @@ fun PostsEntrepriseScreen(
     newNav: () -> Unit
 ) {
 
-    val applicationUiState = postsViewModel?.postsUiState ?: PostsEntrepriseUiState()
+    val postsUiState = postsViewModel?.postsUiState ?: PostsEntrepriseUiState()
 
     val scaffoldState = rememberScaffoldState()
 
@@ -64,10 +64,10 @@ fun PostsEntrepriseScreen(
                 }
             )
         }
-    ) {
+    ) {padding ->
 
-        when(applicationUiState.postList){
-            is Ressources.Loading -> {
+        when(postsUiState.postList){
+            is PostsRessources.Loading -> {
                 CircularProgressIndicator(
                     modifier = Modifier
                         .fillMaxSize()
@@ -75,9 +75,9 @@ fun PostsEntrepriseScreen(
                 )
             }
 
-            is Ressources.Success -> {
+            is PostsRessources.Success -> {
                 LazyColumn(modifier = Modifier.padding(6.dp)){
-                    items(applicationUiState.postList.data ?: emptyList()) {
+                    items(postsUiState.postList.data ?: emptyList()) {
                         post ->
                         PostCardComponent(post, onCardClick = { onPostClick.invoke(post.postId) })
                     }
@@ -85,7 +85,7 @@ fun PostsEntrepriseScreen(
             }
             else -> {
                 Text(
-                    text = applicationUiState
+                    text = postsUiState
                         .postList.throwable?.localizedMessage ?: "OOPS!\nUne Erreur s'est produite",
                     color = Color.Red
                 )

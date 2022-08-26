@@ -94,7 +94,7 @@ fun ParallaxToolbar(
                     }
             ) {
 
-                if(profileUiState.currentUserEntreprise!!.urlLogoEntreprise != null) {
+                if(profileUiState.currentUserEntreprise?.urlLogoEntreprise != null) {
                     AsyncImage(
                         model = ImageRequest
                             .Builder(LocalContext.current)
@@ -117,6 +117,7 @@ fun ParallaxToolbar(
                         modifier = Modifier.fillMaxSize()
                     )
                 }
+
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
@@ -147,6 +148,7 @@ fun ParallaxToolbar(
                     )
                 }
             }
+
             Column(
                 Modifier
                     .fillMaxWidth()

@@ -7,7 +7,7 @@ import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.sardes.thegabworkproject.data.models.CompteEntreprise
-import com.sardes.thegabworkproject.repository.Ressources
+import com.sardes.thegabworkproject.repository.ressources.PostsRessources
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -26,7 +26,7 @@ class PostsEntrepriseRepository {
         .firestore.collection(POSTS_COLLECTION_REF)
 
 
-    fun getEntreprisePosts(entrepriseId:String): Flow<Ressources<List
+    fun getEntreprisePosts(entrepriseId:String): Flow<PostsRessources<List
     <CompteEntreprise.PostVacant>>> = callbackFlow{
 
         var snapshotStateListener : ListenerRegistration? = null
@@ -38,15 +38,15 @@ class PostsEntrepriseRepository {
                 .addSnapshotListener{ snapshot, e ->
                     val response = if (snapshot != null){
                         val postVacant = snapshot.toObjects(CompteEntreprise.PostVacant::class.java)
-                        Ressources.Success(data = postVacant)
+                        PostsRessources.Success(data = postVacant)
                     }else{
-                        Ressources.Error(throwable = e?.cause)
+                        PostsRessources.Error(throwable = e?.cause)
                     }
                     trySend(response)
 
                 }
         }catch (e:Exception){
-            trySend(Ressources.Error(e.cause))
+            trySend(PostsRessources.Error(e.cause))
             e.printStackTrace()
         }
 

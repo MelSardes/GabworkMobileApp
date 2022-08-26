@@ -6,8 +6,8 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sardes.thegabworkproject.data.models.CompteEntreprise
-import com.sardes.thegabworkproject.repository.Ressources
 import com.sardes.thegabworkproject.repository.main.entreprise.HomeEntrepriseRepository
+import com.sardes.thegabworkproject.repository.ressources.Ressources
 import kotlinx.coroutines.launch
 
 class HomeEntrepriseViewModel(
@@ -39,7 +39,7 @@ class HomeEntrepriseViewModel(
         }
     }
 
-    fun loadPosts(){
+    fun loadActivePosts(){
         if (hasUser){
             if (entrepriseId.isNotBlank())
                 getActivePosts(entrepriseId)

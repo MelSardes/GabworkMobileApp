@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import com.sardes.thegabworkproject.R
 import com.sardes.thegabworkproject.data.models.CompteDemandeur
 import com.sardes.thegabworkproject.data.models.CompteEntreprise
-import com.sardes.thegabworkproject.repository.Ressources
+import com.sardes.thegabworkproject.repository.ressources.PostsRessources
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.PostsEntrepriseUiState
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.PostsEntrepriseViewModel
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.standalonepost.PostUiState
@@ -219,7 +219,7 @@ fun BottomSheetModalScreen(
         ) {
 
             when(applicationUiState.postList){
-                is Ressources.Loading -> {
+                is PostsRessources.Loading -> {
                     CircularProgressIndicator(
                         modifier = Modifier
                             .fillMaxSize()
@@ -227,7 +227,7 @@ fun BottomSheetModalScreen(
                     )
                 }
 
-                is Ressources.Success -> {
+                is PostsRessources.Success -> {
                     LazyColumn(modifier = Modifier.padding(6.dp)){
                         items(applicationUiState.postList.data ?: emptyList()) {
                                 post ->
