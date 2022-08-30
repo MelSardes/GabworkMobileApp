@@ -3,6 +3,7 @@ package com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.home
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.IconButton
@@ -93,15 +94,18 @@ fun HomeEntrepriseScreen(
             is Ressources.Success -> {
                 LazyColumn(modifier = Modifier.padding(padding)){
                     item {
+
                         Column {
-                            Text(text = "Posts Actif", textAlign = TextAlign.Start)
+                            Text(text = "Posts Actifs", textAlign = TextAlign.Start)
                             Spacer(Modifier.width(10.dp))
                         }
-                    }
 
-                    items(homeUiState.postList.data ?: emptyList()) {
-                                post ->
-                            PostCardComponent(post, onCardClick = { onPostClick.invoke() })
+                        LazyRow {
+                            items(homeUiState.postList.data ?: emptyList()) {
+                                        post ->
+                                    PostCardComponent(post, onCardClick = { onPostClick.invoke() })
+                            }
+                        }
                     }
 
                     item{
@@ -110,26 +114,29 @@ fun HomeEntrepriseScreen(
 
                             Spacer(Modifier.width(10.dp))
 
-                            Column(modifier = Modifier.padding(10.dp)){
-                                SeekerCardComponent(
-                                    demandeur = CompteDemandeur(
-                                        nom = "SARDES",
-                                        prenom = "Mel",
-                                        occupation = "Developpeur blockchain",
-                                        urlPhotoProfil = "${R.drawable.black_businessman_in_blue_suit_waving_hello}"
+                            LazyRow(modifier = Modifier.padding(10.dp)){
+                                item {
+                                    SeekerCardComponent(
+                                        demandeur = CompteDemandeur(
+                                            nom = "SARDES",
+                                            prenom = "Mel",
+                                            occupation = "Developpeur blockchain",
+                                            urlPhotoProfil = R.drawable.black_businessman_in_blue_suit_waving_hello.toString()
+                                        )
                                     )
-                                )
+                                    Spacer(Modifier.width(10.dp))
+                                }
 
-                                Spacer(Modifier.width(10.dp))
-
-                                SeekerCardComponent(
-                                    demandeur = CompteDemandeur(
-                                        nom = "MAKOSSO",
-                                        prenom = "Loïck",
-                                        occupation = "Developpeur android",
-                                        urlPhotoProfil = "${R.drawable.business_3d}"
+                                item {
+                                    SeekerCardComponent(
+                                        demandeur = CompteDemandeur(
+                                            nom = "MAKOSSO",
+                                            prenom = "Loïck",
+                                            occupation = "Developpeur android",
+                                            urlPhotoProfil = R.drawable.business_3d.toString()
+                                        )
                                     )
-                                )
+                                }
                             }
                         }
                     }

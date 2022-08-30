@@ -70,14 +70,15 @@ dependencies {
 //    implementation("com.google.android.gms:play-services-auth:20.2.0")
     implementation 'com.google.android.gms:play-services-auth:20.2.0'
     implementation 'com.google.android.gms:play-services-mlkit-text-recognition-common:17.1.0'
+    implementation 'com.google.android.material:material:1.6.1'
 
     def nav_version = "2.5.1"
     implementation("androidx.navigation:navigation-compose:$nav_version")
 
 
-    implementation 'androidx.compose.ui:ui:1.3.0-alpha03'
-    implementation "androidx.compose.animation:animation:1.3.0-alpha03"
-    implementation "androidx.compose.foundation:foundation:1.3.0-alpha03"
+    implementation 'androidx.compose.ui:ui:1.3.0-beta01'
+    implementation "androidx.compose.animation:animation:1.3.0-beta01"
+    implementation "androidx.compose.foundation:foundation:1.3.0-beta01"
     debugImplementation "androidx.compose.ui:ui-tooling:1.2.1"
     implementation "androidx.compose.ui:ui-tooling-preview:1.2.1"
 
@@ -90,11 +91,11 @@ dependencies {
 
 
     implementation 'androidx.core:core-ktx:1.8.0'
-    implementation 'androidx.compose.material:material:1.3.0-alpha03'
-    implementation "androidx.compose.material:material-icons-extended:1.3.0-alpha03"
-    implementation "androidx.compose.material3:material3:1.0.0-alpha16"
-    implementation "androidx.compose.material3:material3-window-size-class:1.0.0-alpha16"
-    implementation "androidx.compose.runtime:runtime:1.3.0-alpha03"
+    implementation 'androidx.compose.material:material:1.3.0-beta01'
+    implementation "androidx.compose.material:material-icons-extended:1.3.0-beta01"
+    implementation "androidx.compose.material3:material3:1.0.0-beta01"
+    implementation "androidx.compose.material3:material3-window-size-class:1.0.0-beta01"
+    implementation "androidx.compose.runtime:runtime:1.3.0-beta01"
     //noinspection GradleDependency
     implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
@@ -110,20 +111,13 @@ dependencies {
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
 
 
-    // Import the Firebase BoM
-
-    // Declare the dependency for the Firebase SDK for Google Analytics
-
-    // Declare the dependencies for any other desired Firebase products
-//    implementation 'com.google.firebase:firebase-firestore-ktx'
-
     implementation('org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4')
 
     implementation "androidx.navigation:navigation-compose:2.5.1"
 
     implementation "com.google.accompanist:accompanist-pager:0.25.0"
     implementation "com.google.accompanist:accompanist-pager-indicators:0.25.0"
-    implementation "com.google.accompanist:accompanist-insets:0.17.0"
+    implementation "com.google.accompanist:accompanist-insets:0.23.1"
     implementation 'com.google.accompanist:accompanist-systemuicontroller:0.26.1-alpha'
 
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.0-alpha01")
@@ -138,6 +132,17 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout-compose:1.0.1"
 
     implementation "androidx.palette:palette:1.0.0"
+
+//    implementation "com.github.skydoves:orbital:0.2.2"
+
+    implementation "me.saket.swipe:swipe:1.0.0"
+    implementation 'uk.co.samuelwall:material-tap-target-prompt:3.3.2'
+
+
+//    implementation 'com.cleveroad.blur_tutorial:blur_tutorial:1.0.1'
+
+
+    implementation 'com.radusalagean:info-bar-compose:1.0.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

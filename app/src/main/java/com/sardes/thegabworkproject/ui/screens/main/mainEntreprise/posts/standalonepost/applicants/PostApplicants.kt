@@ -35,8 +35,7 @@ fun PostApplicants(
 
             SoloPostCardComponent(
                 postId = postId,
-                standalonePostViewModel = StandalonePostViewModel()
-            ){}
+                standalonePostViewModel = standalonePostViewModel){}
 
             Spacer(Modifier.height(20.dp))
 

@@ -24,7 +24,6 @@ import com.sardes.thegabworkproject.R
 import com.sardes.thegabworkproject.data.models.CompteDemandeur
 import com.sardes.thegabworkproject.data.models.CompteEntreprise
 import com.sardes.thegabworkproject.repository.ressources.PostsRessources
-import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.PostsEntrepriseUiState
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.PostsEntrepriseViewModel
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.standalonepost.PostUiState
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.standalonepost.StandalonePostViewModel
@@ -190,7 +189,7 @@ fun BottomSheetModalScreen(
         }
     ) {
 
-        val applicationUiState = postsViewModel?.postsUiState ?: PostsEntrepriseUiState()
+        val applicationUiState = postsViewModel?.postsUiState
 
         val scaffoldState = rememberScaffoldState()
 
@@ -218,7 +217,7 @@ fun BottomSheetModalScreen(
             }
         ) {
 
-            when(applicationUiState.postList){
+            when(applicationUiState?.postList){
                 is PostsRessources.Loading -> {
                     CircularProgressIndicator(
                         modifier = Modifier
@@ -246,7 +245,7 @@ fun BottomSheetModalScreen(
                 else -> {
                     Text(
                         text = applicationUiState
-                            .postList.throwable?.localizedMessage ?: "OOPS!\nUne Erreur s'est produite",
+                            ?.postList?.throwable?.localizedMessage ?: "OOPS!\nUne Erreur s'est produite",
                         color = Color.Red
                     )
                 }

@@ -25,32 +25,36 @@ class PostsEntrepriseRepository {
     private val postsRef: CollectionReference = Firebase
         .firestore.collection(POSTS_COLLECTION_REF)
 
+    private val postsOwnerRef: CollectionReference = Firebase.firestore
+        .collection(COMPTES_ENTREPRISE_REF)
+        .document(getUserId())
+        .collection("Posts")
 
-    fun getEntreprisePosts(entrepriseId:String): Flow<PostsRessources<List
-    <CompteEntreprise.PostVacant>>> = callbackFlow{
+    fun getEntreprisePosts(entrepriseId: String): Flow<PostsRessources<List
+    <CompteEntreprise.PostVacant>>> = callbackFlow {
 
-        var snapshotStateListener : ListenerRegistration? = null
+        var snapshotStateListener: ListenerRegistration? = null
 
         try {
             snapshotStateListener = postsRef
                 .orderBy("dateCreationPost")
                 .whereEqualTo("entrepriseId", entrepriseId)
-                .addSnapshotListener{ snapshot, e ->
-                    val response = if (snapshot != null){
+                .addSnapshotListener { snapshot, e ->
+                    val response = if (snapshot != null) {
                         val postVacant = snapshot.toObjects(CompteEntreprise.PostVacant::class.java)
                         PostsRessources.Success(data = postVacant)
-                    }else{
+                    } else {
                         PostsRessources.Error(throwable = e?.cause)
                     }
                     trySend(response)
 
                 }
-        }catch (e:Exception){
+        } catch (e: Exception) {
             trySend(PostsRessources.Error(e.cause))
             e.printStackTrace()
         }
 
-        awaitClose{
+        awaitClose {
             snapshotStateListener?.remove()
         }
     }
@@ -59,15 +63,15 @@ class PostsEntrepriseRepository {
     fun getPost(
         postId: String,
         onError: (Throwable) -> Unit,
-        onSuccess: (CompteEntreprise.PostVacant?) -> Unit
-    ){
+        onSuccess: (CompteEntreprise.PostVacant?) -> Unit,
+    ) {
         postsRef
             .document(postId)
             .get()
             .addOnSuccessListener {
                 onSuccess.invoke(it?.toObject(CompteEntreprise.PostVacant::class.java))
             }
-            .addOnFailureListener{result ->
+            .addOnFailureListener { result ->
                 result.cause?.let { onError.invoke(it) }
 
             }
@@ -79,15 +83,15 @@ class PostsEntrepriseRepository {
         entrepriseName: String,
         dateCreationPost: Timestamp,
         descriptionEmploi: String,
-        salaire: Int,
+        salaire: String,
         typeDEmploi: String,
         adresse: String,
-        dateLimite: Timestamp,
+        dateLimite: Timestamp?,
         prerequis: String,
         emploiOuStage: String,
         actif: Boolean,
-        onComplete: (Boolean) -> Unit
-    ){
+        onComplete: (Boolean) -> Unit,
+    ) {
         val documentId = postsRef.document().id
         val post = CompteEntreprise.PostVacant(
             documentId,
@@ -104,17 +108,24 @@ class PostsEntrepriseRepository {
             emploiOuStage,
             actif
         )
+        val postRef = hashMapOf(
+            "postReference" to "${postsOwnerRef.document(documentId)}",
+            "postId" to documentId
+        )
 
-
+        // ADD POST IN POSTS COLLECTION
         postsRef
             .document(documentId)
             .set(post)
-            .addOnCompleteListener {result ->
+            .addOnCompleteListener { result ->
                 onComplete.invoke(result.isSuccessful)
             }
+
+        // ADD POST REFERENCE IN POST COLLECTION INTO ENTREPRISE ACCOUNT PROFILE
+        postsOwnerRef.document(documentId).set(postRef)
     }
 
-    fun deletePost(postId: String, onComplete: (Boolean) -> Unit){
+    fun deletePost(postId: String, onComplete: (Boolean) -> Unit) {
         postsRef.document(postId)
             .delete()
             .addOnCompleteListener {
@@ -124,35 +135,35 @@ class PostsEntrepriseRepository {
 
 
     fun updatePost(
-        postId: String,
-        postName: String,
-        entrepriseId: String,
-        entrepriseName: String,
-        dateCreationPost: Timestamp,
-        descriptionEmploi: String,
-        salaire: Int,
-        typeDEmploi: String,
-        adresse: String,
-        dateLimite: Timestamp,
-        prerequis: String,
-        emploiOuStage: String,
-        actif: Boolean,
-        onResult: (Boolean) -> Unit
-    ){
+        postId:             String,
+        postName:           String,
+        entrepriseId:       String,
+        entrepriseName:     String,
+        dateCreationPost:   Timestamp,
+        descriptionEmploi:  String,
+        salaire:            String,
+        typeDEmploi:        String,
+        adresse:            String,
+        dateLimite:         Timestamp,
+        prerequis:          String,
+        emploiOuStage:      String,
+        actif:              Boolean,
+        onResult:           (Boolean) -> Unit,
+    ) {
         val updateData = hashMapOf<String, Any>(
-            "postId" to postId,
-            "intitulePost" to postName,
-            "entrepriseId" to entrepriseId,
-            "entrepriseName" to entrepriseName,
-            "dateCreationPost" to dateCreationPost,
+            "postId"            to postId,
+            "intitulePost"      to postName,
+            "entrepriseId"      to entrepriseId,
+            "entrepriseName"    to entrepriseName,
+            "dateCreationPost"  to dateCreationPost,
             "descriptionEmploi" to descriptionEmploi,
-            "salaire" to salaire,
-            "typeDEmploi" to typeDEmploi,
-            "adresse" to adresse,
-            "dateLimite" to dateLimite,
-            "prerequis" to prerequis,
-            "emploiOuStage" to emploiOuStage,
-            "actif" to actif,
+            "salaire"           to salaire,
+            "typeDEmploi"       to typeDEmploi,
+            "adresse"           to adresse,
+            "dateLimite"        to dateLimite,
+            "prerequis"         to prerequis,
+            "emploiOuStage"     to emploiOuStage,
+            "actif"             to actif,
         )
 
         postsRef.document(entrepriseId)

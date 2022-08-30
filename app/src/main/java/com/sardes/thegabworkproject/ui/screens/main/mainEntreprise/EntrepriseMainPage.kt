@@ -24,90 +24,12 @@ import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.home.HomeEntr
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.message.MessagesEntrepriseScreen
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.PostsEntrepriseScreen
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.standalonepost.create.NewPostScreen
+import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.standalonepost.create.NewPostViewModel
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.profile.ProfileEntrepriseScreen
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.search.SearchEntrepriseScreen
 import com.sardes.thegabworkproject.ui.theme.BlueFlag
 import com.sardes.thegabworkproject.ui.theme.BlueVariant
 import com.sardes.thegabworkproject.ui.theme.YellowFlag
-
-/*
-@SuppressLint("MaterialDesignInsteadOrbitDesign")
-@Composable
-fun EntrepriseMainPage0(
-    viewModel: HomeEntrepriseViewModel = HomeEntrepriseViewModel()
-){
-    data class TabItem(
-        val icon: ImageVector,
-        val contentDescription: String
-    )
-
-    var tabIndex by remember { mutableStateOf(0) }
-    val homeScreens = listOf(
-        TabItem(Icons.Rounded.Home, "Home"),
-        TabItem(Icons.Rounded.FormatListBulleted, "Applications"),
-        TabItem(Icons.Rounded.Search, "Search"),
-        TabItem(Icons.Rounded.Message, "Messages"),
-        TabItem(Icons.Rounded.Person, "Profile"),
-    )
-
-    LaunchedEffect(key1 = Unit){
-        viewModel.getEntrepriseInformations()
-    }
-
-    TheGabworkProjectTheme {
-        Column(
-            modifier = Modifier
-                .background(MaterialTheme.colors.background)
-                .fillMaxSize()
-        ) {
-
-            Box(modifier = Modifier
-                .fillMaxWidth()
-                .weight(0.9f)
-                .align(Alignment.Start)) {
-                when (tabIndex) {
-                    0 -> HomeEntrepriseScreen{}
-                    1 -> PostsEntrepriseScreen(
-                        onPostClick = {},
-                        postsViewModel = PostsEntrepriseViewModel(),
-                        newNav = {},
-                        navToNewPost = {},
-                        navController = navController
-                    )
-                    2 -> SearchEntrepriseScreen()
-                    3 -> MessagesEntrepriseScreen()
-                    4 -> ProfileEntrepriseScreen()
-                }
-            }
-
-            Box(modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.End)) {
-                TabRow(
-                    selectedTabIndex = tabIndex,
-                    backgroundColor = Color(0xFF2A3855),
-                    contentColor = YellowFlag,
-                    modifier = Modifier
-                ) {
-                    homeScreens.forEachIndexed { i, item ->
-                        Tab(
-                            selected = tabIndex == i,
-                            onClick = { tabIndex = i },
-                            modifier = Modifier.heightIn(48.dp)
-                        ) {
-                            Icon(item.icon, contentDescription = item.contentDescription,
-                                tint = if (i == tabIndex) YellowFlag
-                                else Color.White.copy(alpha = 0.5f)
-                            )
-                        }
-                    }
-                }
-            }
-
-        }
-    }
-}
-*/
 
 
 @SuppressLint("MaterialDesignInsteadOrbitDesign")
@@ -154,7 +76,9 @@ fun Navigation(navController: NavHostController) {
             GetStartedScreen(null,{}){}
         }
         composable(NavigationItem.NewPost.route) {
-            NewPostScreen()
+            NewPostScreen(postViewModel = NewPostViewModel()){
+                navController.navigateUp()
+            }
         }
     }
 }

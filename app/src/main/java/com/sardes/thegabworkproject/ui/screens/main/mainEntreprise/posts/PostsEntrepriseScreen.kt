@@ -37,14 +37,14 @@ fun PostsEntrepriseScreen(
 
     val postsUiState = postsViewModel?.postsUiState ?: PostsEntrepriseUiState()
 
-    val scaffoldState = rememberScaffoldState()
+//    val scaffoldState = rememberScaffoldState()
 
     LaunchedEffect(key1 = Unit){
         postsViewModel?.loadPosts()
     }
 
     Scaffold(
-        scaffoldState = scaffoldState,
+//        scaffoldState = scaffoldState,
         topBar = {
             TopAppBar(
                 backgroundColor = BlueFlag,
@@ -64,9 +64,10 @@ fun PostsEntrepriseScreen(
                 }
             )
         }
-    ) {padding ->
+    ) { padding ->
 
         when(postsUiState.postList){
+
             is PostsRessources.Loading -> {
                 CircularProgressIndicator(
                     modifier = Modifier
@@ -76,21 +77,25 @@ fun PostsEntrepriseScreen(
             }
 
             is PostsRessources.Success -> {
-                LazyColumn(modifier = Modifier.padding(6.dp)){
+                LazyColumn(modifier = Modifier.padding(padding)){
+                    item { 
+                        Text(text = "Tous les posts")
+                    }
                     items(postsUiState.postList.data ?: emptyList()) {
                         post ->
-                        PostCardComponent(post, onCardClick = { onPostClick.invoke(post.postId) })
+                        PostCardComponent(post, onCardClick = { /*onPostClick.invoke(post.postId)*/ })
                     }
                 }
             }
+
             else -> {
                 Text(
                     text = postsUiState
                         .postList.throwable?.localizedMessage ?: "OOPS!\nUne Erreur s'est produite",
-                    color = Color.Red
+                    color = Color.Red,
+                    textAlign = TextAlign.Center,
                 )
             }
-
         }
 
     }

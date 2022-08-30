@@ -24,7 +24,7 @@ data class CompteEntreprise(
         val entrepriseName: String = "",
         val dateCreationPost: Timestamp = Timestamp.now(),
         val descriptionEmploi: String = "",
-        val salaire: Int = 0,
+        val salaire: String = "",
         val typeDEmploi: String = "",
         val adresse: String = "",
         val dateLimite: Timestamp? = null,

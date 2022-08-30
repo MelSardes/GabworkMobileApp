@@ -1,10 +1,12 @@
 <resources>
-    <string name="app_name">Gabwork</string>
-    <string name="look_for">Que cherche t-on aujourd\'hui ?</string>
-    <string name="select_account_type">Sélectionnez le type de compte que vous voulez créer</string>
-    <string name="arrow_back">Arrow back</string>
-    <string name="posts">Posts</string>
-    <string name="demandeurs">Demandeurs</string>
-    <string name="seeCv">Voir le CV</string>
-    <string name="seeProfile">Voir le profil</string>
+    <string name="app_name" translatable="false">Gabwork</string>
+    <string name="look_for" translatable="false">Que cherche t-on aujourd\'hui ?</string>
+    <string name="select_account_type" translatable="false">Sélectionnez le type de compte que vous voulez créer</string>
+    <string name="arrow_back" translatable="false">Arrow back</string>
+    <string name="posts" translatable="false">Posts</string>
+    <string name="demandeurs" translatable="false">Demandeurs</string>
+    <string name="seeCv" translatable="false">Voir le CV</string>
+    <string name="seeProfile" translatable="false">Voir le profil</string>
+    <string name="show_less" translatable="false">Show less</string>
+    <string name="show_more" translatable="false">Show more</string>
 </resources>

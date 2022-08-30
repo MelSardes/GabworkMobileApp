@@ -16,13 +16,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.sardes.thegabworkproject.data.models.CompteEntreprise
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.standalonepost.PostUiState
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.standalonepost.StandalonePostViewModel
 import com.sardes.thegabworkproject.ui.theme.NewBlue
-import com.sardes.thegabworkproject.ui.theme.SoftBlue
+import kiwi.orbit.compose.ui.controls.Card as OrbitCard
+import kiwi.orbit.compose.ui.controls.Text as OrbitText
 
 @SuppressLint("MaterialDesignInsteadOrbitDesign")
 @Composable
@@ -44,7 +45,7 @@ fun SoloPostCardComponent(
             .fillMaxWidth()
             .height(160.dp)
             .clickable { onClick.invoke() },
-        colors = CardDefaults.cardColors(containerColor = SoftBlue),
+        colors = CardDefaults.cardColors(containerColor = Color.White),
         shape = RoundedCornerShape(10.dp),
         elevation = CardDefaults.cardElevation(10.dp),
     ) {
@@ -57,19 +58,23 @@ fun SoloPostCardComponent(
         ) {
             Column(
                 modifier = Modifier,
-                verticalArrangement = Arrangement.SpaceEvenly,
+                verticalArrangement = Arrangement.SpaceAround,
                 horizontalAlignment = Alignment.Start
             ) {
                 Text(
                     text = postUiState.postName,
-                    style = MaterialTheme.typography.h5.copy(fontWeight = FontWeight.Bold),
-                    color = NewBlue
+                    style = MaterialTheme.typography.h6.copy(fontWeight = FontWeight.Bold),
+                    color = NewBlue,
+                    modifier = Modifier.weight(1f),
+                    overflow = TextOverflow.Ellipsis
                 )
+
                 Text(
                     text = postUiState.typeEmploi,
-                    style = MaterialTheme.typography.h6,
+                    style = MaterialTheme.typography.body1,
                     color = NewBlue
                 )
+
                 Text(
                     text = postUiState.adresse,
                     style = MaterialTheme.typography.body2,
@@ -89,9 +94,9 @@ fun SoloPostCardComponent(
                     color = if (postUiState.actif) Color(0xFF0F730C) else Color(0xFFDB1E1E),
                     modifier = if (postUiState.actif) {
                         Modifier
-                            .clip(RoundedCornerShape(20.dp))
                             .background(Color(0xFFEDF9F0))
-                            .padding(5.dp)
+                            .padding(horizontal = 10.dp, vertical = 5.dp)
+                            .clip(RoundedCornerShape(20.dp))
                     } else {
                         Modifier
                             .clip(RoundedCornerShape(20.dp))
@@ -101,18 +106,26 @@ fun SoloPostCardComponent(
                     style = MaterialTheme.typography.body1
 
                 )
+
                 Text(
-                    text = "${postUiState.salaire} Fcfa/mois",
+                    text = "${postUiState.salaire} \n Fcfa/mois",
                     color = NewBlue,
-                    style = MaterialTheme.typography.h6,
+                    style = MaterialTheme.typography.body1,
                 )
             }
         }
     }
 }
 
+//@Preview
+@Composable
+fun TestCard() {
+    OrbitCard {
+        OrbitText(text = "Test")
+    }
+}
 
-@Preview
+//@Preview
 @Composable
 fun PreviewSoloPostCard() {
     PostCardComponent(
@@ -121,7 +134,7 @@ fun PreviewSoloPostCard() {
             typeDEmploi = "Temps Plein",
             adresse = "23 Rue des Légendes",
             actif = true,
-            salaire = 2000000
+            salaire = "2000000"
         ),
         onCardClick = {}
     )

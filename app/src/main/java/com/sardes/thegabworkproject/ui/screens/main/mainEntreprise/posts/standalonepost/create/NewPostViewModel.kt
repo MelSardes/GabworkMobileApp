@@ -1,4 +1,4 @@
-package com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.standalonepost
+package com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.standalonepost.create
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -9,7 +9,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.sardes.thegabworkproject.data.models.CompteEntreprise
 import com.sardes.thegabworkproject.repository.main.entreprise.PostsEntrepriseRepository
 
-class StandalonePostViewModel(
+class NewPostViewModel(
     private val repository: PostsEntrepriseRepository = PostsEntrepriseRepository(),
 ) : ViewModel() {
 
@@ -74,7 +74,7 @@ class StandalonePostViewModel(
                 salaire = postUiState.salaire,
                 typeDEmploi = postUiState.typeEmploi,
                 adresse = postUiState.adresse,
-                dateLimite = postUiState.dateLimite!!,
+                dateLimite = postUiState.dateLimite,
                 prerequis = postUiState.prerequis,
                 emploiOuStage = postUiState.emploiOuStage,
                 actif = postUiState.actif
@@ -138,6 +138,7 @@ class StandalonePostViewModel(
         postUiState = PostUiState()
     }
 }
+
 
 data class PostUiState(
     val postName: String = "",

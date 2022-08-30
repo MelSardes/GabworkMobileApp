@@ -110,7 +110,7 @@ fun PreviewPostCard() {
             typeDEmploi = "Temps Plein",
             adresse = "23 Rue des Légendes",
             actif = true,
-            salaire = 2000000
+            salaire = "2000000"
         ),
         onCardClick = {}
     )

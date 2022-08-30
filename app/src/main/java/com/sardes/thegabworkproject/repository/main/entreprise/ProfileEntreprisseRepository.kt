@@ -15,7 +15,7 @@ class ProfileEntreprisseRepository {
 
     fun getUserId(): String = Firebase.auth.currentUser?.uid.orEmpty()
 
-    private val entreprise_ref: CollectionReference = Firebase
+    private val entrepriseRef: CollectionReference = Firebase
         .firestore.collection(ENTREPRISE_COLLECTION_REF)
 
 
@@ -24,7 +24,7 @@ class ProfileEntreprisseRepository {
         onError: (Throwable) -> Unit,
         onSuccess: (CompteEntreprise?) -> Unit
     ){
-        entreprise_ref
+        entrepriseRef
             .document(entrepriseId)
             .get()
             .addOnSuccessListener {
@@ -52,22 +52,22 @@ class ProfileEntreprisseRepository {
         onResult: (Boolean) -> Unit
     ){
         val updateData = hashMapOf<String, Any>(
-            "idCompteEntreprise" to idCompteEntreprise,
-            "nomEntreprise" to nomEntreprise,
-            "secteurDActivite" to secteurDActivite,
-            "descriptionEntreprise" to descriptionEntreprise,
-            "ville" to ville,
-            "emailEntreprise" to emailEntreprise,
-            "telephone" to telephone,
-            "adresseEntreprise" to adresseEntreprise,
-            "siteWebEntreprise" to siteWebEntreprise,
-            "urlLogoEntreprise" to urlLogoEntreprise,
-            "dateCreationCompte" to dateCreationCompte,
-            "dateCreationEntreprise" to dateCreationEntreprise,
-            "typeDeCompte" to typeDeCompte,
+            "idCompteEntreprise"        to idCompteEntreprise,
+            "nomEntreprise"             to nomEntreprise,
+            "secteurDActivite"          to secteurDActivite,
+            "descriptionEntreprise"     to descriptionEntreprise,
+            "ville"                     to ville,
+            "emailEntreprise"           to emailEntreprise,
+            "telephone"                 to telephone,
+            "adresseEntreprise"         to adresseEntreprise,
+            "siteWebEntreprise"         to siteWebEntreprise,
+            "urlLogoEntreprise"         to urlLogoEntreprise,
+            "dateCreationCompte"        to dateCreationCompte,
+            "dateCreationEntreprise"    to dateCreationEntreprise,
+            "typeDeCompte"              to typeDeCompte,
         )
 
-        entreprise_ref.document(idCompteEntreprise)
+        entrepriseRef.document(idCompteEntreprise)
             .update(updateData)
             .addOnCompleteListener{
                 onResult(it.isSuccessful)
