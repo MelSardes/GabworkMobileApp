@@ -7,10 +7,10 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseUser
 import com.sardes.thegabworkproject.data.models.CompteEntreprise
-import com.sardes.thegabworkproject.repository.main.entreprise.PostsEntrepriseRepository
+import com.sardes.thegabworkproject.repository.main.entreprise.HomeEntrepriseRepository
 
 class NewPostViewModel(
-    private val repository: PostsEntrepriseRepository = PostsEntrepriseRepository(),
+    private val repository: HomeEntrepriseRepository = HomeEntrepriseRepository(),
 ) : ViewModel() {
 
     var postUiState by mutableStateOf(PostUiState())
@@ -63,6 +63,7 @@ class NewPostViewModel(
         postUiState = postUiState.copy(actif = actif)
     }
 
+/*
     fun addPost() {
         if (hasUser) {
             repository.addPost(
@@ -83,6 +84,7 @@ class NewPostViewModel(
             }
         }
     }
+*/
 
     private fun setEditFields(post: CompteEntreprise.PostVacant) {
         postUiState = postUiState.copy(
@@ -97,6 +99,7 @@ class NewPostViewModel(
         )
     }
 
+/*
     fun getPost(postId: String) {
         repository.getPost(
             postId = postId,
@@ -106,7 +109,9 @@ class NewPostViewModel(
             postUiState.selectedPost?.let { it1 -> setEditFields(it1) }
         }
     }
+*/
 
+/*
     fun updatePost(postId: String) {
         repository.updatePost(
             postId = postId,
@@ -126,6 +131,7 @@ class NewPostViewModel(
             postUiState = postUiState.copy(updateAddedPost = it)
         }
     }
+*/
 
     fun resetPostAddedStatus() {
         postUiState = postUiState.copy(

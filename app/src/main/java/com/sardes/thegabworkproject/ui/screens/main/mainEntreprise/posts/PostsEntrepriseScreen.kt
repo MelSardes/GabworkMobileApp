@@ -1,15 +1,12 @@
 package com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts
 
-import android.annotation.SuppressLint
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.PostAdd
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -17,58 +14,43 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import com.sardes.thegabworkproject.navigation.NavigationItem
-import com.sardes.thegabworkproject.repository.ressources.PostsRessources
+import com.sardes.thegabworkproject.repository.ressources.Ressources
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.components.PostCardComponent
-import com.sardes.thegabworkproject.ui.theme.BlueFlag
-import com.sardes.thegabworkproject.ui.theme.YellowFlag
+import kiwi.orbit.compose.ui.controls.Scaffold
+import kiwi.orbit.compose.ui.controls.TopAppBar
 
-@SuppressLint("MaterialDesignInsteadOrbitDesign", "UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun PostsEntrepriseScreen(
-    navController: NavController,
-    postsViewModel: PostsEntrepriseViewModel? = PostsEntrepriseViewModel(),
-    onPostClick: (id: String) -> Unit,
-    navToNewPost: () -> Unit,
-    newNav: () -> Unit
+    postsEntrepriseViewModel: PostsEntrepriseViewModel? = PostsEntrepriseViewModel()
 ) {
 
-    val postsUiState = postsViewModel?.postsUiState ?: PostsEntrepriseUiState()
-
-//    val scaffoldState = rememberScaffoldState()
+    val postsUiState = postsEntrepriseViewModel?.postsEntrepriseUiState ?: PostsEntrepriseUiState()
 
     LaunchedEffect(key1 = Unit){
-        postsViewModel?.loadPosts()
+        postsEntrepriseViewModel?.loadActivePosts()
     }
 
+
     Scaffold(
-//        scaffoldState = scaffoldState,
         topBar = {
             TopAppBar(
-                backgroundColor = BlueFlag,
                 modifier = Modifier.clip(RoundedCornerShape(bottomStart = 20.dp, bottomEnd = 20.dp)),
+                elevation = 16.dp,
                 navigationIcon = {},
-                actions = {
-                    IconButton(onClick = {navController.navigate(NavigationItem.NewPost.route)}) {
-                        Icon(
-                            imageVector = Icons.Rounded.PostAdd,
-                            contentDescription = "Add Post",
-                            tint = YellowFlag
-                        )
-                    }
-                },
                 title = {
-                    Text(text = "Posts", textAlign = TextAlign.Center, color = Color.White)
+                    Text(
+                        text = "Posts",
+                        textAlign = TextAlign.Center,
+                    )
                 }
             )
         }
     ) { padding ->
 
-        when(postsUiState.postList){
-
-            is PostsRessources.Loading -> {
+        when (postsUiState.postList){
+            is Ressources.Loading -> {
                 CircularProgressIndicator(
                     modifier = Modifier
                         .fillMaxSize()
@@ -76,37 +58,43 @@ fun PostsEntrepriseScreen(
                 )
             }
 
-            is PostsRessources.Success -> {
+            is Ressources.Success -> {
                 LazyColumn(modifier = Modifier.padding(padding)){
-                    item { 
-                        Text(text = "Tous les posts")
-                    }
-                    items(postsUiState.postList.data ?: emptyList()) {
-                        post ->
-                        PostCardComponent(post, onCardClick = { /*onPostClick.invoke(post.postId)*/ })
+                    item {
+
+                        Column {
+                            Text(text = "Posts Actifs", textAlign = TextAlign.Start)
+                            Spacer(Modifier.width(10.dp))
+                        }
+
+                        LazyRow {
+                            items(postsUiState.postList.data ?: emptyList()) {
+                                    post ->
+                                PostCardComponent(post, onCardClick = { })
+                            }
+                        }
                     }
                 }
             }
 
             else -> {
                 Text(
-                    text = postsUiState
-                        .postList.throwable?.localizedMessage ?: "OOPS!\nUne Erreur s'est produite",
-                    color = Color.Red,
-                    textAlign = TextAlign.Center,
+                    text = postsUiState.postList.throwable?.localizedMessage ?: "OOPS!\nUne erreur s'est produite",
+                    color = Color.Red
                 )
             }
+
+
+
         }
 
+
     }
-}
-/*
 
+}
+
+@Preview(name = "PostsEntrepriseScreen")
 @Composable
-@Preview(showSystemUi = true, showBackground = true)
-private fun ApplicationsScreenPreview() {
-    PostsEntrepriseScreen(
-    )
+private fun PreviewPostsEntrepriseScreen() {
+    PostsEntrepriseScreen()
 }
-*/
-

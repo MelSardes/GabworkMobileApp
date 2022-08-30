@@ -100,6 +100,7 @@ fun SelectSignUpAccount(
                 Row(modifier = Modifier
                     .align(Center)
                     .padding(5.dp)){
+/*
                     Image(
                         painter = painterResource(id = R.drawable.tall_building),
                         contentDescription = "Building",
@@ -108,7 +109,8 @@ fun SelectSignUpAccount(
                             .fillMaxWidth(0.44f)
                             .clip(RoundedCornerShape(60.dp, 0.dp, 0.dp, 0.dp))
                     )
-                    
+*/
+
                     Spacer(modifier = Modifier.width(10.dp))
 
                     Column (modifier = Modifier

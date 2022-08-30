@@ -91,7 +91,7 @@ fun PostCardComponent(
 
                 )
                 Text(
-                    text = "${Post.salaire} Fcfa/mois",
+                    text = Post.salaire +"\nFcfa/mois",
                     color = NewBlue,
                     style = MaterialTheme.typography.h6,
                 )

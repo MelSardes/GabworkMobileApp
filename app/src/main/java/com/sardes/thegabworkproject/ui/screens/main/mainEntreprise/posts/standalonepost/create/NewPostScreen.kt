@@ -219,7 +219,7 @@ fun NewPostScreen(
 
         item {
             ButtonBundleMedium(
-                onClick = { postViewModel?.addPost() },
+                onClick = { /*postViewModel?.addPost()*/ },
                 modifier = Modifier.padding(10.dp)
             ) {
                 Text("Créer post")

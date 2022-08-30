@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.callbackFlow
 
 
 const val COMPTES_ENTREPRISE_REF = "ComptesEntreprise"
+const val POSTS_COLLECTION_REF = "PostsVacant"
 
 class HomeEntrepriseRepository {
 
@@ -54,6 +55,68 @@ class HomeEntrepriseRepository {
                 .orderBy("dateCreationPost")
                 .whereEqualTo("entrepriseId", entrepriseId)
                 .whereEqualTo("actif", true)
+                .addSnapshotListener{ snapshot, e ->
+                    val response = if (snapshot != null){
+                        val postsVacant = snapshot.toObjects(CompteEntreprise.PostVacant::class.java)
+                        Ressources.Success(data = postsVacant)
+                    }else{
+                        Ressources.Error(throwable = e?.cause)
+                    }
+                    trySend(response)
+
+                }
+        }catch (e:Exception){
+            trySend(Ressources.Error(e.cause))
+            e.printStackTrace()
+        }
+
+        awaitClose{
+            snapshotStateListener?.remove()
+        }
+    }
+
+
+    fun getInctivePosts(entrepriseId:String): Flow<Ressources<List
+    <CompteEntreprise.PostVacant>>> = callbackFlow{
+
+        var snapshotStateListener : ListenerRegistration? = null
+
+        try {
+            snapshotStateListener = postsRef
+                .orderBy("dateCreationPost")
+                .whereEqualTo("entrepriseId", entrepriseId)
+                .whereEqualTo("actif", false)
+                .addSnapshotListener{ snapshot, e ->
+                    val response = if (snapshot != null){
+                        val postsVacant = snapshot.toObjects(CompteEntreprise.PostVacant::class.java)
+                        Ressources.Success(data = postsVacant)
+                    }else{
+                        Ressources.Error(throwable = e?.cause)
+                    }
+                    trySend(response)
+
+                }
+        }catch (e:Exception){
+            trySend(Ressources.Error(e.cause))
+            e.printStackTrace()
+        }
+
+        awaitClose{
+            snapshotStateListener?.remove()
+        }
+    }
+
+
+
+    fun getAllPosts(entrepriseId:String): Flow<Ressources<List
+    <CompteEntreprise.PostVacant>>> = callbackFlow{
+
+        var snapshotStateListener : ListenerRegistration? = null
+
+        try {
+            snapshotStateListener = postsRef
+                .orderBy("dateCreationPost")
+                .whereEqualTo("entrepriseId", entrepriseId)
                 .addSnapshotListener{ snapshot, e ->
                     val response = if (snapshot != null){
                         val postsVacant = snapshot.toObjects(CompteEntreprise.PostVacant::class.java)

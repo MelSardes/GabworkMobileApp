@@ -1,3 +1,4 @@
+/*
 package com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.components
 
 import android.annotation.SuppressLint
@@ -19,8 +20,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.sardes.thegabworkproject.data.models.CompteEntreprise
+import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.home.HomeEntrepriseViewModel
+import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.PostsEntrepriseViewModel
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.standalonepost.PostUiState
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.standalonepost.StandalonePostViewModel
+import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.standalonepost.create.PostUiState
 import com.sardes.thegabworkproject.ui.theme.NewBlue
 import kiwi.orbit.compose.ui.controls.Card as OrbitCard
 import kiwi.orbit.compose.ui.controls.Text as OrbitText
@@ -28,12 +32,12 @@ import kiwi.orbit.compose.ui.controls.Text as OrbitText
 @SuppressLint("MaterialDesignInsteadOrbitDesign")
 @Composable
 fun SoloPostCardComponent(
-    standalonePostViewModel: StandalonePostViewModel?,
+    standalonePostViewModel: PostsEntrepriseViewModel?,
     postId: String,
     onClick: () -> Unit,
 ) {
 
-    val postUiState = standalonePostViewModel?.postUiState ?: PostUiState()
+    val postUiState = standalonePostViewModel?.postsEntrepriseUiState ?: PostUiState()
 
     LaunchedEffect(key1 = Unit){
         standalonePostViewModel?.getPost(postId)
@@ -139,4 +143,4 @@ fun PreviewSoloPostCard() {
         onCardClick = {}
     )
     
-}
+}*/

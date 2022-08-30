@@ -55,13 +55,7 @@ fun Navigation(navController: NavHostController) {
             HomeEntrepriseScreen{}
         }
         composable(NavigationItem.Posts.route) {
-            PostsEntrepriseScreen(
-                onPostClick = {},
-                navToNewPost = { /*TODO*/ },
-                navController = navController
-            ) {
-
-            }
+            PostsEntrepriseScreen()
         }
         composable(NavigationItem.Search.route) {
             SearchEntrepriseScreen()
