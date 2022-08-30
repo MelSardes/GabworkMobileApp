@@ -6,14 +6,15 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.sardes.thegabworkproject.models.Competences_Profil_Etudiant
+import com.sardes.thegabworkproject.data.models.Competences_Profil_Etudiant
+import com.sardes.thegabworkproject.repository.ressources.Ressources
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 
 const val COMPETENCES_COLLECTION_REF = "Competences"
 
-class SkillsStorageRepository(){
+class SkillsStorageRepository() {
 
     fun user() = Firebase.auth.currentUser
     fun hasUser(): Boolean = Firebase.auth.currentUser != null
@@ -23,31 +24,33 @@ class SkillsStorageRepository(){
     private val competencesRef: CollectionReference = Firebase
         .firestore.collection(COMPETENCES_COLLECTION_REF)
 
-    fun getUserSkills(userId:String):Flow<Ressources<List
-            <Competences_Profil_Etudiant>>> = callbackFlow{
+    fun getUserSkills(userId: String): Flow<Ressources<List
+    <Competences_Profil_Etudiant>>> = callbackFlow {
 
-        var snapshotStateListener : ListenerRegistration? = null
+        var snapshotStateListener: ListenerRegistration? = null
 
         try {
             snapshotStateListener = competencesRef
                 .orderBy("competence")
                 .whereEqualTo("id_compte_standard", userId)
-                .addSnapshotListener{ snapshot, e ->
-                    val response = if (snapshot != null){
-                        val competences = snapshot.toObjects(Competences_Profil_Etudiant::class.java)
+                .addSnapshotListener { snapshot, e ->
+                    val response = if (snapshot != null) {
+                        val competences =
+                            snapshot.toObjects(Competences_Profil_Etudiant::class.java)
                         Ressources.Success(data = competences)
-                    }else{
+                    } else {
                         Ressources.Error(throwable = e?.cause)
                     }
+
                     trySend(response)
 
                 }
-        }catch (e:Exception){
+        } catch (e: Exception) {
             trySend(Ressources.Error(e.cause))
             e.printStackTrace()
         }
 
-        awaitClose{
+        awaitClose {
             snapshotStateListener?.remove()
         }
     }
@@ -56,15 +59,15 @@ class SkillsStorageRepository(){
     fun getSkill(
         skillId: String,
         onError: (Throwable) -> Unit,
-        onSuccess: (Competences_Profil_Etudiant?) -> Unit
-    ){
+        onSuccess: (Competences_Profil_Etudiant?) -> Unit,
+    ) {
         competencesRef
             .document(skillId)
             .get()
             .addOnSuccessListener {
                 onSuccess.invoke(it?.toObject(Competences_Profil_Etudiant::class.java))
             }
-            .addOnFailureListener{result ->
+            .addOnFailureListener { result ->
                 result.cause?.let { onError.invoke(it) }
 
             }
@@ -75,8 +78,8 @@ class SkillsStorageRepository(){
         competence: String,
         timestamp: Timestamp,
         niveau_de_comptence: String,
-        onComplete: (Boolean) -> Unit
-    ){
+        onComplete: (Boolean) -> Unit,
+    ) {
         val documentId = competencesRef.document().id
         val skill = Competences_Profil_Etudiant(
             userId,
@@ -89,12 +92,12 @@ class SkillsStorageRepository(){
         competencesRef
             .document(documentId)
             .set(skill)
-            .addOnCompleteListener {result ->
+            .addOnCompleteListener { result ->
                 onComplete.invoke(result.isSuccessful)
             }
     }
 
-    fun deleteSkill(skillId: String, onComplete: (Boolean) -> Unit){
+    fun deleteSkill(skillId: String, onComplete: (Boolean) -> Unit) {
         competencesRef.document(skillId)
             .delete()
             .addOnCompleteListener {
@@ -107,8 +110,8 @@ class SkillsStorageRepository(){
         competence: String,
         niveau_de_comptence: String,
         skillId: String,
-        onResult: (Boolean) -> Unit
-    ){
+        onResult: (Boolean) -> Unit,
+    ) {
         val updateData = hashMapOf<String, Any>(
             "competence" to competence,
             "niveau_de_competence" to niveau_de_comptence,

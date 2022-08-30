@@ -24,7 +24,9 @@ class MainActivity : ComponentActivity() {
                     onNavToMainPage = {}
                 )
 
-                SetupNavGraph(loginViewModel = loginViewModel)
+                SetupNavGraph(
+                    loginViewModel = loginViewModel,
+                )
             }
         }
     }

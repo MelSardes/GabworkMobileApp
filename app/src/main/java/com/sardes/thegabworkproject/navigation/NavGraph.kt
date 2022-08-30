@@ -1,12 +1,10 @@
 package com.sardes.thegabworkproject.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
+import androidx.navigation.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navigation
 import com.sardes.thegabworkproject.Verification
 import com.sardes.thegabworkproject.ui.screens.GetStartedScreen
 import com.sardes.thegabworkproject.ui.screens.login.LoginScreen
@@ -15,6 +13,10 @@ import com.sardes.thegabworkproject.ui.screens.login_and_signup.LoginOrSignUp
 import com.sardes.thegabworkproject.ui.screens.login_and_signup.SelectSignUpAccount
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.EntrepriseMainPage
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.home.HomeEntrepriseScreen
+import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.home.HomeEntrepriseViewModel
+import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.PostsEntrepriseScreen
+import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.standalonepost.PostViewModel
+import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.standalonepost.applicants.PostApplicants
 import com.sardes.thegabworkproject.ui.screens.signup.entreprisesignup.EntrepriseAccountSignUpScreen
 import com.sardes.thegabworkproject.ui.screens.signup.entreprisesignup.EntrepriseAccountSignUpViewModel
 import com.sardes.thegabworkproject.ui.screens.signup.independantsignup.IndependantAccountSignUpSceen
@@ -32,11 +34,6 @@ fun SetupNavGraph(
         startDestination = Screen.Verification.route
     ){
 
-/*
-        homeGraph(
-            navController = navController,
-        )
-*/
         composable(Screen.EntrepriseMain.route){
             EntrepriseMainPage()
         }
@@ -96,6 +93,31 @@ fun SetupNavGraph(
                 }
             )
         }
+
+        composable(route = Screen.PostsEntrepriseScreen.route){
+            PostsEntrepriseScreen(
+                onPostClick = {postId ->
+                    navController.navigate(Screen.PostApplicants.route + "?id=$postId"){
+                        launchSingleTop = true
+                    }
+                },
+                navController = navController,
+                postsViewModel = HomeEntrepriseViewModel()
+            )
+        }
+
+        composable(
+            route = Screen.PostApplicants.route,
+            arguments = listOf(navArgument("id"){
+                type = NavType.StringType
+                defaultValue = ""
+            })
+        ){entry ->
+            PostApplicants(
+                standalonePostViewModel = PostViewModel(),
+                postId = entry.arguments?.getString("id") as String
+            )
+        }
     }
 }
 
@@ -110,7 +132,7 @@ fun NavGraphBuilder.authGraph(
     ){
 
         composable(Screen.MainEntreprise.route){
-            HomeEntrepriseScreen()
+            HomeEntrepriseScreen{}
         }
 
         composable(route = Screen.Login.route){

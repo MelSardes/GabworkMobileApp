@@ -7,7 +7,7 @@
         <deviceKey>
           <Key>
             <type value="SERIAL_NUMBER" />
-            <value value="0633115129001275" />
+            <value value="192.168.137.43:5555" />
           </Key>
         </deviceKey>
       </Target>

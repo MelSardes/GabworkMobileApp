@@ -4,17 +4,19 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.sardes.thegabworkproject.models.CompteEntreprise
+import androidx.lifecycle.viewModelScope
+import com.sardes.thegabworkproject.data.models.CompteEntreprise
 import com.sardes.thegabworkproject.repository.main.entreprise.HomeEntrepriseRepository
+import com.sardes.thegabworkproject.repository.ressources.Ressources
+import kotlinx.coroutines.launch
 
 class HomeEntrepriseViewModel(
-    private val repository: HomeEntrepriseRepository = HomeEntrepriseRepository()
+    private val repository: HomeEntrepriseRepository = HomeEntrepriseRepository(),
+) : ViewModel() {
 
-): ViewModel(){
     var homeEntrepriseUiState by mutableStateOf(HomeEntrepriseUiState())
 
-    val entreprise = repository.user()
-
+    val user = repository.user()
     val hasUser: Boolean
         get() = repository.hasUser()
 
@@ -22,19 +24,43 @@ class HomeEntrepriseViewModel(
         get() = repository.getUserId()
 
 
-    fun getEntrepriseInformations(){
+    fun getEntrepriseInformations() {
         if (hasUser) {
             if (entrepriseId.isNotBlank()) {
+                homeEntrepriseUiState = homeEntrepriseUiState.copy(isLoading = true)
+
                 repository.getInformations(
                     onError = {}
                 ) {
                     homeEntrepriseUiState = homeEntrepriseUiState.copy(entrepriseInformations = it)
                 }
+                homeEntrepriseUiState = homeEntrepriseUiState.copy(isLoading = false)
             }
+        }
+    }
+
+    fun loadActivePosts() {
+        if (hasUser) {
+            if (entrepriseId.isNotBlank())
+                getActivePosts(entrepriseId)
+        } else {
+            homeEntrepriseUiState = homeEntrepriseUiState.copy(
+                postList = Ressources.Error(
+                    throwable = Throwable(message = "Utilisateur non connecté")
+                )
+            )
+        }
+    }
+
+    private fun getActivePosts(entrepriseId: String) = viewModelScope.launch {
+        repository.getActivePosts(entrepriseId).collect {
+            homeEntrepriseUiState = homeEntrepriseUiState.copy(postList = it)
         }
     }
 }
 
 data class HomeEntrepriseUiState(
+    val isLoading: Boolean = false,
     val entrepriseInformations: CompteEntreprise? = null,
+    val postList: Ressources<List<CompteEntreprise.PostVacant>> = Ressources.Loading(),
 )

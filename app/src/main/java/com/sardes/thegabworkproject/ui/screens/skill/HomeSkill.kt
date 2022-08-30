@@ -21,8 +21,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.firebase.Timestamp
-import com.sardes.thegabworkproject.models.Competences_Profil_Etudiant
-import com.sardes.thegabworkproject.repository.Ressources
+import com.sardes.thegabworkproject.data.models.Competences_Profil_Etudiant
+import com.sardes.thegabworkproject.repository.ressources.Ressources
 import java.text.SimpleDateFormat
 import java.util.*
 

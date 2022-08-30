@@ -6,7 +6,7 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
-import com.sardes.thegabworkproject.models.CompteEntreprise
+import com.sardes.thegabworkproject.data.models.CompteEntreprise
 
 
 const val COMPTES_ENTREPRISE_COLLECTION_REF = "ComptesEntreprise"
