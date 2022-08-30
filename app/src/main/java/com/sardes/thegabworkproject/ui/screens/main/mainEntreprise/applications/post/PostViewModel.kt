@@ -34,7 +34,7 @@ class PostViewModel (
         postUiState = postUiState.copy(descriptionEmploi = descriptionEmploi)
     }
 
-    fun onSalaireChange(salaire: Int){
+    fun onSalaireChange(salaire: String){
         postUiState = postUiState.copy(salaire = salaire )
     }
 
@@ -143,7 +143,7 @@ data class PostUiState(
     val entrepriseName: String = "",
     val dateCreationPost: Timestamp = Timestamp.now(),
     val descriptionEmploi: String = "",
-    val salaire: Int = 0,
+    val salaire: String = "",
     val typeEmploi: String = "",
     val adresse: String = "",
     val dateLimite: Timestamp? = null,
