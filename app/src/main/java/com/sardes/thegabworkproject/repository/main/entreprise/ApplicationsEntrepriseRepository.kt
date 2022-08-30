@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.callbackFlow
 const val ENTREPRISE_COLLECTION_REF = "ComptesEntreprise"
 const val POSTS_COLLECTION_REF = "PostsVacant"
 
-class ApplicartionsEntrepriseRepository {
+class ApplicationsEntrepriseRepository {
 
     fun user() = Firebase.auth.currentUser
     fun hasUser(): Boolean = Firebase.auth.currentUser != null

@@ -7,11 +7,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sardes.thegabworkproject.models.CompteEntreprise
 import com.sardes.thegabworkproject.repository.Ressources
-import com.sardes.thegabworkproject.repository.main.entreprise.ApplicartionsEntrepriseRepository
+import com.sardes.thegabworkproject.repository.main.entreprise.ApplicationsEntrepriseRepository
 import kotlinx.coroutines.launch
 
 class PostsEntrepriseViewModel(
-    private val repository: ApplicartionsEntrepriseRepository = ApplicartionsEntrepriseRepository()
+    private val repository: ApplicationsEntrepriseRepository = ApplicationsEntrepriseRepository()
 ) : ViewModel() {
 
     var applicationsUiState by mutableStateOf(PostsEntrepriseUiState())

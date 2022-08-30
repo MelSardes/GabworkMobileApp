@@ -7,10 +7,10 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseUser
 import com.sardes.thegabworkproject.models.CompteEntreprise
-import com.sardes.thegabworkproject.repository.main.entreprise.ApplicartionsEntrepriseRepository
+import com.sardes.thegabworkproject.repository.main.entreprise.ApplicationsEntrepriseRepository
 
 class PostViewModel (
-    private val repository: ApplicartionsEntrepriseRepository = ApplicartionsEntrepriseRepository()
+    private val repository: ApplicationsEntrepriseRepository = ApplicationsEntrepriseRepository()
 ): ViewModel(){
 
     var postUiState by mutableStateOf(PostUiState())
