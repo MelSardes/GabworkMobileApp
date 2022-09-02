@@ -3,37 +3,45 @@ package com.sardes.thegabworkproject
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.sardes.thegabworkproject.navigation.SetupNavGraph
+import androidx.navigation.compose.rememberNavController
+import com.sardes.thegabworkproject.navigation.NavGraphMain
 import com.sardes.thegabworkproject.ui.screens.login.LoginViewModel
-import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.PostsEntrepriseViewModel
 import com.sardes.thegabworkproject.ui.theme.TheGabworkProjectTheme
 
 
 class MainActivity : ComponentActivity() {
+
+
+//    private val loginViewModel by viewModel<LoginViewModel>()
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             val loginViewModel = viewModel(modelClass = LoginViewModel::class.java)
-
+            val navController = rememberNavController()
             TheGabworkProjectTheme{
-                Verification(
+/*                Verification(
                     loginViewModel = loginViewModel,
                     onNavToStartPage = {},
                     onNavToMainPage = {}
-                )
+                )*/
 
+//                EntrepriseMainPage(navController = navController)
+                NavGraphMain(loginViewModel)
+/*
                 SetupNavGraph(
+                    navController = navController,
                     loginViewModel = loginViewModel,
-                    postsEntrepriseViewModel = PostsEntrepriseViewModel()
                 )
+*/
             }
         }
     }
 }
 
+/*
 @Composable
 fun Verification(
     loginViewModel: LoginViewModel? = null,
@@ -47,3 +55,4 @@ fun Verification(
             onNavToMainPage.invoke()
     }
 }
+*/

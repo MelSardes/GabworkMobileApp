@@ -18,7 +18,9 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import kiwi.orbit.compose.ui.controls.ButtonBundleMedium
 import kiwi.orbit.compose.ui.controls.SegmentedSwitch
@@ -31,9 +33,8 @@ import kiwi.orbit.compose.ui.controls.TextField as OrbitTextField
 @SuppressLint("MaterialDesignInsteadOrbitDesign")
 @Composable
 fun NewPostScreen(
-    modifier: Modifier = Modifier,
     postViewModel: NewPostViewModel?,
-    onAdd: () -> Unit
+    onAdd: () -> Unit,
 ) {
 
     val postUiState = postViewModel?.postUiState
@@ -43,13 +44,13 @@ fun NewPostScreen(
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .padding(20.dp)
-            .background(Color.White),
+            .background(White)
+            .padding(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
 
-        if (postUiState?.postAddedStatus == true){
+        if (postUiState?.postAddedStatus == true) {
             scope.launch {
                 postViewModel.resetPostAddedStatus()
                 onAdd.invoke()
@@ -58,8 +59,15 @@ fun NewPostScreen(
 
 
         item {
-            OrbitText("Je suis à la recherche d'un.e ${postUiState?.postName}")
+            OrbitText(
+                "Je suis à la recherche d'un.e ${postUiState?.postName}",
+                maxLines = 5,
+                overflow = TextOverflow.Ellipsis
+            )
+            Spacer(modifier = Modifier.height(20.dp))
         }
+
+//        Nom du post
         item {
             val focusRequester = remember { FocusRequester() }
             OrbitTextField(
@@ -86,6 +94,7 @@ fun NewPostScreen(
             Spacer(modifier = Modifier.height(10.dp))
         }
 
+//        Salaire
         item {
             val focusRequester = remember { FocusRequester() }
             OrbitTextField(
@@ -111,7 +120,7 @@ fun NewPostScreen(
             Spacer(modifier = Modifier.height(10.dp))
         }
 
-
+//        Adresse
         item {
             val focusRequester = remember { FocusRequester() }
 
@@ -139,6 +148,112 @@ fun NewPostScreen(
             Spacer(modifier = Modifier.height(10.dp))
         }
 
+//        Ville
+        item {
+            val focusRequester = remember { FocusRequester() }
+
+            OrbitTextField(
+                value = postUiState?.ville ?: "",
+                onValueChange = { postViewModel?.onVilleChange(it) },
+                label = { OrbitText("Ville") },
+                info = { OrbitText("Précisez de nouveau la ville") },
+                leadingIcon = {
+                    OrbitIcon(
+                        OrbitIcons.Location,
+                        contentDescription = null
+                    )
+                },
+                singleLine = false,
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    keyboardType = KeyboardType.Text,
+                ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .focusRequester(focusRequester),
+                placeholder = { OrbitText("Ex: Sardesville") },
+            )
+
+            Spacer(modifier = Modifier.height(10.dp))
+        }
+
+//        Province
+        item {
+            val focusRequester = remember { FocusRequester() }
+
+            OrbitTextField(
+                value = postUiState?.province ?: "Précisez de nouveau la province",
+                onValueChange = { postViewModel?.onProvinceChange(it) },
+                label = { OrbitText("Province") },
+                info = { OrbitText("") },
+                leadingIcon = {
+                    OrbitIcon(
+                        OrbitIcons.Map,
+                        contentDescription = null
+                    )
+                },
+                singleLine = false,
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    keyboardType = KeyboardType.Text,
+                ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .focusRequester(focusRequester),
+                placeholder = { OrbitText("Ex: Haut-Ogooué") },
+            )
+
+            Spacer(modifier = Modifier.height(10.dp))
+        }
+
+//        Domaine
+        item {
+            val focusRequester = remember { FocusRequester() }
+
+            OrbitTextField(
+                value = postUiState?.domaine ?: "",
+                onValueChange = { postViewModel?.onDomaineChange(it) },
+                label = { OrbitText("Domaine") },
+                info = { OrbitText("Domaine") },
+                leadingIcon = {
+                    OrbitIcon(
+                        OrbitIcons.Ai,
+                        contentDescription = null
+                    )
+                },
+                singleLine = false,
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    keyboardType = KeyboardType.Text,
+                ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .focusRequester(focusRequester),
+                placeholder = { OrbitText("Ex: IT") },
+            )
+
+            Spacer(modifier = Modifier.height(10.dp))
+        }
+
+
+//            Experience
+        item {
+
+            var selectedIndex by remember { mutableStateOf<Int?>(null) }
+
+            SegmentedSwitch(
+                optionFirst = { OrbitText("Senior") },
+                optionSecond = { OrbitText("Junior") },
+                selectedIndex = selectedIndex,
+                onOptionClick = { index ->
+                    postViewModel?.onExperienceChange(if (index == 1) "Temps partiel" else "Temps plein")
+                    selectedIndex = index.takeIf { index != selectedIndex }
+                },
+                label = { OrbitText("Type d'emploi") },
+            )
+
+            Spacer(modifier = Modifier.height(10.dp))
+        }
+
+
+//        Type d'emploi
         item {
 
             var selectedIndex by remember { mutableStateOf<Int?>(null) }
@@ -157,6 +272,7 @@ fun NewPostScreen(
             Spacer(modifier = Modifier.height(10.dp))
         }
 
+//        Emploi ou stage
         item {
             var selectedIndex by remember { mutableStateOf<Int?>(null) }
             SegmentedSwitch(
@@ -172,13 +288,14 @@ fun NewPostScreen(
             Spacer(modifier = Modifier.height(10.dp))
         }
 
+//        Prérequis
         item {
             val focusRequester = remember { FocusRequester() }
 
             OrbitTextField(
                 value = postUiState?.prerequis ?: "",
                 onValueChange = { postViewModel?.onPrerequisChange(it) },
-                label = { OrbitText("Prérequis") },
+                label = { OrbitText("Prérequis") }, /* TODO: MAKE A LIST FOR <PREREQUIS>*/
                 info = { OrbitText("Que voulez-vous pour ce post ?") },
                 singleLine = false,
                 keyboardOptions = KeyboardOptions.Default.copy(
@@ -191,6 +308,7 @@ fun NewPostScreen(
             Spacer(modifier = Modifier.height(10.dp))
         }
 
+//        Description du post
         item {
             val focusRequester = remember { FocusRequester() }
 
@@ -219,7 +337,9 @@ fun NewPostScreen(
 
         item {
             ButtonBundleMedium(
-                onClick = { /*postViewModel?.addPost()*/ },
+                onClick = {
+                    postViewModel?.addPost()
+                },
                 modifier = Modifier.padding(10.dp)
             ) {
                 Text("Créer post")

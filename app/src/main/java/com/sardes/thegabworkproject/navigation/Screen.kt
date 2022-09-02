@@ -14,8 +14,6 @@ sealed class Screen(val route: String){
         object EntrepriseMain: Screen(route = "main_screen")
         object MainEntreprise: Screen(route = "main_entreprise_screen")
         object SkillEdit: Screen(route = "skill_edit")
-        object PostsEntrepriseScreen: Screen(route = "PostsEntrepriseScreen")
-        object PostApplicants: Screen(route = "PostsApplicants")
 }
 
 enum class NestedRoutes{
@@ -29,6 +27,7 @@ sealed class NavigationItem(var route: String, var icon: Int, var title: String)
         object Search : NavigationItem("search", R.drawable.ic_search, "Chercher")
         object Messages : NavigationItem("messagess", R.drawable.ic_message, "Messages")
         object Profile : NavigationItem("profile", R.drawable.ic_person, "Profil")
-        object Start : NavigationItem("start", R.drawable.ic_start, "start")
-        object NewPost : NavigationItem("newPost", R.drawable.ic_start, "newPost")
+        object Start : NavigationItem("start", R.drawable.ic_start, "Start")
+        object NewPost : NavigationItem("newPost", R.drawable.ic_start, "NewPost")
+        object Applicants : NavigationItem("applicants", 0, "")
 }

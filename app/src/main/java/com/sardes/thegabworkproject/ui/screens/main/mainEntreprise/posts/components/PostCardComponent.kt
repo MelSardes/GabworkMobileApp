@@ -14,86 +14,137 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sardes.thegabworkproject.data.models.CompteEntreprise
-import com.sardes.thegabworkproject.ui.theme.NewBlue
-import com.sardes.thegabworkproject.ui.theme.SoftBlue
+import com.sardes.thegabworkproject.ui.theme.GWpalette
+import com.sardes.thegabworkproject.ui.theme.TailwindCSSColor.Pink900
 
 @SuppressLint("MaterialDesignInsteadOrbitDesign")
 @Composable
 fun PostCardComponent(
-    Post: CompteEntreprise.PostVacant,
+    post: CompteEntreprise.Post?,
     onCardClick: () -> Unit,
 ) {
     Card(
+        shape = RoundedCornerShape(10.dp),
+        colors = CardDefaults.cardColors(containerColor = White),
         modifier = Modifier
-            .padding(10.dp)
+            .padding(20.dp)
             .fillMaxWidth()
             .height(160.dp)
             .clickable { onCardClick.invoke() },
-        colors = CardDefaults.cardColors(containerColor = SoftBlue),
-        shape = RoundedCornerShape(10.dp),
         elevation = CardDefaults.cardElevation(10.dp),
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(20.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceEvenly,
+        Column(
+            modifier = Modifier,
+            verticalArrangement = Arrangement.SpaceBetween,
+            horizontalAlignment = Alignment.Start
         ) {
-            Column(
-                modifier = Modifier,
-                verticalArrangement = Arrangement.SpaceEvenly,
-                horizontalAlignment = Alignment.Start
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp)
+                    .weight(1f),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceAround,
             ) {
                 Text(
-                    text = Post.postName,
-                    style = MaterialTheme.typography.h5.copy(fontWeight = FontWeight.Bold),
-                    color = NewBlue
+                    text = post?.postName ?: "",
+                    textAlign = TextAlign.Start,
+                    style = MaterialTheme.typography.h5,
+                    color = GWpalette.ImperialRed,
+                    modifier = Modifier.weight(1f)
                 )
-                Text(
-                    text = Post.typeDEmploi,
-                    style = MaterialTheme.typography.h6,
-                    color = NewBlue
-                )
-                Text(
-                    text = Post.adresse,
-                    style = MaterialTheme.typography.body2,
-                    color = NewBlue
-                )
-            }
 
-            Spacer(Modifier.width(10.dp))
-
-            Column(
-                modifier = Modifier,
-                verticalArrangement = Arrangement.SpaceEvenly,
-                horizontalAlignment = Alignment.End
-            ) {
                 Text(
-                    text = if (Post.actif) "Actif" else "Inactif",
-                    color = if (Post.actif) Color(0xFF0F730C) else Color(0xFFDB1E1E),
-                    modifier = if (Post.actif) {
+                    text = if (post?.actif == true) "Actif" else "Inactif",
+                    color = if (post?.actif == true) Color(0xFF0F730C) else Color(0xFFDB1E1E),
+                    modifier = if (post?.actif == true) {
                         Modifier
                             .clip(RoundedCornerShape(20.dp))
                             .background(Color(0xFFEDF9F0))
-                            .padding(5.dp)
+                            .padding(vertical = 5.dp, horizontal = 20.dp)
                     } else {
                         Modifier
                             .clip(RoundedCornerShape(20.dp))
                             .background(Color(0xFFFFEFEF))
-                            .padding(5.dp)
+                            .padding(vertical = 5.dp, horizontal = 20.dp)
                     },
                     style = MaterialTheme.typography.body1
-
                 )
+            }
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceAround,
+            ) {
                 Text(
-                    text = Post.salaire +"\nFcfa/mois",
-                    color = NewBlue,
-                    style = MaterialTheme.typography.h6,
+                    text = post?.domaine ?: "",
+                    textAlign = TextAlign.Center,
+                    maxLines = 1,
+                    style = MaterialTheme.typography.body2,
+                    color = White,
+                    modifier = Modifier
+                        .padding(end = 5.dp)
+                        .weight(1f)
+                        .clip(RoundedCornerShape(20.dp))
+                        .background(Pink900)
+                        .padding(5.dp)
+                )
+
+                Text(
+                    text = post?.typeDEmploi ?: "",
+                    textAlign = TextAlign.Center,
+                    maxLines = 1,
+                    style = MaterialTheme.typography.body2,
+                    color = White,
+                    modifier = Modifier
+                        .padding(horizontal = 5.dp)
+                        .weight(1f)
+                        .clip(RoundedCornerShape(20.dp))
+                        .background(Pink900)
+                        .padding(5.dp)
+                )
+
+                Text(
+                    text = post?.experience ?: "",
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.body2,
+                    color = White,
+                    modifier = Modifier
+                        .padding(start = 5.dp)
+                        .weight(1f)
+                        .clip(RoundedCornerShape(20.dp))
+                        .background(Pink900)
+                        .padding(5.dp)
+                )
+            }
+
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceAround,
+            ) {
+                Text(
+                    text = (post?.salaire ?: "") + "F/mois",
+                    color = GWpalette.LackCoral,
+                    style = MaterialTheme.typography.body2,
+                )
+
+                Text(
+                    text = post?.ville + "/" + post?.province,
+                    style = MaterialTheme.typography.body2,
+                    color = GWpalette.CoolGrey
                 )
             }
         }
@@ -105,14 +156,17 @@ fun PostCardComponent(
 @Composable
 fun PreviewPostCard() {
     PostCardComponent(
-        Post = CompteEntreprise.PostVacant(
+        post = CompteEntreprise.Post(
             postName = "Developpeur Mobile",
             typeDEmploi = "Temps Plein",
             adresse = "23 Rue des Légendes",
+            ville = "Sardesville",
+            province = "Haut-Ogooué",
+            experience = "Junior",
+            domaine = "IT",
             actif = true,
             salaire = "2000000"
-        ),
-        onCardClick = {}
-    )
-    
+        )
+    ) {}
+
 }

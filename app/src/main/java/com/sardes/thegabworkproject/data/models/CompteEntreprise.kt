@@ -17,7 +17,7 @@ data class CompteEntreprise(
     val dateCreationEntreprise: Timestamp? = Timestamp.now(),
     val typeDeCompte:String = "Entreprise",
 ){
-    data class PostVacant(
+    data class Post(
         val postId: String = "",
         val postName: String = "",
         val entrepriseId: String = "",
@@ -25,6 +25,10 @@ data class CompteEntreprise(
         val dateCreationPost: Timestamp = Timestamp.now(),
         val descriptionEmploi: String = "",
         val salaire: String = "",
+        val ville: String = "",
+        val province: String = "",
+        val domaine: String = "",
+        val experience: String = "",
         val typeDEmploi: String = "",
         val adresse: String = "",
         val dateLimite: Timestamp? = null,
@@ -39,10 +43,12 @@ data class CompteEntreprise(
         )
 
 
-        data class ListeDemandeurs(
-            val PostEmploiId: String,
-            val profilDemandeurId: String,
-            val dateSoumission: String,
+        data class Candidat(
+            val PostId: String = "",
+            val candidatId: String = "",
+            val nomCandidat: String = "",
+            val occupationCandidat: String = "",
+            val dateCandidature: Timestamp? = null,
         )
 
         data class ListeEtudiants(

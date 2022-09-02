@@ -5,18 +5,12 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
-import com.sardes.thegabworkproject.Verification
 import com.sardes.thegabworkproject.ui.screens.GetStartedScreen
 import com.sardes.thegabworkproject.ui.screens.login.LoginScreen
 import com.sardes.thegabworkproject.ui.screens.login.LoginViewModel
 import com.sardes.thegabworkproject.ui.screens.login_and_signup.LoginOrSignUp
 import com.sardes.thegabworkproject.ui.screens.login_and_signup.SelectSignUpAccount
-import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.EntrepriseMainPage
-import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.home.HomeEntrepriseScreen
-import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.PostsEntrepriseScreen
-import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.PostsEntrepriseViewModel
 import com.sardes.thegabworkproject.ui.screens.signup.entreprisesignup.EntrepriseAccountSignUpScreen
 import com.sardes.thegabworkproject.ui.screens.signup.entreprisesignup.EntrepriseAccountSignUpViewModel
 import com.sardes.thegabworkproject.ui.screens.signup.independantsignup.IndependantAccountSignUpSceen
@@ -26,19 +20,21 @@ import com.sardes.thegabworkproject.ui.screens.signup.standardsignup.StandardSig
 
 @Composable
 fun SetupNavGraph(
-    navController: NavHostController = rememberNavController(),
+    navController: NavHostController,
     loginViewModel: LoginViewModel,
-    postsEntrepriseViewModel: PostsEntrepriseViewModel
 ){
     NavHost(
         navController = navController,
         startDestination = Screen.Verification.route
     ){
 
+/*
         composable(Screen.EntrepriseMain.route){
             EntrepriseMainPage()
         }
+*/
 
+/*
         composable(Screen.Verification.route){
             Verification(
                 onNavToStartPage = {
@@ -53,6 +49,7 @@ fun SetupNavGraph(
                 }
             )
         }
+*/
 
         authGraph(navController, loginViewModel)
 
@@ -95,9 +92,6 @@ fun SetupNavGraph(
             )
         }
 
-        composable(route = Screen.PostsEntrepriseScreen.route){
-            PostsEntrepriseScreen()
-        }
 
 /*
         composable(
@@ -126,9 +120,6 @@ fun NavGraphBuilder.authGraph(
         route = NestedRoutes.Login.name
     ){
 
-        composable(Screen.MainEntreprise.route){
-            HomeEntrepriseScreen{}
-        }
 
         composable(route = Screen.Login.route){
             LoginScreen(

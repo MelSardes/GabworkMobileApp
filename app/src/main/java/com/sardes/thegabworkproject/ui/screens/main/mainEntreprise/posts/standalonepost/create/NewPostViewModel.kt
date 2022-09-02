@@ -7,10 +7,10 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseUser
 import com.sardes.thegabworkproject.data.models.CompteEntreprise
-import com.sardes.thegabworkproject.repository.main.entreprise.HomeEntrepriseRepository
+import com.sardes.thegabworkproject.repository.main.entreprise.MainEntrepriseRepository
 
 class NewPostViewModel(
-    private val repository: HomeEntrepriseRepository = HomeEntrepriseRepository(),
+    private val repository: MainEntrepriseRepository = MainEntrepriseRepository(),
 ) : ViewModel() {
 
     var postUiState by mutableStateOf(PostUiState())
@@ -46,6 +46,12 @@ class NewPostViewModel(
     fun onAdresseChange(adresse: String) {
         postUiState = postUiState.copy(adresse = adresse)
     }
+    fun onVilleChange(ville: String) {
+        postUiState = postUiState.copy(ville = ville)
+    }
+    fun onProvinceChange(province: String) {
+        postUiState = postUiState.copy(province = province)
+    }
 
     fun onDateLimiteChange(dateLimite: Timestamp) {
         postUiState = postUiState.copy(dateLimite = dateLimite)
@@ -54,16 +60,18 @@ class NewPostViewModel(
     fun onPrerequisChange(prerequis: String) {
         postUiState = postUiState.copy(prerequis = prerequis)
     }
+    fun onExperienceChange(experience: String) {
+        postUiState = postUiState.copy(experience = experience)
+    }
+    fun onDomaineChange(domaine: String) {
+        postUiState = postUiState.copy(domaine = domaine)
+    }
 
     fun onEmploiOuStagehange(emploiOuStage: String) {
         postUiState = postUiState.copy(emploiOuStage = emploiOuStage)
     }
 
-    fun onActiveChange(actif: Boolean) {
-        postUiState = postUiState.copy(actif = actif)
-    }
 
-/*
     fun addPost() {
         if (hasUser) {
             repository.addPost(
@@ -73,26 +81,32 @@ class NewPostViewModel(
                 dateCreationPost = postUiState.dateCreationPost,
                 descriptionEmploi = postUiState.descriptionEmploi,
                 salaire = postUiState.salaire,
+                domaine = postUiState.domaine,
+                experience = postUiState.experience,
                 typeDEmploi = postUiState.typeEmploi,
                 adresse = postUiState.adresse,
+                ville = postUiState.ville,
+                province = postUiState.province,
                 dateLimite = postUiState.dateLimite,
                 prerequis = postUiState.prerequis,
                 emploiOuStage = postUiState.emploiOuStage,
-                actif = postUiState.actif
             ) {
                 postUiState = postUiState.copy(postAddedStatus = it)
             }
         }
     }
-*/
 
-    private fun setEditFields(post: CompteEntreprise.PostVacant) {
+    private fun setEditFields(post: CompteEntreprise.Post) {
         postUiState = postUiState.copy(
             postName = post.postName,
             descriptionEmploi = post.descriptionEmploi,
             salaire = post.salaire,
             typeEmploi = post.typeDEmploi,
             adresse = post.adresse,
+            ville = post.ville,
+            province = post.province,
+            domaine = post.domaine,
+            experience = post.experience,
             dateLimite = post.dateLimite,
             prerequis = post.prerequis,
             emploiOuStage = post.emploiOuStage,
@@ -123,6 +137,10 @@ class NewPostViewModel(
             salaire = postUiState.salaire,
             typeDEmploi = postUiState.typeEmploi,
             adresse = postUiState.adresse,
+            ville = postUiState.ville,
+            province = postUiState.province,
+            domaine = postUiState.domaine,
+            experience = postUiState.experience,
             dateLimite = postUiState.dateLimite!!,
             prerequis = postUiState.prerequis,
             emploiOuStage = postUiState.emploiOuStage,
@@ -154,14 +172,17 @@ data class PostUiState(
     val salaire: String = "",
     val typeEmploi: String = "",
     val adresse: String = "",
+    val ville: String = "",
+    val province: String = "",
+    val domaine: String = "",
+    val experience: String = "",
     val dateLimite: Timestamp? = null,
     val prerequis: String = "",
     val emploiOuStage: String = "",
-    val actif: Boolean = false,
 
     val postAddedStatus: Boolean = false,
     val updateAddedPost: Boolean = false,
-    val selectedPost: CompteEntreprise.PostVacant? = null,
+    val selectedPost: CompteEntreprise.Post? = null,
 
     val isLoading: Boolean = false,
 

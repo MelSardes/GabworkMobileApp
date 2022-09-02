@@ -9,8 +9,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme.typography
+import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -18,7 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.graphics.Color.Companion.LightGray
 import androidx.compose.ui.graphics.Color.Companion.Transparent
@@ -36,6 +37,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.google.accompanist.insets.LocalWindowInsets
 import com.sardes.thegabworkproject.R
+import com.sardes.thegabworkproject.ui.composition.CircularButton
 import com.sardes.thegabworkproject.ui.theme.AppBarCollapsedHeight
 import com.sardes.thegabworkproject.ui.theme.AppBarExpendedHeight
 import com.sardes.thegabworkproject.ui.theme.BlueFlag
@@ -181,27 +183,6 @@ fun ParallaxToolbar(
     }
 }
 
-@SuppressLint("MaterialDesignInsteadOrbitDesign")
-@Composable
-fun CircularButton(
-    @DrawableRes iconResouce: Int,
-    color: Color = Gray,
-    elevation: ButtonElevation? = ButtonDefaults.elevation(),
-    onClick: () -> Unit = {},
-) {
-    Button(
-        onClick = onClick,
-        contentPadding = PaddingValues(),
-        shape = RoundedCornerShape(10.dp),
-        colors = ButtonDefaults.buttonColors(backgroundColor = White, contentColor = color),
-        elevation = elevation,
-        modifier = Modifier
-            .width(38.dp)
-            .height(38.dp)
-    ) {
-        Icon(painterResource(id = iconResouce), null)
-    }
-}
 
 @Composable
 fun Content(
@@ -352,7 +333,7 @@ fun InfoColumn(@DrawableRes iconResouce: Int, text1: String, text2: String) {
     }
 }
 
-@Preview(showSystemUi = true, device = "id:TECNO POP3")
+//@Preview(showSystemUi = true, device = "id:TECNO POP3")
 @Preview(showSystemUi = true, device = "spec:width=1280dp,height=800dp,dpi=480")
 @Preview(showSystemUi = true, device = "id:pixel")
 @Preview(showSystemUi = true, device = "id:pixel_3")

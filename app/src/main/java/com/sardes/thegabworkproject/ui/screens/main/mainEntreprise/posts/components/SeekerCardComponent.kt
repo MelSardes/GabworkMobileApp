@@ -103,7 +103,8 @@ fun SeekerCardComponent(
                     Button(
                         onClick = {},
                         modifier = Modifier
-                            .padding(8.dp),
+                            .padding(8.dp)
+                            .weight(1f),
                         shape = RoundedCornerShape(20.dp),
                         colors = ButtonDefaults.buttonColors(Color(0xFF2972FE))
                     ) {
@@ -115,7 +116,7 @@ fun SeekerCardComponent(
                     }
                     OutlinedButton(
                         onClick = {},
-                        modifier = Modifier.padding(8.dp),
+                        modifier = Modifier.padding(8.dp).weight(1f),
                         shape = RoundedCornerShape(20.dp),
                         colors = ButtonDefaults.outlinedButtonColors(contentColor = Color(0xFF2972FE))
                     ) {

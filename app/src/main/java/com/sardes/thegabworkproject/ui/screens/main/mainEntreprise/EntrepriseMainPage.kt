@@ -12,35 +12,50 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.sardes.thegabworkproject.navigation.NavigationItem
-import com.sardes.thegabworkproject.ui.screens.GetStartedScreen
+import androidx.navigation.navArgument
+import com.sardes.thegabworkproject.navigation.EntrepriseInterfaceScreen
+import com.sardes.thegabworkproject.navigation.EntreprisePostsScreen
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.home.HomeEntrepriseScreen
+import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.home.HomeEntrepriseViewModel
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.message.MessagesEntrepriseScreen
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.PostsEntrepriseScreen
+import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.PostsEntrepriseViewModel
+import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.applicants.ApplicantsScreen
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.standalonepost.create.NewPostScreen
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.standalonepost.create.NewPostViewModel
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.profile.ProfileEntrepriseScreen
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.search.SearchEntrepriseScreen
-import com.sardes.thegabworkproject.ui.theme.BlueFlag
-import com.sardes.thegabworkproject.ui.theme.BlueVariant
-import com.sardes.thegabworkproject.ui.theme.YellowFlag
+import com.sardes.thegabworkproject.ui.theme.GWpalette.Gunmetal
+import com.sardes.thegabworkproject.ui.theme.GWpalette.ImperialRed
 
 
 @SuppressLint("MaterialDesignInsteadOrbitDesign")
 @Composable
 fun EntrepriseMainPage() {
     val navController = rememberNavController()
+    val homeViewModel = viewModel(modelClass = HomeEntrepriseViewModel::class.java)
+    val postsViewModel = viewModel(modelClass = PostsEntrepriseViewModel::class.java)
+    val newPostViewModel = viewModel(modelClass = NewPostViewModel::class.java)
+
     Scaffold(
         bottomBar = { BottomNavigationBar(navController) },
         content = { padding ->
             Box(modifier = Modifier.padding(padding)) {
-                Navigation(navController = navController)
+                EntrepriseMainNavigation(
+                    navController,
+                    homeViewModel,
+                    postsViewModel,
+                    newPostViewModel
+                )
+//                Text("Mel SARDES failed again")
             }
         },
         backgroundColor = Color.White// Set background color to avoid the white flashing when you switch between screens
@@ -49,33 +64,168 @@ fun EntrepriseMainPage() {
 
 
 @Composable
-fun Navigation(navController: NavHostController) {
-    NavHost(navController, startDestination = NavigationItem.Home.route) {
-        composable(NavigationItem.Home.route) {
-            HomeEntrepriseScreen{}
+fun EntrepriseMainNavigation(
+    navController: NavHostController,
+    homeViewModel: HomeEntrepriseViewModel,
+    postsViewModel: PostsEntrepriseViewModel,
+    newPostViewModel: NewPostViewModel,
+) {
+    NavHost(
+        navController,
+        route = EntrepriseInterfaceScreen.EntrepriseMainNavigation.route,
+        startDestination = EntrepriseInterfaceScreen.EntrepriseHome.route
+    ) {
+
+//        homeEntrepriseScreen(navController)
+        composable(EntrepriseInterfaceScreen.EntrepriseHome.route) {
+            HomeEntrepriseScreen(homeViewModel){ postId ->
+                navController.navigate(EntreprisePostsScreen.EntreprisePostsApplicants.route + "?id=$postId") {
+                    launchSingleTop = true
+                }
+            }
         }
-        composable(NavigationItem.Posts.route) {
-            PostsEntrepriseScreen()
+
+//        postsEntrepriseScreen(navController)
+        composable(EntrepriseInterfaceScreen.EntreprisePosts.route){
+            PostsEntrepriseScreen(
+                postsViewModel,
+                CreatePost = { navController.navigate(EntreprisePostsScreen.EntrepriseNewPost.route) }
+            ) { postId ->
+                navController.navigate(EntreprisePostsScreen.EntreprisePostsApplicants.route + "?id=$postId") {
+                    launchSingleTop = true
+                }
+            }
         }
-        composable(NavigationItem.Search.route) {
-            SearchEntrepriseScreen()
-        }
-        composable(NavigationItem.Messages.route) {
-            MessagesEntrepriseScreen()
-        }
-        composable(NavigationItem.Profile.route) {
-            ProfileEntrepriseScreen()
-        }
-        composable(NavigationItem.Start.route) {
-            GetStartedScreen(null,{}){}
-        }
-        composable(NavigationItem.NewPost.route) {
-            NewPostScreen(postViewModel = NewPostViewModel()){
+
+        composable(EntreprisePostsScreen.EntrepriseNewPost.route) {
+            NewPostScreen(newPostViewModel) {
                 navController.navigateUp()
             }
         }
+
+        composable(
+            route = EntreprisePostsScreen.EntreprisePostsApplicants.route + "?id={id}",
+            arguments = listOf(navArgument("id") {
+                type = NavType.StringType
+                defaultValue = ""
+            })
+        ) { entry ->
+            ApplicantsScreen(
+                postId = entry.arguments?.getString("id") as String
+            ) {
+                navController.navigateUp()
+            }
+        }
+
+//        searchEntrepriseScreen(navController)
+        composable(EntrepriseInterfaceScreen.EntrepriseSearch.route) {
+            SearchEntrepriseScreen()
+        }
+
+//        messagesEntrepriseScreen(navController)
+        composable(EntrepriseInterfaceScreen.EntrepriseMessages.route) {
+            MessagesEntrepriseScreen()
+        }
+
+//        profileEntrepriseScreen(navController)
+        composable(EntrepriseInterfaceScreen.EntrepriseProfile.route) {
+            ProfileEntrepriseScreen()
+        }
+
+/*
+        composable(NavigationItem.Start.route) {
+            GetStartedScreen(null, {}) {}
+        }
+*/
     }
 }
+
+/*
+fun NavGraphBuilder.homeEntrepriseScreen(navController: NavController) {
+    navigation(
+        route = EntrepriseInterfaceScreen.EntrepriseHome.route,
+        startDestination = EntrepriseHomeScreen.EntrepriseHomeMain.route
+    ){
+        composable(EntrepriseHomeScreen.EntrepriseHomeMain.route) {
+            HomeEntrepriseScreen()
+        }
+    }
+}
+
+fun NavGraphBuilder.postsEntrepriseScreen(navController: NavController){
+    navigation(
+        route = EntrepriseInterfaceScreen.EntreprisePosts.route,
+        startDestination = EntreprisePostsScreen.EntreprisePostsMain.route
+    ){
+        composable(EntreprisePostsScreen.EntreprisePostsMain.route){
+            PostsEntrepriseScreen(
+                CreatePost = { navController.navigate(EntreprisePostsScreen.EntrepriseNewPost.route) }
+            ) { postId ->
+                navController.navigate(EntreprisePostsScreen.EntreprisePostsApplicants.route + "?id=$postId") {
+                    launchSingleTop = true
+                }
+            }
+        }
+
+        composable(EntreprisePostsScreen.EntrepriseNewPost.route) {
+            NewPostScreen() {
+                navController.navigateUp()
+            }
+        }
+
+        composable(
+            route = EntreprisePostsScreen.EntreprisePostsApplicants.route + "?id={id}",
+            arguments = listOf(navArgument("id") {
+                type = NavType.StringType
+                defaultValue = ""
+            })
+        ) { entry ->
+            ApplicantsScreen(
+                postId = entry.arguments?.getString("id") as String
+            ) {
+                navController.navigateUp()
+            }
+        }
+
+
+    }
+}
+
+fun NavGraphBuilder.searchEntrepriseScreen(navController: NavController){
+    navigation(
+        route = EntrepriseInterfaceScreen.EntrepriseSearch.route,
+        startDestination = EntrepriseSearchScreen.EntrepriseSearchMain.route
+    ) {
+        composable(EntrepriseSearchScreen.EntrepriseSearchMain.route) {
+            SearchEntrepriseScreen()
+        }
+    }
+}
+
+fun NavGraphBuilder.messagesEntrepriseScreen(navController: NavController){
+    navigation(
+        route = EntrepriseInterfaceScreen.EntrepriseMessages.route,
+        startDestination = EntrepriseMessagesScreen.EntrepriseMessagesMain.route
+    ) {
+        composable(EntrepriseMessagesScreen.EntrepriseMessagesMain.route) {
+            MessagesEntrepriseScreen()
+        }
+    }
+}
+
+fun NavGraphBuilder.profileEntrepriseScreen(navController: NavController){
+    navigation(
+        route = EntrepriseInterfaceScreen.EntrepriseProfile.route,
+        startDestination = EntrepriseProfileScreen.EntrepriseProfileMain.route
+    ) {
+        composable(EntrepriseProfileScreen.EntrepriseProfileMain.route) {
+            ProfileEntrepriseScreen()
+        }
+    }
+}
+
+
+*/
 
 
 @SuppressLint("MaterialDesignInsteadOrbitDesign")
@@ -83,7 +233,7 @@ fun Navigation(navController: NavHostController) {
 fun TopBar() {
     TopAppBar(
         title = { Text(text = "Gabwork", style = MaterialTheme.typography.h5) },
-        backgroundColor = BlueFlag,
+        backgroundColor = Color.White,
         contentColor = Color.White,
         modifier = Modifier.clip(RoundedCornerShape(bottomEnd = 10.dp, bottomStart = 10.dp))
     )
@@ -93,25 +243,29 @@ fun TopBar() {
 @Composable
 fun BottomNavigationBar(navController: NavController) {
     val items = listOf(
-        NavigationItem.Home,
-        NavigationItem.Posts,
-        NavigationItem.Search,
-        NavigationItem.Messages,
-        NavigationItem.Profile
+        EntrepriseInterfaceScreen.EntrepriseHome,
+        EntrepriseInterfaceScreen.EntreprisePosts,
+        EntrepriseInterfaceScreen.EntrepriseSearch,
+        EntrepriseInterfaceScreen.EntrepriseMessages,
+        EntrepriseInterfaceScreen.EntrepriseProfile,
     )
     BottomNavigation(
-        backgroundColor = BlueVariant,
-        contentColor = Color.White,
-        modifier = Modifier.clip(RoundedCornerShape(topEnd = 10.dp, topStart = 10.dp))
+        backgroundColor = Color.White,
+        contentColor = Color.Black,
+        modifier = Modifier.clip(RoundedCornerShape(topEnd = 20.dp, topStart = 20.dp)),
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
+
         items.forEach { item ->
             BottomNavigationItem(
-                icon = { Icon(painterResource(id = item.icon), contentDescription = item.title) },
+                icon = { Icon(
+                    painterResource(id = item.icon),
+                    contentDescription = item.title
+                ) },
                 label = { Text(text = item.title) },
-                selectedContentColor = YellowFlag,
-                unselectedContentColor = Color.White.copy(0.4f),
+                selectedContentColor = ImperialRed,
+                unselectedContentColor = Gunmetal,
                 alwaysShowLabel = false,
                 selected = currentRoute == item.route,
                 onClick = {

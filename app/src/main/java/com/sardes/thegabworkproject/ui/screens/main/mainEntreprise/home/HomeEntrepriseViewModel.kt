@@ -6,12 +6,12 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sardes.thegabworkproject.data.models.CompteEntreprise
-import com.sardes.thegabworkproject.repository.main.entreprise.HomeEntrepriseRepository
+import com.sardes.thegabworkproject.repository.main.entreprise.MainEntrepriseRepository
 import com.sardes.thegabworkproject.repository.ressources.Ressources
 import kotlinx.coroutines.launch
 
 class HomeEntrepriseViewModel(
-    private val repository: HomeEntrepriseRepository = HomeEntrepriseRepository()
+    private val repository: MainEntrepriseRepository = MainEntrepriseRepository()
 ): ViewModel(){
 
     var homeEntrepriseUiState by mutableStateOf(HomeEntrepriseUiState())
@@ -29,7 +29,7 @@ class HomeEntrepriseViewModel(
             if (entrepriseId.isNotBlank()) {
                 homeEntrepriseUiState = homeEntrepriseUiState.copy(isLoading = true)
 
-                repository.getInformations(
+                repository.getEntrepriseInformations(
                     onError = {}
                 ) {
                     homeEntrepriseUiState = homeEntrepriseUiState.copy(entrepriseInformations = it)
@@ -45,7 +45,7 @@ class HomeEntrepriseViewModel(
                 getActivePosts(entrepriseId)
         }
         else{
-            homeEntrepriseUiState = homeEntrepriseUiState.copy(postList = Ressources.Error(
+            homeEntrepriseUiState = homeEntrepriseUiState.copy(homePostList = Ressources.Error(
                 throwable = Throwable(message = "Utilisateur non connecté")
             ))
         }
@@ -53,7 +53,7 @@ class HomeEntrepriseViewModel(
 
     private fun getActivePosts(entrepriseId : String) = viewModelScope.launch {
         repository.getActivePosts(entrepriseId).collect{
-            homeEntrepriseUiState = homeEntrepriseUiState.copy(postList = it)
+            homeEntrepriseUiState = homeEntrepriseUiState.copy(homePostList = it)
         }
     }
 }
@@ -61,5 +61,5 @@ class HomeEntrepriseViewModel(
 data class HomeEntrepriseUiState(
     val isLoading: Boolean = false,
     val entrepriseInformations: CompteEntreprise? = null,
-    val postList: Ressources<List<CompteEntreprise.PostVacant>> = Ressources.Loading(),
+    val homePostList: Ressources<List<CompteEntreprise.Post>> = Ressources.Loading(),
     )

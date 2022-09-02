@@ -18,10 +18,46 @@ data class CompteDemandeur(
     val occupation: String = "",
     val typeDeCompte:String = "Demandeur",
 ){
-    data class Experience_Profil_Demandeur(
-        val idExperienceDemandeur: Int,
-        val TitrePostOccupe: Int,
-        val nomEntreprise: Int,
+
+    data class Bookmark(
+        val idBookmark: String = "",
+        val idPost: String = "",
+        val idEntreprise: String = "",
+        val nomEntreprise: String = "",
+        val urlLogoEntreprise: String = "",
+//        val status: String = "",
+        val salaire: String = "",
+        val dateEnregistrement: Timestamp = Timestamp.now(),
+        val ville: String = "",
+        val province: String = "",
+        val typeDEmploi: String = "",
+    )
+
+    data class Candidature(
+        val candidatureId: String = "",
+        val postId: String = "",
+        val postName: String = "",
+        val entrepriseId: String = "",
+        val entrepriseName: String = "",
+        val descriptionEmploi: String = "",
+        val salaire: String = "",
+        val ville: String = "",
+        val province: String = "",
+        val domaine: String = "",
+        val experience: String = "",
+        val typeDEmploi: String = "",
+        val adresse: String = "",
+        val dateCandidature: Timestamp = Timestamp.now(),
+        val dateLimite: Timestamp? = null,
+        val prerequis: String = "",
+        val status: String = ""
+    )
+
+
+    data class Experience(
+        val idExperienceDemandeur: String,
+        val TitrePostOccupe: String,
+        val nomEntreprise: String,
         val ville: String,
         val description: String,
         val dateDebut: String?,
@@ -29,9 +65,9 @@ data class CompteDemandeur(
     )
 
 
-    data class Competences_Profil_Demandeur(
-        val idCompetenceDemandeur: Int,
-        val idCompetence: Int?,
+    data class Competences(
+        val idCompetenceDemandeur: String,
+        val idCompetence: String?,
         val niveauDeCompetence: String,
     )
 }
