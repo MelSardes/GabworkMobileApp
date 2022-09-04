@@ -101,17 +101,16 @@ class IndependantAccountSignUpViewModel (
         if (hasUser){
             repository.addUserInformations(
                 userId = user!!.uid,
-                userName = signUpUiState.userName,
-                userForeName = signUpUiState.foreName,
-                userPassword = signUpUiState.password,
-                sex = signUpUiState.sex,
-                phone = signUpUiState.phone,
+                nom = signUpUiState.userName,
+                prenom = signUpUiState.foreName,
+                sexe = signUpUiState.sex,
+                telephone = signUpUiState.phone,
                 email = signUpUiState.userMail,
-                city = signUpUiState.city,
-                nationality = signUpUiState.nationality,
-                address = signUpUiState.address,
+                ville = signUpUiState.city,
+                nationalite = signUpUiState.nationality,
+                adresse = signUpUiState.address,
                 competences = signUpUiState.skills,
-                website = signUpUiState.webisite,
+                siteWeb = signUpUiState.webisite,
                 urlPhoto = "https://" +
                         "firebasestorage.googleapis.com/v0/b/" +
                         "thegabworkprojecttest.appspot.com/o/" +
@@ -119,7 +118,7 @@ class IndependantAccountSignUpViewModel (
                         "${user!!.uid}__profile__independant.jpg" +
                         "?alt=media",
                 photo = signUpUiState.photo,
-                timestamp = Timestamp.now()
+                dateCreationCompte = Timestamp.now()
             ){
                 signUpUiState = signUpUiState.copy(informationsAddedStatus = it)
             }

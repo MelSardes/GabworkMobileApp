@@ -41,8 +41,8 @@ import com.sardes.thegabworkproject.ui.theme.YellowFlag
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "MaterialDesignInsteadOrbitDesign")
 @Composable
 fun EntrepriseAccountSignUpScreen(
-    viewModel: EntrepriseAccountSignUpViewModel? = null,
-    onNavToMainPage:() -> Unit,
+    viewModel: EntrepriseAccountSignUpViewModel?,
+    navToEntrepriseInterface:() -> Unit,
     onNavToLoginPage:() -> Unit,
 ) {
 
@@ -484,7 +484,7 @@ fun EntrepriseAccountSignUpScreen(
 
                         LaunchedEffect(key1 = viewModel?.hasUser){
                             if (viewModel?.hasUser == true){
-                                onNavToMainPage.invoke()
+                                navToEntrepriseInterface.invoke()
                             }
                         }
                     }

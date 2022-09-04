@@ -118,13 +118,13 @@ dependencies {
     implementation "com.google.accompanist:accompanist-pager:0.25.0"
     implementation "com.google.accompanist:accompanist-pager-indicators:0.25.0"
     implementation "com.google.accompanist:accompanist-insets:0.23.1"
-    implementation 'com.google.accompanist:accompanist-systemuicontroller:0.26.1-alpha'
+    implementation 'com.google.accompanist:accompanist-systemuicontroller:0.26.2-beta'
 
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.0-alpha01")
 
     implementation('io.coil-kt:coil-compose:2.2.0')
 
-    def orbitVersion = "0.18.0"
+    def orbitVersion = '0.19.0'
     implementation "kiwi.orbit.compose:ui:$orbitVersion"
     implementation "kiwi.orbit.compose:icons:$orbitVersion"
     implementation "kiwi.orbit.compose:illustrations:$orbitVersion"

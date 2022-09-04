@@ -5,6 +5,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.ListenerRegistration
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.sardes.thegabworkproject.data.models.CompteEntreprise
@@ -26,17 +27,17 @@ class MainEntrepriseRepository {
     fun getUserId(): String = Firebase.auth.currentUser?.uid.orEmpty()
 
 
+    //    REFER A USER WITH ENTREPRISE ACCOUNT
     private val comptesEntrepriseRef: DocumentReference = Firebase
         .firestore.collection(COMPTES_ENTREPRISE_REF).document(getUserId())
 
-
+    //    REFER POSTS FROM ALL ENTREPRISES
     private val postsRef: CollectionReference = Firebase
         .firestore.collection(POSTS_COLLECTION_REF)
 
-
+    //    REFER APPLICANTS TO POST FROM AN ENTREPRISE
     private val candidatsRef: CollectionReference = Firebase
-        .firestore.collection(COMPTES_ENTREPRISE_REF + "/" + getUserId() + "/" + CANDIDATS_COLLECTION_REF)
-
+        .firestore.collection(POSTS_COLLECTION_REF + "/" + getUserId() + "/" + CANDIDATS_COLLECTION_REF)
 
 
     fun getEntrepriseInformations(
@@ -52,12 +53,6 @@ class MainEntrepriseRepository {
                 result.cause?.let { onError.invoke(it) }
             }
     }
-
-
-
-
-
-
 
 
     fun getPost(
@@ -76,7 +71,6 @@ class MainEntrepriseRepository {
 
             }
     }
-
 
 
     fun getActivePosts(entrepriseId: String): Flow<Ressources<List
@@ -188,7 +182,7 @@ class MainEntrepriseRepository {
         typeDEmploi: String,
         adresse: String,
         dateLimite: Timestamp?,
-        prerequis: String,
+        competences: List<String>,
         emploiOuStage: String,
         actif: Boolean = true,
         onComplete: (Boolean) -> Unit,
@@ -210,7 +204,7 @@ class MainEntrepriseRepository {
             typeDEmploi,
             adresse,
             dateLimite,
-            prerequis,
+            competences,
             emploiOuStage,
             actif,
         )
@@ -224,16 +218,14 @@ class MainEntrepriseRepository {
     }
 
 
-
-    fun getPostApplicants(entrepriseId: String, postId: String): Flow<Ressources<List
+    fun getPostApplicants(postId: String): Flow<Ressources<List
     <CompteEntreprise.Post.Candidat>>> = callbackFlow {
 
         var snapshotStateListener: ListenerRegistration? = null
 
         try {
-            snapshotStateListener = postsRef
-                .orderBy("dateCandidature")
-                .whereEqualTo("entrepriseId", entrepriseId)
+            snapshotStateListener = candidatsRef
+                .orderBy("dateCandidature", Query.Direction.ASCENDING)
                 .whereEqualTo("postId", postId)
                 .addSnapshotListener { snapshot, e ->
                     val response = if (snapshot != null) {
@@ -253,5 +245,22 @@ class MainEntrepriseRepository {
         awaitClose {
             snapshotStateListener?.remove()
         }
+    }
+
+
+    fun getApplicantProfile(
+        applicantId: String,
+        onError: (Throwable) -> Unit,
+        onSuccess: (CompteEntreprise.Post.Candidat?) -> Unit,
+    ) {
+        candidatsRef
+            .document(applicantId)
+            .get()
+            .addOnSuccessListener {
+                onSuccess.invoke(it?.toObject(CompteEntreprise.Post.Candidat::class.java))
+            }
+            .addOnFailureListener { reslut ->
+                reslut.cause?.let { onError.invoke(it) }
+            }
     }
 }

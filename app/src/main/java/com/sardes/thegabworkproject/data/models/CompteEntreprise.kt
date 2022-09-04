@@ -3,18 +3,20 @@ package com.sardes.thegabworkproject.data.models
 import com.google.firebase.Timestamp
 
 data class CompteEntreprise(
-    val idCompteEntreprise: String = "",
-    val nomEntreprise: String = "",
-    val secteurDActivite: String = "",
-    val descriptionEntreprise: String = "",
+    val entrepriseId: String = "",
+    val nom: String = "",
+    val activite: String = "",
+    val description: String = "",
     val ville: String = "",
-    val emailEntreprise: String = "",
+    val province: String = "",
+    val email: String = "",
     val telephone: String = "",
-    val adressEntreprise: String = "",
-    val siteWebEntreprise: String? = "",
-    val urlLogoEntreprise: String? = "",
-    val dateCreationCompte: Timestamp? = null,
-    val dateCreationEntreprise: Timestamp? = Timestamp.now(),
+    val adresse: String = "",
+    val siteWeb: String? = "",
+    val nombreEmployes: String = "",
+    val urlLogo: String? = "",
+    val dateCreationCompte: Timestamp? = Timestamp.now(),
+    val dateCreationEntreprise: Timestamp? = null,
     val typeDeCompte:String = "Entreprise",
 ){
     data class Post(
@@ -32,7 +34,7 @@ data class CompteEntreprise(
         val typeDEmploi: String = "",
         val adresse: String = "",
         val dateLimite: Timestamp? = null,
-        val prerequis: String = "",
+        val competences: List<String> = emptyList(),
         val emploiOuStage: String = "",
         val actif: Boolean = true
     ){
@@ -46,12 +48,13 @@ data class CompteEntreprise(
         data class Candidat(
             val PostId: String = "",
             val candidatId: String = "",
-            val nomCandidat: String = "",
-            val occupationCandidat: String = "",
+            val nomComplet: String = "",
+            val occupation: String = "",
+            val urlPhoto: String? = null,
             val dateCandidature: Timestamp? = null,
         )
 
-        data class ListeEtudiants(
+        data class EtudiantCandidat(
             val PostEmploiId: String,
             val ProfilEtudiantId: String,
             val dateSoumission: String,

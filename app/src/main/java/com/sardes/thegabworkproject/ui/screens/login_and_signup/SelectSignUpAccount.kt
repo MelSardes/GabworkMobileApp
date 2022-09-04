@@ -26,9 +26,9 @@ import com.sardes.thegabworkproject.ui.theme.*
 
 @Composable
 fun SelectSignUpAccount(
-    onNavToEntrepriseSignUpAccount: () -> Unit,
-    onNavToIndependantSignUpAccount: () -> Unit,
-    onNavToStandardSignUpAccount: () -> Unit,
+    onNavToEntrepriseSignUpAccount: () -> Unit = {},
+    onNavToIndependantSignUpAccount: () -> Unit = {},
+    onNavToStandardSignUpAccount: () -> Unit = {},
 ) {
     Column(
         modifier = Modifier.fillMaxSize()

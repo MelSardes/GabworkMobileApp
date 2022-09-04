@@ -57,13 +57,13 @@ class ProfileEntrepriseViewModel(
 
     private fun setEditFields(entreprise: CompteEntreprise){
         informationsUiState = informationsUiState.copy(
-            nomEntreprise = entreprise.nomEntreprise,
-            secteurDActivite = entreprise.secteurDActivite,
-            descriptionEntreprise = entreprise.descriptionEntreprise,
+            nomEntreprise = entreprise.nom,
+            secteurDActivite = entreprise.activite,
+            descriptionEntreprise = entreprise.description,
             ville = entreprise.ville,
-            emailEntreprise = entreprise.emailEntreprise,
-            siteWebEntreprise = entreprise.siteWebEntreprise,
-            urlLogoEntreprise = entreprise.urlLogoEntreprise,
+            emailEntreprise = entreprise.email,
+            siteWebEntreprise = entreprise.siteWeb,
+            urlLogoEntreprise = entreprise.urlLogo,
             dateCreationCompte = entreprise.dateCreationCompte!!,
         )
     }

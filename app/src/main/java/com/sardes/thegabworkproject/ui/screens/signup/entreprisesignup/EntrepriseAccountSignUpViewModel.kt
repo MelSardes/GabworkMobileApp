@@ -97,23 +97,23 @@ class EntrepriseAccountSignUpViewModel(
         if (hasUser){
             repository.addEntrepriseInformations(
                 entrepriseId = entreprise!!.uid,
-                entrepriseName = signUpUiState.entrepriseName,
-                phone = signUpUiState.phone,
+                nom = signUpUiState.entrepriseName,
+                telephone = signUpUiState.phone,
                 email = signUpUiState.entrepriseMail,
-                city = signUpUiState.city,
-                activityArea = signUpUiState.activityArea,
+                ville = signUpUiState.city,
+                activite = signUpUiState.activityArea,
                 description = signUpUiState.description,
-                address = signUpUiState.address,
-                website = signUpUiState.website,
-                urlLogo = "https://" +
+                adresse = signUpUiState.address,
+                siteWeb = signUpUiState.website,
+                urlLogoEntreprise = "https://" +
                         "firebasestorage.googleapis.com/v0/b/" +
                         "thegabworkprojecttest.appspot.com/o/" +
                         "userProfile%2Fentreprise%2F" +
                         "${entreprise!!.uid}__profile__entreprise.jpg" +
                         "?alt=media",
-                Logo = signUpUiState.logo,
-                timestamp = Timestamp.now(),
-                creationDate = signUpUiState.creationDate,
+                logoEntreprise = signUpUiState.logo,
+                dateCreationCompte = Timestamp.now(),
+                dateCreationEntreprise = signUpUiState.creationDate,
             ){
                 signUpUiState = signUpUiState.copy(informationsAddedStatus = it)
             }

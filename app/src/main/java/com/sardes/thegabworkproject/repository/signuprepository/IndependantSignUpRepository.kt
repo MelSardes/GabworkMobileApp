@@ -10,6 +10,7 @@ import com.sardes.thegabworkproject.data.models.CompteIndependant
 
 
 const val COMPTES_INDEPENDANT_COLLECTION_REF = "ComptesIndependant"
+private const val USERS_COLLECTION_REF = "Users"
 
 
 class IndependantSignUpRepository {
@@ -18,54 +19,75 @@ class IndependantSignUpRepository {
 
     private val comptesIndependantRef: CollectionReference = Firebase
         .firestore.collection(COMPTES_INDEPENDANT_COLLECTION_REF)
+    private val usersRef: CollectionReference = Firebase
+        .firestore.collection((USERS_COLLECTION_REF))
+
 
     fun addUserInformations(
         userId: String,
-        userName: String,
-        userForeName: String,
-        userPassword: String,
-        sex: String,
-        phone: String,
+        nom: String,
+        prenom: String,
+        sexe: String,
+        telephone: String,
         email: String,
-        city: String,
-        nationality: String,
-        address: String,
+        ville: String,
+        nationalite: String,
+        adresse: String,
         urlPhoto: String,
         photo: Uri?,
         competences: String,
-        website: String,
-        timestamp: Timestamp,
-        onComplete: (Boolean) -> Unit
-    ){
+        siteWeb: String,
+        dateCreationCompte: Timestamp,
+        typeDeCompte:String = "Independant",
+
+        onComplete: (Boolean) -> Unit,
+    ) {
         val independantUser = CompteIndependant(
             userId,
-            userName,
-            userForeName,
-            userPassword,
-            sex,
-            phone,
+            nom,
+            prenom,
+            sexe,
+            telephone,
             email,
-            city,
-            nationality,
-            address,
+            ville,
+            nationalite,
+            adresse,
             urlPhoto,
             competences,
-            website,
-            timestamp
+            siteWeb,
+            dateCreationCompte,
+            typeDeCompte,
         )
+
+        val userType = hashMapOf(
+            "UID" to userId,
+            "account" to typeDeCompte
+        )
+
+
 
         if (photo != null) {
             storageRef.child(
-                "userProfile/standard/${userId}__profile__independant.jpg")
+                "userProfile/independant/${userId}__profile__independant.jpg"
+            )
                 .putFile(photo)
         }
 
         comptesIndependantRef
             .document(userId)
             .set(independantUser)
-            .addOnCompleteListener {result ->
+            .addOnCompleteListener { result ->
                 onComplete.invoke(result.isSuccessful)
             }
+
+
+        usersRef
+            .document(userId)
+            .set(userType)
+            .addOnCompleteListener { result ->
+                onComplete.invoke(result.isSuccessful)
+            }
+
     }
 }
 

@@ -57,8 +57,8 @@ class NewPostViewModel(
         postUiState = postUiState.copy(dateLimite = dateLimite)
     }
 
-    fun onPrerequisChange(prerequis: String) {
-        postUiState = postUiState.copy(prerequis = prerequis)
+    fun onSkillsChange(competences: List<String>) {
+        postUiState = postUiState.copy(competences = competences)
     }
     fun onExperienceChange(experience: String) {
         postUiState = postUiState.copy(experience = experience)
@@ -88,7 +88,7 @@ class NewPostViewModel(
                 ville = postUiState.ville,
                 province = postUiState.province,
                 dateLimite = postUiState.dateLimite,
-                prerequis = postUiState.prerequis,
+                competences = postUiState.competences,
                 emploiOuStage = postUiState.emploiOuStage,
             ) {
                 postUiState = postUiState.copy(postAddedStatus = it)
@@ -108,7 +108,7 @@ class NewPostViewModel(
             domaine = post.domaine,
             experience = post.experience,
             dateLimite = post.dateLimite,
-            prerequis = post.prerequis,
+            competences = post.competences,
             emploiOuStage = post.emploiOuStage,
         )
     }
@@ -177,7 +177,7 @@ data class PostUiState(
     val domaine: String = "",
     val experience: String = "",
     val dateLimite: Timestamp? = null,
-    val prerequis: String = "",
+    val competences: List<String> = emptyList(),
     val emploiOuStage: String = "",
 
     val postAddedStatus: Boolean = false,

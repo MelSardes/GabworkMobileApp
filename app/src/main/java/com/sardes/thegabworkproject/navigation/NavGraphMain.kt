@@ -10,8 +10,16 @@ import androidx.navigation.navigation
 import com.sardes.thegabworkproject.R
 import com.sardes.thegabworkproject.ui.screens.GetStartedScreen
 import com.sardes.thegabworkproject.ui.screens.control.AuthControl
+import com.sardes.thegabworkproject.ui.screens.login.LoginScreen
 import com.sardes.thegabworkproject.ui.screens.login.LoginViewModel
+import com.sardes.thegabworkproject.ui.screens.login_and_signup.SelectSignUpAccount
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.EntrepriseMainPage
+import com.sardes.thegabworkproject.ui.screens.signup.entreprisesignup.EntrepriseAccountSignUpScreen
+import com.sardes.thegabworkproject.ui.screens.signup.entreprisesignup.EntrepriseAccountSignUpViewModel
+import com.sardes.thegabworkproject.ui.screens.signup.independantsignup.IndependantAccountSignUpSceen
+import com.sardes.thegabworkproject.ui.screens.signup.independantsignup.IndependantAccountSignUpViewModel
+import com.sardes.thegabworkproject.ui.screens.signup.standardsignup.StandardAccountSignUpViewModel
+import com.sardes.thegabworkproject.ui.screens.signup.standardsignup.StandardSignUpScreen
 import com.sardes.thegabworkproject.ui.screens.splash.SplashScreen
 
 sealed class Interface(val route: String) {
@@ -26,6 +34,15 @@ sealed class Interface(val route: String) {
     object SeekerInterface : Interface("SeekerInterface")
 }
 
+sealed class AuthInterfaceScreen(val route: String) {
+    object LoginScreen : AuthInterfaceScreen("LoginScreen")
+    object SignUpSelectScreen : AuthInterfaceScreen("SignUpSelectScreen")
+    object StandardSignUpScreen : AuthInterfaceScreen("StandardSignUpScreen")
+    object IndependantSignUpScreen : AuthInterfaceScreen("IndependantSignUpScreen")
+    object EntrepriseSignUpScreen : AuthInterfaceScreen("EntrepriseSignUpScreen")
+    object StudentSignUpScreen : AuthInterfaceScreen("StudentSignUpScreen")
+    object SeekerSignUpScreen : AuthInterfaceScreen("SeekerSignUpScreen")
+}
 
 sealed class HomeInterfaceScreen(val route: String) {
     object Splash : HomeInterfaceScreen("Splash")
@@ -34,14 +51,36 @@ sealed class HomeInterfaceScreen(val route: String) {
 }
 
 sealed class EntrepriseInterfaceScreen(var route: String, var icon: Int, var title: String) {
-    object EntrepriseMain           : EntrepriseInterfaceScreen("EntrepriseInterface/EntrepriseMain", 0, "")
-    object EntrepriseMainNavigation : EntrepriseInterfaceScreen("EntrepriseInterface/MainNavigation", 0, "")
+    object EntrepriseMain : EntrepriseInterfaceScreen("EntrepriseInterface/EntrepriseMain", 0, "")
+    object EntrepriseMainNavigation :
+        EntrepriseInterfaceScreen("EntrepriseInterface/MainNavigation", 0, "")
 
-    object EntrepriseHome           : EntrepriseInterfaceScreen("EntrepriseInterface/EntrepriseHome",       R.drawable.ic_home,     "Home")
-    object EntreprisePosts          : EntrepriseInterfaceScreen("EntrepriseInterface/EntreprisePosts",      R.drawable.ic_post,     "Posts")
-    object EntrepriseSearch         : EntrepriseInterfaceScreen("EntrepriseInterface/EntrepriseSearch",     R.drawable.ic_search,   "Chercher")
-    object EntrepriseMessages       : EntrepriseInterfaceScreen("EntrepriseInterface/EntrepriseMessages",   R.drawable.ic_message,  "Messages")
-    object EntrepriseProfile        : EntrepriseInterfaceScreen("EntrepriseInterface/EntrepriseProfile",    R.drawable.ic_person,   "Profil")
+    object EntrepriseHome :
+        EntrepriseInterfaceScreen("EntrepriseInterface/EntrepriseHome", R.drawable.ic_home, "Home")
+
+    object EntreprisePosts : EntrepriseInterfaceScreen(
+        "EntrepriseInterface/EntreprisePosts",
+        R.drawable.ic_post,
+        "Posts"
+    )
+
+    object EntrepriseSearch : EntrepriseInterfaceScreen(
+        "EntrepriseInterface/EntrepriseSearch",
+        R.drawable.ic_search,
+        "Chercher"
+    )
+
+    object EntrepriseMessages : EntrepriseInterfaceScreen(
+        "EntrepriseInterface/EntrepriseMessages",
+        R.drawable.ic_message,
+        "Messages"
+    )
+
+    object EntrepriseProfile : EntrepriseInterfaceScreen(
+        "EntrepriseInterface/EntrepriseProfile",
+        R.drawable.ic_person,
+        "Profil"
+    )
 }
 
 sealed class SeekerInterfaceScreen(val route: String) {
@@ -93,20 +132,25 @@ sealed class IndependantInterfaceScreen(val route: String) {
 sealed class EntrepriseHomeScreen(val route: String) {
     object EntrepriseHomeMain : EntrepriseHomeScreen("EntrepriseInterface/EntrepriseHome/Main")
 
-    object EntrepriseHomePost       : EntrepriseHomeScreen("EntrepriseInterface/EntrepriseHome/Post")
-    object EntrepriseHomeApplicant  : EntrepriseHomeScreen("EntrepriseInterface/EntrepriseHome/Applicant")
+    object EntrepriseHomePost : EntrepriseHomeScreen("EntrepriseInterface/EntrepriseHome/Post")
+    object EntrepriseHomeApplicant :
+        EntrepriseHomeScreen("EntrepriseInterface/EntrepriseHome/Applicant")
 
-    object EntrepriseHomeStudent :  EntrepriseHomeScreen("EntrepriseInterface/EntrepriseHome/Student")
+    object EntrepriseHomeStudent :
+        EntrepriseHomeScreen("EntrepriseInterface/EntrepriseHome/Student")
 
-    object EntrepriseHomeIndependant :  EntrepriseHomeScreen("EntrepriseInterface/EntrepriseHome/Independant")
+    object EntrepriseHomeIndependant :
+        EntrepriseHomeScreen("EntrepriseInterface/EntrepriseHome/Independant")
 }
 
 sealed class EntrepriseSearchScreen(val route: String) {
-    object EntrepriseSearchMain : EntrepriseSearchScreen("EntrepriseInterface/EntrepriseSearch/Main")
+    object EntrepriseSearchMain :
+        EntrepriseSearchScreen("EntrepriseInterface/EntrepriseSearch/Main")
 }
 
 sealed class EntrepriseMessagesScreen(val route: String) {
-    object EntrepriseMessagesMain : EntrepriseMessagesScreen("EntrepriseInterface/EntrepriseMessages/Main")
+    object EntrepriseMessagesMain :
+        EntrepriseMessagesScreen("EntrepriseInterface/EntrepriseMessages/Main")
 }
 
 sealed class EntreprisePostsScreen(val route: String) {
@@ -128,7 +172,12 @@ sealed class EntrepriseProfileScreen(val route: String) {
 
 
 @Composable
-fun NavGraphMain(loginViewModel: LoginViewModel? = null) {
+fun NavGraphMain(
+    loginViewModel: LoginViewModel? = null,
+    standardAccountSignUpViewModel: StandardAccountSignUpViewModel,
+    independantAccountSignUpViewModel: IndependantAccountSignUpViewModel,
+    entrepriseAccountSignUpViewModel: EntrepriseAccountSignUpViewModel,
+) {
     val navController = rememberNavController()
 
     NavHost(
@@ -136,10 +185,118 @@ fun NavGraphMain(loginViewModel: LoginViewModel? = null) {
         startDestination = Interface.HomeInterface.route
     ) {
 
-        homeInterfaceGraph(navController)
+        homeInterfaceGraph(navController, loginViewModel)
+
+        authInterfaceGraph(
+            navController,
+            loginViewModel,
+            standardAccountSignUpViewModel,
+            independantAccountSignUpViewModel,
+            entrepriseAccountSignUpViewModel
+        )
 
         entrepriseInterfaceGraph()
     }
+}
+
+
+fun NavGraphBuilder.authInterfaceGraph(
+    navController: NavHostController,
+    loginViewModel: LoginViewModel?,
+    standardAccountSignUpViewModel: StandardAccountSignUpViewModel?,
+    independantAccountSignUpViewModel: IndependantAccountSignUpViewModel?,
+    entrepriseAccountSignUpViewModel: EntrepriseAccountSignUpViewModel?,
+) {
+    navigation(
+        route = Interface.AuthInterface.route,
+        startDestination = AuthInterfaceScreen.LoginScreen.route
+    ) {
+        composable(route = AuthInterfaceScreen.LoginScreen.route) {
+            LoginScreen(
+                navToEntrepriseInterface = {
+                    navController.navigate(Interface.EntrepriseInterface.route) {
+                        launchSingleTop = true
+                        popUpTo(route = AuthInterfaceScreen.LoginScreen.route) {
+                            inclusive = true
+                        }
+                    }
+                },
+                loginViewModel = loginViewModel
+            ) {
+                navController.navigate(AuthInterfaceScreen.SignUpSelectScreen.route) {
+                    launchSingleTop = true
+                    popUpTo(AuthInterfaceScreen.LoginScreen.route) {
+                        inclusive = true
+                    }
+                }
+            }
+        }
+    }
+
+    composable(route = AuthInterfaceScreen.SignUpSelectScreen.route){
+        SelectSignUpAccount(
+            onNavToEntrepriseSignUpAccount = {
+                navController.navigate(AuthInterfaceScreen.EntrepriseSignUpScreen.route) {
+                    launchSingleTop = true
+                    popUpTo(route = AuthInterfaceScreen.SignUpSelectScreen.route) {
+                        inclusive = true
+                    }
+                }
+            }
+        )
+    }
+
+
+    composable(route = AuthInterfaceScreen.StandardSignUpScreen.route) {
+        StandardSignUpScreen(
+            navToStandardInterface = {
+                navController.navigate(Interface.StandardInterface.route) {
+                    launchSingleTop = true
+                    popUpTo(AuthInterfaceScreen.StandardSignUpScreen.route) {
+                        inclusive = true
+                    }
+                }
+            },
+            viewModel = standardAccountSignUpViewModel
+        ) {
+            navController.navigate(AuthInterfaceScreen.LoginScreen.route)
+        }
+    }
+
+
+    composable(route = AuthInterfaceScreen.IndependantSignUpScreen.route) {
+        IndependantAccountSignUpSceen(
+            navToIndependantInterface = {
+                navController.navigate(Interface.IndependantInterface.route) {
+                    launchSingleTop = true
+                    popUpTo(AuthInterfaceScreen.IndependantSignUpScreen.route) {
+                        inclusive = true
+                    }
+                }
+            },
+            viewModel = independantAccountSignUpViewModel
+        ) {
+            navController.navigate(AuthInterfaceScreen.LoginScreen.route)
+        }
+    }
+
+
+    composable(route = AuthInterfaceScreen.EntrepriseSignUpScreen.route) {
+        EntrepriseAccountSignUpScreen(
+            navToEntrepriseInterface = {
+                navController.navigate(Interface.EntrepriseInterface.route) {
+                    popUpTo(AuthInterfaceScreen.EntrepriseSignUpScreen.route) {
+                        inclusive = true
+                    }
+                }
+            },
+            viewModel = entrepriseAccountSignUpViewModel
+        ) {
+            navController.navigate(AuthInterfaceScreen.LoginScreen.route)
+        }
+    }
+
+
 }
 
 fun NavGraphBuilder.entrepriseInterfaceGraph() {
@@ -147,66 +304,22 @@ fun NavGraphBuilder.entrepriseInterfaceGraph() {
         route = Interface.EntrepriseInterface.route,
         startDestination = EntrepriseInterfaceScreen.EntrepriseMain.route
     ) {
-        composable(EntrepriseInterfaceScreen.EntrepriseMain.route){
+        composable(EntrepriseInterfaceScreen.EntrepriseMain.route) {
             EntrepriseMainPage()
         }
 
     }
 }
 
-/*
-fun NavGraphBuilder.entrepriseMainNavigation(navController: NavHostController) {
-    navigation(
-        route = EntrepriseInterfaceScreen.EntrepriseMain.route,
-        startDestination = EntrepriseInterfaceScreen.EntrepriseHome.route
-    ) {
-        composable(EntrepriseInterfaceScreen.EntrepriseHome.route) {
-            HomeEntrepriseScreen(
-                onPostClick = {},
-                newPost = {}
-            )
-        }
-
-        composable(EntreprisePostsScreen.EntreprisePostsApplicants.route) {
-            PostsEntrepriseScreen(
-                CreatePost = { navController.navigate(EntreprisePostsScreen.EntrepriseNewPost.route) }
-            ) { postId ->
-                navController.navigate(EntreprisePostsScreen.EntreprisePostsApplicants.route + "?id=$postId") {
-                    launchSingleTop = true
-                }
-            }
-        }
-
-        composable(EntrepriseInterfaceScreen.EntrepriseSearch.route){
-            SearchEntrepriseScreen()
-        }
-
-        composable(EntrepriseInterfaceScreen.EntrepriseMessages.route){
-            MessagesEntrepriseScreen()
-        }
-
-        composable(EntrepriseInterfaceScreen.EntrepriseMessages.route){
-            MessagesEntrepriseScreen()
-        }
-
-        composable(EntrepriseInterfaceScreen.EntrepriseProfile.route){
-            ProfileEntrepriseScreen()
-        }
-    }
-}
-*/
-
-
-//==============================================================
-//
-//=============================================================
-
-private fun NavGraphBuilder.homeInterfaceGraph(navController: NavHostController) {
+private fun NavGraphBuilder.homeInterfaceGraph(
+    navController: NavHostController,
+    loginViewModel: LoginViewModel?,
+) {
     navigation(
         route = Interface.HomeInterface.route,
         startDestination = HomeInterfaceScreen.Splash.route
     ) {
-        addSplashScreen(navController = navController)
+        addSplashScreen(navController = navController, loginViewModel)
 
         composable(HomeInterfaceScreen.Control.route) {
             AuthControl(
@@ -232,14 +345,23 @@ private fun NavGraphBuilder.homeInterfaceGraph(navController: NavHostController)
     }
 }
 
-private fun NavGraphBuilder.addSplashScreen(navController: NavHostController) {
+private fun NavGraphBuilder.addSplashScreen(
+    navController: NavHostController,
+    loginViewModel: LoginViewModel?,
+) {
     composable(HomeInterfaceScreen.Splash.route) {
         SplashScreen(
-            navToMain = {
-                navController.navigate(Interface.EntrepriseInterface.route) {
+            navToEntrepriseInterface = {
+                navController.navigate(AuthInterfaceScreen.EntrepriseSignUpScreen.route) {
                     popUpTo(HomeInterfaceScreen.Splash.route) { inclusive = true }
                 }
             },
+            navToLogin = {
+                navController.navigate(AuthInterfaceScreen.LoginScreen.route){
+                    popUpTo(HomeInterfaceScreen.Splash.route) { inclusive = true }
+                }
+            },
+            loginViewModel = loginViewModel
         )
     }
 }

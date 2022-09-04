@@ -55,7 +55,6 @@ fun EntrepriseMainPage() {
                     postsViewModel,
                     newPostViewModel
                 )
-//                Text("Mel SARDES failed again")
             }
         },
         backgroundColor = Color.White// Set background color to avoid the white flashing when you switch between screens
@@ -132,100 +131,9 @@ fun EntrepriseMainNavigation(
             ProfileEntrepriseScreen()
         }
 
-/*
-        composable(NavigationItem.Start.route) {
-            GetStartedScreen(null, {}) {}
-        }
-*/
     }
 }
 
-/*
-fun NavGraphBuilder.homeEntrepriseScreen(navController: NavController) {
-    navigation(
-        route = EntrepriseInterfaceScreen.EntrepriseHome.route,
-        startDestination = EntrepriseHomeScreen.EntrepriseHomeMain.route
-    ){
-        composable(EntrepriseHomeScreen.EntrepriseHomeMain.route) {
-            HomeEntrepriseScreen()
-        }
-    }
-}
-
-fun NavGraphBuilder.postsEntrepriseScreen(navController: NavController){
-    navigation(
-        route = EntrepriseInterfaceScreen.EntreprisePosts.route,
-        startDestination = EntreprisePostsScreen.EntreprisePostsMain.route
-    ){
-        composable(EntreprisePostsScreen.EntreprisePostsMain.route){
-            PostsEntrepriseScreen(
-                CreatePost = { navController.navigate(EntreprisePostsScreen.EntrepriseNewPost.route) }
-            ) { postId ->
-                navController.navigate(EntreprisePostsScreen.EntreprisePostsApplicants.route + "?id=$postId") {
-                    launchSingleTop = true
-                }
-            }
-        }
-
-        composable(EntreprisePostsScreen.EntrepriseNewPost.route) {
-            NewPostScreen() {
-                navController.navigateUp()
-            }
-        }
-
-        composable(
-            route = EntreprisePostsScreen.EntreprisePostsApplicants.route + "?id={id}",
-            arguments = listOf(navArgument("id") {
-                type = NavType.StringType
-                defaultValue = ""
-            })
-        ) { entry ->
-            ApplicantsScreen(
-                postId = entry.arguments?.getString("id") as String
-            ) {
-                navController.navigateUp()
-            }
-        }
-
-
-    }
-}
-
-fun NavGraphBuilder.searchEntrepriseScreen(navController: NavController){
-    navigation(
-        route = EntrepriseInterfaceScreen.EntrepriseSearch.route,
-        startDestination = EntrepriseSearchScreen.EntrepriseSearchMain.route
-    ) {
-        composable(EntrepriseSearchScreen.EntrepriseSearchMain.route) {
-            SearchEntrepriseScreen()
-        }
-    }
-}
-
-fun NavGraphBuilder.messagesEntrepriseScreen(navController: NavController){
-    navigation(
-        route = EntrepriseInterfaceScreen.EntrepriseMessages.route,
-        startDestination = EntrepriseMessagesScreen.EntrepriseMessagesMain.route
-    ) {
-        composable(EntrepriseMessagesScreen.EntrepriseMessagesMain.route) {
-            MessagesEntrepriseScreen()
-        }
-    }
-}
-
-fun NavGraphBuilder.profileEntrepriseScreen(navController: NavController){
-    navigation(
-        route = EntrepriseInterfaceScreen.EntrepriseProfile.route,
-        startDestination = EntrepriseProfileScreen.EntrepriseProfileMain.route
-    ) {
-        composable(EntrepriseProfileScreen.EntrepriseProfileMain.route) {
-            ProfileEntrepriseScreen()
-        }
-    }
-}
-
-
-*/
 
 
 @SuppressLint("MaterialDesignInsteadOrbitDesign")

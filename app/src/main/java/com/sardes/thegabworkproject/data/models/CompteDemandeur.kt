@@ -3,7 +3,7 @@ package com.sardes.thegabworkproject.data.models
 import com.google.firebase.Timestamp
 
 data class CompteDemandeur(
-    val idCompteDemandeur: String = "",
+    val userId: String = "",
     val nom: String = "",
     val prenom: String = "",
     val sexe: String = "",
@@ -12,7 +12,7 @@ data class CompteDemandeur(
     val ville: String = "",
     val nationalite: String = "",
     val adresse: String = "",
-    val urlPhotoProfil: String = "",
+    val urlPhoto: String = "",
     val dateCreationCompte: Timestamp = Timestamp.now(),
     val urlCV: String? = "",
     val occupation: String = "",

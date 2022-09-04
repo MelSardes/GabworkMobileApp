@@ -46,10 +46,10 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sardes.thegabworkproject.R
+import com.sardes.thegabworkproject.ui.composition.AnimatedText
 import com.sardes.thegabworkproject.ui.composition.dotBackground
 import com.sardes.thegabworkproject.ui.screens.login.LoginViewModel
 import kotlinx.coroutines.delay
@@ -59,24 +59,27 @@ import kotlin.random.Random
 @SuppressLint("MaterialDesignInsteadOrbitDesign", "UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun SplashScreen(
-    navToMain: () -> Unit = {},
+    loginViewModel: LoginViewModel?,
+
     navToLogin: () -> Unit = {},
-    loginViewModel: LoginViewModel = LoginViewModel(),
+
+    navToEntrepriseInterface: () -> Unit = {},
+    navToDemandeurInterface: () -> Unit = {},
+    navToStandardInterface: () -> Unit = {},
+    navToStudentInterface: () -> Unit = {},
+    navToIndepedantInterface: () -> Unit = {},
 ) {
     val density = LocalDensity.current
     val dotBackground = MaterialTheme.colors.dotBackground
 
+    val loginUiState = loginViewModel?.loginUiState
+
+
     LaunchedEffect(Unit) {
-        delay(3000)
-
-        loginViewModel.hasUser
-
-        if (!loginViewModel.hasUser) {
-            navToLogin()
-        } else
-            navToMain()
-
+        loginViewModel?.loadUserAccountType()
+        loginViewModel?.hasUser
     }
+
 
     Scaffold {
 
@@ -183,7 +186,7 @@ fun SplashScreen(
 
             Image(
                 modifier = Modifier
-                    .size(128.dp)
+                    .size(200.dp)
                     .graphicsLayer {
                         alpha = animAlpha
                         rotationX = animRotation
@@ -196,6 +199,7 @@ fun SplashScreen(
                 contentDescription = stringResource(id = R.string.app_name)
             )
 
+
             AnimatedText(
                 text = stringResource(id = R.string.app_name),
                 modifier = Modifier
@@ -204,13 +208,26 @@ fun SplashScreen(
             )
         }
     }
+
+    if (loginViewModel?.hasUser == true) {
+        LaunchedEffect(loginUiState?.userType?.account) {
+            delay(3000)
+
+            when (loginUiState?.userType?.account) {
+                "Entreprise"    -> navToEntrepriseInterface.invoke()
+                "Demandeur"     -> navToDemandeurInterface.invoke()
+                "Standard"      -> navToStandardInterface.invoke()
+                "Etudiant"      -> navToStudentInterface.invoke()
+                "Independant"   -> navToIndepedantInterface.invoke()
+            }
+        }
+    } else {
+        LaunchedEffect(Unit) {
+            navToLogin()
+        }
+    }
 }
 
-@Preview
-@Composable
-fun SplashScreenPreview() {
-    SplashScreen({},{}, LoginViewModel())
-}
 
 @SuppressLint("MaterialDesignInsteadOrbitDesign")
 @Composable

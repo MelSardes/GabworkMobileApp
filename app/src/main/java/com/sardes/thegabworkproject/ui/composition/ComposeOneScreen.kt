@@ -190,7 +190,7 @@ fun ComposeOneScreen() {
                         scaleY = animScale
                     },
                 painter = painterResource(id = R.drawable.gabwork_logo_v2),
-                contentDescription = "Why Not Compose!"
+                contentDescription = "Gabwork logo"
             )
 
             AnimatedText(
@@ -244,7 +244,7 @@ fun AnimatedText(
 
             Text(
                 text = char.toString(),
-                fontSize = 24.sp,
+                fontSize = 30.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.graphicsLayer {
                     alpha = animAlpha

@@ -6,11 +6,14 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.ExposedDropdownMenuDefaults.TrailingIcon
 import androidx.compose.material.MaterialTheme.typography
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,6 +43,13 @@ fun NewPostScreen(
     val postUiState = postViewModel?.postUiState
 
     val scope = rememberCoroutineScope()
+
+
+    var skill by remember { mutableStateOf("") }
+    val skillList = remember {
+        mutableStateListOf<String>()
+    }
+
 
     LazyColumn(
         modifier = Modifier
@@ -293,10 +303,23 @@ fun NewPostScreen(
             val focusRequester = remember { FocusRequester() }
 
             OrbitTextField(
-                value = postUiState?.prerequis ?: "",
-                onValueChange = { postViewModel?.onPrerequisChange(it) },
+                value = skill,
+                onValueChange = { skill = it },
                 label = { OrbitText("Prérequis") }, /* TODO: MAKE A LIST FOR <PREREQUIS>*/
                 info = { OrbitText("Que voulez-vous pour ce post ?") },
+                trailingIcon = {
+                    OrbitIcon(
+                        imageVector = Icons.Default.Check,
+                        contentDescription = null
+                    )
+                },
+                onTrailingIconClick = {
+                    if (skill.isNotEmpty()) {
+                        skillList.add(skill)
+                        skill = ""
+                        postViewModel?.onSkillsChange(skillList)
+                    }
+                },
                 singleLine = false,
                 keyboardOptions = KeyboardOptions.Default.copy(
                     keyboardType = KeyboardType.Text,
@@ -306,6 +329,11 @@ fun NewPostScreen(
                     .focusRequester(focusRequester),
             )
             Spacer(modifier = Modifier.height(10.dp))
+
+        }
+
+        items(skillList){
+            OrbitText(text = it)
         }
 
 //        Description du post

@@ -10,62 +10,82 @@ import com.sardes.thegabworkproject.data.models.CompteEntreprise
 
 
 const val COMPTES_ENTREPRISE_COLLECTION_REF = "ComptesEntreprise"
-
+private const val USERS_COLLECTION_REF = "Users"
 
 
 class EntrepriseSignUpRepository {
 
-    var storageRef = Firebase.storage.reference
+    private var storageRef = Firebase.storage.reference
 
 
-    private val comptesEntrepriseRef : CollectionReference = Firebase
+    private val comptesEntrepriseRef: CollectionReference = Firebase
         .firestore.collection(COMPTES_ENTREPRISE_COLLECTION_REF)
+
+
+    private val usersRef: CollectionReference = Firebase
+        .firestore.collection((USERS_COLLECTION_REF))
 
     fun addEntrepriseInformations(
         entrepriseId: String,
-        entrepriseName: String,
-        activityArea: String,
+        nom: String,
+        activite: String,
         description: String,
-        city: String,
+        ville: String,
         email: String,
-        phone: String,
-        address: String,
-        website: String,
-        urlLogo: String,
-        Logo: Uri?,
-        creationDate: Timestamp,
-        timestamp: Timestamp?,
-        onComplete: (Boolean) -> Unit
-    ){
+        telephone: String,
+        adresse: String,
+        siteWeb: String,
+        logoEntreprise: Uri?,
+        urlLogoEntreprise: String,
+        dateCreationCompte: Timestamp,
+        dateCreationEntreprise: Timestamp,
+        typeDeCompte:String = "Entreprise",
+
+        onComplete: (Boolean) -> Unit,
+    ) {
         val entreprise = CompteEntreprise(
             entrepriseId,
-            entrepriseName,
-            activityArea,
+            nom,
+            activite,
             description,
-            city,
+            ville,
             email,
-            phone,
-            address,
-            website,
-            urlLogo,
-            timestamp,
-            creationDate,
+            telephone,
+            adresse,
+            siteWeb,
+            urlLogoEntreprise,
+            dateCreationCompte,
+            dateCreationEntreprise,
+            typeDeCompte,
         )
 
-        if (Logo != null) {
+        val userType = hashMapOf(
+            "UID" to entrepriseId,
+            "account" to typeDeCompte
+        )
+
+
+
+        if (logoEntreprise != null) {
             storageRef.child(
-                "userProfile/entreprise/${entrepriseId}__profile__entreprise.jpg")
-                .putFile(Logo)
+                "userProfile/entreprise/${entrepriseId}__profile__entreprise.jpg"
+            )
+                .putFile(logoEntreprise)
         }
 
         comptesEntrepriseRef
             .document(entrepriseId)
             .set(entreprise)
-            .addOnCompleteListener {result ->
+            .addOnCompleteListener { result ->
                 onComplete.invoke(result.isSuccessful)
             }
 
-
+        usersRef
+            .document(entrepriseId)
+            .set(userType)
+            .addOnCompleteListener { result ->
+                onComplete.invoke(result.isSuccessful)
+            }
     }
 
 

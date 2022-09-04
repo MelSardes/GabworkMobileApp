@@ -61,8 +61,13 @@ class PostsEntrepriseViewModel (
     }
 
 
+//===================================================================
+//      GET DATA FORM REPOSITORY
+//===================================================================
 
-
+//-------------------------------------------------------------------
+//      GET POSTS
+//-------------------------------------------------------------------
     private fun getActivePosts(entrepriseId : String) = viewModelScope.launch {
         repository.getActivePosts(entrepriseId).collect{
             postsEntrepriseUiState = postsEntrepriseUiState.copy(postList = it)
@@ -78,7 +83,6 @@ class PostsEntrepriseViewModel (
             postsEntrepriseUiState = postsEntrepriseUiState.copy(postList = it)
         }
     }
-
 
 }
 

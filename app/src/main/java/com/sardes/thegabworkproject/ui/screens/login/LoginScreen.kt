@@ -27,15 +27,20 @@ import com.sardes.thegabworkproject.R
 import kiwi.orbit.compose.ui.controls.Scaffold
 
 
-@SuppressLint("UnrememberedMutableState", "UnusedMaterialScaffoldPaddingParameter",
+@SuppressLint(
+    "UnrememberedMutableState", "UnusedMaterialScaffoldPaddingParameter",
     "MaterialDesignInsteadOrbitDesign"
 )
 @Composable
 fun LoginScreen(
     loginViewModel: LoginViewModel? = null,
-    onNavToMainPage:() -> Unit,
-    onNavToSelectSignUpPage:() -> Unit,
-//    navController: NavController
+    navToEntrepriseInterface: () -> Unit = {},
+    navToDemandeurInterface: () -> Unit = {},
+    navToStandardInterface: () -> Unit = {},
+    navToIndepedantInterface: () -> Unit = {},
+    navToStudentInterface: () -> Unit = {},
+
+    onNavToSelectSignUpPage: () -> Unit = {},
 ) {
 
     val loginUiState = loginViewModel?.loginUiState
@@ -54,7 +59,7 @@ fun LoginScreen(
 //    }
 
     Scaffold {
-        Box{
+        Box {
             Image(
                 painter = painterResource(id = R.drawable.perroquet),
                 contentDescription = "perroquet",
@@ -68,7 +73,7 @@ fun LoginScreen(
                 horizontalAlignment = CenterHorizontally,
                 verticalArrangement = Arrangement.Top,
 
-            ) {
+                ) {
                 Image(
                     painter = painterResource(id = R.drawable.gabwork_logo),
                     contentDescription = "App Logo",
@@ -112,7 +117,10 @@ fun LoginScreen(
                                 value = loginUiState?.userMail ?: "",
                                 onValueChange = { loginViewModel?.onUserEmailChange(it) },
                                 label = { Text(text = "Email") },
-                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email, imeAction = ImeAction.Next),
+                                keyboardOptions = KeyboardOptions(
+                                    keyboardType = KeyboardType.Email,
+                                    imeAction = ImeAction.Next
+                                ),
                                 singleLine = true,
                                 leadingIcon = {
                                     Icon(
@@ -123,7 +131,10 @@ fun LoginScreen(
                                 trailingIcon = {
                                     if (userEmail.isNotBlank())
                                         IconButton(onClick = { userEmail = "" }) {
-                                            Icon(imageVector = Icons.Filled.Clear, contentDescription = "")
+                                            Icon(
+                                                imageVector = Icons.Filled.Clear,
+                                                contentDescription = ""
+                                            )
                                         }
                                 },
                                 isError = isError
@@ -142,10 +153,15 @@ fun LoginScreen(
                                         contentDescription = null
                                     )
                                 },
-                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Done),
+                                keyboardOptions = KeyboardOptions(
+                                    keyboardType = KeyboardType.Password,
+                                    imeAction = ImeAction.Done
+                                ),
                                 visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                                 trailingIcon = {
-                                    IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
+                                    IconButton(onClick = {
+                                        isPasswordVisible = !isPasswordVisible
+                                    }) {
                                         Icon(
                                             imageVector = if (isPasswordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
                                             contentDescription = "Password Toggle"
@@ -157,7 +173,7 @@ fun LoginScreen(
 
                             Spacer(modifier = Modifier.height(16.dp))
                             Button(
-                                onClick = { loginViewModel?.loginUser(context)},
+                                onClick = { loginViewModel?.loginUser(context) },
                                 shape = RoundedCornerShape(162.dp),
                                 modifier = Modifier.fillMaxWidth()
                             ) {
@@ -168,7 +184,7 @@ fun LoginScreen(
                                 modifier = Modifier.fillMaxWidth(),
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
-                                TextButton(onClick = {onNavToSelectSignUpPage.invoke()}) {
+                                TextButton(onClick = { onNavToSelectSignUpPage.invoke() }) {
                                     Text(text = "Inscription")
                                 }
                                 TextButton(onClick = { }) {
@@ -176,13 +192,29 @@ fun LoginScreen(
                                 }
                             }
 
-                            if (loginUiState?.isLoading == true){
+                            if (loginUiState?.isLoading == true) {
                                 CircularProgressIndicator()
                             }
 
-                            LaunchedEffect(key1 = loginViewModel?.hasUser){
-                                if (loginViewModel?.hasUser == true){
-                                    onNavToMainPage.invoke()
+                            if(loginUiState?.isSuccessLogin == true){
+                                LaunchedEffect(key1 = Unit) {
+                                    loginViewModel.hasUser
+                                    loginViewModel.loadUserAccountType()
+                                }
+                            }
+
+//                            -----------------------------------------------------------------------
+//                            DETERMINE WHAT INTERFACE SHOW TO THE USER ACCORDING TO HIS ACCOUNT TYPE
+//                            -----------------------------------------------------------------------
+                            if (loginViewModel?.hasUser == true) {
+                                LaunchedEffect(loginUiState?.userType?.account) {
+                                    when (loginUiState?.userType?.account) {
+                                        "Entreprise" -> navToEntrepriseInterface.invoke()
+                                        "Demandeur" -> navToDemandeurInterface.invoke()
+                                        "Standard" -> navToStandardInterface.invoke()
+                                        "Etudiant" -> navToStudentInterface.invoke()
+                                        "Independant" -> navToIndepedantInterface.invoke()
+                                    }
                                 }
                             }
                         }
@@ -198,7 +230,5 @@ fun LoginScreen(
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun PreviewLogIn(){
-    LoginScreen(onNavToMainPage = { /*TODO*/ }) {
-        
-    }
+    LoginScreen()
 }

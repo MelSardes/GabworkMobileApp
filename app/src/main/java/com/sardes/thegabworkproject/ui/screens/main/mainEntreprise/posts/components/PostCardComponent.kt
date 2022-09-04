@@ -26,7 +26,7 @@ import com.sardes.thegabworkproject.ui.theme.TailwindCSSColor.Pink900
 @Composable
 fun PostCardComponent(
     post: CompteEntreprise.Post?,
-    onCardClick: () -> Unit,
+    onCardClick: () -> Unit =  {},
 ) {
     Card(
         shape = RoundedCornerShape(10.dp),

@@ -49,7 +49,7 @@ class StandardAccountSignUpViewModel(
     fun createUser(context: Context) = viewModelScope.launch {
         try {
             if (!validateSignUpForm()){
-                throw IllegalArgumentException("Les champs email et mot de passe doivent être rempli")
+                throw IllegalArgumentException("Les champs marqués d'une étoile(*) doivent être remplis")
             }
 
             signUpUiState = signUpUiState.copy(isLoading = true)
@@ -74,7 +74,7 @@ class StandardAccountSignUpViewModel(
 
                     Toast.makeText(
                         context,
-                        "Compte créé avec succès",
+                        "Bienvenu, vous êtes désormais un Gabworker",
                         Toast.LENGTH_SHORT
                     ).show()
                     signUpUiState = signUpUiState.copy(isSuccessLogin = true)
@@ -100,15 +100,14 @@ class StandardAccountSignUpViewModel(
         if (hasUser){
             repository.addUserInformations(
                 userId = user!!.uid,
-                userName = signUpUiState.userName,
-                userForeName = signUpUiState.foreName,
-                userPassword = signUpUiState.password,
-                sex = signUpUiState.sex,
-                phone = signUpUiState.phone,
+                nom = signUpUiState.userName,
+                prenom = signUpUiState.foreName,
+                sexe = signUpUiState.sex,
+                telephone = signUpUiState.phone,
                 email = signUpUiState.userMail,
-                city = signUpUiState.city,
-                nationality = signUpUiState.nationality,
-                address = signUpUiState.address,
+                ville = signUpUiState.city,
+                nationalite = signUpUiState.nationality,
+                adresse = signUpUiState.address,
                 urlPhoto = "https://" +
                         "firebasestorage.googleapis.com/v0/b/" +
                         "thegabworkprojecttest.appspot.com/o/" +
@@ -116,7 +115,7 @@ class StandardAccountSignUpViewModel(
                         "${user!!.uid}__profile__standard.jpg" +
                         "?alt=media",
                 photo = signUpUiState.photo,
-                timestamp = Timestamp.now()
+                dateCreationCompte = Timestamp.now()
             ){
                 signUpUiState = signUpUiState.copy(informationsAddedStatus = it)
             }

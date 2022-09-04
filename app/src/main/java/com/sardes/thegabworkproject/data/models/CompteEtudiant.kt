@@ -3,22 +3,21 @@ package com.sardes.thegabworkproject.data.models
 import com.google.firebase.Timestamp
 
 data class CompteEtudiant(
-    val idCompteEtudiant: String,
-    val nomCompteEtudiant: String,
-    val prenomCompteEtudiant: String,
-    val motDePasseCompteEtudiant: String,
-    val sexeCompteEtudiant: String,
-    val telephoneCompteEtudiant: String,
-    val emailCompteEtudiant: String= "",
-    val ville: String,
-    val nationaliteCompteEtudiant: String,
-    val adressCompteEtudiant: String,
-    val urlPhotoProfilCompteEtudiant: String,
-    val dateCreationCompteEtudiant: Timestamp,
-    val universiteActuelle: String,
+    val userId: String = "",
+    val nom: String = "",
+    val prenom: String = "",
+    val sexe: String = "",
+    val telephone: String = "",
+    val email: String = "",
+    val ville: String = "",
+    val nationalite: String = "",
+    val adresse: String = "",
+    val urlPhoto: String = "",
+    val dateCreationCompte: Timestamp = Timestamp.now(),
+    val universiteActuelle: String = "",
     val dateDebut: Timestamp,
-    val cycleActuel: String,
-    val filliereActuelle: String,
+    val cycleActuel: String = "",
+    val filliereActuelle: String = "",
     val typeDeCompte:String = "Etudiant"
 ) {
     data class ParcoursEtudiant(

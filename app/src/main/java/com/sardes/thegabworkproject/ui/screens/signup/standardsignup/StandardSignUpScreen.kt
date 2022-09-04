@@ -32,7 +32,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
@@ -43,19 +42,21 @@ import com.sardes.thegabworkproject.ui.screens.signup.imageUri
 import com.sardes.thegabworkproject.ui.theme.YellowFlag
 
 
-@SuppressLint("UnrememberedMutableState", "UnusedMaterialScaffoldPaddingParameter",
-    "MaterialDesignInsteadOrbitDesign")
+@SuppressLint(
+    "UnrememberedMutableState", "UnusedMaterialScaffoldPaddingParameter",
+    "MaterialDesignInsteadOrbitDesign"
+)
 @Composable
 fun StandardSignUpScreen(
-    viewModel: StandardAccountSignUpViewModel? = null,
-    onNavToMainPage:() -> Unit,
-    onNavToLoginPage:() -> Unit,
+    viewModel: StandardAccountSignUpViewModel?,
+    navToStandardInterface: () -> Unit,
+    onNavToLoginPage: () -> Unit,
 ) {
 
     val signUpUiState = viewModel?.signUpUiState
     val isError = signUpUiState?.signUpError != null
     val context = LocalContext.current
-    
+
     var isPasswordVisible by remember {
         mutableStateOf(false)
     }
@@ -69,7 +70,8 @@ fun StandardSignUpScreen(
     var userNationality by remember { mutableStateOf("") }
 
     val selectImage = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.GetContent()) { uri: Uri? ->
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
         imageUri.value = uri
     }
 
@@ -96,21 +98,28 @@ fun StandardSignUpScreen(
                 Box(
                     modifier = Modifier
                         .weight(1f)
-                ){
-                    Box(modifier = Modifier
-                        .size(102.dp)
-                        .clip(CircleShape)
-                        .background(Color.Gray)
-                        .align(Alignment.Center)
-                        .border(width = 2.dp, color = Color.White, shape = CircleShape)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(102.dp)
+                            .clip(CircleShape)
+                            .background(Color.Gray)
+                            .align(Alignment.Center)
+                            .border(width = 2.dp, color = Color.White, shape = CircleShape)
                     ) {
 
                         if (imageUri.value != null) {
                             TextButton(
                                 onClick = { selectImage.launch("image/*") },
-                                modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.2f))
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .background(Color.Black.copy(alpha = 0.2f))
                             ) {
-                                Text("Choisir une photo de profil", color = YellowFlag, textAlign = TextAlign.Center)
+                                Text(
+                                    "Choisir une photo de profil",
+                                    color = YellowFlag,
+                                    textAlign = TextAlign.Center
+                                )
 
                             }
                             Image(
@@ -119,7 +128,7 @@ fun StandardSignUpScreen(
                                 contentScale = ContentScale.Crop,
                                 contentDescription = "image",
                             )
-                        }else{
+                        } else {
                             Image(
                                 modifier = Modifier.fillMaxSize(),
                                 painter = painterResource(id = R.drawable.ic_placeholder),
@@ -128,9 +137,15 @@ fun StandardSignUpScreen(
                             )
                             TextButton(
                                 onClick = { selectImage.launch("image/*") },
-                                modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.2f))
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .background(Color.Black.copy(alpha = 0.2f))
                             ) {
-                                Text("Choisir une image", color = YellowFlag, textAlign = TextAlign.Center)
+                                Text(
+                                    "Choisir une image",
+                                    color = YellowFlag,
+                                    textAlign = TextAlign.Center
+                                )
                             }
                         }
 
@@ -196,7 +211,10 @@ fun StandardSignUpScreen(
                                     trailingIcon = {
                                         if (userEmail.isNotBlank())
                                             IconButton(onClick = { userEmail = "" }) {
-                                                Icon(imageVector = Icons.Filled.Clear, contentDescription = "")
+                                                Icon(
+                                                    imageVector = Icons.Filled.Clear,
+                                                    contentDescription = ""
+                                                )
                                             }
                                     },
                                     isError = isError
@@ -223,7 +241,9 @@ fun StandardSignUpScreen(
                                     ),
                                     visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                                     trailingIcon = {
-                                        IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
+                                        IconButton(onClick = {
+                                            isPasswordVisible = !isPasswordVisible
+                                        }) {
                                             Icon(
                                                 imageVector = if (isPasswordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
                                                 contentDescription = "Password Toggle"
@@ -249,10 +269,15 @@ fun StandardSignUpScreen(
                                             contentDescription = null
                                         )
                                     },
-                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Next),
+                                    keyboardOptions = KeyboardOptions(
+                                        keyboardType = KeyboardType.Password,
+                                        imeAction = ImeAction.Next
+                                    ),
                                     visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                                     trailingIcon = {
-                                        IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
+                                        IconButton(onClick = {
+                                            isPasswordVisible = !isPasswordVisible
+                                        }) {
                                             Icon(
                                                 imageVector = if (isPasswordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
                                                 contentDescription = "Password Toggle"
@@ -278,11 +303,17 @@ fun StandardSignUpScreen(
                                             contentDescription = null
                                         )
                                     },
-                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Next),
+                                    keyboardOptions = KeyboardOptions(
+                                        keyboardType = KeyboardType.Text,
+                                        imeAction = ImeAction.Next
+                                    ),
                                     trailingIcon = {
                                         if (userName.isNotBlank())
                                             IconButton(onClick = { userName = "" }) {
-                                                Icon(imageVector = Icons.Filled.Clear, contentDescription = "")
+                                                Icon(
+                                                    imageVector = Icons.Filled.Clear,
+                                                    contentDescription = ""
+                                                )
                                             }
                                     },
                                     isError = isError
@@ -306,11 +337,17 @@ fun StandardSignUpScreen(
                                             contentDescription = null
                                         )
                                     },
-                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Next),
+                                    keyboardOptions = KeyboardOptions(
+                                        keyboardType = KeyboardType.Text,
+                                        imeAction = ImeAction.Next
+                                    ),
                                     trailingIcon = {
                                         if (userForename.isNotBlank())
                                             IconButton(onClick = { userForename = "" }) {
-                                                Icon(imageVector = Icons.Filled.Clear, contentDescription = "")
+                                                Icon(
+                                                    imageVector = Icons.Filled.Clear,
+                                                    contentDescription = ""
+                                                )
                                             }
                                     },
                                     isError = isError
@@ -357,11 +394,17 @@ fun StandardSignUpScreen(
                                             contentDescription = null
                                         )
                                     },
-                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Next),
+                                    keyboardOptions = KeyboardOptions(
+                                        keyboardType = KeyboardType.Text,
+                                        imeAction = ImeAction.Next
+                                    ),
                                     trailingIcon = {
                                         if (userPhone.isNotBlank())
                                             IconButton(onClick = { userPhone = "" }) {
-                                                Icon(imageVector = Icons.Filled.Clear, contentDescription = "")
+                                                Icon(
+                                                    imageVector = Icons.Filled.Clear,
+                                                    contentDescription = ""
+                                                )
                                             }
                                     },
                                     isError = isError
@@ -384,17 +427,23 @@ fun StandardSignUpScreen(
                                             contentDescription = null
                                         )
                                     },
-                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Next),
+                                    keyboardOptions = KeyboardOptions(
+                                        keyboardType = KeyboardType.Text,
+                                        imeAction = ImeAction.Next
+                                    ),
                                     trailingIcon = {
                                         if (userCity.isNotBlank())
                                             IconButton(onClick = { userCity = "" }) {
-                                                Icon(imageVector = Icons.Filled.Clear, contentDescription = "")
+                                                Icon(
+                                                    imageVector = Icons.Filled.Clear,
+                                                    contentDescription = ""
+                                                )
                                             }
                                     },
                                     isError = isError
                                 )
 
-                            Spacer(modifier = Modifier.height(16.dp))
+                                Spacer(modifier = Modifier.height(16.dp))
                             }
 
                             // USER NATIONALITY
@@ -411,11 +460,17 @@ fun StandardSignUpScreen(
                                             contentDescription = null
                                         )
                                     },
-                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Next),
+                                    keyboardOptions = KeyboardOptions(
+                                        keyboardType = KeyboardType.Text,
+                                        imeAction = ImeAction.Next
+                                    ),
                                     trailingIcon = {
                                         if (userNationality.isNotBlank())
                                             IconButton(onClick = { userNationality = "" }) {
-                                                Icon(imageVector = Icons.Filled.Clear, contentDescription = "")
+                                                Icon(
+                                                    imageVector = Icons.Filled.Clear,
+                                                    contentDescription = ""
+                                                )
                                             }
                                     },
 
@@ -439,11 +494,17 @@ fun StandardSignUpScreen(
                                             contentDescription = null
                                         )
                                     },
-                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Next),
+                                    keyboardOptions = KeyboardOptions(
+                                        keyboardType = KeyboardType.Text,
+                                        imeAction = ImeAction.Next
+                                    ),
                                     trailingIcon = {
                                         if (userAddress.isNotBlank())
                                             IconButton(onClick = { userAddress = "" }) {
-                                                Icon(imageVector = Icons.Filled.Clear, contentDescription = "")
+                                                Icon(
+                                                    imageVector = Icons.Filled.Clear,
+                                                    contentDescription = ""
+                                                )
                                             }
                                     },
 
@@ -456,14 +517,14 @@ fun StandardSignUpScreen(
 
                             item {
                                 Button(
-                                    onClick = { viewModel?.createUser(context)},
+                                    onClick = { viewModel?.createUser(context) },
                                     modifier = Modifier.fillMaxWidth(),
                                     shape = RoundedCornerShape(162.dp)
                                 ) {
                                     Text(text = "Je m'inscit")
                                 }
 
-                            Spacer(modifier = Modifier.weight(1f))
+                                Spacer(modifier = Modifier.weight(1f))
                             }
 
                             item {
@@ -471,7 +532,7 @@ fun StandardSignUpScreen(
                                     modifier = Modifier.fillMaxWidth(),
                                     horizontalArrangement = Arrangement.SpaceBetween
                                 ) {
-                                    TextButton(onClick = {onNavToLoginPage.invoke()}) {
+                                    TextButton(onClick = { onNavToLoginPage.invoke() }) {
                                         Text(text = "Déjà Gabworker ? \n Je me connecte")
                                     }
                                 }
@@ -480,13 +541,13 @@ fun StandardSignUpScreen(
 
                         }
 
-                        if (signUpUiState?.isLoading == true){
+                        if (signUpUiState?.isLoading == true) {
                             CircularProgressIndicator()
                         }
 
-                        LaunchedEffect(key1 = viewModel?.hasUser){
-                            if (viewModel?.hasUser == true){
-                                onNavToMainPage.invoke()
+                        LaunchedEffect(key1 = viewModel?.hasUser) {
+                            if (viewModel?.hasUser == true) {
+                                navToStandardInterface.invoke()
                             }
                         }
                     }
@@ -496,31 +557,14 @@ fun StandardSignUpScreen(
     }
 }
 
-
-
-
-
-
-
-
-
+/*
 
 @Preview("SignUp", showBackground = true, showSystemUi = true)
 @Composable
 fun PreviewLogIn() {
-    StandardSignUpScreen(onNavToMainPage = { /*TODO*/ }) {
+    StandardSignUpScreen(navToStandardInterface = { */
+/*TODO*//*
+ }) {
     }
 }
-
-
-
-
-
-
-/*
-@Preview(showSystemUi = true, showBackground = true)
-@Composable
-fun StandardSignUpRebuildPreview() {
-    StandardSignUpRebuild()
-
-}*/
+*/

@@ -6,20 +6,19 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
-import com.sardes.thegabworkproject.data.models.CompteStandard
+import com.sardes.thegabworkproject.data.models.CompteEtudiant
 
 
-const val COMPTES_STANDARD_COLLECTION_REF = "ComptesStandard"
+private val COMPTES_ETUDIANT_COLLECTION_REF = "ComptesDemandeur"
 private const val USERS_COLLECTION_REF = "Users"
 
 
-class StandardSignUpRepository {
+class EtudiantSignUpRepository {
 
     var storageRef = Firebase.storage.reference
 
-    private val comptesStandardRef: CollectionReference = Firebase
-        .firestore.collection(COMPTES_STANDARD_COLLECTION_REF)
-
+    private val comptesIndependantRef: CollectionReference = Firebase
+        .firestore.collection(COMPTES_ETUDIANT_COLLECTION_REF)
 
     private val usersRef: CollectionReference = Firebase
         .firestore.collection((USERS_COLLECTION_REF))
@@ -35,14 +34,17 @@ class StandardSignUpRepository {
         ville: String,
         nationalite: String,
         adresse: String,
-        urlPhoto: String,
         photo: Uri?,
+        urlPhoto: String,
         dateCreationCompte: Timestamp,
-        typeDeCompte:String = "Standard",
-
+        universiteActuelle: String,
+        dateDebut: Timestamp,
+        cycleActuel: String,
+        filliereActuelle: String,
+        typeDeCompte: String = "Etudiant",
         onComplete: (Boolean) -> Unit,
     ) {
-        val standardUser = CompteStandard(
+        val studentUser = CompteEtudiant(
             userId,
             nom,
             prenom,
@@ -54,6 +56,10 @@ class StandardSignUpRepository {
             adresse,
             urlPhoto,
             dateCreationCompte,
+            universiteActuelle,
+            dateDebut,
+            cycleActuel,
+            filliereActuelle,
             typeDeCompte,
         )
 
@@ -64,17 +70,16 @@ class StandardSignUpRepository {
 
 
 
-
         if (photo != null) {
             storageRef.child(
-                "userProfile/standard/${userId}__profile__standard.jpg"
+                "userProfile/etudiant/${userId}__profile__etudiant.jpg"
             )
                 .putFile(photo)
         }
 
-        comptesStandardRef
+        comptesIndependantRef
             .document(userId)
-            .set(standardUser)
+            .set(studentUser)
             .addOnCompleteListener { result ->
                 onComplete.invoke(result.isSuccessful)
             }

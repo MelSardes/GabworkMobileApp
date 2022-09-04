@@ -123,7 +123,7 @@ fun NavGraphBuilder.authGraph(
 
         composable(route = Screen.Login.route){
             LoginScreen(
-                onNavToMainPage = {
+                navToEntrepriseInterface = {
                     navController.navigate(Screen.MainEntreprise.route){
                         launchSingleTop = true
                         popUpTo(route = Screen.Login.route){
@@ -144,7 +144,7 @@ fun NavGraphBuilder.authGraph(
 
         composable(route = Screen.StandardSignUp.route){
             StandardSignUpScreen(
-                onNavToMainPage = {
+                navToStandardInterface = {
                     navController.navigate(Screen.EntrepriseMain.route){
                         launchSingleTop = true
                         popUpTo(Screen.StandardSignUp.route){
@@ -160,7 +160,7 @@ fun NavGraphBuilder.authGraph(
 
         composable(route = Screen.IndependantSignUp.route){
             IndependantAccountSignUpSceen(
-                onNavToMainPage = {
+                navToIndependantInterface = {
                     navController.navigate(Screen.EntrepriseMain.route){
                         launchSingleTop = true
                         popUpTo(Screen.IndependantSignUp.route){
@@ -176,7 +176,7 @@ fun NavGraphBuilder.authGraph(
 
         composable(route = Screen.EntrepriseSignUp.route){
             EntrepriseAccountSignUpScreen(
-                onNavToMainPage = {
+                navToEntrepriseInterface = {
                     navController.navigate(Screen.EntrepriseMain.route){
                         popUpTo(Screen.Login.route){
                             inclusive = true

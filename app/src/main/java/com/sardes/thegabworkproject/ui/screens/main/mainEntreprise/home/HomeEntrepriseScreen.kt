@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.TopAppBar
@@ -23,12 +24,15 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.google.accompanist.insets.LocalWindowInsets
 import com.sardes.thegabworkproject.R
 import com.sardes.thegabworkproject.repository.ressources.Ressources
@@ -46,7 +50,6 @@ fun HomeEntrepriseScreen(
     homeEntrepriseViewModel: HomeEntrepriseViewModel?,
     onPostClick: (id: String) -> Unit = {},
 ) {
-//    val scaffoldState = rememberScaffoldState()
 
     val homeUiState = homeEntrepriseViewModel?.homeEntrepriseUiState ?: HomeEntrepriseUiState()
     val scrollState = rememberLazyListState()
@@ -56,66 +59,50 @@ fun HomeEntrepriseScreen(
     }
 
     Box(modifier = Modifier.background(Color.White)) {
-        when (homeUiState.homePostList) {
-            is Ressources.Loading -> {
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .wrapContentSize(align = Alignment.Center)
-                )
-            }
+        Content(homeUiState, scrollState, onPostClick)
 
-            is Ressources.Success -> {
-                LazyColumn(
-                    contentPadding = PaddingValues(top = AppBarExpendedHeight),
-                    state = scrollState
-                ) {
-                    items(homeUiState.homePostList.data ?: emptyList()) { post ->
-                        PostCardComponent(post) { onPostClick(post.postId)}
-                    }
+        ParallaxToolbar(
+            scrollState,
+            homeUiState.entrepriseInformations?.urlLogo.toString(),
+            homeUiState.entrepriseInformations?.nom.toString()
+        )
 
-/*
-                item {
-                    LazyRow(modifier = Modifier.padding(10.dp)) {
-                        item {
-                            SeekerCardComponent(
-                                demandeur = CompteDemandeur(
-                                    nom = "SARDES",
-                                    prenom = "Mel",
-                                    occupation = "Developpeur blockchain",
-                                    urlPhotoProfil = R.drawable.black_businessman_in_blue_suit_waving_hello.toString()
-                                )
-                            )
-                            Spacer(Modifier.width(10.dp))
-                        }
+    }
+}
 
-                        item {
-                            SeekerCardComponent(
-                                demandeur = CompteDemandeur(
-                                    nom = "MAKOSSO",
-                                    prenom = "Loïck",
-                                    occupation = "Developpeur android",
-                                    urlPhotoProfil = R.drawable.business_3d.toString()
-                                )
-                            )
-                        }
-                    }
+@Composable
+private fun Content(
+    homeUiState: HomeEntrepriseUiState,
+    scrollState: LazyListState,
+    onPostClick: (id: String) -> Unit,
+) {
+    when (homeUiState.homePostList) {
+        is Ressources.Loading -> {
+            CircularProgressIndicator(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .wrapContentSize(align = Alignment.Center)
+            )
+        }
+
+        is Ressources.Success -> {
+            LazyColumn(
+                contentPadding = PaddingValues(top = AppBarExpendedHeight),
+                state = scrollState
+            ) {
+                items(homeUiState.homePostList.data ?: emptyList()) { post ->
+                    PostCardComponent(post) { onPostClick(post.postId) }
                 }
-*/
-                }
-            }
-
-            else -> {
-                Text(
-                    text = homeUiState.homePostList.throwable?.localizedMessage
-                        ?: "OOPS!\nUne erreur s'est produite",
-                    color = Color.Red
-                )
             }
         }
 
-        ParallaxToolbar(scrollState)
-
+        else -> {
+            Text(
+                text = homeUiState.homePostList.throwable?.localizedMessage
+                    ?: "OOPS!\nUne erreur s'est produite",
+                color = Color.Red
+            )
+        }
     }
 }
 
@@ -124,6 +111,8 @@ fun HomeEntrepriseScreen(
 @Composable
 fun ParallaxToolbar(
     scrollState: LazyListState,
+    dataImage: String,
+    dataName: String
 ) {
     val imageHeight = AppBarExpendedHeight - AppBarCollapsedHeight
 
@@ -164,7 +153,7 @@ fun ParallaxToolbar(
                         .background(
                             Brush.verticalGradient(
                                 colorStops = arrayOf(
-                                    Pair(0.5f, Color.Transparent),
+                                    Pair(0.25f, Color.Transparent),
                                     Pair(1f, Color.White)
                                 )
                             )
@@ -178,7 +167,7 @@ fun ParallaxToolbar(
                     verticalAlignment = Alignment.Bottom
                 ) {
                     Text(
-                        "Péroquet gris du Gabon",
+                        "Bonjour",
                         fontWeight = FontWeight.Medium,
                         color = BlueFlag,
                         modifier = Modifier
@@ -192,11 +181,13 @@ fun ParallaxToolbar(
             Column(
                 Modifier
                     .fillMaxWidth()
-                    .height(AppBarCollapsedHeight),
+                    .height(AppBarCollapsedHeight)
+                    .padding(horizontal = 20.dp),
                 verticalArrangement = Arrangement.Center
             ) {
-                androidx.compose.material.Text(
-                    "Bonjour",
+                Text(
+                    if (dataName == null) dataName
+                    else "",
                     style = MaterialTheme.typography.h5.copy(fontWeight = FontWeight.Bold),
                     color = BlueFlag,
                     modifier = Modifier
@@ -216,8 +207,20 @@ fun ParallaxToolbar(
             .height(AppBarCollapsedHeight)
             .padding(horizontal = 16.dp)
     ) {
-        CircularButton(R.drawable.ic_business_100)
-        CircularButton(R.drawable.ic_search)
+        CircularButton(kiwi.orbit.compose.icons.R.drawable.ic_orbit_menu_hamburger)
+        AsyncImage(
+            model = ImageRequest
+                .Builder(LocalContext.current)
+                .data(dataImage)
+                .crossfade(true)
+                .crossfade(1000)
+                .placeholder(R.drawable.ic_person)
+                .build(),
+            contentDescription = null,
+            modifier = Modifier.size(38.dp).clip(shape = CircleShape),
+            contentScale = ContentScale.Crop,
+        )
+
     }
 }
 

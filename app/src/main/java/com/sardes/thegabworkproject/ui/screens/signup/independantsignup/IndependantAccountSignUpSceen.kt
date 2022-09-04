@@ -48,7 +48,7 @@ import com.sardes.thegabworkproject.ui.theme.YellowFlag
 @Composable
 fun IndependantAccountSignUpSceen(
     viewModel: IndependantAccountSignUpViewModel? = null,
-    onNavToMainPage:() -> Unit,
+    navToIndependantInterface:() -> Unit,
     onNavToLoginPage:() -> Unit
 ) {
 
@@ -540,7 +540,7 @@ fun IndependantAccountSignUpSceen(
 
                         LaunchedEffect(key1 = viewModel?.hasUser){
                             if (viewModel?.hasUser == true){
-                                onNavToMainPage.invoke()
+                                navToIndependantInterface.invoke()
                             }
                         }
                     }

@@ -24,15 +24,14 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.sardes.thegabworkproject.R
-import com.sardes.thegabworkproject.data.models.CompteDemandeur
+import com.sardes.thegabworkproject.data.models.CompteEntreprise
 
 @SuppressLint("MaterialDesignInsteadOrbitDesign")
 @Composable
 fun SeekerCardComponent(
-    modifier: Modifier = Modifier,
-    demandeur: CompteDemandeur
+    candidat: CompteEntreprise.Post.Candidat,
 ) {
-    Box(modifier.fillMaxWidth()) {
+    Box(modifier = Modifier.fillMaxWidth()) {
         Card(
             elevation = 4.dp,
             backgroundColor = Color.White,
@@ -42,7 +41,7 @@ fun SeekerCardComponent(
                 .padding(8.dp)
                 .clickable(onClick = {})
         ) {
-            Column (verticalArrangement = Arrangement.SpaceBetween){
+            Column(verticalArrangement = Arrangement.SpaceBetween) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
@@ -52,7 +51,7 @@ fun SeekerCardComponent(
                 ) {
                     AsyncImage(
                         model = ImageRequest.Builder(LocalContext.current)
-                            .data(demandeur.urlPhotoProfil)
+                            .data(candidat.urlPhoto)
                             .crossfade(true)
                             .placeholder(R.drawable.account_box_80)
                             .build(),
@@ -64,14 +63,14 @@ fun SeekerCardComponent(
                     )
                     Column {
                         Text(
-                            text = demandeur.nom + " " + demandeur.prenom,
+                            text = candidat.nomComplet,
                             style = typography.h6,
                             modifier = Modifier.padding(horizontal = 8.dp),
                             overflow = TextOverflow.Ellipsis,
                             maxLines = 1
                         )
                         Text(
-                            text = demandeur.occupation,
+                            text = candidat.occupation,
                             color = Color.Black.copy(alpha = 0.5f),
                             style = typography.body2,
                             modifier = Modifier.padding(horizontal = 8.dp)
@@ -92,14 +91,14 @@ fun SeekerCardComponent(
                 }
 
                 Divider(
-                    modifier
+                    modifier = Modifier
                         .padding(bottom = 5.dp)
                         .fillMaxWidth(0.6f)
                         .background(Color.Black.copy(alpha = 0.1f))
                         .align(CenterHorizontally)
                 )
 
-                Row (Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceAround){
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceAround) {
                     Button(
                         onClick = {},
                         modifier = Modifier
@@ -116,7 +115,9 @@ fun SeekerCardComponent(
                     }
                     OutlinedButton(
                         onClick = {},
-                        modifier = Modifier.padding(8.dp).weight(1f),
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .weight(1f),
                         shape = RoundedCornerShape(20.dp),
                         colors = ButtonDefaults.outlinedButtonColors(contentColor = Color(0xFF2972FE))
                     ) {
@@ -135,10 +136,10 @@ fun SeekerCardComponent(
 @Preview(name = "SeekerCardComponent")
 @Composable
 private fun PreviewSeekerCardComponent() {
-    SeekerCardComponent(demandeur = CompteDemandeur(
-        nom = "SARDES",
-        prenom = "Mel",
-        occupation = "Developpeur Android"
-    )
+    SeekerCardComponent(
+        candidat = CompteEntreprise.Post.Candidat(
+            nomComplet = "Mel SARDES",
+            occupation = "Developpeur Android"
+        )
     )
 }

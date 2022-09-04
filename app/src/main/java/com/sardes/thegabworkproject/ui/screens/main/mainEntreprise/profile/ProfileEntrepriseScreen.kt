@@ -96,11 +96,11 @@ fun ParallaxToolbar(
                     }
             ) {
 
-                if(profileUiState.currentUserEntreprise?.urlLogoEntreprise != null) {
+                if(profileUiState.currentUserEntreprise?.urlLogo != null) {
                     AsyncImage(
                         model = ImageRequest
                             .Builder(LocalContext.current)
-                            .data("${profileUiState.currentUserEntreprise.urlLogoEntreprise}")
+                            .data("${profileUiState.currentUserEntreprise.urlLogo}")
                             .crossfade(true)
                             .crossfade(1000)
                             .placeholder(R.drawable.ic_image)
@@ -140,7 +140,7 @@ fun ParallaxToolbar(
                     verticalAlignment = Alignment.Bottom
                 ) {
                     Text(
-                        "${profileUiState.currentUserEntreprise?.secteurDActivite}",
+                        "${profileUiState.currentUserEntreprise?.activite}",
                         fontWeight = FontWeight.Medium,
                         color = BlueFlag,
                         modifier = Modifier
@@ -158,7 +158,7 @@ fun ParallaxToolbar(
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(
-                    "${profileUiState.currentUserEntreprise?.nomEntreprise}",
+                    "${profileUiState.currentUserEntreprise?.nom}",
                     style = typography.h5.copy(fontWeight = FontWeight.Bold),
                     color = BlueFlag,
                     modifier = Modifier
@@ -216,7 +216,7 @@ fun Address(profileUiState: InformationsUiState) {
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 16.dp),
         )
         Text(
-            text = "${profileUiState.currentUserEntreprise?.adressEntreprise}",
+            text = "${profileUiState.currentUserEntreprise?.adresse}",
             fontWeight = FontWeight.Medium,
             modifier = Modifier.padding(horizontal = 16.dp),
         )
@@ -227,7 +227,7 @@ fun Address(profileUiState: InformationsUiState) {
 @Composable
 fun Description(profileUiState: InformationsUiState) {
     Text(
-        text = "${profileUiState.currentUserEntreprise?.descriptionEntreprise}",
+        text = "${profileUiState.currentUserEntreprise?.description}",
         style = typography.body1,
         modifier = Modifier.padding(horizontal = 16.dp, vertical = 16.dp),
     )
@@ -269,12 +269,12 @@ fun BasicInfo(profileUiState: InformationsUiState) {
             InfoColumn(
                 R.drawable.ic_web,
                 "Visitez",
-                "${profileUiState.currentUserEntreprise?.siteWebEntreprise}"
+                "${profileUiState.currentUserEntreprise?.siteWeb}"
             )
             InfoColumn(
                 R.drawable.ic_industry,
                 "Oeuvre dans le/la/les",
-                "${profileUiState.currentUserEntreprise?.secteurDActivite}"
+                "${profileUiState.currentUserEntreprise?.activite}"
             )
         }
         Spacer(modifier = Modifier.height(5.dp))
@@ -307,7 +307,7 @@ fun BasicInfo(profileUiState: InformationsUiState) {
             InfoColumn(
                 R.drawable.ic_email,
                 "Contactez",
-                "${profileUiState.currentUserEntreprise?.emailEntreprise}"
+                "${profileUiState.currentUserEntreprise?.email}"
             )
             InfoColumn(
                 kiwi.orbit.compose.ui.R.drawable.ic_orbit_phone,

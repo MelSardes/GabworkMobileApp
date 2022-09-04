@@ -6,20 +6,19 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
-import com.sardes.thegabworkproject.data.models.CompteStandard
+import com.sardes.thegabworkproject.data.models.CompteDemandeur
 
 
-const val COMPTES_STANDARD_COLLECTION_REF = "ComptesStandard"
+private const val COMPTES_DEMANDEUR_COLLECTION_REF = "ComptesDemandeur"
 private const val USERS_COLLECTION_REF = "Users"
 
 
-class StandardSignUpRepository {
+class DemandeurSignUpRepository {
 
     var storageRef = Firebase.storage.reference
 
-    private val comptesStandardRef: CollectionReference = Firebase
-        .firestore.collection(COMPTES_STANDARD_COLLECTION_REF)
-
+    private val comptesIndependantRef: CollectionReference = Firebase
+        .firestore.collection(COMPTES_DEMANDEUR_COLLECTION_REF)
 
     private val usersRef: CollectionReference = Firebase
         .firestore.collection((USERS_COLLECTION_REF))
@@ -35,14 +34,16 @@ class StandardSignUpRepository {
         ville: String,
         nationalite: String,
         adresse: String,
-        urlPhoto: String,
         photo: Uri?,
+        urlPhotoProfil: String,
         dateCreationCompte: Timestamp,
-        typeDeCompte:String = "Standard",
+        urlCV: String,
+        occupation: String,
+        typeDeCompte: String = "Demandeur",
 
         onComplete: (Boolean) -> Unit,
     ) {
-        val standardUser = CompteStandard(
+        val seekerUser = CompteDemandeur(
             userId,
             nom,
             prenom,
@@ -52,8 +53,10 @@ class StandardSignUpRepository {
             ville,
             nationalite,
             adresse,
-            urlPhoto,
+            urlPhotoProfil,
             dateCreationCompte,
+            urlCV,
+            occupation,
             typeDeCompte,
         )
 
@@ -64,17 +67,16 @@ class StandardSignUpRepository {
 
 
 
-
         if (photo != null) {
             storageRef.child(
-                "userProfile/standard/${userId}__profile__standard.jpg"
+                "userProfile/demandeur/${userId}__profile__demandeur.jpg"
             )
                 .putFile(photo)
         }
 
-        comptesStandardRef
+        comptesIndependantRef
             .document(userId)
-            .set(standardUser)
+            .set(seekerUser)
             .addOnCompleteListener { result ->
                 onComplete.invoke(result.isSuccessful)
             }

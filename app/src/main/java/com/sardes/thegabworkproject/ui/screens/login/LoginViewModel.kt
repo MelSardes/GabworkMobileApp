@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sardes.thegabworkproject.data.models.UserType
 import com.sardes.thegabworkproject.repository.AuthRepository
 import kotlinx.coroutines.launch
 
@@ -16,11 +17,16 @@ class LoginViewModel(
 
     val currenUser = repository.currentUser
 
+
+    val userId: String
+        get() = repository.getUserId()
+
+
     val hasUser: Boolean
         get() = repository.hasUser()
 
     var loginUiState by mutableStateOf(LoginUiState())
-        private set
+//        private set
 
     fun onUserEmailChange(userEmail: String){
         loginUiState = loginUiState.copy(userMail = userEmail)
@@ -71,6 +77,19 @@ class LoginViewModel(
         }
     }
 
+
+    fun loadUserAccountType(){
+        if(hasUser){
+            getUserAccountType(userId)
+        }
+    }
+
+    private fun getUserAccountType(userId: String){
+        repository.getUserAccountType(userId = userId, onError = {}){
+            loginUiState = loginUiState.copy(userType = it)
+        }
+    }
+
 }
 
 
@@ -82,4 +101,6 @@ data class LoginUiState(
     val isSuccessLogin: Boolean = false,
     val signUpError: String? = null,
     val loginError: String? = null,
+
+    val userType: UserType? = null
 )
