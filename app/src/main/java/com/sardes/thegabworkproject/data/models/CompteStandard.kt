@@ -14,5 +14,5 @@ data class CompteStandard(
     val adresse: String = "",
     val urlPhoto: String = "",
     val dateCreationCompte: Timestamp = Timestamp.now(),
-    val typeDeCompte:String = "Standard",
-    )
+    val typeDeCompte: String = "Standard",
+)

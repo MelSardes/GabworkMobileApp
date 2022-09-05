@@ -378,7 +378,6 @@ fun NewPostScreen(
 
 @SuppressLint("MaterialDesignInsteadOrbitDesign")
 @OptIn(ExperimentalMaterialApi::class)
-//@Preview(showBackground = true)
 @Composable
 fun SelectFieldScreenInner() {
     val options = listOf("Option 1", "Option 2", "Option 3", "Option 4", "Option 5")

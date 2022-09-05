@@ -3,7 +3,7 @@ package com.sardes.thegabworkproject.data
 import com.sardes.thegabworkproject.R
 import com.sardes.thegabworkproject.data.models.SecteursDActivite
 
-object OccupationsDataProvider {
+object ActivityAreaDataProvider {
 
 
 

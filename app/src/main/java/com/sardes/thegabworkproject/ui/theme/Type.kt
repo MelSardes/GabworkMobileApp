@@ -18,7 +18,7 @@ val yanone = FontFamily(
 )
 
 // Set of Material typography styles to start with
-val Typography = Typography(
+val GWTypography = Typography(
 
     body1 = TextStyle(
         fontFamily = yanone,

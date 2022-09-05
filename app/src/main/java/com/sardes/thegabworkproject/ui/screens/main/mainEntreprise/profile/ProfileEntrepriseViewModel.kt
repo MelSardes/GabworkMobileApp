@@ -31,8 +31,8 @@ class ProfileEntrepriseViewModel(
     fun onDescriptionEntrepriseChange(descriptionEntreprise: String){
         informationsUiState = informationsUiState.copy(descriptionEntreprise = descriptionEntreprise)
     }
-    fun onVilleChange(ville: String){
-        informationsUiState = informationsUiState.copy(ville = ville)
+    fun onVilleChange(villes: List<String>){
+        informationsUiState = informationsUiState.copy(villes = villes)
     }
     fun onEmailEntrepriseChange(emailEntreprise: String){
         informationsUiState = informationsUiState.copy(emailEntreprise = emailEntreprise)
@@ -60,7 +60,7 @@ class ProfileEntrepriseViewModel(
             nomEntreprise = entreprise.nom,
             secteurDActivite = entreprise.activite,
             descriptionEntreprise = entreprise.description,
-            ville = entreprise.ville,
+            villes = entreprise.villes,
             emailEntreprise = entreprise.email,
             siteWebEntreprise = entreprise.siteWeb,
             urlLogoEntreprise = entreprise.urlLogo,
@@ -91,7 +91,7 @@ class ProfileEntrepriseViewModel(
             nomEntreprise = informationsUiState.nomEntreprise,
             secteurDActivite = informationsUiState.secteurDActivite,
             descriptionEntreprise = informationsUiState.descriptionEntreprise,
-            ville = informationsUiState.ville,
+            villes = informationsUiState.villes,
             emailEntreprise = informationsUiState.emailEntreprise,
             telephone = informationsUiState.telephone,
             adresseEntreprise = informationsUiState.adressEntreprise,
@@ -110,7 +110,7 @@ data class InformationsUiState(
     val nomEntreprise: String = "",
     val secteurDActivite: String = "",
     val descriptionEntreprise: String = "",
-    val ville: String = "",
+    val villes: List<String> = emptyList(),
     val emailEntreprise: String = "",
     val telephone: String = "",
     val adressEntreprise: String = "",

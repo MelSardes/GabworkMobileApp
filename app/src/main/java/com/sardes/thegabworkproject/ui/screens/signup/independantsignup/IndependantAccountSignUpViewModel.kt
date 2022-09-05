@@ -43,7 +43,7 @@ class IndependantAccountSignUpViewModel (
                 signUpUiState.city.isNotBlank() &&
                 signUpUiState.sex.isNotBlank() &&
                 signUpUiState.phone.isNotBlank() &&
-                signUpUiState.skills.isNotBlank() &&
+                signUpUiState.skills.isNotEmpty() &&
                 signUpUiState.nationality.isNotBlank()
 
 
@@ -167,8 +167,8 @@ class IndependantAccountSignUpViewModel (
         signUpUiState = signUpUiState.copy(address = address)
     }
 
-    fun onSkillsChange(competemces: String){
-        signUpUiState = signUpUiState.copy(skills = competemces)
+    fun onSkillsChange(competences: List<String>){
+        signUpUiState = signUpUiState.copy(skills = competences)
     }
 
     fun onWebsiteChange(webisite: String){
@@ -193,7 +193,7 @@ class IndependantAccountSignUpViewModel (
         val city: String = "",
         val nationality: String = "",
         val address: String = "",
-        val skills: String = "",
+        val skills: List<String> = emptyList(),
         val webisite: String = "",
         val urlPhoto: String = "",
         val photo: Uri? = null,

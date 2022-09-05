@@ -125,7 +125,7 @@ fun SoloPostCardComponent(
 @Composable
 fun TestCard() {
     OrbitCard {
-        OrbitText(text = "Test")
+        OrbitText(text = "com.sardes.thegabworkproject.test.Test")
     }
 }
 

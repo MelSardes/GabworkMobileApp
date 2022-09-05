@@ -1,154 +1,229 @@
+package com.sardes.thegabworkproject.test
+
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import kiwi.orbit.compose.icons.Icons
-import kiwi.orbit.compose.ui.controls.*
+import com.sardes.thegabworkproject.ui.theme.GWTypography
+import com.sardes.thegabworkproject.ui.theme.GWpalette.CoolGrey
+import com.sardes.thegabworkproject.ui.theme.GWpalette.MaximumRed
+import com.sardes.thegabworkproject.ui.theme.TailwindCSSColor.Green500
+import kiwi.orbit.compose.ui.controls.Card
+import kiwi.orbit.compose.ui.controls.Surface
+import kiwi.orbit.compose.ui.controls.Text
+
+
+val surfaceColor = MaximumRed
 
 @Preview(showSystemUi = true)
 @Composable
 fun Test() {
 
-    var datumOne by remember { mutableStateOf("") }
-    var datumTwo by remember { mutableStateOf("") }
-    var datumThree by remember { mutableStateOf("") }
 
-    var isStepOneVisible by remember { mutableStateOf(true) }
-    var isStepTwoVisible by remember { mutableStateOf(false) }
-    var isStepThreeVisible by remember { mutableStateOf(false) }
+    var stepIndicator by remember { mutableStateOf(1) }
 
+    val focusRequester = remember { FocusRequester() }
 
-    Column(
-        modifier = Modifier,
-        verticalArrangement = Arrangement.SpaceEvenly
+    Surface(
+        modifier = Modifier
+            .fillMaxSize(),
+        color = surfaceColor
     ) {
-
-        Row(horizontalArrangement = Arrangement.SpaceAround) {
-            ButtonSecondary(onClick = {
-                isStepOneVisible = true
-                isStepTwoVisible = false
-                isStepThreeVisible = false
-            }) {
-                Text("Step 1")
-            }
-            ButtonSecondary(onClick = {
-                isStepOneVisible = false
-                isStepTwoVisible = true
-                isStepThreeVisible = false
-            }) {
-                Text("Step 2")
-            }
-            ButtonSecondary(onClick = {
-                isStepOneVisible = false
-                isStepTwoVisible = false
-                isStepThreeVisible = true
-            }) {
-                Text("Step 3")
-            }
-        }
-
-        Column(
-            Modifier.padding(horizontal = 30.dp),
-            verticalArrangement = Arrangement.Center
-        ) {
-            val focusRequester = remember { FocusRequester() }
-
-            if (isStepOneVisible) {
-                TextField(
-                    value = datumOne,
-                    onValueChange = { datumOne = it },
-                    label = { Text("Something in One") },
-                    info = { Text("Something else") },
-                    leadingIcon = {
-                        Icon(
-                            Icons.Check,
-                            contentDescription = null
-                        )
-                    },
-                    singleLine = false,
-                    keyboardOptions = KeyboardOptions.Default.copy(
-                        keyboardType = KeyboardType.Text,
-                    ),
+        Column(modifier = Modifier.fillMaxSize()) {
+            Column(modifier = Modifier.fillMaxHeight(0.2f)) {
+//            HEADER
+                Column(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .focusRequester(focusRequester),
-                )
-            }
-
-
-            if (isStepTwoVisible) {
-                TextField(
-                    value = datumTwo,
-                    onValueChange = { datumTwo = it },
-                    label = { Text("Something in Two") },
-                    info = { Text("Something else") },
-                    leadingIcon = {
-                        Icon(
-                            Icons.Check,
-                            contentDescription = null
+                        .padding(20.dp)
+                ) {
+                    Row(
+                        Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Start
+                    ) {
+                        Text(
+                            when (stepIndicator) {
+                                2 -> "33%"
+                                3 -> "66%"
+                                4 -> "100%"
+                                else -> ""
+                            },
+                            color = White,
+                            style = GWTypography.h5.copy(fontWeight = FontWeight.Bold)
                         )
-                    },
-                    singleLine = false,
-                    keyboardOptions = KeyboardOptions.Default.copy(
-                        keyboardType = KeyboardType.Text,
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .focusRequester(focusRequester),
-                )
-
-            }
-
-            if (isStepThreeVisible) {
-                TextField(
-                    value = datumThree,
-                    onValueChange = { datumThree = it },
-                    label = { Text("Something in Three") },
-                    info = { Text("Something else") },
-                    leadingIcon = {
-                        Icon(
-                            Icons.Check,
-                            contentDescription = null
+                        Spacer(modifier = Modifier.width(5.dp))
+                        Text(
+                            when (stepIndicator) {
+                                1 -> ""
+                                else -> "completé"
+                            },
+                            color = Color.LightGray,
+                            style = GWTypography.body2
                         )
-                    },
-                    singleLine = false,
-                    keyboardOptions = KeyboardOptions.Default.copy(
-                        keyboardType = KeyboardType.Text,
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .focusRequester(focusRequester),
-                )
-            }
-
-            if (!isStepOneVisible && !isStepTwoVisible && !isStepThreeVisible) {
-                Text("Success")
-            }
-
-
-            Spacer(modifier = Modifier.height(40.dp))
-
-            ButtonCritical(
-                onClick = {
-                    if (isStepOneVisible) {
-                        isStepOneVisible = false
-                        isStepTwoVisible = true
-                    } else if (isStepTwoVisible) {
-                        isStepTwoVisible = false
-                    } else if (isStepThreeVisible) {
-                        isStepThreeVisible = false
                     }
                 }
-            ) {
-                Text(text = "Click me")
+                Text(
+                    text =
+                    when (stepIndicator) {
+                        1 -> "Details du compte"
+                        2 -> "Informations sur l'entreprise 1/2"
+                        3 -> "Informations sur l'entreprise 2/2"
+                        4 -> "Vérification des informations"
+                        else -> ""
+                    },
+                    color = White,
+                    style = GWTypography.h6
+                )
+
+//                STEPS
+                Row(
+                    modifier = Modifier,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(5.dp)
+                            .height(5.dp)
+                            .clip(CircleShape)
+                            .background(if (stepIndicator == 1) White else Green500)
+                    )
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(5.dp)
+                            .height(5.dp)
+                            .clip(CircleShape)
+                            .background(
+                                when (stepIndicator) {
+                                    1 -> CoolGrey
+                                    2 -> White
+                                    else -> Green500
+                                }
+                            )
+                    )
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(5.dp)
+                            .height(5.dp)
+                            .clip(CircleShape)
+                            .background(
+                                when (stepIndicator) {
+                                    1 -> CoolGrey
+                                    2 -> CoolGrey
+                                    3 -> White
+                                    else -> Green500
+                                }
+                            )
+                    )
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(5.dp)
+                            .height(5.dp)
+                            .clip(CircleShape)
+                            .background(
+                                when (stepIndicator) {
+                                    1 -> CoolGrey
+                                    2 -> CoolGrey
+                                    3 -> CoolGrey
+                                    4 -> White
+                                    else -> Green500
+                                }
+                            )
+                    )
+                }
             }
 
 
+            Column(
+                modifier = Modifier
+                    .fillMaxHeight(1f)
+                    .clip(RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
+                    .background(
+                        Brush.horizontalGradient(
+                            colorStops = arrayOf(
+                                Pair(0.3f, surfaceColor),
+                                Pair(1f, Green500)
+                            )
+                        )
+                    )
+            ) {
+
+                Card(
+                    modifier = Modifier
+                        .weight(0.92f)
+                        .fillMaxWidth(),
+                    backgroundColor = White,
+                    shape = RoundedCornerShape(24.dp)
+                ) {
+
+                    //================================================
+                    //      CONTENT
+                    //================================================
+
+                }
+
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(0.08f)
+                ) {
+                    Card(
+                        backgroundColor = surfaceColor,
+                        modifier = Modifier
+                            .fillMaxWidth(0.5f)
+                            .fillMaxHeight(),
+                        onClick = { stepIndicator -= 1 },
+                    ) {
+                        Text(
+                            text = "Précédent",
+                            color = White,
+                            style = GWTypography.h6,
+                            textAlign = TextAlign.Center
+                        )
+                    }
+                    Card(
+                        backgroundColor = Green500,
+                        modifier = Modifier
+                            .fillMaxWidth(1f)
+                            .fillMaxHeight(),
+                        onClick = {
+
+                            stepIndicator += 1
+
+//                            when(stepIndicator){
+//                                1 -> stepIndicator = 2
+//                                2 -> stepIndicator = 3
+//                                3 -> stepIndicator = 4
+//                                4 -> stepIndicator = 5
+//                            }
+                        },
+                    ) {
+                        Text(
+                            text = "Suivant",
+                            color = White,
+                            style = GWTypography.h6,
+                            textAlign = TextAlign.Center
+                        )
+                    }
+                }
+            }
         }
     }
 }
+

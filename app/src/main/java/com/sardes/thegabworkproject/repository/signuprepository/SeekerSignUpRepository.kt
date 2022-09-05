@@ -13,7 +13,7 @@ private const val COMPTES_DEMANDEUR_COLLECTION_REF = "ComptesDemandeur"
 private const val USERS_COLLECTION_REF = "Users"
 
 
-class DemandeurSignUpRepository {
+class SeekerSignUpRepository {
 
     var storageRef = Firebase.storage.reference
 
@@ -30,6 +30,9 @@ class DemandeurSignUpRepository {
         prenom: String,
         sexe: String,
         telephone: String,
+        HQH: String,
+        langues: List<String>,
+        competences: List<String>,
         email: String,
         ville: String,
         nationalite: String,
@@ -47,6 +50,9 @@ class DemandeurSignUpRepository {
             userId,
             nom,
             prenom,
+            HQH,
+            langues,
+            competences,
             sexe,
             telephone,
             email,

@@ -343,6 +343,7 @@ fun IndependantAccountSignUpSceen(
 
 
                             // SKILLS
+/*
                             item {
                                 OutlinedTextField(
                                     modifier = Modifier.fillMaxWidth(),
@@ -368,6 +369,7 @@ fun IndependantAccountSignUpSceen(
                                 Spacer(modifier = Modifier.height(16.dp))
 
                             }
+*/
 
                             // WEBSITE
                             item {

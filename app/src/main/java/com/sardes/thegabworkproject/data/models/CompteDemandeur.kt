@@ -6,6 +6,9 @@ data class CompteDemandeur(
     val userId: String = "",
     val nom: String = "",
     val prenom: String = "",
+    val HQH: String = "",
+    val langues: List<String> = emptyList(),
+    val competences: List<String> = emptyList(),
     val sexe: String = "",
     val telephone: String = "",
     val email: String= "",
@@ -55,10 +58,20 @@ data class CompteDemandeur(
 
 
     data class Experience(
-        val idExperienceDemandeur: String,
-        val TitrePostOccupe: String,
-        val nomEntreprise: String,
+        val occupation: String,
+        val entreprise: String,
+        val typeDEmploi: String,
         val ville: String,
+        val adresse: String? = null,
+        val description: String,
+        val dateDebut: String?,
+        val dateFin: String?,
+    )
+
+    data class Education(
+        val universite: String,
+        val ville: String,
+        val adresse: String? = null,
         val description: String,
         val dateDebut: String?,
         val dateFin: String?,

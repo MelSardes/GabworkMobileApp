@@ -6,6 +6,7 @@ data class CompteEtudiant(
     val userId: String = "",
     val nom: String = "",
     val prenom: String = "",
+    val langues: List<String> = emptyList(),
     val sexe: String = "",
     val telephone: String = "",
     val email: String = "",
@@ -15,7 +16,7 @@ data class CompteEtudiant(
     val urlPhoto: String = "",
     val dateCreationCompte: Timestamp = Timestamp.now(),
     val universiteActuelle: String = "",
-    val dateDebut: Timestamp,
+//    val dateDebut: Timestamp,
     val cycleActuel: String = "",
     val filliereActuelle: String = "",
     val typeDeCompte:String = "Etudiant"

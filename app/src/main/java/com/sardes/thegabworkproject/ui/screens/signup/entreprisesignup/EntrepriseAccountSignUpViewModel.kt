@@ -37,12 +37,10 @@ class EntrepriseAccountSignUpViewModel(
                 signUpUiState.confirmPassword.isNotBlank() &&
                 signUpUiState.entrepriseName.isNotBlank() &&
                 signUpUiState.address.isNotBlank() &&
-                signUpUiState.city.isNotBlank() &&
+                signUpUiState.city.isNotEmpty() &&
                 signUpUiState.phone.isNotBlank() &&
                 signUpUiState.activityArea.isNotBlank() &&
                 signUpUiState.description.isNotBlank()
-
-
     fun createUser(context: Context) = viewModelScope.launch {
         try {
             if (!validateEntrepriseForm()){
@@ -105,7 +103,7 @@ class EntrepriseAccountSignUpViewModel(
                 description = signUpUiState.description,
                 adresse = signUpUiState.address,
                 siteWeb = signUpUiState.website,
-                urlLogoEntreprise = "https://" +
+                urlLogo = "https://" +
                         "firebasestorage.googleapis.com/v0/b/" +
                         "thegabworkprojecttest.appspot.com/o/" +
                         "userProfile%2Fentreprise%2F" +
@@ -114,6 +112,7 @@ class EntrepriseAccountSignUpViewModel(
                 logoEntreprise = signUpUiState.logo,
                 dateCreationCompte = Timestamp.now(),
                 dateCreationEntreprise = signUpUiState.creationDate,
+                employes = signUpUiState.employes
             ){
                 signUpUiState = signUpUiState.copy(informationsAddedStatus = it)
             }
@@ -141,15 +140,15 @@ class EntrepriseAccountSignUpViewModel(
         signUpUiState = signUpUiState.copy(phone = entreprisePhone)
     }
 
-    fun onEntrepriseCityChange(entrepriseCity: String){
-        signUpUiState = signUpUiState.copy(city = entrepriseCity)
+    fun onCityChange(city: List<String>){
+        signUpUiState = signUpUiState.copy(city = city)
     }
 
     fun onAddressChange(address: String){
         signUpUiState = signUpUiState.copy(address = address)
     }
 
-    fun onEntrepriseActivityAreaChange(activityArea: String){
+    fun onActivityAreaChange(activityArea: String){
         signUpUiState = signUpUiState.copy(activityArea = activityArea)
     }
 
@@ -157,8 +156,12 @@ class EntrepriseAccountSignUpViewModel(
         signUpUiState = signUpUiState.copy(description = description)
     }
 
-    fun onEntrepriseWebsiteChange(website: String){
+    fun onWebsiteChange(website: String){
         signUpUiState = signUpUiState.copy(website = website)
+    }
+
+    fun onEmployesChange(employes: String){
+        signUpUiState = signUpUiState.copy(employes = employes)
     }
 
 
@@ -166,7 +169,7 @@ class EntrepriseAccountSignUpViewModel(
         signUpUiState = signUpUiState.copy(logo = logo)
     }
 
-    fun onCreationDateChange(creationDate: Timestamp){
+    fun onCreationDateChange(creationDate: String){
         signUpUiState = signUpUiState.copy(creationDate = creationDate)
     }
 }
@@ -182,10 +185,10 @@ data class SignupUiState(
     val activityArea: String = "",
     val description: String = "",
     val website: String = "",
-    val city: String = "",
+    val city: List<String> = emptyList(),
     val address: String = "",
     val logo: Uri? = null,
-    val creationDate: Timestamp = Timestamp.now(),
+    val creationDate: String = "",
 
 //STATES
     val isLoading: Boolean = false,
@@ -194,5 +197,6 @@ data class SignupUiState(
     val loginError: String? = null,
 
     val informationsAddedStatus: Boolean = false,
+    val employes: String = "",
 
     )

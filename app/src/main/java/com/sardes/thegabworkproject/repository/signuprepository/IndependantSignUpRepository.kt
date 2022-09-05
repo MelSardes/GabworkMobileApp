@@ -35,7 +35,7 @@ class IndependantSignUpRepository {
         adresse: String,
         urlPhoto: String,
         photo: Uri?,
-        competences: String,
+        competences: List<String>,
         siteWeb: String,
         dateCreationCompte: Timestamp,
         typeDeCompte:String = "Independant",

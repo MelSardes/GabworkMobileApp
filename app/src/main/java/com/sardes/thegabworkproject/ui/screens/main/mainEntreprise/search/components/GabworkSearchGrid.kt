@@ -21,7 +21,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.sardes.thegabworkproject.data.OccupationsDataProvider
+import com.sardes.thegabworkproject.data.ActivityAreaDataProvider
 import com.sardes.thegabworkproject.data.models.SecteursDActivite
 import com.sardes.thegabworkproject.ui.theme.extensions.generateDominantColorState
 import com.sardes.thegabworkproject.ui.theme.modifiers.horizontalGradientBackground
@@ -29,7 +29,7 @@ import com.sardes.thegabworkproject.ui.verticalgrid.VerticalGrid
 
 @Composable
 fun GabworkSearchGrid() {
-    val items = remember { OccupationsDataProvider.secteurs }
+    val items = remember { ActivityAreaDataProvider.secteurs }
     //This is not Lazy at the moment Soon we will have LazyLayout coming then will
     //Update it so we have better performance
     VerticalGrid {

@@ -34,7 +34,7 @@ fun TheGabworkProjectTheme(
 
     MaterialTheme(
         colors = colors,
-        typography = Typography,
+        typography = GWTypography,
         shapes = Shapes,
         content = content
     )

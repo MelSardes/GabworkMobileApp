@@ -293,7 +293,8 @@ fun BasicInfo(profileUiState: InformationsUiState) {
             InfoColumn(
                 kiwi.orbit.compose.ui.R.drawable.ic_orbit_city,
                 "Rendez vous à",
-                "${profileUiState.currentUserEntreprise?.ville}"
+                "",
+                /*"${profileUiState.currentUserEntreprise?.ville}"*/
             )
         }
         Spacer(modifier = Modifier.height(5.dp))

@@ -13,8 +13,8 @@ data class CompteIndependant(
     val nationalite: String = "",
     val adresse: String = "",
     val urlPhoto: String = "",
-    val competences: String = "",
-    val siteWeb: String = "",
+    val competences: List<String> = emptyList(),
+    val siteWeb: String? = null,
     val dateCreationCompte: Timestamp = Timestamp.now(),
     val typeDeCompte:String = "Independant"
 )
