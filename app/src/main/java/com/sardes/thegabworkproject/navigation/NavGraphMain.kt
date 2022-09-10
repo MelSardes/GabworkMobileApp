@@ -450,7 +450,12 @@ private fun NavGraphBuilder.addSplashScreen(
                     popUpTo(HomeInterfaceScreen.Splash.route) { inclusive = true }
                 }
             },
-            loginViewModel = loginViewModel
+            loginViewModel = loginViewModel,
+            navToDemandeurInterface = {
+                navController.navigate(AuthInterfaceScreen.SeekerSignUpScreen.route){
+                    popUpTo(HomeInterfaceScreen.Splash.route){inclusive = true}
+                }
+            }
         )
     }
 }

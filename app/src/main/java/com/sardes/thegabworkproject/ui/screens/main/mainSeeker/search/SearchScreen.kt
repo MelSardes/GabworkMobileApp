@@ -5,7 +5,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import kiwi.orbit.compose.ui.controls.Text
 
 @Composable
-fun SearchSeekerScreen(searchSeekerViewModel: SearchSeekerViewModel?) {
+fun SearchSeekerScreen(searchSeekerViewModel: SearchSeekerViewModel? = null) {
     Text(text = "SEARCH")
 }
 

@@ -45,6 +45,7 @@ fun SeekerSignUpScreen(
     val focusRequester = remember { FocusRequester() }
 
     val context = LocalContext.current
+
     val year: Int
     val month: Int
     val day: Int
@@ -206,7 +207,7 @@ fun SeekerSignUpScreen(
                                 preferences = preferences
                             )
 
-                            10 -> SeekerVerifyInformationsStep(isError, seekerUiState, viewModel)
+                            10 -> SeekerVerifyInformationsStep(isError, seekerUiState, viewModel, context)
                         }
 
 

@@ -8,7 +8,7 @@ import androidx.compose.ui.tooling.preview.Preview
 
 @SuppressLint("MaterialDesignInsteadOrbitDesign")
 @Composable
-fun ProfileSeekerScreen(profileSeekerViewModel: ProfileSeekerViewModel?) {
+fun ProfileSeekerScreen(profileSeekerViewModel: ProfileSeekerViewModel? = null) {
     Box() {
         Text(text = "ProfileScreen")
     }

@@ -8,7 +8,7 @@ import androidx.compose.ui.tooling.preview.Preview
 
 @SuppressLint("MaterialDesignInsteadOrbitDesign")
 @Composable
-fun MessagesSeekerScreen(homeSeekerViewModel: MessagesSeekerViewModel?) {
+fun MessagesSeekerScreen(homeSeekerViewModel: MessagesSeekerViewModel? = null) {
     Box() {
         Text(text = "MessagesScreen")
     }

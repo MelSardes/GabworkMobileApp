@@ -6,24 +6,19 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.sardes.thegabworkproject.navigation.SeekerInterfaceScreen
 import com.sardes.thegabworkproject.ui.screens.main.mainSeeker.home.HomeSeekerScreen
-import com.sardes.thegabworkproject.ui.screens.main.mainSeeker.home.HomeSeekerViewModel
 import com.sardes.thegabworkproject.ui.screens.main.mainSeeker.message.MessagesSeekerScreen
-import com.sardes.thegabworkproject.ui.screens.main.mainSeeker.message.MessagesSeekerViewModel
 import com.sardes.thegabworkproject.ui.screens.main.mainSeeker.profile.ProfileSeekerScreen
-import com.sardes.thegabworkproject.ui.screens.main.mainSeeker.profile.ProfileSeekerViewModel
 import com.sardes.thegabworkproject.ui.screens.main.mainSeeker.saves.SavesSeekerScreen
-import com.sardes.thegabworkproject.ui.screens.main.mainSeeker.saves.SavesSeekerViewModel
 import com.sardes.thegabworkproject.ui.screens.main.mainSeeker.search.SearchSeekerScreen
-import com.sardes.thegabworkproject.ui.screens.main.mainSeeker.search.SearchSeekerViewModel
 
 @Composable
 fun SeekerMainNavigation(
     navController           : NavHostController,
-    homeSeekerViewModel     : HomeSeekerViewModel?,
-    savesSeekerViewModel    : SavesSeekerViewModel?,
-    searchSeekerViewModel   : SearchSeekerViewModel?,
-    messagesSeekerViewModel : MessagesSeekerViewModel?,
-    profileSeekerViewModel  : ProfileSeekerViewModel?
+//    homeSeekerViewModel     : HomeSeekerViewModel?,
+//    savesSeekerViewModel    : SavesSeekerViewModel?,
+//    searchSeekerViewModel   : SearchSeekerViewModel?,
+//    messagesSeekerViewModel : MessagesSeekerViewModel?,
+//    profileSeekerViewModel  : ProfileSeekerViewModel?
 ) {
 
     NavHost(
@@ -32,23 +27,23 @@ fun SeekerMainNavigation(
         startDestination = SeekerInterfaceScreen.SeekerHome.route
     ){
         composable(SeekerInterfaceScreen.SeekerHome.route){
-            HomeSeekerScreen(homeSeekerViewModel)
+            HomeSeekerScreen()
         }
 
         composable(SeekerInterfaceScreen.SeekerSaves.route){
-            SavesSeekerScreen(savesSeekerViewModel)
+            SavesSeekerScreen()
         }
 
         composable(SeekerInterfaceScreen.SeekerSearch.route){
-            SearchSeekerScreen(searchSeekerViewModel)
+            SearchSeekerScreen()
         }
 
         composable(SeekerInterfaceScreen.SeekerMessages.route){
-            MessagesSeekerScreen(messagesSeekerViewModel)
+            MessagesSeekerScreen()
         }
 
         composable(SeekerInterfaceScreen.SeekerProfile.route){
-            ProfileSeekerScreen(profileSeekerViewModel)
+            ProfileSeekerScreen()
         }
     }
 

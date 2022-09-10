@@ -1,5 +1,6 @@
 package com.sardes.thegabworkproject.ui.screens.signup.seekersignup.components
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -21,8 +22,8 @@ import com.sardes.thegabworkproject.ui.screens.signup.seekersignup.SeekerSignUpV
 import com.sardes.thegabworkproject.ui.screens.signup.seekersignup.SignupUiStateSeeker
 import com.sardes.thegabworkproject.ui.theme.GWTypography
 import com.sardes.thegabworkproject.ui.theme.GWpalette.CoolGrey
-import com.sardes.thegabworkproject.ui.theme.GWpalette.DarkLiver
 import com.sardes.thegabworkproject.ui.theme.GWpalette.LackCoral
+import com.sardes.thegabworkproject.ui.theme.GWpalette.MaximumRed
 import com.sardes.thegabworkproject.ui.theme.TailwindCSSColor.Green500
 import kiwi.orbit.compose.ui.controls.Card
 import kiwi.orbit.compose.ui.controls.KeyValue
@@ -33,9 +34,9 @@ import kiwi.orbit.compose.ui.controls.Text as Orbittext
 fun SeekerVerifyInformationsStep(
     isError: Boolean,
     uiStateSeeker: SignupUiStateSeeker?,
-    viewModel: SeekerSignUpViewModel?
+    viewModel: SeekerSignUpViewModel?,
+    context: Context
 ) {
-    val context = LocalContext.current
 
 
     Column(
@@ -63,7 +64,7 @@ fun SeekerVerifyInformationsStep(
                     text = "Vérifiez que ces informations sont correctes\n " +
                         "avant de soumettre votre inscription",
                     style = GWTypography.body1.copy(fontWeight = FontWeight.Medium),
-                    color = DarkLiver
+                    color = MaximumRed
                 )
                 Spacer(modifier = Modifier.height(20.dp))
             }
@@ -238,6 +239,6 @@ fun SeekerVerifyInformationsStep(
 @Preview
 @Composable
 fun SeekerVerifyInformationsStepPreview() {
-    SeekerVerifyInformationsStep(false, null, null)
+    SeekerVerifyInformationsStep(false, null, null, context = LocalContext.current)
 
 }

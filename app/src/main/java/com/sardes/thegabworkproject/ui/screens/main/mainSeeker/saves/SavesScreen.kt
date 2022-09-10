@@ -8,7 +8,7 @@ import androidx.compose.ui.tooling.preview.Preview
 
 @SuppressLint("MaterialDesignInsteadOrbitDesign")
 @Composable
-fun SavesSeekerScreen(savesSeekerViewModel: SavesSeekerViewModel?) {
+fun SavesSeekerScreen(savesSeekerViewModel: SavesSeekerViewModel? = null) {
     Box() {
         Text(text = "SavesScreen")
     }

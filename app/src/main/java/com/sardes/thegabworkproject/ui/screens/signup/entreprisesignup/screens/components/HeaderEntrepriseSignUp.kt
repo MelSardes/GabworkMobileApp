@@ -15,13 +15,12 @@ fun HeaderEntrepriseSignUp(
     stepIndicator: Int) {
     Column(
         modifier = Modifier
-            .fillMaxHeight(0.2f)
-            .padding(30.dp)
+            .fillMaxHeight(0.14f)
+            .padding(horizontal = 20.dp, vertical = 10.dp)
     ) {
 //            HEADER
         Column(
-            modifier = Modifier
-                .padding(20.dp)
+            horizontalAlignment = Alignment.Start
         ) {
             Row(
                 Modifier.fillMaxWidth(),
@@ -37,7 +36,7 @@ fun HeaderEntrepriseSignUp(
                         else -> "100%"
                     },
                     color = Color.White,
-                    style = GWTypography.h5.copy(fontWeight = FontWeight.Bold)
+                    style = GWTypography.body1.copy(fontWeight = FontWeight.Bold),
                 )
                 Spacer(modifier = Modifier.width(5.dp))
                 kiwi.orbit.compose.ui.controls.Text(
@@ -46,20 +45,21 @@ fun HeaderEntrepriseSignUp(
                     style = GWTypography.body2
                 )
             }
+            kiwi.orbit.compose.ui.controls.Text(
+                text =
+                when (stepIndicator) {
+                    1 -> "Details du compte"
+                    2 -> "Informations sur l'entreprise 1/2"
+                    3 -> "Informations sur l'entreprise 2/2"
+                    4 -> "Logo de l'entreprise"
+                    5 -> "Vérification des informations"
+                    else -> ""
+                },
+                color = Color.White,
+                style = GWTypography.body1
+            )
         }
-        kiwi.orbit.compose.ui.controls.Text(
-            text =
-            when (stepIndicator) {
-                1 -> "Details du compte"
-                2 -> "Informations sur l'entreprise 1/2"
-                3 -> "Informations sur l'entreprise 2/2"
-                4 -> "Logo de l'entreprise"
-                5 -> "Vérification des informations"
-                else -> ""
-            },
-            color = Color.White,
-            style = GWTypography.h6
-        )
+        Spacer(modifier = Modifier.height(10.dp))
 
 //                STEPS
         StepsBarsSignUpEntreprise(stepIndicator)
