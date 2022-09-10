@@ -13,11 +13,15 @@ import com.sardes.thegabworkproject.ui.screens.control.AuthControl
 import com.sardes.thegabworkproject.ui.screens.login.LoginScreen
 import com.sardes.thegabworkproject.ui.screens.login.LoginViewModel
 import com.sardes.thegabworkproject.ui.screens.login_and_signup.SelectSignUpAccount
-import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.EntrepriseMainPage
-import com.sardes.thegabworkproject.ui.screens.signup.entreprisesignup.screens.EntrepriseAccountSignUpScreen
+import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.main.EntrepriseMainPage
+import com.sardes.thegabworkproject.ui.screens.main.mainSeeker.main.SeekerMainPage
 import com.sardes.thegabworkproject.ui.screens.signup.entreprisesignup.EntrepriseAccountSignUpViewModel
+import com.sardes.thegabworkproject.ui.screens.signup.entreprisesignup.screens.EntrepriseAccountSignUpScreen
 import com.sardes.thegabworkproject.ui.screens.signup.independantsignup.IndependantAccountSignUpSceen
 import com.sardes.thegabworkproject.ui.screens.signup.independantsignup.IndependantAccountSignUpViewModel
+import com.sardes.thegabworkproject.ui.screens.signup.seekersignup.SeekerSignUpViewModel
+import com.sardes.thegabworkproject.ui.screens.signup.seekersignup.screens.SeekerSignUpScreen
+import com.sardes.thegabworkproject.ui.screens.signup.seekersignup.screens.SeekerSignUpStart
 import com.sardes.thegabworkproject.ui.screens.signup.standardsignup.StandardAccountSignUpViewModel
 import com.sardes.thegabworkproject.ui.screens.signup.standardsignup.StandardSignUpScreen
 import com.sardes.thegabworkproject.ui.screens.splash.SplashScreen
@@ -39,8 +43,10 @@ sealed class AuthInterfaceScreen(val route: String) {
     object SignUpSelectScreen : AuthInterfaceScreen("SignUpSelectScreen")
     object StandardSignUpScreen : AuthInterfaceScreen("StandardSignUpScreen")
     object IndependantSignUpScreen : AuthInterfaceScreen("IndependantSignUpScreen")
+    object EntrepriseStartSignUpScreen : AuthInterfaceScreen("EntrepriseStartSignUpScreen")
     object EntrepriseSignUpScreen : AuthInterfaceScreen("EntrepriseSignUpScreen")
     object StudentSignUpScreen : AuthInterfaceScreen("StudentSignUpScreen")
+    object SeekerStartSignUpScreen : AuthInterfaceScreen("SeekerStartSignUpScreen")
     object SeekerSignUpScreen : AuthInterfaceScreen("SeekerSignUpScreen")
 }
 
@@ -83,14 +89,23 @@ sealed class EntrepriseInterfaceScreen(var route: String, var icon: Int, var tit
     )
 }
 
-sealed class SeekerInterfaceScreen(val route: String) {
-    object SeekerMain : SeekerInterfaceScreen("SeekerInterface/Main")
+sealed class SeekerInterfaceScreen(val route: String, val icon: Int) {
+    object SeekerMain : SeekerInterfaceScreen("SeekerInterface/Main", 0)
 
-    object SeekerHome : SeekerInterfaceScreen("SeekerInterface/SeekerHome")
-    object SeekerBookmarks : SeekerInterfaceScreen("SeekerInterface/SeekerBookmarks")
-    object SeekerSearch : SeekerInterfaceScreen("SeekerInterface/SeekerSearch")
-    object SeekerMessages : SeekerInterfaceScreen("SeekerInterface/SeekerMessages")
-    object SeekerProfile : SeekerInterfaceScreen("SeekerInterface/SeekerProfile")
+    object SeekerHome : SeekerInterfaceScreen("SeekerInterface/SeekerHome", R.drawable.ic_home)
+    object SeekerSaves : SeekerInterfaceScreen(
+        "SeekerInterface/SeekerBookmarks",
+        kiwi.orbit.compose.ui.R.drawable.ic_orbit_bookmark
+    )
+
+    object SeekerSearch :
+        SeekerInterfaceScreen("SeekerInterface/SeekerSearch", R.drawable.ic_search)
+
+    object SeekerMessages :
+        SeekerInterfaceScreen("SeekerInterface/SeekerMessages", R.drawable.ic_message)
+
+    object SeekerProfile :
+        SeekerInterfaceScreen("SeekerInterface/SeekerProfile", R.drawable.ic_person)
 }
 
 sealed class StandardInterfaceScreen(val route: String) {
@@ -177,6 +192,7 @@ fun NavGraphMain(
     standardAccountSignUpViewModel: StandardAccountSignUpViewModel,
     independantAccountSignUpViewModel: IndependantAccountSignUpViewModel,
     entrepriseAccountSignUpViewModel: EntrepriseAccountSignUpViewModel,
+    seekerSignUpViewModel: SeekerSignUpViewModel?
 ) {
     val navController = rememberNavController()
 
@@ -192,10 +208,13 @@ fun NavGraphMain(
             loginViewModel,
             standardAccountSignUpViewModel,
             independantAccountSignUpViewModel,
-            entrepriseAccountSignUpViewModel
+            entrepriseAccountSignUpViewModel,
+            seekerSignUpViewModel
         )
 
         entrepriseInterfaceGraph()
+
+        seekerInterfaceGraph()
     }
 }
 
@@ -206,6 +225,7 @@ fun NavGraphBuilder.authInterfaceGraph(
     standardAccountSignUpViewModel: StandardAccountSignUpViewModel?,
     independantAccountSignUpViewModel: IndependantAccountSignUpViewModel?,
     entrepriseAccountSignUpViewModel: EntrepriseAccountSignUpViewModel?,
+    seekerSignUpViewModel: SeekerSignUpViewModel?
 ) {
     navigation(
         route = Interface.AuthInterface.route,
@@ -213,6 +233,8 @@ fun NavGraphBuilder.authInterfaceGraph(
     ) {
         composable(route = AuthInterfaceScreen.LoginScreen.route) {
             LoginScreen(
+                loginViewModel = loginViewModel,
+
                 navToEntrepriseInterface = {
                     navController.navigate(Interface.EntrepriseInterface.route) {
                         launchSingleTop = true
@@ -221,24 +243,84 @@ fun NavGraphBuilder.authInterfaceGraph(
                         }
                     }
                 },
-                loginViewModel = loginViewModel
-            ) {
-                navController.navigate(AuthInterfaceScreen.SignUpSelectScreen.route) {
-                    launchSingleTop = true
-                    popUpTo(AuthInterfaceScreen.LoginScreen.route) {
-                        inclusive = true
+
+                onNavToSelectSignUpPage = {
+                    navController.navigate(AuthInterfaceScreen.SignUpSelectScreen.route) {
+                        launchSingleTop = true
+                        popUpTo(AuthInterfaceScreen.LoginScreen.route) {
+                            inclusive = true
+                        }
+                    }
+
+                },
+
+                navToSeekerInterface = {
+                    navController.navigate(Interface.SeekerInterface.route){
+                        launchSingleTop = true
+                        popUpTo(route = AuthInterfaceScreen.LoginScreen.route){
+                            inclusive = true
+                        }
                     }
                 }
-            }
+            )
         }
     }
 
     composable(route = AuthInterfaceScreen.SignUpSelectScreen.route){
         SelectSignUpAccount(
             onNavToEntrepriseSignUpAccount = {
-                navController.navigate(AuthInterfaceScreen.EntrepriseSignUpScreen.route) {
+                navController.navigate(AuthInterfaceScreen.EntrepriseStartSignUpScreen.route) {
                     launchSingleTop = true
-                    popUpTo(route = AuthInterfaceScreen.SignUpSelectScreen.route) {
+                }
+            },
+
+            onNavToStandardSignUpAccount = {
+                navController.navigate(AuthInterfaceScreen.SeekerStartSignUpScreen.route){
+                    launchSingleTop = true
+                }
+            }
+
+        )
+    }
+
+
+
+    composable(route = AuthInterfaceScreen.SeekerStartSignUpScreen.route){
+        SeekerSignUpStart(
+            onNavToLoginPage = {
+                navController.navigate(AuthInterfaceScreen.LoginScreen.route){launchSingleTop = true}
+            },
+
+            startSigningUp = {
+                navController.navigate(AuthInterfaceScreen.SeekerSignUpScreen.route){launchSingleTop = true}
+            }
+        )
+    }
+
+    composable(route = AuthInterfaceScreen.EntrepriseStartSignUpScreen.route){
+        SeekerSignUpStart(
+            onNavToLoginPage = {
+                navController.navigate(AuthInterfaceScreen.LoginScreen.route){launchSingleTop = true}
+            },
+
+            startSigningUp = {
+                navController.navigate(AuthInterfaceScreen.EntrepriseSignUpScreen.route){launchSingleTop = true}
+            }
+        )
+    }
+
+
+
+
+
+
+    composable(route = AuthInterfaceScreen.SeekerSignUpScreen.route){
+        SeekerSignUpScreen(
+            viewModel = seekerSignUpViewModel,
+
+            navToSeekerInterface = {
+                navController.navigate(Interface.SeekerInterface.route){
+                    popUpTo(AuthInterfaceScreen.SeekerSignUpScreen.route){
                         inclusive = true
                     }
                 }
@@ -283,20 +365,17 @@ fun NavGraphBuilder.authInterfaceGraph(
 
     composable(route = AuthInterfaceScreen.EntrepriseSignUpScreen.route) {
         EntrepriseAccountSignUpScreen(
+            viewModel = entrepriseAccountSignUpViewModel,
+
             navToEntrepriseInterface = {
                 navController.navigate(Interface.EntrepriseInterface.route) {
                     popUpTo(AuthInterfaceScreen.EntrepriseSignUpScreen.route) {
                         inclusive = true
                     }
                 }
-            },
-            viewModel = entrepriseAccountSignUpViewModel
-        ) {
-            navController.navigate(AuthInterfaceScreen.LoginScreen.route)
-        }
+            }
+        )
     }
-
-
 }
 
 fun NavGraphBuilder.entrepriseInterfaceGraph() {
@@ -307,7 +386,17 @@ fun NavGraphBuilder.entrepriseInterfaceGraph() {
         composable(EntrepriseInterfaceScreen.EntrepriseMain.route) {
             EntrepriseMainPage()
         }
+    }
+}
 
+fun NavGraphBuilder.seekerInterfaceGraph(){
+    navigation(
+        route = Interface.SeekerInterface.route,
+        startDestination = SeekerInterfaceScreen.SeekerMain.route
+    ){
+        composable(SeekerInterfaceScreen.SeekerMain.route){
+            SeekerMainPage()
+        }
     }
 }
 

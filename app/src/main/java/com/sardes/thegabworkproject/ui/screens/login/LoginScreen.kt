@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sardes.thegabworkproject.R
 import kiwi.orbit.compose.ui.controls.Scaffold
+import kotlinx.coroutines.delay
 
 
 @SuppressLint(
@@ -33,9 +34,9 @@ import kiwi.orbit.compose.ui.controls.Scaffold
 )
 @Composable
 fun LoginScreen(
-    loginViewModel: LoginViewModel? = null,
+    loginViewModel: LoginViewModel?,
     navToEntrepriseInterface: () -> Unit = {},
-    navToDemandeurInterface: () -> Unit = {},
+    navToSeekerInterface: () -> Unit = {},
     navToStandardInterface: () -> Unit = {},
     navToIndepedantInterface: () -> Unit = {},
     navToStudentInterface: () -> Unit = {},
@@ -192,43 +193,47 @@ fun LoginScreen(
                                 }
                             }
 
-                            if (loginUiState?.isLoading == true) {
-                                CircularProgressIndicator()
-                            }
-
-                            if(loginUiState?.isSuccessLogin == true){
-                                LaunchedEffect(key1 = Unit) {
-                                    loginViewModel.hasUser
-                                    loginViewModel.loadUserAccountType()
-                                }
-                            }
-
-//                            -----------------------------------------------------------------------
-//                            DETERMINE WHAT INTERFACE SHOW TO THE USER ACCORDING TO HIS ACCOUNT TYPE
-//                            -----------------------------------------------------------------------
-                            if (loginViewModel?.hasUser == true) {
-                                LaunchedEffect(loginUiState?.userType?.account) {
-                                    when (loginUiState?.userType?.account) {
-                                        "Entreprise" -> navToEntrepriseInterface.invoke()
-                                        "Demandeur" -> navToDemandeurInterface.invoke()
-                                        "Standard" -> navToStandardInterface.invoke()
-                                        "Etudiant" -> navToStudentInterface.invoke()
-                                        "Independant" -> navToIndepedantInterface.invoke()
-                                    }
-                                }
-                            }
                         }
                     }
                 }
             }
         }
-
     }
+
+
+    if (loginUiState?.isLoading == true) {
+        CircularProgressIndicator()
+    }
+
+    if(loginUiState?.isSuccessLogin == true){
+        LaunchedEffect(key1 = Unit) {
+            loginViewModel.hasUser
+            loginViewModel.loadUserAccountType()
+        }
+    }
+
+//                            -----------------------------------------------------------------------
+//                            DETERMINE WHAT INTERFACE IS SHOWN TO THE USER ACCORDING TO HIS ACCOUNT TYPE
+//                            -----------------------------------------------------------------------
+    if (loginViewModel?.hasUser == true) {
+        LaunchedEffect(loginUiState?.userType?.account) {
+            delay(3000)
+            when (loginUiState?.userType?.account) {
+                "Entreprise"    -> navToEntrepriseInterface.invoke()
+                "Demandeur"     -> navToSeekerInterface.invoke()
+                "Standard"      -> navToStandardInterface.invoke()
+                "Etudiant"      -> navToStudentInterface.invoke()
+                "Independant"   -> navToIndepedantInterface.invoke()
+            }
+        }
+    }
+
+
 }
 
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun PreviewLogIn(){
-    LoginScreen()
+    LoginScreen(null)
 }

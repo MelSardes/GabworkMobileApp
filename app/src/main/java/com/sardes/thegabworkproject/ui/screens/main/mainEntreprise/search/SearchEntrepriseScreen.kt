@@ -14,7 +14,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.sardes.thegabworkproject.data.GabworkDataProvider
+import com.sardes.thegabworkproject.data.provider.GabworkDataProvider
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.search.components.EntrepriseSearchBar
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.search.components.GabworkSearchGrid
 import com.sardes.thegabworkproject.ui.theme.modifiers.horizontalGradientBackground

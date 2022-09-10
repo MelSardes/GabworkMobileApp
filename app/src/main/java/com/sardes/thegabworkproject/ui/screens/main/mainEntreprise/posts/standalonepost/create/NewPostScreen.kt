@@ -253,10 +253,10 @@ fun NewPostScreen(
                 optionSecond = { OrbitText("Junior") },
                 selectedIndex = selectedIndex,
                 onOptionClick = { index ->
-                    postViewModel?.onExperienceChange(if (index == 1) "Temps partiel" else "Temps plein")
+                    postViewModel?.onExperienceChange(if (index == 1) "Junior" else "Sénior")
                     selectedIndex = index.takeIf { index != selectedIndex }
                 },
-                label = { OrbitText("Type d'emploi") },
+                label = { OrbitText("Expérience") },
             )
 
             Spacer(modifier = Modifier.height(10.dp))

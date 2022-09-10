@@ -1,5 +1,6 @@
 package com.sardes.thegabworkproject.ui.screens.signup.components
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -14,17 +15,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.sardes.thegabworkproject.R
 import com.sardes.thegabworkproject.ui.theme.GWTypography
 import com.sardes.thegabworkproject.ui.theme.GWpalette
 import kiwi.orbit.compose.ui.controls.Text
 
 
-@Preview
+//@Preview
 @Composable
-fun Hero(nomCompte: String = "UNKNOWN LABEL") {
+fun Hero(nomCompte: String = "UNKNOWN LABEL", @DrawableRes image: Int) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -32,7 +31,7 @@ fun Hero(nomCompte: String = "UNKNOWN LABEL") {
             .clip(RoundedCornerShape(bottomStart = 24.dp, bottomEnd = 24.dp))
     ) {
         Image(
-            painter = painterResource(id = R.drawable.painted_paul),
+            painter = painterResource(id = image),
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxWidth()

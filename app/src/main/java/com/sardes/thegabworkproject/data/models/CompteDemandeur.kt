@@ -1,6 +1,10 @@
 package com.sardes.thegabworkproject.data.models
 
+import androidx.annotation.ColorLong
+import androidx.compose.ui.graphics.Color
 import com.google.firebase.Timestamp
+import com.sardes.thegabworkproject.ui.theme.TailwindCSSColor
+import com.sardes.thegabworkproject.ui.theme.orange
 
 data class CompteDemandeur(
     val userId: String = "",
@@ -8,7 +12,10 @@ data class CompteDemandeur(
     val prenom: String = "",
     val HQH: String = "",
     val langues: List<String> = emptyList(),
-    val competences: List<String> = emptyList(),
+    val preferencesDEmploi: List<String> = emptyList(),
+    val competences: List<Skill> = emptyList(),
+    val education: List<Education> = emptyList(),
+    val experience: List<Experience> = emptyList(),
     val sexe: String = "",
     val telephone: String = "",
     val email: String= "",
@@ -16,9 +23,10 @@ data class CompteDemandeur(
     val nationalite: String = "",
     val adresse: String = "",
     val urlPhoto: String = "",
+    val dateNaissance: String = "",
     val dateCreationCompte: Timestamp = Timestamp.now(),
     val urlCV: String? = "",
-    val occupation: String = "",
+    val metier: String = "",
     val typeDeCompte:String = "Demandeur",
 ){
 
@@ -57,30 +65,41 @@ data class CompteDemandeur(
     )
 
 
+/*
     data class Experience(
-        val occupation: String,
+        val position: String,
         val entreprise: String,
         val typeDEmploi: String,
         val ville: String,
-        val adresse: String? = null,
         val description: String,
         val dateDebut: String?,
         val dateFin: String?,
     )
+*/
 
+/*
     data class Education(
-        val universite: String,
+        val etablissement: String,
+        val diplome: String,
         val ville: String,
-        val adresse: String? = null,
+        val domaine: String,
         val description: String,
         val dateDebut: String?,
         val dateFin: String?,
     )
+*/
 
 
     data class Competences(
-        val idCompetenceDemandeur: String,
-        val idCompetence: String?,
-        val niveauDeCompetence: String,
+        val nomCompetence: String,
+        val niveau: String,
     )
+}
+
+sealed class Niveau(val titre: String, @ColorLong val couleur: Color){
+    object DEBUTANT: Niveau("Débutant", TailwindCSSColor.Blue500)
+    object INTERMEDIAIRE: Niveau("Intermédiaire", TailwindCSSColor.Green500)
+    object EXPERIMENTE: Niveau("Expérimenté", TailwindCSSColor.Yellow500)
+    object AVANCE: Niveau("Avancé", orange)
+    object EXPERT: Niveau("Expert", TailwindCSSColor.Red500)
 }

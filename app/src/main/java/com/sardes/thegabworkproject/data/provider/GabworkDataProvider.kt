@@ -1,4 +1,4 @@
-package com.sardes.thegabworkproject.data
+package com.sardes.thegabworkproject.data.provider
 
 import androidx.compose.ui.graphics.Color
 import com.sardes.thegabworkproject.ui.theme.graySurface

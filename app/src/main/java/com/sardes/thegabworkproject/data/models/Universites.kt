@@ -1,6 +1,6 @@
 package com.sardes.thegabworkproject.data.models
 
-data class Universite(
+data class Universites(
     val id_universite: Int,
     val nom_universite: String,
     val domain: List<String>,

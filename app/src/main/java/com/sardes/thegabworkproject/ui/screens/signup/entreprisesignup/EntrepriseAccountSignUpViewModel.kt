@@ -19,7 +19,7 @@ class EntrepriseAccountSignUpViewModel(
     private val commonSignUpRepository: CommonSignUpRepository = CommonSignUpRepository()
 ): ViewModel() {
 
-    val currenUser = commonSignUpRepository.currentUser
+    val currentUser = commonSignUpRepository.currentUser
 
     val hasUser: Boolean
         get() = commonSignUpRepository.hasUser()
@@ -27,40 +27,40 @@ class EntrepriseAccountSignUpViewModel(
     private val entreprise: FirebaseUser?
         get() = commonSignUpRepository.user()
 
-    var signUpUiState by mutableStateOf(SignupUiState())
+    var signUpUiStateEntreprise by mutableStateOf(SignupUiStateEntreprise())
         private set
 
 
     private fun validateEntrepriseForm() =
-        signUpUiState.entrepriseMail.isNotBlank() &&
-                signUpUiState.password.isNotBlank() &&
-                signUpUiState.confirmPassword.isNotBlank() &&
-                signUpUiState.entrepriseName.isNotBlank() &&
-                signUpUiState.address.isNotBlank() &&
-                signUpUiState.city.isNotEmpty() &&
-                signUpUiState.phone.isNotBlank() &&
-                signUpUiState.activityArea.isNotBlank() &&
-                signUpUiState.description.isNotBlank()
+        signUpUiStateEntreprise.entrepriseMail.isNotBlank() &&
+                signUpUiStateEntreprise.password.isNotBlank() &&
+                signUpUiStateEntreprise.confirmPassword.isNotBlank() &&
+                signUpUiStateEntreprise.entrepriseName.isNotBlank() &&
+                signUpUiStateEntreprise.address.isNotBlank() &&
+                signUpUiStateEntreprise.city.isNotEmpty() &&
+                signUpUiStateEntreprise.phone.isNotBlank() &&
+                signUpUiStateEntreprise.activityArea.isNotBlank() &&
+                signUpUiStateEntreprise.description.isNotBlank()
     fun createUser(context: Context) = viewModelScope.launch {
         try {
             if (!validateEntrepriseForm()){
-                throw IllegalArgumentException("Les champs marqués d'une étoiles (*) doivent être rempli")
+                throw IllegalArgumentException("Les champs marqués d'une étoile (*) doivent être remplis")
             }
 
-            signUpUiState = signUpUiState.copy(isLoading = true)
+            signUpUiStateEntreprise = signUpUiStateEntreprise.copy(isLoading = true)
 
-            if (signUpUiState.password !=
-                signUpUiState.confirmPassword){
+            if (signUpUiStateEntreprise.password !=
+                signUpUiStateEntreprise.confirmPassword){
                 throw  IllegalArgumentException(
                     "Les mots de passe ne correspondent pas"
                 )
             }
 
-            signUpUiState = signUpUiState.copy(signUpError = null)
+            signUpUiStateEntreprise = signUpUiStateEntreprise.copy(signUpError = null)
 
             commonSignUpRepository.createUser(
-                signUpUiState.entrepriseMail,
-                signUpUiState.password
+                signUpUiStateEntreprise.entrepriseMail,
+                signUpUiStateEntreprise.password
             ){ isSuccessful ->
                 if (isSuccessful){
 
@@ -72,21 +72,21 @@ class EntrepriseAccountSignUpViewModel(
                         "Compte créé avec succès",
                         Toast.LENGTH_SHORT
                     ).show()
-                    signUpUiState = signUpUiState.copy(isSuccessLogin = true)
+                    signUpUiStateEntreprise = signUpUiStateEntreprise.copy(isSuccessLogin = true)
                 }else{
                     Toast.makeText(
                         context,
                         "Erreur lors de la création du compte",
                         Toast.LENGTH_SHORT
                     ).show()
-                    signUpUiState = signUpUiState.copy(isSuccessLogin = false)
+                    signUpUiStateEntreprise = signUpUiStateEntreprise.copy(isSuccessLogin = false)
                 }
             }
         }catch (e:Exception){
-            signUpUiState = signUpUiState.copy(signUpError = e.localizedMessage)
+            signUpUiStateEntreprise = signUpUiStateEntreprise.copy(signUpError = e.localizedMessage)
             e.printStackTrace()
         }finally {
-            signUpUiState = signUpUiState.copy(isLoading = false)
+            signUpUiStateEntreprise = signUpUiStateEntreprise.copy(isLoading = false)
         }
     }
 
@@ -95,108 +95,108 @@ class EntrepriseAccountSignUpViewModel(
         if (hasUser){
             repository.addEntrepriseInformations(
                 entrepriseId = entreprise!!.uid,
-                nom = signUpUiState.entrepriseName,
-                telephone = signUpUiState.phone,
-                email = signUpUiState.entrepriseMail,
-                ville = signUpUiState.city,
-                activite = signUpUiState.activityArea,
-                description = signUpUiState.description,
-                adresse = signUpUiState.address,
-                siteWeb = signUpUiState.website,
+                nom = signUpUiStateEntreprise.entrepriseName,
+                telephone = signUpUiStateEntreprise.phone,
+                email = signUpUiStateEntreprise.entrepriseMail,
+                ville = signUpUiStateEntreprise.city,
+                activite = signUpUiStateEntreprise.activityArea,
+                description = signUpUiStateEntreprise.description,
+                adresse = signUpUiStateEntreprise.address,
+                siteWeb = signUpUiStateEntreprise.website,
                 urlLogo = "https://" +
                         "firebasestorage.googleapis.com/v0/b/" +
                         "thegabworkprojecttest.appspot.com/o/" +
                         "userProfile%2Fentreprise%2F" +
                         "${entreprise!!.uid}__profile__entreprise.jpg" +
                         "?alt=media",
-                logoEntreprise = signUpUiState.logo,
+                logoEntreprise = signUpUiStateEntreprise.logo,
                 dateCreationCompte = Timestamp.now(),
-                dateCreationEntreprise = signUpUiState.creationDate,
-                employes = signUpUiState.employes
+                dateCreationEntreprise = signUpUiStateEntreprise.creationDate,
+                employes = signUpUiStateEntreprise.employes
             ){
-                signUpUiState = signUpUiState.copy(informationsAddedStatus = it)
+                signUpUiStateEntreprise = signUpUiStateEntreprise.copy(informationsAddedStatus = it)
             }
         }
     }
 
 
     fun onEntrepriseEmailChangeSignUp(entrepriseMail: String){
-        signUpUiState = signUpUiState.copy(entrepriseMail = entrepriseMail)
+        signUpUiStateEntreprise = signUpUiStateEntreprise.copy(entrepriseMail = entrepriseMail)
     }
 
     fun onPasswordChangeSignUp(password: String){
-        signUpUiState = signUpUiState.copy(password = password)
+        signUpUiStateEntreprise = signUpUiStateEntreprise.copy(password = password)
     }
 
     fun onConfirmPasswordChange(confirmPassword: String){
-        signUpUiState = signUpUiState.copy(confirmPassword = confirmPassword)
+        signUpUiStateEntreprise = signUpUiStateEntreprise.copy(confirmPassword = confirmPassword)
     }
 
     fun onEntrerpiseNameChange(entrepriseName: String){
-        signUpUiState = signUpUiState.copy(entrepriseName = entrepriseName)
+        signUpUiStateEntreprise = signUpUiStateEntreprise.copy(entrepriseName = entrepriseName)
     }
 
     fun onEntreprisePhoneChange(entreprisePhone: String){
-        signUpUiState = signUpUiState.copy(phone = entreprisePhone)
+        signUpUiStateEntreprise = signUpUiStateEntreprise.copy(phone = entreprisePhone)
     }
 
     fun onCityChange(city: List<String>){
-        signUpUiState = signUpUiState.copy(city = city)
+        signUpUiStateEntreprise = signUpUiStateEntreprise.copy(city = city)
     }
 
     fun onAddressChange(address: String){
-        signUpUiState = signUpUiState.copy(address = address)
+        signUpUiStateEntreprise = signUpUiStateEntreprise.copy(address = address)
     }
 
     fun onActivityAreaChange(activityArea: String){
-        signUpUiState = signUpUiState.copy(activityArea = activityArea)
+        signUpUiStateEntreprise = signUpUiStateEntreprise.copy(activityArea = activityArea)
     }
 
     fun onEntrepriseDescriptionChange(description: String){
-        signUpUiState = signUpUiState.copy(description = description)
+        signUpUiStateEntreprise = signUpUiStateEntreprise.copy(description = description)
     }
 
     fun onWebsiteChange(website: String){
-        signUpUiState = signUpUiState.copy(website = website)
+        signUpUiStateEntreprise = signUpUiStateEntreprise.copy(website = website)
     }
 
     fun onEmployesChange(employes: String){
-        signUpUiState = signUpUiState.copy(employes = employes)
+        signUpUiStateEntreprise = signUpUiStateEntreprise.copy(employes = employes)
     }
 
 
     fun onLogoChange(logo: Uri?){
-        signUpUiState = signUpUiState.copy(logo = logo)
+        signUpUiStateEntreprise = signUpUiStateEntreprise.copy(logo = logo)
     }
 
     fun onCreationDateChange(creationDate: String){
-        signUpUiState = signUpUiState.copy(creationDate = creationDate)
+        signUpUiStateEntreprise = signUpUiStateEntreprise.copy(creationDate = creationDate)
     }
 }
 
 
-data class SignupUiState(
-    val entrepriseMail: String = "",
-    val password: String = "",
-    val confirmPassword: String = "",
+data class SignupUiStateEntreprise(
+    val entrepriseMail  : String = "",
+    val password        : String = "",
+    val confirmPassword : String = "",
 
-    val entrepriseName: String = "",
-    val phone: String = "",
-    val activityArea: String = "",
-    val description: String = "",
-    val website: String = "",
-    val city: List<String> = emptyList(),
-    val address: String = "",
-    val logo: Uri? = null,
-    val creationDate: String = "",
+    val entrepriseName  : String = "",
+    val phone           : String = "",
+    val activityArea    : String = "",
+    val description     : String = "",
+    val website         : String = "",
+    val city            : List<String> = emptyList(),
+    val address         : String = "",
+    val logo            : Uri? = null,
+    val creationDate    : String = "",
+    val employes        : String = "",
 
 //STATES
-    val isLoading: Boolean = false,
-    val isSuccessLogin: Boolean = false,
-    val signUpError: String? = null,
-    val loginError: String? = null,
+    val isLoading       : Boolean = false,
+    val isSuccessLogin  : Boolean = false,
+    val signUpError     : String? = null,
+    val loginError      : String? = null,
 
     val informationsAddedStatus: Boolean = false,
-    val employes: String = "",
 
     )

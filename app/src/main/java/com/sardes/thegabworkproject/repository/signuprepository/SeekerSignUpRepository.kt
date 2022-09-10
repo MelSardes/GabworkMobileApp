@@ -7,6 +7,9 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.sardes.thegabworkproject.data.models.CompteDemandeur
+import com.sardes.thegabworkproject.data.models.Education
+import com.sardes.thegabworkproject.data.models.Experience
+import com.sardes.thegabworkproject.data.models.Skill
 
 
 private const val COMPTES_DEMANDEUR_COLLECTION_REF = "ComptesDemandeur"
@@ -32,16 +35,20 @@ class SeekerSignUpRepository {
         telephone: String,
         HQH: String,
         langues: List<String>,
-        competences: List<String>,
+        preferencesDEmploi: List<String>,
+        competences: List<Skill>,
+        education: List<Education>,
+        experience: List<Experience>,
         email: String,
-        ville: String,
+        villes: String,
         nationalite: String,
         adresse: String,
         photo: Uri?,
         urlPhotoProfil: String,
+        dateNaissance: String,
         dateCreationCompte: Timestamp,
         urlCV: String,
-        occupation: String,
+        metier: String,
         typeDeCompte: String = "Demandeur",
 
         onComplete: (Boolean) -> Unit,
@@ -52,17 +59,21 @@ class SeekerSignUpRepository {
             prenom,
             HQH,
             langues,
+            preferencesDEmploi,
             competences,
+            education,
+            experience,
             sexe,
             telephone,
             email,
-            ville,
+            villes,
             nationalite,
             adresse,
             urlPhotoProfil,
+            dateNaissance,
             dateCreationCompte,
             urlCV,
-            occupation,
+            metier,
             typeDeCompte,
         )
 

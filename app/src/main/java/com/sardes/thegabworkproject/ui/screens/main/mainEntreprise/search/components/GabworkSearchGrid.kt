@@ -21,8 +21,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.sardes.thegabworkproject.data.ActivityAreaDataProvider
-import com.sardes.thegabworkproject.data.models.SecteursDActivite
+import com.sardes.thegabworkproject.data.provider.ActivityAreaDataProvider
+import com.sardes.thegabworkproject.data.models.SecteurDActivite
 import com.sardes.thegabworkproject.ui.theme.extensions.generateDominantColorState
 import com.sardes.thegabworkproject.ui.theme.modifiers.horizontalGradientBackground
 import com.sardes.thegabworkproject.ui.verticalgrid.VerticalGrid
@@ -41,7 +41,7 @@ fun GabworkSearchGrid() {
 
 @SuppressLint("MaterialDesignInsteadOrbitDesign")
 @Composable
-fun SearchGridItem(area: SecteursDActivite) {
+fun SearchGridItem(area: SecteurDActivite) {
     val context = LocalContext.current
     val imageBitmap = ImageBitmap.imageResource(context.resources, area.imageId).asAndroidBitmap()
     val swatch = remember(area.id) { imageBitmap.generateDominantColorState() }

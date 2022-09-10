@@ -1,6 +1,6 @@
 package com.sardes.thegabworkproject.data.models
 
-data class SecteursDActivite(
+data class SecteurDActivite(
     val id: Int,
     val nom: String,
     val description: String,

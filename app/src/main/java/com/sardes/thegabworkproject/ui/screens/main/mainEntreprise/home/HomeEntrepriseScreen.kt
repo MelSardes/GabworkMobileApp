@@ -6,7 +6,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -66,7 +65,6 @@ fun HomeEntrepriseScreen(
             homeUiState.entrepriseInformations?.urlLogo.toString(),
             homeUiState.entrepriseInformations?.nom.toString()
         )
-
     }
 }
 
@@ -90,8 +88,14 @@ private fun Content(
                 contentPadding = PaddingValues(top = AppBarExpendedHeight),
                 state = scrollState
             ) {
-                items(homeUiState.homePostList.data ?: emptyList()) { post ->
-                    PostCardComponent(post) { onPostClick(post.postId) }
+//                items(homeUiState.homePostList.data ?: emptyList()) { post ->
+//                    PostCardComponent(post) { onPostClick(post.postId) }
+//                }
+
+                homeUiState.homePostList.data?.forEach {
+                    item {
+                        PostCardComponent(it) { onPostClick(it.postId) }
+                    }
                 }
             }
         }

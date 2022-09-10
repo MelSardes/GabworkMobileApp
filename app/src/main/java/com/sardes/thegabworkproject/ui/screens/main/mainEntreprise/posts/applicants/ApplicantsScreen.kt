@@ -16,28 +16,29 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.sardes.thegabworkproject.repository.main.entreprise.MainEntrepriseRepository
 import com.sardes.thegabworkproject.repository.ressources.Ressources
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.components.PostCardComponent
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.components.SeekerCardComponent
+import kotlinx.coroutines.delay
 
 @SuppressLint("MaterialDesignInsteadOrbitDesign")
 @Composable
 fun ApplicantsScreen(
-    applicantsViewModel: ApplicantsViewModel = ApplicantsViewModel(repository = MainEntrepriseRepository()),
+    applicantsViewModel: ApplicantsViewModel?,
     postId: String,
     onNavigate: () -> Unit,
 ) {
 
 
-    val applicantsUiState = applicantsViewModel.applicantsUiState ?: ApplicantsUiState()
+    val applicantsUiState = applicantsViewModel?.applicantsUiState ?: ApplicantsUiState()
 
-    LaunchedEffect(key1 = Unit) {
-        applicantsViewModel.getPost(postId)
+    LaunchedEffect(applicantsViewModel?.getPost(postId)) {
+        applicantsViewModel?.getPost(postId)
     }
 
-    LaunchedEffect(key1 = Unit) {
-        applicantsViewModel.getPostApplicants(postId)
+    LaunchedEffect(applicantsViewModel?.getPostApplicants(postId)) {
+        delay(2000)
+        applicantsViewModel?.getPostApplicants(postId)
     }
 
 
@@ -82,24 +83,6 @@ fun ApplicantsScreen(
 
                 }
             }
-
-/*
-            SeekerCardComponent(
-                demandeur = CompteDemandeur(
-                    nom = "Sardes",
-                    prenom = "Mel",
-                    sexe = "homme",
-                    telephone = "066157770",
-                    email = "melsardes2042@hotmail.com",
-                    ville = "Sardesville",
-                    nationalite = "Sardesienne",
-                    adresse = "42 Avenue des légendes, Sardesville, Etat de Sardes",
-                    urlPhotoProfil = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/We_Can_Do_It%21_NARA_535413_-_Restoration_2.jpg/220px-We_Can_Do_It%21_NARA_535413_-_Restoration_2.jpg",
-                    occupation = "Développeur Kotlin",
-                )
-            )
-*/
-
         }
     }
 

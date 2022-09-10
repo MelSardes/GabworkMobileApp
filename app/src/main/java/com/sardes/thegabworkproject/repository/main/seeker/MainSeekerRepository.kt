@@ -7,6 +7,7 @@ import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.sardes.thegabworkproject.data.models.CompteDemandeur
+import com.sardes.thegabworkproject.data.models.CompteEntreprise
 import com.sardes.thegabworkproject.repository.ressources.Ressources
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -16,6 +17,7 @@ import kotlinx.coroutines.flow.callbackFlow
 const val COMPTES_DEMANDEUR_REF = "ComptesDemandeur"
 const val BOOKMARKS_REF = "Favoris"
 const val APPLICATIONS_REF = "candidatures"
+const val POSTS_COLLECTION_REF = "Posts"
 
 class MainSeekerRepository {
 
@@ -29,12 +31,16 @@ class MainSeekerRepository {
         .firestore.collection(COMPTES_DEMANDEUR_REF)
 
 
-    private val postBookmarkedRef: CollectionReference = Firebase
+    private val bookmarkedPostRef: CollectionReference = Firebase
         .firestore.collection(COMPTES_DEMANDEUR_REF + "/" + getUserId() + "/" + BOOKMARKS_REF)
 
 
     private val applicationsRef: CollectionReference = Firebase
         .firestore.collection(COMPTES_DEMANDEUR_REF + "/" + getUserId() + "/" + APPLICATIONS_REF)
+
+
+    private val postsRef: CollectionReference = Firebase
+        .firestore.collection(com.sardes.thegabworkproject.repository.main.entreprise.POSTS_COLLECTION_REF)
 
 
     /*
@@ -46,7 +52,7 @@ class MainSeekerRepository {
         var snapshotStateListener: ListenerRegistration? = null
 
         try {
-            snapshotStateListener = postBookmarkedRef
+            snapshotStateListener = bookmarkedPostRef
                 .orderBy("dateEnregistrement")
                 .whereEqualTo("userId", userId)
                 .addSnapshotListener { snapshot, e ->
@@ -82,7 +88,7 @@ class MainSeekerRepository {
         typeDEmploi: String,
         onComplete: (Boolean) -> Unit,
     ) {
-        val documentId = postBookmarkedRef.document().id
+        val documentId = bookmarkedPostRef.document().id
 
         val bookmark = CompteDemandeur.Bookmark(
             documentId,
@@ -97,7 +103,7 @@ class MainSeekerRepository {
             typeDEmploi,
         )
 
-        postBookmarkedRef
+        bookmarkedPostRef
             .document(documentId)
             .set(bookmark)
             .addOnCompleteListener { result ->
@@ -107,9 +113,9 @@ class MainSeekerRepository {
     }
 
 
-    /*
-        @APPLICATIONS THIS SECTION CONCERNS EVERYTHING ABOUT APPLICATIONS
-     */
+    /*********************************************************************
+    @APPLICATIONS THIS SECTION CONCERNS EVERYTHING ABOUT APPLICATIONS
+     *********************************************************************/
 
     fun getAllApplications(userId: String): Flow<Ressources<List
     <CompteDemandeur.Candidature>>> = callbackFlow {
@@ -233,6 +239,157 @@ class MainSeekerRepository {
     }
 
 
+
+
+    /*********************************************************************
+    @
+     *********************************************************************/
+
+    fun getSeekerInformations(
+        seekerId: String,
+        onError: (Throwable) -> Unit,
+        onSuccess: (CompteDemandeur?) -> Unit,
+    ) {
+        seekerRef
+            .document(seekerId)
+            .get()
+            .addOnSuccessListener {
+                onSuccess.invoke(it?.toObject(CompteDemandeur::class.java))
+            }
+            .addOnFailureListener { result ->
+                result.cause?.let { onError.invoke(it) }
+            }
+    }
+
+
+    /*********************************************************************
+    @
+     *********************************************************************/
+
+    fun getOccupationLikePosts(occupation: String): Flow<Ressources<List
+    <CompteEntreprise.Post>>> = callbackFlow {
+        var snapshotStateListener: ListenerRegistration? = null
+
+        try {
+            snapshotStateListener = postsRef
+                .orderBy("dateCreationPost")
+                .whereEqualTo("competences", occupation)
+                .addSnapshotListener { snapshot, e ->
+                    val response = if (snapshot != null) {
+                        val post =
+                            snapshot.toObjects(CompteEntreprise.Post::class.java)
+                        Ressources.Success(data = post)
+                    } else {
+                        Ressources.Error(throwable = e?.cause)
+                    }
+                    trySend(response)
+                }
+        } catch (e: Exception) {
+            trySend(Ressources.Error(e.cause))
+            e.printStackTrace()
+        }
+
+        awaitClose {
+            snapshotStateListener?.remove()
+        }
+    }
+
+
+    fun getFiveLatestOccupationLikePosts(occupation: String): Flow<Ressources<List
+    <CompteEntreprise.Post>>> = callbackFlow {
+        var snapshotStateListener: ListenerRegistration? = null
+
+        try {
+            snapshotStateListener = postsRef
+                .orderBy("dateCreationPost")
+                .whereEqualTo("competences", occupation)
+                .limit(5)
+                .addSnapshotListener { snapshot, e ->
+                    val response = if (snapshot != null) {
+                        val post =
+                            snapshot.toObjects(CompteEntreprise.Post::class.java)
+                        Ressources.Success(data = post)
+                    } else {
+                        Ressources.Error(throwable = e?.cause)
+                    }
+                    trySend(response)
+                }
+        } catch (e: Exception) {
+            trySend(Ressources.Error(e.cause))
+            e.printStackTrace()
+        }
+
+        awaitClose {
+            snapshotStateListener?.remove()
+        }
+    }
+
+
+    fun getFiveLatestPosts(): Flow<Ressources<List
+    <CompteEntreprise.Post>>> = callbackFlow {
+        var snapshotStateListener: ListenerRegistration? = null
+
+        try {
+            snapshotStateListener = postsRef
+                .orderBy("dateCreationPost")
+                .limit(5)
+                .addSnapshotListener { snapshot, e ->
+                    val response = if (snapshot != null) {
+                        val post =
+                            snapshot.toObjects(CompteEntreprise.Post::class.java)
+                        Ressources.Success(data = post)
+                    } else {
+                        Ressources.Error(throwable = e?.cause)
+                    }
+                    trySend(response)
+                }
+        } catch (e: Exception) {
+            trySend(Ressources.Error(e.cause))
+            e.printStackTrace()
+        }
+
+        awaitClose {
+            snapshotStateListener?.remove()
+        }
+    }
+
+
+    fun getPostsFromCity(city: String): Flow<Ressources<List
+    <CompteEntreprise.Post>>> = callbackFlow {
+        var snapshotStateListener: ListenerRegistration? = null
+
+        try {
+            snapshotStateListener = postsRef
+                .orderBy("dateCreationPost")
+                .whereEqualTo("ville", city)
+                .addSnapshotListener { snapshot, e ->
+                    val response = if (snapshot != null) {
+                        val post =
+                            snapshot.toObjects(CompteEntreprise.Post::class.java)
+                        Ressources.Success(data = post)
+                    } else {
+                        Ressources.Error(throwable = e?.cause)
+                    }
+                    trySend(response)
+                }
+        } catch (e: Exception) {
+            trySend(Ressources.Error(e.cause))
+            e.printStackTrace()
+        }
+
+        awaitClose {
+            snapshotStateListener?.remove()
+        }
+    }
+
+
+
+
+
+    /*********************************************************************
+    % ADD
+     *********************************************************************/
+
     fun addApplication(
         candidatureId: String,
         postId: String,
@@ -282,21 +439,8 @@ class MainSeekerRepository {
     }
 
 
-    fun getSeekerInformations(
-        seekerId: String,
-        onError: (Throwable) -> Unit,
-        onSuccess: (CompteDemandeur?) -> Unit,
-    ) {
-        seekerRef
-            .document(seekerId)
-            .get()
-            .addOnSuccessListener {
-                onSuccess.invoke(it?.toObject(CompteDemandeur::class.java))
-            }
-            .addOnFailureListener { result ->
-                result.cause?.let { onError.invoke(it) }
-            }
-    }
+
+
 
 
 }

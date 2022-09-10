@@ -10,4 +10,25 @@
     <string name="show_less" translatable="false">Show less</string>
     <string name="show_more" translatable="false">Show more</string>
     <string name="start_signup" translatable="false">Commencer l\'inscription</string>
+    <string name="Description_UOB">Première Université du pays, elle a été créée en 1970, sous l’appellation d’Université Nationale du Gabon (UNG). Elle a pris son nom actuel en 1978. À la suite de restructurations, certains établissements ont été détachés pour donner naissance à des grandes écoles (École normale supérieure de l’enseignement technique, Institut universitaire des sciences de l’organisation, etc.) ou à d’autres universités (université des sciences et techniques de Masuku, université des sciences de la santé de Libreville, etc.) L’Université Omar Bongo est spécialisée dans les sciences humaines.</string>
+    <string name="Web_UOB">https://univ-omarbongo.ga</string>
+    <string name="Adrese_UOB">680, Boulevard Leon MBA</string>
+    <string name="Mail_UOB">contact@univ-omarbongo.ga</string>
+    <string name="Nom_UOB">Université Omar Bongo</string>
+    <string name="lbv">Libreville</string>
+    <string name="Sigle_UOB">UOB</string>
+    <string name="nom_INPTIC">Institut National de la Poste, des Technologies de l’Information et de la Communication</string>
+    <string name="sigle_INPTIC">INPTIC</string>
+    <string name="mail_INPTIC">inptic@inptic-ga.org</string>
+    <string name="adresse_INPTIC">13124 Gros-Bouquet Libreville</string>
+    <string name="web_INPTIC">https://www.inptic-ga.org</string>
+    <string name="description_INPTIC">" L’Institut National de la Poste, des Technologies de l’Information et de la Communication, en abrégé INPTIC, est un établissement public gabonais de formation dans les domaines de l’informatique, de l’audiovisuel, des multimédias, d’Internet et des télécommunications.  L’INPTIC accueille chaque année des étudiants sélectionnés par voie de concours en formation initiale ou sur dossier en formation continue et désireux de recevoir de solides connaissances et compétences pratiques dans les métiers du numérique. "</string>
+    <string name="nom_USTM">Université des Sciences et Techniques de Masuku</string>
+    <string name="sigle_USTM">USTM</string>
+    <string name="mail_USTM"> info@univ-masuku.ga</string>
+    <string name="adresse_USTM">901, Franceville</string>
+    <string name="web_USTM">https://univ-masuku.org/</string>
+    <string name="fcv">Franceville</string>
+    <string name="description_USTM">Inaugurée en 1986 par le feu Président EL HADJ OMAR BONGO ONDIMBA, l\'USTM est le premier établissement scientifique du Gabon qui forme aussi bien dans le domaine technologique que celui des sciences fondamentales. Depuis 2007, les formations sont arrimées au système LMD et l\'institution délivre des diplômes allant du DUT au Doctorat.</string>
+    <string name="school_logo">School logo</string>
 </resources>

@@ -14,16 +14,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sardes.thegabworkproject.R
-import com.sardes.thegabworkproject.test.surfaceColor
 import com.sardes.thegabworkproject.ui.screens.signup.components.Hero
 import com.sardes.thegabworkproject.ui.theme.GWTypography
 import com.sardes.thegabworkproject.ui.theme.GWpalette
 import com.sardes.thegabworkproject.ui.theme.TailwindCSSColor
+import com.sardes.thegabworkproject.ui.theme.TailwindCSSColor.Green500
 import kiwi.orbit.compose.ui.controls.Card
 
 @Composable
 fun EntrepriseSignUpStart(
-    modifier: Modifier = Modifier,
     onNavToLoginPage: () -> Unit = {},
     startSigningUp: () -> Unit = {},
 ) {
@@ -37,7 +36,7 @@ fun EntrepriseSignUpStart(
                 .fillMaxWidth()
                 .fillMaxHeight(0.93f)
                 .clip(RoundedCornerShape(bottomStart = 24.dp, bottomEnd = 24.dp))
-                .background(surfaceColor)
+                .background(Green500)
         ) {
             Column(
                 modifier = Modifier
@@ -47,7 +46,7 @@ fun EntrepriseSignUpStart(
                     .background(Color.White)
             ) {
 
-                Hero("COMPTE ENTREPRISE")
+                Hero(nomCompte = "COMPTE ENTREPRISE", image = R.drawable.painted_paul)
 
                 kiwi.orbit.compose.ui.controls.Text(
                     "Avec ce compte, vous pourrez : \n" +
@@ -73,7 +72,7 @@ fun EntrepriseSignUpStart(
                 modifier = Modifier
                     .fillMaxWidth()
                     .fillMaxHeight(1f),
-                backgroundColor = surfaceColor,
+                backgroundColor = Green500,
             ) {
                 Box(contentAlignment = Alignment.Center) {
                     kiwi.orbit.compose.ui.controls.Text(
