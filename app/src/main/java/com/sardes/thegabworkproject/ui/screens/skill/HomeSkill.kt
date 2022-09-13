@@ -1,31 +1,11 @@
 package com.sardes.thegabworkproject.ui.screens.skill
 
-import android.annotation.SuppressLint
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.combinedClickable
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.ExitToApp
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+//import com.sardes.thegabworkproject.data.models.Competences_Profil_Etudiant
 import com.google.firebase.Timestamp
-import com.sardes.thegabworkproject.data.models.Competences_Profil_Etudiant
-import com.sardes.thegabworkproject.repository.ressources.Ressources
 import java.text.SimpleDateFormat
 import java.util.*
 
+/*
 @SuppressLint("MaterialDesignInsteadOrbitDesign", "UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun HomeSkill(
@@ -157,8 +137,10 @@ fun HomeSkill(
     }
 
 }
+*/
 
 
+/*
 @SuppressLint("MaterialDesignInsteadOrbitDesign")
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -215,6 +197,7 @@ fun SkillItem(
         }
     }
 }
+*/
 
 
 private fun formatDate(timestamp: Timestamp):String{
@@ -222,8 +205,10 @@ private fun formatDate(timestamp: Timestamp):String{
     return sdf.format(timestamp.toDate())
 }
 
+/*
 @Preview(name = "HomeSkill")
 @Composable
 private fun PreviewHomeSkill() {
     SkillItem(Competences_Profil_Etudiant(),{},{} )
 }
+*/

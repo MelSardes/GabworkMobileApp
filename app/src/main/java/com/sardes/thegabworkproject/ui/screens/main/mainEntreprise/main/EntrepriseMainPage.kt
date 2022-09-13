@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.home.HomeEntrepriseViewModel
+import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.message.MessagesEntrepriseViewModel
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.PostsEntrepriseViewModel
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.applicants.ApplicantsViewModel
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.standalonepost.create.NewPostViewModel
@@ -29,6 +30,7 @@ fun EntrepriseMainPage() {
     val homeViewModel = viewModel(modelClass = HomeEntrepriseViewModel::class.java)
     val postsViewModel = viewModel(modelClass = PostsEntrepriseViewModel::class.java)
     val newPostViewModel = viewModel(modelClass = NewPostViewModel::class.java)
+    val messagesViewModel = viewModel(modelClass = MessagesEntrepriseViewModel::class.java)
     val applicantsViewModel = viewModel(modelClass = ApplicantsViewModel::class.java)
 
     Scaffold(
@@ -41,7 +43,8 @@ fun EntrepriseMainPage() {
                     homeViewModel,
                     postsViewModel,
                     newPostViewModel,
-                    applicantsViewModel
+                    applicantsViewModel,
+                    messagesViewModel,
                 )
             }
         },

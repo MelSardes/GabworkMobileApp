@@ -9,21 +9,16 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import com.sardes.thegabworkproject.R
 import com.sardes.thegabworkproject.ui.screens.GetStartedScreen
-import com.sardes.thegabworkproject.ui.screens.control.AuthControl
 import com.sardes.thegabworkproject.ui.screens.login.LoginScreen
 import com.sardes.thegabworkproject.ui.screens.login.LoginViewModel
 import com.sardes.thegabworkproject.ui.screens.login_and_signup.SelectSignUpAccount
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.main.EntrepriseMainPage
-import com.sardes.thegabworkproject.ui.screens.main.mainSeeker.main.SeekerMainPage
+import com.sardes.thegabworkproject.ui.screens.main.mainStandard.main.StandardMainPage
 import com.sardes.thegabworkproject.ui.screens.signup.entreprisesignup.EntrepriseAccountSignUpViewModel
 import com.sardes.thegabworkproject.ui.screens.signup.entreprisesignup.screens.EntrepriseAccountSignUpScreen
-import com.sardes.thegabworkproject.ui.screens.signup.independantsignup.IndependantAccountSignUpSceen
-import com.sardes.thegabworkproject.ui.screens.signup.independantsignup.IndependantAccountSignUpViewModel
-import com.sardes.thegabworkproject.ui.screens.signup.seekersignup.SeekerSignUpViewModel
-import com.sardes.thegabworkproject.ui.screens.signup.seekersignup.screens.SeekerSignUpScreen
-import com.sardes.thegabworkproject.ui.screens.signup.seekersignup.screens.SeekerSignUpStart
-import com.sardes.thegabworkproject.ui.screens.signup.standardsignup.StandardAccountSignUpViewModel
-import com.sardes.thegabworkproject.ui.screens.signup.standardsignup.StandardSignUpScreen
+import com.sardes.thegabworkproject.ui.screens.signup.standardsignup.StandardSignUpViewModel
+import com.sardes.thegabworkproject.ui.screens.signup.standardsignup.screens.StandardSignUpScreen
+import com.sardes.thegabworkproject.ui.screens.signup.standardsignup.screens.StandardSignUpStart
 import com.sardes.thegabworkproject.ui.screens.splash.SplashScreen
 
 sealed class Interface(val route: String) {
@@ -32,27 +27,22 @@ sealed class Interface(val route: String) {
     object AuthInterface : Interface("AuthInterface")
 
     object EntrepriseInterface : Interface("EntrepriseInterface")
-    object StandardInterface : Interface("StandardInterface")
-    object IndependantInterface : Interface("IndependantInterface")
-    object StudentInterface : Interface("StudentInterface")
-    object SeekerInterface : Interface("SeekerInterface")
+    object StandardInterface : Interface("standardInterface")
 }
 
 sealed class AuthInterfaceScreen(val route: String) {
     object LoginScreen : AuthInterfaceScreen("LoginScreen")
     object SignUpSelectScreen : AuthInterfaceScreen("SignUpSelectScreen")
-    object StandardSignUpScreen : AuthInterfaceScreen("StandardSignUpScreen")
-    object IndependantSignUpScreen : AuthInterfaceScreen("IndependantSignUpScreen")
+
     object EntrepriseStartSignUpScreen : AuthInterfaceScreen("EntrepriseStartSignUpScreen")
     object EntrepriseSignUpScreen : AuthInterfaceScreen("EntrepriseSignUpScreen")
-    object StudentSignUpScreen : AuthInterfaceScreen("StudentSignUpScreen")
-    object SeekerStartSignUpScreen : AuthInterfaceScreen("SeekerStartSignUpScreen")
-    object SeekerSignUpScreen : AuthInterfaceScreen("SeekerSignUpScreen")
+
+    object StandardStartSignUpScreen : AuthInterfaceScreen("standardStartSignUpScreen")
+    object StandardSignUpScreen : AuthInterfaceScreen("standardSignUpScreen")
 }
 
 sealed class HomeInterfaceScreen(val route: String) {
     object Splash : HomeInterfaceScreen("Splash")
-    object Control : HomeInterfaceScreen("Control")
     object GetStarted : HomeInterfaceScreen("GetStarted")
 }
 
@@ -89,59 +79,34 @@ sealed class EntrepriseInterfaceScreen(var route: String, var icon: Int, var tit
     )
 }
 
-sealed class SeekerInterfaceScreen(val route: String, val icon: Int) {
-    object SeekerMain : SeekerInterfaceScreen("SeekerInterface/Main", 0)
+sealed class StandardInterfaceScreen(val route: String, val icon: Int) {
+    object StandardMain : StandardInterfaceScreen("standardInterface/Main", 0)
 
-    object SeekerHome : SeekerInterfaceScreen("SeekerInterface/SeekerHome", R.drawable.ic_home)
-    object SeekerSaves : SeekerInterfaceScreen(
-        "SeekerInterface/SeekerBookmarks",
+    object StandardHome : StandardInterfaceScreen("standardInterface/standardHome", R.drawable.ic_home)
+    object StandardSaves : StandardInterfaceScreen(
+        "standardInterface/standardBookmarks",
         kiwi.orbit.compose.ui.R.drawable.ic_orbit_bookmark
     )
 
-    object SeekerSearch :
-        SeekerInterfaceScreen("SeekerInterface/SeekerSearch", R.drawable.ic_search)
+    object StandardSearch :
+        StandardInterfaceScreen("standardInterface/standardSearch", R.drawable.ic_search)
 
-    object SeekerMessages :
-        SeekerInterfaceScreen("SeekerInterface/SeekerMessages", R.drawable.ic_message)
+    object StandardMessages :
+        StandardInterfaceScreen("standardInterface/standardMessages", R.drawable.ic_message)
 
-    object SeekerProfile :
-        SeekerInterfaceScreen("SeekerInterface/SeekerProfile", R.drawable.ic_person)
+    object StandardProfile :
+        StandardInterfaceScreen("standardInterface/standardProfile", R.drawable.ic_person)
 }
 
-sealed class StandardInterfaceScreen(val route: String) {
-    object StandardMain : StandardInterfaceScreen("StandardInterface/Main")
 
-    object StandardHome : StandardInterfaceScreen("StandardInterface/StandardHome")
-    object StandardBookmarks : StandardInterfaceScreen("StandardInterface/StandardBookmarks")
-    object StandardSearch : StandardInterfaceScreen("StandardInterface/StandardSearch")
-    object StandardMessages : StandardInterfaceScreen("StandardInterface/StandardMessages")
-    object StandardProfile : StandardInterfaceScreen("StandardInterface/StandardProfile")
+sealed class StandardPostScreen(val route: String){
+    object DetailsPostScreen: StandardPostScreen("StandardApplicationPost")
 }
 
-sealed class StudentInterfaceScreen(val route: String) {
-    object StudentMain : StudentInterfaceScreen("StudentInterface/Main")
-
-    object StudentHome : StudentInterfaceScreen("StudentInterface/StudentHome")
-    object StudentBookmarks : StudentInterfaceScreen("StudentInterface/StudentBookmarks")
-    object StudentSearch : StudentInterfaceScreen("StudentInterface/StudentSearch")
-    object StudentMessages : StudentInterfaceScreen("StudentInterface/StudentMessages")
-    object StudentProfile : StudentInterfaceScreen("StudentInterface/StudentProfile")
+sealed class StandardMessageScreen(val route: String){
+    object StandardConversationScreen: StandardMessageScreen("standardInterface/standardMessages/Conversation")
 }
 
-sealed class IndependantInterfaceScreen(val route: String) {
-    object IndependantMain : IndependantInterfaceScreen("IndependantInterface/Main")
-
-    object IndependantHome : IndependantInterfaceScreen("IndependantInterface/IndependantHome")
-    object IndependantBookmarks :
-        IndependantInterfaceScreen("IndependantInterface/IndependantBookmarks")
-
-    object IndependantSearch : IndependantInterfaceScreen("IndependantInterface/Independantearch")
-    object IndependantMessages :
-        IndependantInterfaceScreen("IndependantInterface/IndependantMessages")
-
-    object IndependantProfile :
-        IndependantInterfaceScreen("IndependantInterface/IndependantProfile")
-}
 
 
 sealed class EntrepriseHomeScreen(val route: String) {
@@ -189,10 +154,8 @@ sealed class EntrepriseProfileScreen(val route: String) {
 @Composable
 fun NavGraphMain(
     loginViewModel: LoginViewModel? = null,
-    standardAccountSignUpViewModel: StandardAccountSignUpViewModel,
-    independantAccountSignUpViewModel: IndependantAccountSignUpViewModel,
     entrepriseAccountSignUpViewModel: EntrepriseAccountSignUpViewModel,
-    seekerSignUpViewModel: SeekerSignUpViewModel?
+    standardSignUpViewModel: StandardSignUpViewModel?
 ) {
     val navController = rememberNavController()
 
@@ -206,15 +169,13 @@ fun NavGraphMain(
         authInterfaceGraph(
             navController,
             loginViewModel,
-            standardAccountSignUpViewModel,
-            independantAccountSignUpViewModel,
             entrepriseAccountSignUpViewModel,
-            seekerSignUpViewModel
+            standardSignUpViewModel
         )
 
         entrepriseInterfaceGraph()
 
-        seekerInterfaceGraph()
+        StandardInterfaceGraph()
     }
 }
 
@@ -222,10 +183,8 @@ fun NavGraphMain(
 fun NavGraphBuilder.authInterfaceGraph(
     navController: NavHostController,
     loginViewModel: LoginViewModel?,
-    standardAccountSignUpViewModel: StandardAccountSignUpViewModel?,
-    independantAccountSignUpViewModel: IndependantAccountSignUpViewModel?,
     entrepriseAccountSignUpViewModel: EntrepriseAccountSignUpViewModel?,
-    seekerSignUpViewModel: SeekerSignUpViewModel?
+    standardSignUpViewModel: StandardSignUpViewModel?
 ) {
     navigation(
         route = Interface.AuthInterface.route,
@@ -254,8 +213,8 @@ fun NavGraphBuilder.authInterfaceGraph(
 
                 },
 
-                navToSeekerInterface = {
-                    navController.navigate(Interface.SeekerInterface.route){
+                navToStandardInterface = {
+                    navController.navigate(Interface.StandardInterface.route){
                         launchSingleTop = true
                         popUpTo(route = AuthInterfaceScreen.LoginScreen.route){
                             inclusive = true
@@ -275,7 +234,7 @@ fun NavGraphBuilder.authInterfaceGraph(
             },
 
             onNavToStandardSignUpAccount = {
-                navController.navigate(AuthInterfaceScreen.SeekerStartSignUpScreen.route){
+                navController.navigate(AuthInterfaceScreen.StandardStartSignUpScreen.route){
                     launchSingleTop = true
                 }
             }
@@ -285,20 +244,20 @@ fun NavGraphBuilder.authInterfaceGraph(
 
 
 
-    composable(route = AuthInterfaceScreen.SeekerStartSignUpScreen.route){
-        SeekerSignUpStart(
+    composable(route = AuthInterfaceScreen.StandardStartSignUpScreen.route){
+        StandardSignUpStart(
             onNavToLoginPage = {
                 navController.navigate(AuthInterfaceScreen.LoginScreen.route){launchSingleTop = true}
             },
 
             startSigningUp = {
-                navController.navigate(AuthInterfaceScreen.SeekerSignUpScreen.route){launchSingleTop = true}
+                navController.navigate(AuthInterfaceScreen.StandardSignUpScreen.route){launchSingleTop = true}
             }
         )
     }
 
     composable(route = AuthInterfaceScreen.EntrepriseStartSignUpScreen.route){
-        SeekerSignUpStart(
+        StandardSignUpStart(
             onNavToLoginPage = {
                 navController.navigate(AuthInterfaceScreen.LoginScreen.route){launchSingleTop = true}
             },
@@ -314,54 +273,19 @@ fun NavGraphBuilder.authInterfaceGraph(
 
 
 
-    composable(route = AuthInterfaceScreen.SeekerSignUpScreen.route){
-        SeekerSignUpScreen(
-            viewModel = seekerSignUpViewModel,
+    composable(route = AuthInterfaceScreen.StandardSignUpScreen.route){
+        StandardSignUpScreen(
+            viewModel = standardSignUpViewModel,
 
-            navToSeekerInterface = {
-                navController.navigate(Interface.SeekerInterface.route){
-                    popUpTo(AuthInterfaceScreen.SeekerSignUpScreen.route){
+            navToStandardInterface = {
+                navController.navigate(Interface.StandardInterface.route){
+                    popUpTo(AuthInterfaceScreen.StandardSignUpScreen.route){
                         inclusive = true
                     }
                 }
             }
         )
     }
-
-
-    composable(route = AuthInterfaceScreen.StandardSignUpScreen.route) {
-        StandardSignUpScreen(
-            navToStandardInterface = {
-                navController.navigate(Interface.StandardInterface.route) {
-                    launchSingleTop = true
-                    popUpTo(AuthInterfaceScreen.StandardSignUpScreen.route) {
-                        inclusive = true
-                    }
-                }
-            },
-            viewModel = standardAccountSignUpViewModel
-        ) {
-            navController.navigate(AuthInterfaceScreen.LoginScreen.route)
-        }
-    }
-
-
-    composable(route = AuthInterfaceScreen.IndependantSignUpScreen.route) {
-        IndependantAccountSignUpSceen(
-            navToIndependantInterface = {
-                navController.navigate(Interface.IndependantInterface.route) {
-                    launchSingleTop = true
-                    popUpTo(AuthInterfaceScreen.IndependantSignUpScreen.route) {
-                        inclusive = true
-                    }
-                }
-            },
-            viewModel = independantAccountSignUpViewModel
-        ) {
-            navController.navigate(AuthInterfaceScreen.LoginScreen.route)
-        }
-    }
-
 
     composable(route = AuthInterfaceScreen.EntrepriseSignUpScreen.route) {
         EntrepriseAccountSignUpScreen(
@@ -389,16 +313,17 @@ fun NavGraphBuilder.entrepriseInterfaceGraph() {
     }
 }
 
-fun NavGraphBuilder.seekerInterfaceGraph(){
+fun NavGraphBuilder.StandardInterfaceGraph(){
     navigation(
-        route = Interface.SeekerInterface.route,
-        startDestination = SeekerInterfaceScreen.SeekerMain.route
+        route = Interface.StandardInterface.route,
+        startDestination = StandardInterfaceScreen.StandardMain.route
     ){
-        composable(SeekerInterfaceScreen.SeekerMain.route){
-            SeekerMainPage()
+        composable(StandardInterfaceScreen.StandardMain.route){
+            StandardMainPage()
         }
     }
 }
+
 
 private fun NavGraphBuilder.homeInterfaceGraph(
     navController: NavHostController,
@@ -409,22 +334,6 @@ private fun NavGraphBuilder.homeInterfaceGraph(
         startDestination = HomeInterfaceScreen.Splash.route
     ) {
         addSplashScreen(navController = navController, loginViewModel)
-
-        composable(HomeInterfaceScreen.Control.route) {
-            AuthControl(
-                onNavToStartPage = {
-                    navController.navigate(HomeInterfaceScreen.GetStarted.route) {
-                        launchSingleTop = true
-                    }
-                },
-                loginViewModel = LoginViewModel(),
-                onNavToMainPage = {
-                    navController.navigate(Screen.EntrepriseMain.route) {
-                        launchSingleTop = true
-                    }
-                }
-            )
-        }
 
         composable(HomeInterfaceScreen.GetStarted.route) {
             GetStartedScreen(onNavToMainPage = { /*TODO*/ }) {
@@ -451,8 +360,8 @@ private fun NavGraphBuilder.addSplashScreen(
                 }
             },
             loginViewModel = loginViewModel,
-            navToDemandeurInterface = {
-                navController.navigate(AuthInterfaceScreen.SeekerSignUpScreen.route){
+            navToStandardInterface = {
+                navController.navigate(AuthInterfaceScreen.StandardSignUpScreen.route){
                     popUpTo(HomeInterfaceScreen.Splash.route){inclusive = true}
                 }
             }

@@ -1,31 +1,21 @@
 package com.sardes.thegabworkproject.ui.screens.skill
 
 import android.annotation.SuppressLint
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sardes.thegabworkproject.ui.theme.BlueFlag
-import com.sardes.thegabworkproject.ui.theme.TheGabworkProjectTheme
-import kotlinx.coroutines.launch
 
+/*
 @SuppressLint("CoroutineCreationDuringComposition", "MaterialDesignInsteadOrbitDesign")
 @Composable
 fun SkillScreen(
@@ -113,6 +103,7 @@ fun SkillScreen(
             )
 
             Spacer(modifier = Modifier.height(10.dp))
+*/
 /*
             OutlinedTextField(
                 value = skillUiState.niveau_de_competence,
@@ -123,7 +114,8 @@ fun SkillScreen(
                     .padding(8.dp)
                     .height(30.dp)
 
-            )*/
+            )*//*
+
 
             LazyColumn(
                 modifier = Modifier.fillMaxWidth(),
@@ -142,6 +134,7 @@ fun SkillScreen(
         }
     }
 }
+*/
 
 
 @SuppressLint("MaterialDesignInsteadOrbitDesign")
@@ -167,6 +160,7 @@ fun SkillLevelItem(
 
 
 
+/*
 @Preview(showSystemUi = true)
 @Composable
 fun PreviewSkillScreen(){
@@ -175,4 +169,4 @@ fun PreviewSkillScreen(){
             
         }
     }
-}
+}*/

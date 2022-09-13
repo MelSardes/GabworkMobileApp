@@ -9,16 +9,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.sardes.thegabworkproject.ui.screens.signup.seekersignup.SeekerSignUpViewModel
-import com.sardes.thegabworkproject.ui.screens.signup.seekersignup.SignupUiStateSeeker
+import com.sardes.thegabworkproject.ui.screens.signup.standardsignup.StandardSignUpViewModel
+import com.sardes.thegabworkproject.ui.screens.signup.standardsignup.SignupUiStateStandard
 
 
 @SuppressLint("MaterialDesignInsteadOrbitDesign")
 @Preview(showBackground = true)
 @Composable
 fun Test(
-    uiState: SignupUiStateSeeker? = null,
-    viewModel: SeekerSignUpViewModel? = null,
+    uiState: SignupUiStateStandard? = null,
+    viewModel: StandardSignUpViewModel? = null,
     focusRequester: FocusRequester = FocusRequester.Default
 ) {
 

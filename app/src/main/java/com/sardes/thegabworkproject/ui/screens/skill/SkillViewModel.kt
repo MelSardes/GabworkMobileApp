@@ -1,14 +1,6 @@
 package com.sardes.thegabworkproject.ui.screens.skill
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-import androidx.lifecycle.ViewModel
-import com.google.firebase.Timestamp
-import com.google.firebase.auth.FirebaseUser
-import com.sardes.thegabworkproject.data.models.Competences_Profil_Etudiant
-import com.sardes.thegabworkproject.repository.SkillsStorageRepository
-
+/*
 class SkillViewModel (
     private val repository: SkillsStorageRepository = SkillsStorageRepository()
 ): ViewModel(){
@@ -86,11 +78,13 @@ class SkillViewModel (
 
 
 }
+*/
 
+/*
 data class SkillUiState(
     val competence: String = "",
     val niveau_de_competence: String = "",
     val skillAddedStatus: Boolean = false,
     val updateAddedSkill: Boolean = false,
     val selectedSkill: Competences_Profil_Etudiant? = null,
-)
+)*/

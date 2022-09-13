@@ -23,6 +23,7 @@ data class CompteEntreprise(
         val postName: String = "",
         val entrepriseId: String = "",
         val entrepriseName: String = "",
+        val urlLogo: String? = null,
         val dateCreationPost: Timestamp = Timestamp.now(),
         val descriptionEmploi: String = "",
         val salaire: String = "",
@@ -34,13 +35,18 @@ data class CompteEntreprise(
         val adresse: String = "",
         val dateLimite: Timestamp? = null,
         val competences: List<String> = emptyList(),
-        val emploiOuStage: String = "",
+        val responsabilites: List<String> = emptyList(),
+        val comments: List<Review> = emptyList(),
+        val savers: List<String> = emptyList(),
+        val totalApplicants: Int = 0,
         val actif: Boolean = true
     ){
-        data class CompetencesDuPost(
-            val competenceId: String,
-            val PostEmploiId: String,
-            val niveauDeCompetence: String,
+        data class Review(
+            val reviewerId: String? = null,
+            val urlPhoto: String? = null,
+            val reviewerName: String? = null,
+            val reviewCotent: String? = null,
+            val date: String? = null,
         )
 
 
@@ -53,11 +59,11 @@ data class CompteEntreprise(
             val dateCandidature: Timestamp? = null,
         )
 
-        data class EtudiantCandidat(
-            val PostEmploiId: String,
-            val ProfilEtudiantId: String,
-            val dateSoumission: String,
-        )
+//        data class EtudiantCandidat(
+//            val PostEmploiId: String,
+//            val ProfilEtudiantId: String,
+//            val dateSoumission: String,
+//        )
     }
 
 }

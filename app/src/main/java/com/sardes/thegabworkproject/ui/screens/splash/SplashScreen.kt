@@ -64,10 +64,7 @@ fun SplashScreen(
     navToLogin: () -> Unit = {},
 
     navToEntrepriseInterface: () -> Unit = {},
-    navToDemandeurInterface: () -> Unit = {},
     navToStandardInterface: () -> Unit = {},
-    navToStudentInterface: () -> Unit = {},
-    navToIndepedantInterface: () -> Unit = {},
 ) {
     val density = LocalDensity.current
     val dotBackground = MaterialTheme.colors.dotBackground
@@ -186,7 +183,7 @@ fun SplashScreen(
 
             Image(
                 modifier = Modifier
-                    .size(200.dp)
+                    .size(300.dp)
                     .graphicsLayer {
                         alpha = animAlpha
                         rotationX = animRotation
@@ -215,10 +212,7 @@ fun SplashScreen(
 
             when (loginUiState?.userType?.account) {
                 "Entreprise"    -> navToEntrepriseInterface.invoke()
-                "Demandeur"     -> navToDemandeurInterface.invoke()
                 "Standard"      -> navToStandardInterface.invoke()
-                "Etudiant"      -> navToStudentInterface.invoke()
-                "Independant"   -> navToIndepedantInterface.invoke()
             }
         }
     } else {

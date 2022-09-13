@@ -60,24 +60,32 @@ class NewPostViewModel(
     fun onSkillsChange(competences: List<String>) {
         postUiState = postUiState.copy(competences = competences)
     }
+
+    fun onReponsabilitesChange(competences: List<String>) {
+        postUiState = postUiState.copy(competences = competences)
+    }
     fun onExperienceChange(experience: String) {
         postUiState = postUiState.copy(experience = experience)
     }
     fun onDomaineChange(domaine: String) {
         postUiState = postUiState.copy(domaine = domaine)
     }
+    fun onTotalApplicantsChange(domaine: String) {
+        postUiState = postUiState.copy(domaine = domaine)
+    }
 
-    fun onEmploiOuStagehange(emploiOuStage: String) {
-        postUiState = postUiState.copy(emploiOuStage = emploiOuStage)
+    fun onCommentsChange(comments: List<CompteEntreprise.Post.Review>) {
+        postUiState = postUiState.copy(comments = comments)
     }
 
 
-    fun addPost() {
+    fun addPost(entrepriseName: String, urlLogo: String?) {
         if (hasUser) {
             repository.addPost(
                 postName = postUiState.postName,
                 entrepriseId = user!!.uid,
-                entrepriseName = postUiState.entrepriseName,
+                entrepriseName = entrepriseName,
+                urlLogo = urlLogo,
                 dateCreationPost = postUiState.dateCreationPost,
                 descriptionEmploi = postUiState.descriptionEmploi,
                 salaire = postUiState.salaire,
@@ -89,7 +97,7 @@ class NewPostViewModel(
                 province = postUiState.province,
                 dateLimite = postUiState.dateLimite,
                 competences = postUiState.competences,
-                emploiOuStage = postUiState.emploiOuStage,
+                responsabilites = postUiState.competences,
             ) {
                 postUiState = postUiState.copy(postAddedStatus = it)
             }
@@ -109,7 +117,7 @@ class NewPostViewModel(
             experience = post.experience,
             dateLimite = post.dateLimite,
             competences = post.competences,
-            emploiOuStage = post.emploiOuStage,
+            reponsabilites = post.responsabilites,
         )
     }
 
@@ -167,6 +175,7 @@ class NewPostViewModel(
 data class PostUiState(
     val postName: String = "",
     val entrepriseName: String = "",
+    val urlLogo: String? = null,
     val dateCreationPost: Timestamp = Timestamp.now(),
     val descriptionEmploi: String = "",
     val salaire: String = "",
@@ -178,7 +187,9 @@ data class PostUiState(
     val experience: String = "",
     val dateLimite: Timestamp? = null,
     val competences: List<String> = emptyList(),
-    val emploiOuStage: String = "",
+    val reponsabilites: List<String> = emptyList(),
+    val comments: List<CompteEntreprise.Post.Review> = emptyList(),
+    val totalApplicants: Int = 0,
 
     val postAddedStatus: Boolean = false,
     val updateAddedPost: Boolean = false,

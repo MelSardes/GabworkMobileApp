@@ -5,7 +5,7 @@ import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun MessagesEntrepriseScreen(
-    messagesViewMode: MessagesEntrepriseViewModel = MessagesEntrepriseViewModel()
+    messagesViewMode: MessagesEntrepriseViewModel?
 ) {
     // TODO UI Logic
 }
@@ -13,6 +13,6 @@ fun MessagesEntrepriseScreen(
 @Composable
 @Preview
 private fun MessagesScreenPreview() {
-    MessagesEntrepriseScreen()
+    MessagesEntrepriseScreen(null)
 }
 

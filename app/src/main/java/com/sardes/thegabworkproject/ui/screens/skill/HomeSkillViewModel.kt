@@ -1,15 +1,6 @@
 package com.sardes.thegabworkproject.ui.screens.skill
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.sardes.thegabworkproject.data.models.Competences_Profil_Etudiant
-import com.sardes.thegabworkproject.repository.ressources.Ressources
-import com.sardes.thegabworkproject.repository.SkillsStorageRepository
-import kotlinx.coroutines.launch
-
+/*
 class HomeSkillViewModel(
     private val repository: SkillsStorageRepository = SkillsStorageRepository()
 ): ViewModel() {
@@ -49,8 +40,10 @@ class HomeSkillViewModel(
 
 
 }
+*/
 
+/*
 data class HomeSkillUiState(
     val skillList: Ressources<List<Competences_Profil_Etudiant>> = Ressources.Loading(),
     val skillDeleteStatus: Boolean = false
-)
+)*/

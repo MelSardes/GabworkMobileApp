@@ -25,6 +25,7 @@ import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.home.HomeEntrepriseViewModel
 import kiwi.orbit.compose.ui.controls.ButtonBundleMedium
 import kiwi.orbit.compose.ui.controls.SegmentedSwitch
 import kotlinx.coroutines.launch
@@ -37,18 +38,20 @@ import kiwi.orbit.compose.ui.controls.TextField as OrbitTextField
 @Composable
 fun NewPostScreen(
     postViewModel: NewPostViewModel?,
+    homeEntrepriseViewModel: HomeEntrepriseViewModel?,
     onAdd: () -> Unit,
 ) {
 
     val postUiState = postViewModel?.postUiState
-
+    val homeUiState = homeEntrepriseViewModel?.homeEntrepriseUiState
     val scope = rememberCoroutineScope()
 
 
     var skill by remember { mutableStateOf("") }
-    val skillList = remember {
-        mutableStateListOf<String>()
-    }
+    val skillList = remember { mutableStateListOf<String>() }
+
+    var responsibility by remember { mutableStateOf("") }
+    val responsibilitiesList = remember { mutableStateListOf<String>() }
 
 
     LazyColumn(
@@ -283,6 +286,7 @@ fun NewPostScreen(
         }
 
 //        Emploi ou stage
+/*
         item {
             var selectedIndex by remember { mutableStateOf<Int?>(null) }
             SegmentedSwitch(
@@ -297,15 +301,16 @@ fun NewPostScreen(
             )
             Spacer(modifier = Modifier.height(10.dp))
         }
+*/
 
-//        Prérequis
+//        Compétences
         item {
             val focusRequester = remember { FocusRequester() }
 
             OrbitTextField(
                 value = skill,
                 onValueChange = { skill = it },
-                label = { OrbitText("Prérequis") }, /* TODO: MAKE A LIST FOR <PREREQUIS>*/
+                label = { OrbitText("Compétences") }, /* TODO: MAKE A LIST FOR <PREREQUIS>*/
                 info = { OrbitText("Que voulez-vous pour ce post ?") },
                 trailingIcon = {
                     OrbitIcon(
@@ -331,8 +336,46 @@ fun NewPostScreen(
             Spacer(modifier = Modifier.height(10.dp))
 
         }
+        items(skillList) {
+            OrbitText(text = it)
+        }
 
-        items(skillList){
+
+//        Responsabilités
+        item {
+            val focusRequester = remember { FocusRequester() }
+
+            OrbitTextField(
+                value = responsibility,
+                onValueChange = { responsibility = it },
+                label = { OrbitText("Responsabilités") },
+                info = { OrbitText("Quelles seront ses responsabilités ?") },
+                trailingIcon = {
+                    OrbitIcon(
+                        imageVector = Icons.Default.Check,
+                        contentDescription = null
+                    )
+                },
+                onTrailingIconClick = {
+                    if (responsibility.isNotEmpty()) {
+                        responsibilitiesList.add(responsibility)
+                        responsibility = ""
+                        postViewModel?.onReponsabilitesChange(responsibilitiesList)
+                    }
+                },
+                singleLine = false,
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    keyboardType = KeyboardType.Text,
+                ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .focusRequester(focusRequester),
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+
+        }
+
+        items(responsibilitiesList) {
             OrbitText(text = it)
         }
 
@@ -366,7 +409,10 @@ fun NewPostScreen(
         item {
             ButtonBundleMedium(
                 onClick = {
-                    postViewModel?.addPost()
+                    postViewModel?.addPost(
+                        entrepriseName = homeUiState?.entrepriseInformations?.nom ?: "",
+                        urlLogo = homeUiState?.entrepriseInformations?.urlLogo
+                    )
                 },
                 modifier = Modifier.padding(10.dp)
             ) {

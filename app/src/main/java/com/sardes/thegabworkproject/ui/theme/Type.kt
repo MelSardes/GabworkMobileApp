@@ -23,13 +23,13 @@ val GWTypography = Typography(
     body1 = TextStyle(
         fontFamily = yanone,
         fontWeight = FontWeight.Light,
-        fontSize = 20.sp
+        fontSize = 16.sp
     ),
 
     body2 = TextStyle(
         fontFamily = yanone,
         fontWeight = FontWeight.Medium,
-        fontSize = 15.sp
+        fontSize = 14.sp
     ),
 
     button = TextStyle(
@@ -72,7 +72,22 @@ val GWTypography = Typography(
             fontFamily = yanone,
             fontWeight = FontWeight.SemiBold,
             fontSize = 24.sp
-    )
+    ),
+
+    subtitle1 = TextStyle(
+        fontFamily = yanone,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 21.sp
+
+    ),
+
+    subtitle2 = TextStyle(
+        fontFamily = yanone,
+        fontWeight = FontWeight.Medium,
+        fontSize = 18.sp
+
+    ),
+
 
     /*
     caption = TextStyle(

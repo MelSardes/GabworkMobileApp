@@ -36,10 +36,7 @@ import kotlinx.coroutines.delay
 fun LoginScreen(
     loginViewModel: LoginViewModel?,
     navToEntrepriseInterface: () -> Unit = {},
-    navToSeekerInterface: () -> Unit = {},
     navToStandardInterface: () -> Unit = {},
-    navToIndepedantInterface: () -> Unit = {},
-    navToStudentInterface: () -> Unit = {},
 
     onNavToSelectSignUpPage: () -> Unit = {},
 ) {
@@ -220,10 +217,7 @@ fun LoginScreen(
             delay(3000)
             when (loginUiState?.userType?.account) {
                 "Entreprise"    -> navToEntrepriseInterface.invoke()
-                "Demandeur"     -> navToSeekerInterface.invoke()
-                "Standard"      -> navToStandardInterface.invoke()
-                "Etudiant"      -> navToStudentInterface.invoke()
-                "Independant"   -> navToIndepedantInterface.invoke()
+                "Demandeur"     -> navToStandardInterface.invoke()
             }
         }
     }

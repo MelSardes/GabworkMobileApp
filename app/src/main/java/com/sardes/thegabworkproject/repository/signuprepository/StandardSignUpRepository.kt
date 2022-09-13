@@ -7,19 +7,19 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.sardes.thegabworkproject.data.models.CompteStandard
+import com.sardes.thegabworkproject.data.models.UserType
 
 
-const val COMPTES_STANDARD_COLLECTION_REF = "ComptesStandard"
+private const val COMPTES_STANDARD_COLLECTION_REF = "ComptesStandard"
 private const val USERS_COLLECTION_REF = "Users"
 
 
 class StandardSignUpRepository {
 
-    var storageRef = Firebase.storage.reference
+    private var storageRef = Firebase.storage.reference
 
     private val comptesStandardRef: CollectionReference = Firebase
         .firestore.collection(COMPTES_STANDARD_COLLECTION_REF)
-
 
     private val usersRef: CollectionReference = Firebase
         .firestore.collection((USERS_COLLECTION_REF))
@@ -35,46 +35,44 @@ class StandardSignUpRepository {
         ville: String,
         nationalite: String,
         adresse: String,
-        urlPhoto: String,
         photo: Uri?,
+        urlPhotoProfil: String,
+        dateNaissance: String,
         dateCreationCompte: Timestamp,
-        typeDeCompte:String = "Standard",
+        typeDeCompte: String = "Standard",
 
         onComplete: (Boolean) -> Unit,
     ) {
-        val standardUser = CompteStandard(
-            userId,
-            nom,
-            prenom,
-            sexe,
-            telephone,
-            email,
-            ville,
-            nationalite,
-            adresse,
-            urlPhoto,
-            dateCreationCompte,
-            typeDeCompte,
+        val seekerUser = CompteStandard(
+            userId = userId,
+            nom = nom,
+            prenom = prenom,
+            sexe = sexe,
+            telephone = telephone,
+            email = email,
+            ville = ville,
+            nationalite = nationalite,
+            adresse = adresse,
+            urlPhoto = urlPhotoProfil,
+            dateNaissance = dateNaissance,
+            dateCreationCompte = dateCreationCompte,
+            typeDeCompte = typeDeCompte,
         )
 
-        val userType = hashMapOf(
-            "UID" to userId,
-            "account" to typeDeCompte
-        )
-
+        val userType = UserType(userId, typeDeCompte)
 
 
 
         if (photo != null) {
             storageRef.child(
-                "userProfile/standard/${userId}__profile__standard.jpg"
+                "userProfile/standard/${userId}__profile.jpg"
             )
                 .putFile(photo)
         }
 
         comptesStandardRef
             .document(userId)
-            .set(standardUser)
+            .set(seekerUser)
             .addOnCompleteListener { result ->
                 onComplete.invoke(result.isSuccessful)
             }

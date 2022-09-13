@@ -19,7 +19,6 @@ import androidx.compose.ui.unit.dp
 import com.sardes.thegabworkproject.repository.ressources.Ressources
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.components.PostCardComponent
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.components.SeekerCardComponent
-import kotlinx.coroutines.delay
 
 @SuppressLint("MaterialDesignInsteadOrbitDesign")
 @Composable
@@ -34,10 +33,6 @@ fun ApplicantsScreen(
 
     LaunchedEffect(applicantsViewModel?.getPost(postId)) {
         applicantsViewModel?.getPost(postId)
-    }
-
-    LaunchedEffect(applicantsViewModel?.getPostApplicants(postId)) {
-        delay(2000)
         applicantsViewModel?.getPostApplicants(postId)
     }
 

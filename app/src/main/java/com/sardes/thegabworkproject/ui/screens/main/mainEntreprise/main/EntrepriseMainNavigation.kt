@@ -1,18 +1,17 @@
 package com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.main
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.sardes.thegabworkproject.navigation.EntrepriseInterfaceScreen
 import com.sardes.thegabworkproject.navigation.EntreprisePostsScreen
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.home.HomeEntrepriseScreen
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.home.HomeEntrepriseViewModel
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.message.MessagesEntrepriseScreen
+import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.message.MessagesEntrepriseViewModel
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.PostsEntrepriseScreen
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.PostsEntrepriseViewModel
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.applicants.ApplicantsScreen
@@ -28,7 +27,8 @@ fun EntrepriseMainNavigation(
     homeViewModel: HomeEntrepriseViewModel?,
     postsViewModel: PostsEntrepriseViewModel?,
     newPostViewModel: NewPostViewModel?,
-    applicantsViewModel: ApplicantsViewModel?
+    applicantsViewModel: ApplicantsViewModel?,
+    messagesViewModel: MessagesEntrepriseViewModel
 ) {
     NavHost(
         navController,
@@ -58,7 +58,10 @@ fun EntrepriseMainNavigation(
         }
 
         composable(EntreprisePostsScreen.EntrepriseNewPost.route) {
-            NewPostScreen(newPostViewModel) {
+            NewPostScreen(
+                newPostViewModel,
+                homeViewModel
+            ) {
                 navController.navigateUp()
             }
         }
@@ -85,7 +88,7 @@ fun EntrepriseMainNavigation(
 
 //        messagesEntrepriseScreen(navController)
         composable(EntrepriseInterfaceScreen.EntrepriseMessages.route) {
-            MessagesEntrepriseScreen()
+            MessagesEntrepriseScreen(messagesViewModel)
         }
 
 //        profileEntrepriseScreen(navController)
@@ -94,11 +97,4 @@ fun EntrepriseMainNavigation(
         }
 
     }
-}
-
-
-@Preview(name = "EntrepriseMainNavigation")
-@Composable
-private fun PreviewEntrepriseMainNavigation() {
-    EntrepriseMainNavigation(navController = rememberNavController(), null, null, null, null)
 }

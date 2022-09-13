@@ -180,7 +180,7 @@ fun ComposeOneScreen() {
 
             Image(
                 modifier = Modifier
-                    .size(128.dp)
+                    .size(328.dp)
                     .graphicsLayer {
                         alpha = animAlpha
                         rotationX = animRotation
@@ -244,7 +244,7 @@ fun AnimatedText(
 
             Text(
                 text = char.toString(),
-                fontSize = 30.sp,
+                fontSize = 60.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.graphicsLayer {
                     alpha = animAlpha

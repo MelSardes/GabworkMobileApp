@@ -70,7 +70,7 @@ class EntrepriseSignUpRepository {
 
         if (logoEntreprise != null) {
             storageRef.child(
-                "userProfile/entreprise/${entrepriseId}__profile__entreprise.jpg"
+                "userProfile/entreprise/${entrepriseId}__profile.jpg"
             )
                 .putFile(logoEntreprise)
         }

@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 
 
-const val COMPTES_ENTREPRISE_REF = "ComptesEntreprise"
+private const val COMPTES_ENTREPRISE_REF = "ComptesEntreprise"
 const val POSTS_COLLECTION_REF = "Posts"
 const val CANDIDATS_COLLECTION_REF = "Candidats"
 
@@ -172,6 +172,7 @@ class MainEntrepriseRepository {
         postName: String,
         entrepriseId: String,
         entrepriseName: String,
+        urlLogo: String?,
         dateCreationPost: Timestamp,
         descriptionEmploi: String,
         salaire: String,
@@ -183,30 +184,29 @@ class MainEntrepriseRepository {
         adresse: String,
         dateLimite: Timestamp?,
         competences: List<String>,
-        emploiOuStage: String,
-        actif: Boolean = true,
+        responsabilites: List<String>,
         onComplete: (Boolean) -> Unit,
     ) {
         val documentId = postsRef.document().id
 
         val post = CompteEntreprise.Post(
-            documentId,
-            postName,
-            entrepriseId,
-            entrepriseName,
-            dateCreationPost,
-            descriptionEmploi,
-            salaire,
-            ville,
-            province,
-            domaine,
-            experience,
-            typeDEmploi,
-            adresse,
-            dateLimite,
-            competences,
-            emploiOuStage,
-            actif,
+            postId = documentId,
+            postName = postName,
+            entrepriseId = entrepriseId,
+            entrepriseName = entrepriseName,
+            urlLogo = urlLogo,
+            dateCreationPost = dateCreationPost,
+            descriptionEmploi = descriptionEmploi,
+            salaire = salaire,
+            ville = ville,
+            province = province,
+            domaine = domaine,
+            experience = experience,
+            typeDEmploi = typeDEmploi,
+            adresse = adresse,
+            dateLimite = dateLimite,
+            competences = competences,
+            responsabilites = responsabilites,
         )
 
         postsRef

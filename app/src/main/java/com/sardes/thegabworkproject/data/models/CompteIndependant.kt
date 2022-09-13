@@ -1,7 +1,6 @@
 package com.sardes.thegabworkproject.data.models
 
-import com.google.firebase.Timestamp
-
+/*
 data class CompteIndependant(
     val userId: String = "",
     val nom: String = "",
@@ -17,4 +16,4 @@ data class CompteIndependant(
     val siteWeb: String? = null,
     val dateCreationCompte: Timestamp = Timestamp.now(),
     val typeDeCompte:String = "Independant"
-)
+)*/

@@ -1,7 +1,6 @@
 package com.sardes.thegabworkproject.data.models
 
-import com.google.firebase.Timestamp
-
+/*
 data class CompteEtudiant(
     val userId: String = "",
     val nom: String = "",
@@ -44,3 +43,4 @@ data class CompteEtudiant(
         val dateFin : String?,
     )
 }
+*/
