@@ -11,6 +11,7 @@ data class Conversation(
     val receiverName: String? = null,
     val receiverDocRef: String? = null,
     val receiverUrlPhoto: String? = null,
+    val receiverUID: String? = null,
 
     val senderName: String? = null,
     val senderDocRef: String? = null,
@@ -24,7 +25,6 @@ data class Conversation(
         val content: String? = null,
 
         val senderUID: String = "",
-        val receiverUID: String = "",
 
         val sentAt: Timestamp = Timestamp.now(),
     )

@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 
 class MessagesStandardViewModel(
     private val repository: MessagesStandardRepository = MessagesStandardRepository()
-): ViewModel() {
+) : ViewModel() {
 
     var standardMessagesUiState by mutableStateOf(StandardMessagesUiState())
 
@@ -20,63 +20,93 @@ class MessagesStandardViewModel(
     val hasUser: Boolean
         get() = repository.hasUser()
 
-    private val userId: String
+    val userId: String
         get() = repository.getUserId()
 
     //===============================================
 
-    fun loadAllConversations(){
-        if (hasUser){
-            getAllConversations(userId)
-        }else{
-            standardMessagesUiState = standardMessagesUiState.copy(conversationsList = Ressources.Error(
-                throwable = Throwable(message = "OOPS! Utilisateur non connecté")
-            ))
+    fun loadAllConversations() {
+        if (hasUser) {
+            getAllConversations()
+        } else {
+            standardMessagesUiState = standardMessagesUiState.copy(
+                conversationsList = Ressources.Error(
+                    throwable = Throwable(message = "OOPS! Utilisateur non connecté")
+                )
+            )
         }
     }
-    private fun getAllConversations(userId: String) = viewModelScope.launch {
-        repository.getGetAllConversations(userId).collect(){
+
+    private fun getAllConversations() = viewModelScope.launch {
+        repository.getGetAllConversations().collect() {
             standardMessagesUiState = standardMessagesUiState.copy(conversationsList = it)
         }
     }
 
-    fun getConversation(conversationId: String){
+    fun getConversation(conversationId: String) {
         repository.getConversation(
             conversationId = conversationId,
             onError = {}
-        ){
+        ) {
             standardMessagesUiState = standardMessagesUiState.copy(selectedConversation = it)
         }
     }
 
 
-
-
-    fun loadAllMessages(){
-        if (hasUser){
-            getAllMessages(userId)
-        }else{
-            standardMessagesUiState = standardMessagesUiState.copy(messagesList = Ressources.Error(
-                throwable = Throwable(message = "OOPS! Utilisateur non connecté")
-            ))
+    fun loadAllMessages(conversationId: String) {
+        if (hasUser) {
+            getAllMessages(conversationId)
+        } else {
+            standardMessagesUiState = standardMessagesUiState.copy(
+                messagesList = Ressources.Error(
+                    throwable = Throwable(message = "OOPS! Utilisateur non connecté")
+                )
+            )
         }
     }
-    private fun getAllMessages(userId: String) = viewModelScope.launch {
-        repository.getAllMessages(userId).collect(){
+
+    private fun getAllMessages(conversationId: String) = viewModelScope.launch {
+        repository.getAllMessages(conversationId).collect() {
             standardMessagesUiState = standardMessagesUiState.copy(messagesList = it)
         }
     }
 
-    fun getMessage(messageId: String){
+    fun getMessage(messageId: String, conversationId: String) {
         repository.getMessage(
             messageId = messageId,
+            conversationId = conversationId,
             onError = {}
-        ){
+        ) {
             standardMessagesUiState = standardMessagesUiState.copy(selectedMessage = it)
         }
     }
 
 
+    fun addMessage() {
+        if (hasUser) {
+            repository.writeConversation(
+                lastMessageContent = standardMessagesUiState.messageContent,
+                latMessageSender = userId,
+                receiverName = standardMessagesUiState.selectedConversation?.receiverName,
+                receiverDocRef = standardMessagesUiState.selectedConversation?.receiverDocRef,
+                receiverUrlPhoto = standardMessagesUiState.selectedConversation?.receiverUrlPhoto,
+                senderName = standardMessagesUiState.selectedConversation?.senderName,
+                senderDocRef = standardMessagesUiState.selectedConversation?.senderDocRef,
+                senderUrlPhoto = standardMessagesUiState.selectedConversation?.senderUrlPhoto,
+                senderUID = userId,
+                receiverUID = standardMessagesUiState.selectedConversation?.receiverUID,
+                content = standardMessagesUiState.messageContent,
+                receiverAccountType = standardMessagesUiState.selectedConversation?.receiverAccountType,
+            ) {
+                standardMessagesUiState = standardMessagesUiState.copy(messageAddedStatus = it)
+            }
+        }
+    }
+
+
+    fun onMessageContentChange(content: String) {
+        standardMessagesUiState = standardMessagesUiState.copy(messageContent = content)
+    }
 }
 
 data class StandardMessagesUiState(
@@ -84,5 +114,10 @@ data class StandardMessagesUiState(
     val messagesList: Ressources<List<Conversation.Message>> = Ressources.Loading(),
 
     val selectedConversation: Conversation? = null,
-    val selectedMessage: Conversation.Message? = null
-)
+    val selectedMessage: Conversation.Message? = null,
+
+    val messageContent: String? = null,
+
+    val messageAddedStatus: Boolean = false,
+
+    )

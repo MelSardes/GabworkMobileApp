@@ -34,7 +34,7 @@ class MessagesStandardRepository {
         .firestore.collection(COMPTES_STANDARD_REF + "/" + getUserId() + "/" + CONVERSATIONS_REF)
 
 
-    fun getGetAllConversations(userId: String): Flow<Ressources<List
+    fun getGetAllConversations(): Flow<Ressources<List
     <Conversation>>> = callbackFlow {
 
         var snapshotStateListener: ListenerRegistration? = null
@@ -42,16 +42,15 @@ class MessagesStandardRepository {
         try {
             snapshotStateListener = conversationRef
                 .orderBy("lastMessageDate")
-                .whereEqualTo("userId", userId)
                 .addSnapshotListener { snapshot, e ->
-                    val reponse = if (snapshot != null) {
+                    val response = if (snapshot != null) {
                         val conversation =
                             snapshot.toObjects(Conversation::class.java)
                         Ressources.Success(data = conversation)
                     } else {
                         Ressources.Error(throwable = e?.cause)
                     }
-                    trySend(reponse)
+                    trySend(response)
                 }
         } catch (e: Exception) {
             trySend(Ressources.Error(e.cause))
@@ -83,10 +82,13 @@ class MessagesStandardRepository {
 
     fun getMessage(
         messageId: String,
+        conversationId: String,
         onError: (Throwable) -> Unit,
         onSuccess: (Conversation.Message?) -> Unit
     ) {
         conversationRef
+            .document(conversationId)
+            .collection(MESSAGES_REF)
             .document(messageId)
             .get()
             .addOnSuccessListener {
@@ -104,9 +106,10 @@ class MessagesStandardRepository {
         var snapshotStateListener: ListenerRegistration? = null
 
         try {
-            snapshotStateListener = messagesRef
+            snapshotStateListener = conversationRef
+                .document(conversationId)
+                .collection(MESSAGES_REF)
                 .orderBy("sentAt", Query.Direction.DESCENDING)
-                .whereEqualTo("conversationId", conversationId)
                 .addSnapshotListener { snapshot, e ->
                     val response = if (snapshot != null) {
                         val message =
@@ -128,38 +131,36 @@ class MessagesStandardRepository {
     }
 
 
-    fun WriteConversation(
-        lastMessageContent: String,
-        latMessageSender: String,
-        receiverName: String,
-        receiverDocRef: String,
-        receiverUrlPhoto: String,
-        senderName: String,
-        senderDocRef: String,
-        senderUrlPhoto: String,
-        senderUID: String,
-        receiverUID: String,
-        content: String,
-        sentAt: Timestamp,
-        receiverAccountType: String,
+    fun writeConversation(
+        lastMessageContent: String?,
+        latMessageSender: String?,
+        receiverName: String?,
+        receiverDocRef: String?,
+        receiverUrlPhoto: String?,
+        senderName: String?,
+        senderDocRef: String?,
+        senderUrlPhoto: String?,
+        senderUID: String?,
+        receiverUID: String?,
+        content: String?,
+        sentAt: Timestamp = Timestamp.now(),
+        receiverAccountType: String?,
         onComplete: (Boolean) -> Unit
     ) {
         conversationRef
-            .document(receiverUID)
+            .document(receiverUID.toString())
             .get()
             .addOnCompleteListener() { task ->
                 if (task.isSuccessful) {
-                    addConversation(
-                        lastMessageContent,
-                        latMessageSender,
+                    updateConversation(
                         receiverName,
                         receiverDocRef,
                         receiverUrlPhoto,
                         senderName,
                         senderDocRef,
                         senderUrlPhoto,
-                        senderUID,
-                        receiverUID,
+                        senderUID.toString(),
+                        receiverUID.toString(),
                         content,
                         sentAt,
                         receiverAccountType,
@@ -170,15 +171,15 @@ class MessagesStandardRepository {
                 else {
                     addConversation(
                         lastMessageContent,
-                        latMessageSender,
+                        latMessageSender.toString(),
                         receiverName,
                         receiverDocRef,
                         receiverUrlPhoto,
                         senderName,
                         senderDocRef,
                         senderUrlPhoto,
-                        senderUID,
-                        receiverUID,
+                        senderUID.toString(),
+                        receiverUID.toString(),
                         content,
                         sentAt,
                         receiverAccountType,
@@ -191,19 +192,19 @@ class MessagesStandardRepository {
 
 
     private fun addConversation(
-        lastMessageContent: String,
+        lastMessageContent: String?,
         latMessageSender: String,
-        receiverName: String,
-        receiverDocRef: String,
-        receiverUrlPhoto: String,
-        senderName: String,
-        senderDocRef: String,
-        senderUrlPhoto: String,
+        receiverName: String?,
+        receiverDocRef: String?,
+        receiverUrlPhoto: String?,
+        senderName: String?,
+        senderDocRef: String?,
+        senderUrlPhoto: String?,
         senderUID: String,
         receiverUID: String,
-        content: String,
+        content: String?,
         sentAt: Timestamp = Timestamp.now(),
-        receiverAccountType: String,
+        receiverAccountType: String?,
         onComplete: (Boolean) -> Unit
     ) {
 
@@ -244,7 +245,6 @@ class MessagesStandardRepository {
             messageId = documentMessageId,
             content = content,
             senderUID = getUserId(),
-            receiverUID = receiverUID,
             sentAt = sentAt,
         )
 
@@ -322,18 +322,18 @@ class MessagesStandardRepository {
 //        ADD NEW MESSAGE INTO SENDER MESSAGES COLLECTION
 
 
-    fun updateConversation(
-        receiverName: String,
-        receiverDocRef: String,
-        receiverUrlPhoto: String,
-        senderName: String,
-        senderDocRef: String,
-        senderUrlPhoto: String,
+    private fun updateConversation(
+        receiverName: String?,
+        receiverDocRef: String?,
+        receiverUrlPhoto: String?,
+        senderName: String?,
+        senderDocRef: String?,
+        senderUrlPhoto: String?,
         senderUID: String,
         receiverUID: String,
-        content: String,
+        content: String?,
         sentAt: Timestamp = Timestamp.now(),
-        receiverAccountType: String,
+        receiverAccountType: String?,
         onComplete: (Boolean) -> Unit
     ) {
 
@@ -347,7 +347,6 @@ class MessagesStandardRepository {
             messageId = documentMessageId,
             content = content,
             senderUID = getUserId(),
-            receiverUID = receiverUID,
             sentAt = sentAt,
         )
 

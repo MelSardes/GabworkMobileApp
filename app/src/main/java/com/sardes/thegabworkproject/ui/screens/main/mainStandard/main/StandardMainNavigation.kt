@@ -12,7 +12,7 @@ import com.sardes.thegabworkproject.navigation.StandardPostScreen
 import com.sardes.thegabworkproject.ui.screens.main.mainStandard.components.PostDetailsScreen
 import com.sardes.thegabworkproject.ui.screens.main.mainStandard.home.HomeStandardScreen
 import com.sardes.thegabworkproject.ui.screens.main.mainStandard.home.HomeStandardViewModel
-import com.sardes.thegabworkproject.ui.screens.main.mainStandard.message.ConversationScreen
+import com.sardes.thegabworkproject.ui.screens.main.mainStandard.message.conversation.ConversationScreen
 import com.sardes.thegabworkproject.ui.screens.main.mainStandard.message.MessagesStandardScreen
 import com.sardes.thegabworkproject.ui.screens.main.mainStandard.message.MessagesStandardViewModel
 import com.sardes.thegabworkproject.ui.screens.main.mainStandard.profile.ProfileStandardScreen
@@ -21,11 +21,11 @@ import com.sardes.thegabworkproject.ui.screens.main.mainStandard.search.SearchSt
 
 @Composable
 fun StandardMainNavigation(
-    navController           : NavHostController,
-    homeStandardViewModel     : HomeStandardViewModel?,
+    navController: NavHostController,
+    homeStandardViewModel: HomeStandardViewModel?,
 //    savesStandardViewModel    : SavesStandardViewModel?,
 //    searchStandardViewModel   : SearchStandardViewModel?,
-    messagesStandardViewModel : MessagesStandardViewModel?,
+    messagesStandardViewModel: MessagesStandardViewModel?,
 //    profileStandardViewModel  : ProfileStandardViewModel?
 ) {
 
@@ -33,50 +33,55 @@ fun StandardMainNavigation(
         navController = navController,
         route = StandardInterfaceScreen.StandardMain.route,
         startDestination = StandardInterfaceScreen.StandardHome.route
-    ){
-        composable(StandardInterfaceScreen.StandardHome.route){
+    ) {
+        composable(StandardInterfaceScreen.StandardHome.route) {
             HomeStandardScreen(
                 homeStandardViewModel,
                 onPostClick = { postId ->
                     navController.navigate(StandardPostScreen.DetailsPostScreen.route + "?id=$postId") {
                         launchSingleTop = true
                     }
-                }
-            )
-        }
-
-        composable(StandardInterfaceScreen.StandardSaves.route){
-            SavesStandardScreen()
-        }
-
-        composable(StandardInterfaceScreen.StandardSearch.route){
-            SearchStandardScreen()
-        }
-
-        composable(StandardInterfaceScreen.StandardMessages.route){
-            MessagesStandardScreen(
-                messagesStandardViewModel,
-                homeStandardViewModel,
-                onCardClick = {conversationId ->
-                    navController.navigate(StandardMessageScreen.StandardConversationScreen.route + "?id=$conversationId"){
+                },
+                onLogoClick = { entrepriseId ->
+                    navController.navigate(StandardMessageScreen.StandardConversationScreen.route + "?id=$entrepriseId") {
                         launchSingleTop = true
                     }
                 }
             )
         }
 
-        composable(StandardInterfaceScreen.StandardProfile.route){
+        composable(StandardInterfaceScreen.StandardSaves.route) {
+            SavesStandardScreen()
+        }
+
+        composable(StandardInterfaceScreen.StandardSearch.route) {
+            SearchStandardScreen()
+        }
+
+        composable(StandardInterfaceScreen.StandardMessages.route) {
+            MessagesStandardScreen(
+                messagesStandardViewModel,
+                homeStandardViewModel,
+                onCardClick = { conversationId ->
+                    navController.navigate(StandardMessageScreen.StandardConversationScreen.route + "?id=$conversationId") {
+                        launchSingleTop = true
+                    }
+                }
+            )
+        }
+
+        composable(StandardInterfaceScreen.StandardProfile.route) {
             ProfileStandardScreen()
         }
 
 
         composable(
             route = StandardMessageScreen.StandardConversationScreen.route + "?id={id}",
-            arguments = listOf(navArgument("id"){
+            arguments = listOf(navArgument("id") {
                 type = NavType.StringType
                 defaultValue = ""
             })
-        ){entry ->
+        ) { entry ->
             ConversationScreen(
                 messagesStandardViewModel,
                 conversationId = entry.arguments?.getString("id") as String,
@@ -90,10 +95,10 @@ fun StandardMainNavigation(
                 type = NavType.StringType
                 defaultValue = ""
             })
-        ){entry ->
+        ) { entry ->
             PostDetailsScreen(
                 homeStandardViewModel = homeStandardViewModel,
-                postId = entry.arguments?.getString("id")as String,
+                postId = entry.arguments?.getString("id") as String,
             )
         }
     }

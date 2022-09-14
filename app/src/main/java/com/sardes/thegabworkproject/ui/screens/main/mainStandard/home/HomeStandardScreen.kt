@@ -25,7 +25,8 @@ import kiwi.orbit.compose.ui.controls.Scaffold
 @Composable
 fun HomeStandardScreen(
     homeStandardViewModel: HomeStandardViewModel?,
-    onPostClick: (id: String) -> Unit
+    onPostClick: (id: String) -> Unit,
+    onLogoClick: (entrepriseId: String) -> Unit,
 ) {
 
     val homeUiState = homeStandardViewModel?.homeStandardUiState ?: HomeStandardUiState()
@@ -78,7 +79,8 @@ fun HomeStandardScreen(
                         item {
                             ApplicablePostCard(
                                 post = it,
-                                onCardClick = { onPostClick(it.postId) }
+                                onCardClick = { onPostClick(it.postId) },
+                                onLogoClick = { onLogoClick(it.entrepriseId) }
                             )
                         }
                     }
@@ -106,5 +108,5 @@ fun HomeStandardScreen(
 @Preview(name = "HomeScreen", showBackground = true)
 @Composable
 private fun PreviewHomeScreen() {
-    HomeStandardScreen(null) {}
+    HomeStandardScreen(null, {}) {}
 }
