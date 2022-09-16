@@ -20,10 +20,34 @@ import kiwi.orbit.compose.ui.R
 @SuppressLint("MaterialDesignInsteadOrbitDesign")
 @Composable
 fun ConversationTopBar(messagesUiState: StandardMessagesUiState?) {
+
+    val name = when (messagesUiState?.chatUserType?.account) {
+        "Standard" -> {
+            messagesUiState.chatWithStandard?.nom
+        }
+        "Entreprise" -> {
+            messagesUiState.chatWithEntreprise?.nom
+        }
+        else -> "Erreur!"
+    }
+
+    val url = when (messagesUiState?.chatUserType?.account) {
+        "Standard" -> {
+            messagesUiState.chatWithStandard?.urlPhoto
+        }
+        "Entreprise" -> {
+            messagesUiState.chatWithEntreprise?.urlLogo
+        }
+        else -> "Erreur"
+    }
+
+
+
+
     CenterAlignedTopAppBar(
         title = {
             Text(
-                text = "${messagesUiState?.selectedConversation?.receiverName}",
+                text = name ?: "Null error!",
                 color = GWpalette.EauBlue,
                 style = GWTypography.h6
             )
@@ -45,7 +69,7 @@ fun ConversationTopBar(messagesUiState: StandardMessagesUiState?) {
                 AsyncImage(
                     model = ImageRequest
                         .Builder(LocalContext.current)
-                        .data(messagesUiState?.selectedConversation?.receiverUrlPhoto)
+                        .data(url)
                         .crossfade(true)
                         .crossfade(1000)
                         .placeholder(drawable.ic_image)

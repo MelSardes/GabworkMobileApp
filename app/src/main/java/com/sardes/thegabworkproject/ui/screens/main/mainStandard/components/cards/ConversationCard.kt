@@ -2,22 +2,25 @@ package com.sardes.thegabworkproject.ui.screens.main.mainStandard.components.car
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.sardes.thegabworkproject.R
 import com.sardes.thegabworkproject.data.models.Conversation
+import com.sardes.thegabworkproject.ui.screens.main.mainStandard.message.MessagesStandardViewModel
 import com.sardes.thegabworkproject.ui.theme.GWTypography
 import com.sardes.thegabworkproject.ui.theme.GWpalette
 import kiwi.orbit.compose.ui.controls.Card as OrbitCard
@@ -25,13 +28,14 @@ import kiwi.orbit.compose.ui.controls.Card as OrbitCard
 @Composable
 fun ConversationCard(
     conversation: Conversation,
+    viewModel: MessagesStandardViewModel?,
     onCardClick: () -> Unit
 ) {
     OrbitCard(
         modifier = Modifier
             .fillMaxWidth()
-            .height(100.dp), elevation = 0.dp,
-        onClick = {onCardClick.invoke()}
+            .height(90.dp), elevation = 0.dp,
+        onClick = { onCardClick.invoke() }
     ) {
         Row(
             modifier = Modifier
@@ -42,8 +46,8 @@ fun ConversationCard(
         ) {
             Card(
                 modifier = Modifier
-                    .height(80.dp)
-                    .fillMaxWidth(0.2f)
+                    .height(70.dp)
+                    .width(70.dp)
             ) {
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
@@ -52,7 +56,9 @@ fun ConversationCard(
                         .placeholder(R.drawable.ic_account_100)
                         .build(),
                     contentDescription = null,
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .clip(RoundedCornerShape(10.dp)),
                     contentScale = ContentScale.Crop
                 )
             }
@@ -68,7 +74,7 @@ fun ConversationCard(
                     Text(text = "${conversation.receiverName}", style = GWTypography.subtitle1)
                     Spacer(modifier = Modifier.weight(1f))
                     Text(
-                        text = "${conversation.lastMessageDate}",
+                        text = "${conversation.lastMessageDate?.toDate()}",
                         style = GWTypography.body2,
                         color = GWpalette.EauBlue,
                         textAlign = TextAlign.Center
@@ -78,8 +84,14 @@ fun ConversationCard(
                 Spacer(modifier = Modifier.weight(0.2f))
 
                 Text(
-                    text = "${conversation.lastMessageContent}",
-                    style = GWTypography.body1,
+                    text =
+                    when (conversation.latMessageSender) {
+                        viewModel?.userId ->
+                            "Vous : ${conversation.lastMessageContent}"
+                        else ->
+                            "${conversation.lastMessageContent}"
+                    },
+                    style = GWTypography.body1.copy(fontWeight = FontWeight.Normal),
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
                     modifier = Modifier.weight(1f)
@@ -88,17 +100,4 @@ fun ConversationCard(
 
         }
     }
-}
-
-@Preview(name = "ConversationCard")
-@Composable
-private fun PreviewConversationCard() {
-    ConversationCard(
-        conversation = Conversation(
-            receiverName = "Mel Sardes",
-            lastMessageContent = "Mel Sardes is about to finish his work",
-            lastMessageDate = "Jeudi, 22h52",
-            receiverUrlPhoto = "https://firebasestorage.googleapis.com/v0/b/thegabworkprojecttest.appspot.com/o/userProfile%2Fstandard%2FfLDAh5ubSVRQdc9jd00MRMRC2Jl1__profile.jpg?alt=media&token=ea8fc984-0f44-4b36-83dc-2e09966bfaf1"
-        )
-    ){}
 }

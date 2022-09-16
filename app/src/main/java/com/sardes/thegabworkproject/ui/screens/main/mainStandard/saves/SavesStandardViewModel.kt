@@ -4,6 +4,6 @@ import androidx.lifecycle.ViewModel
 import com.sardes.thegabworkproject.repository.main.standard.MainStandardRepository
 
 class SavesStandardViewModel(
-    private val repository: MainStandardRepository
+    private val repository: MainStandardRepository = MainStandardRepository()
 ): ViewModel() {
 }

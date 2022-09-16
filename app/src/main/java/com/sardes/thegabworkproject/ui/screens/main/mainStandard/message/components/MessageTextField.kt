@@ -8,7 +8,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sardes.thegabworkproject.ui.screens.main.mainStandard.message.MessagesStandardViewModel
 import com.sardes.thegabworkproject.ui.screens.main.mainStandard.message.StandardMessagesUiState
@@ -24,7 +23,6 @@ import kiwi.orbit.compose.ui.controls.TextField
 fun MessageTextField(
     viewModel: MessagesStandardViewModel?,
     uiState: StandardMessagesUiState?,
-    modifier: Modifier = Modifier
 ) {
 
     Card(
@@ -52,7 +50,7 @@ fun MessageTextField(
                 maxLines = 10,
                 onValueChange = { viewModel?.onMessageContentChange(it) },
                 trailingIcon = {
-                    IconButton(onClick = {}) {
+                    IconButton(onClick = {viewModel?.addMessage()}) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_orbit_send),
                             contentDescription = null,
@@ -60,19 +58,8 @@ fun MessageTextField(
                         )
                     }
                 },
-                onTrailingIconClick = {
-                    if (uiState?.messageContent.isNullOrEmpty()) {
-                        viewModel?.addMessage()
-                        uiState?.copy(messageContent = "")
-                    }
-                }
             )
         }
     }
 }
 
-@Preview(name = "MessageTextfield")
-@Composable
-private fun PreviewMessageTextfield() {
-    MessageTextField(null, null)
-}

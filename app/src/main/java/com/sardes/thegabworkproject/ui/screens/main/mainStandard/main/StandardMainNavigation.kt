@@ -12,21 +12,24 @@ import com.sardes.thegabworkproject.navigation.StandardPostScreen
 import com.sardes.thegabworkproject.ui.screens.main.mainStandard.components.PostDetailsScreen
 import com.sardes.thegabworkproject.ui.screens.main.mainStandard.home.HomeStandardScreen
 import com.sardes.thegabworkproject.ui.screens.main.mainStandard.home.HomeStandardViewModel
-import com.sardes.thegabworkproject.ui.screens.main.mainStandard.message.conversation.ConversationScreen
 import com.sardes.thegabworkproject.ui.screens.main.mainStandard.message.MessagesStandardScreen
 import com.sardes.thegabworkproject.ui.screens.main.mainStandard.message.MessagesStandardViewModel
+import com.sardes.thegabworkproject.ui.screens.main.mainStandard.message.conversation.ConversationScreen
 import com.sardes.thegabworkproject.ui.screens.main.mainStandard.profile.ProfileStandardScreen
+import com.sardes.thegabworkproject.ui.screens.main.mainStandard.profile.ProfileStandardViewModel
 import com.sardes.thegabworkproject.ui.screens.main.mainStandard.saves.SavesStandardScreen
+import com.sardes.thegabworkproject.ui.screens.main.mainStandard.saves.SavesStandardViewModel
 import com.sardes.thegabworkproject.ui.screens.main.mainStandard.search.SearchStandardScreen
+import com.sardes.thegabworkproject.ui.screens.main.mainStandard.search.SearchStandardViewModel
 
 @Composable
 fun StandardMainNavigation(
     navController: NavHostController,
     homeStandardViewModel: HomeStandardViewModel?,
-//    savesStandardViewModel    : SavesStandardViewModel?,
-//    searchStandardViewModel   : SearchStandardViewModel?,
+    savesStandardViewModel    : SavesStandardViewModel?,
+    searchStandardViewModel   : SearchStandardViewModel?,
     messagesStandardViewModel: MessagesStandardViewModel?,
-//    profileStandardViewModel  : ProfileStandardViewModel?
+    profileStandardViewModel  : ProfileStandardViewModel?
 ) {
 
     NavHost(

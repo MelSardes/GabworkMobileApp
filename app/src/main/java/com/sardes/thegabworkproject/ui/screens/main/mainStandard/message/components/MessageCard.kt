@@ -25,20 +25,23 @@ fun MessageCard(
     background: Color = Green500,
     message: Conversation.Message,
     contentColor: Color = Gunmetal,
-    dateColor: Color = EauBlue
+    dateColor: Color = EauBlue,
+    contentAlignment: Alignment.Horizontal = Alignment.End
 ) {
 
     Card(
-        backgroundColor = background,
         modifier = modifier
-            .fillMaxWidth()
-            .height(IntrinsicSize.Min), elevation = 0.dp, shape = shape
+            .fillMaxWidth(0.7f)
+            .height(IntrinsicSize.Min)
+            .padding(end = 3.dp),
+        backgroundColor = background,
+        elevation = 0.dp, shape = shape
     ) {
         Column(
             modifier = Modifier
                 .padding(10.dp),
             verticalArrangement = Arrangement.SpaceAround,
-            horizontalAlignment = Alignment.Start
+            horizontalAlignment = contentAlignment
         ) {
 
 

@@ -128,14 +128,6 @@ fun PostDetailsScreen(
     )
 }
 
-val myList = listOf(
-    "qwrtyuiop qwrtyuiop qwetyuiop qwetyuiop qwtyuiop qwtyuio qwrtyuiop qwetyuiop qwrtyuio",
-    "sjbvnoerv qwrtyuiop qwetyuiop qwetyuiop qwtyuiop qwtyuio qwrtyuiop qwetyuiop qwrtyuio",
-    "hvbwuvbwe qwrtyuiop qwetyuiop qwetyuiop qwtyuiop qwtyuio qwrtyuiop qwetyuiop qwrtyuio",
-    "onvuwueef qwrtyuiop qwetyuiop qwetyuiop qwtyuiop qwtyuio qwrtyuiop qwetyuiop qwrtyuio",
-    "piowbwbbe qwrtyuiop qwetyuiop qwetyuiop qwtyuiop qwtyuio qwrtyuiop qwetyuiop qwrtyuio",
-)
-
 
 @Composable
 private fun Skills(post: CompteEntreprise.Post?, modifier: Modifier) {
