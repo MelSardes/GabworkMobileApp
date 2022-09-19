@@ -102,32 +102,8 @@ class MessagesStandardViewModel(
     }
 
 
-    fun addMessage(
-        receiverName: String,
-        receiverID: String,
-        receriverAccountType: String,
-        receiverUrlPhoto: String,
-    ) {
-        if (hasUser) {
-            if (standardMessagesUiState.selectedConversation == null) {
-                repository.createConversation(
-                    UID = userId,
-                    receiverName = receiverName,
-                    receiverID = receiverID,
-                    receiverAccountType = receriverAccountType,
-                    receiverUrlPhoto = receiverUrlPhoto,
-                    senderUrlPhoto = standardMessagesUiState.userInformations?.urlPhoto,
-                    senderName = standardMessagesUiState.userInformations?.nom,
-                    content = standardMessagesUiState.messageContent!!,
-                ) {
-                    standardMessagesUiState = standardMessagesUiState.copy(messageAddedStatus = it)
-                }
-            }
-        }
-    }
 
-
-    fun createConversation(
+    private fun createConversation(
         receiverName: String,
         receiverID: String,
         receiverAccountType: String,
@@ -169,14 +145,6 @@ class MessagesStandardViewModel(
 
     fun addMessage() {
 
-//        createConversation(
-//            receiverName = standardMessagesUiState.chatWithEntreprise?.nom.toString(),
-//            receiverID = standardMessagesUiState.chatWithEntreprise?.entrepriseId.toString(),
-//            receiverAccountType = "Entreprise",
-//            receiverUrlPhoto = standardMessagesUiState.chatWithEntreprise?.urlLogo.toString()
-//        )
-//
-
         if (standardMessagesUiState.messageContent?.isNotEmpty() == true) {
             if (standardMessagesUiState.selectedConversation == null) {
                 when (standardMessagesUiState.chatUserType?.account) {
@@ -184,15 +152,15 @@ class MessagesStandardViewModel(
                         createConversation(
                             receiverName = standardMessagesUiState.chatWithStandard?.nom.toString(),
                             receiverID = standardMessagesUiState.chatWithStandard?.userId.toString(),
-                            receiverAccountType = "Standard",
+                            receiverAccountType = standardMessagesUiState.chatWithStandard?.typeDeCompte.toString(),
                             receiverUrlPhoto = standardMessagesUiState.chatWithStandard?.urlPhoto.toString()
                         )
 
-                    else -> {
+                    "Entreprise" -> {
                         createConversation(
                             receiverName = standardMessagesUiState.chatWithEntreprise?.nom.toString(),
                             receiverID = standardMessagesUiState.chatWithEntreprise?.entrepriseId.toString(),
-                            receiverAccountType = "Entreprise",
+                            receiverAccountType = standardMessagesUiState.chatWithEntreprise?.typeDeCompte.toString(),
                             receiverUrlPhoto = standardMessagesUiState.chatWithEntreprise?.urlLogo.toString()
                         )
                     }
@@ -202,14 +170,14 @@ class MessagesStandardViewModel(
                     "Standard" -> createConversation(
                         receiverName = standardMessagesUiState.chatWithStandard?.nom.toString(),
                         receiverID = standardMessagesUiState.chatWithStandard?.userId.toString(),
-                        receiverAccountType = "Standard",
+                        receiverAccountType = standardMessagesUiState.chatWithStandard?.typeDeCompte.toString(),
                         receiverUrlPhoto = standardMessagesUiState.chatWithStandard?.urlPhoto.toString()
                     )
 
-                    else -> addMessage(
+                    "Entreprise" -> createConversation(
                         receiverName = standardMessagesUiState.chatWithEntreprise?.nom.toString(),
                         receiverID = standardMessagesUiState.chatWithEntreprise?.entrepriseId.toString(),
-                        receriverAccountType = "Standard",
+                        receiverAccountType = standardMessagesUiState.chatWithEntreprise?.typeDeCompte.toString(),
                         receiverUrlPhoto = standardMessagesUiState.chatWithEntreprise?.urlLogo.toString()
                     )
                 }
@@ -217,8 +185,6 @@ class MessagesStandardViewModel(
         }
 
         standardMessagesUiState = standardMessagesUiState.copy(messageContent = "")
-
-
     }
 
     fun onMessageContentChange(content: String) {

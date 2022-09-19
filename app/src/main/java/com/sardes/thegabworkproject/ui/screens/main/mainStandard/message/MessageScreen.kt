@@ -12,12 +12,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sardes.thegabworkproject.repository.ressources.Ressources
 import com.sardes.thegabworkproject.ui.screens.main.mainStandard.components.cards.ConversationCard
 import com.sardes.thegabworkproject.ui.screens.main.mainStandard.home.HomeStandardViewModel
 import com.sardes.thegabworkproject.ui.theme.GWTypography
+import com.sardes.thegabworkproject.ui.theme.GWpalette.DarkLiver
 import kiwi.orbit.compose.ui.controls.Scaffold
 
 @SuppressLint("MaterialDesignInsteadOrbitDesign")
@@ -31,7 +34,7 @@ fun MessagesStandardScreen(
     val uiState = messageViewModel?.standardMessagesUiState
     val homeUiStateStandard = homeViewModel?.homeStandardUiState
 
-    LaunchedEffect(Unit){
+    LaunchedEffect(Unit) {
         messageViewModel?.loadAllConversations()
     }
 
@@ -42,6 +45,7 @@ fun MessagesStandardScreen(
         LazyColumn(
             Modifier
                 .padding(it)
+                .fillMaxSize()
                 .clip(RoundedCornerShape(24.dp))
         ) {
             when (uiState?.conversationsList) {
@@ -67,23 +71,62 @@ fun MessagesStandardScreen(
                 }
 
                 is Ressources.Success -> {
-                    uiState.conversationsList.data?.forEach {
-                        item {
-                            ConversationCard(
-                                conversation = it,
-                                onCardClick = { onCardClick(it.conversationId!!) },
-                                viewModel = messageViewModel
-                            )
+                    item {
+                        Text(
+                            text = "Entreprises",
+                            style = GWTypography.h6,
+                            color = DarkLiver,
+                            textAlign = TextAlign.Start,
+                            textDecoration = TextDecoration.Underline,
+                            modifier = Modifier.padding(top = 20.dp, start = 20.dp)
+                        )
+                    }
+
+                    uiState.conversationsList.data?.forEach { conversation ->
+                        if (conversation.receiverAccountType.equals("Entreprise")) {
+                            item {
+                                ConversationCard(
+                                    conversation = conversation,
+                                    onCardClick = { onCardClick(conversation.conversationId!!) },
+                                    viewModel = messageViewModel
+                                )
+                            }
                         }
                     }
+
+                    item {
+                        Text(
+                            text = "Personnes",
+                            style = GWTypography.h6,
+                            color = DarkLiver,
+                            textAlign = TextAlign.Start,
+                            textDecoration = TextDecoration.Underline,
+                            modifier = Modifier.padding(top = 20.dp, start = 20.dp)
+                        )
+                    }
+
+                    uiState.conversationsList.data?.forEach { conversation ->
+                        if (conversation.receiverAccountType.equals("Standard")) {
+                            item {
+                                ConversationCard(
+                                    conversation = conversation,
+                                    onCardClick = { onCardClick(conversation.conversationId!!) },
+                                    viewModel = messageViewModel
+                                )
+                            }
+                        }
+                    }
+
                 }
+
                 else -> {
                     item {
                         androidx.compose.material3.Text(
                             text = uiState?.conversationsList?.throwable?.localizedMessage
                                 ?: "OOPS!\nUne erreur s'est produite",
                             style = GWTypography.h4,
-                            color = Color.Red
+                            color = Color.Red,
+                            modifier = Modifier.wrapContentSize(Alignment.Center)
                         )
                     }
                 }

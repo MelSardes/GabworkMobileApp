@@ -103,8 +103,8 @@ sealed class StandardPostScreen(val route: String){
     object DetailsPostScreen: StandardPostScreen("StandardApplicationPost")
 }
 
-sealed class StandardMessageScreen(val route: String){
-    object StandardConversationScreen: StandardMessageScreen("standardInterface/standardMessages/Conversation")
+sealed class StandardMessagesScreen(val route: String){
+    object StandardConversationScreen: StandardMessagesScreen("standardInterface/standardMessages/Conversation")
 }
 
 
@@ -129,8 +129,8 @@ sealed class EntrepriseSearchScreen(val route: String) {
 }
 
 sealed class EntrepriseMessagesScreen(val route: String) {
-    object EntrepriseMessagesMain :
-        EntrepriseMessagesScreen("EntrepriseInterface/EntrepriseMessages/Main")
+    object EntrepriseConversationScreen :
+        EntrepriseMessagesScreen("EntrepriseInterface/EntrepriseMessages/Conversation")
 }
 
 sealed class EntreprisePostsScreen(val route: String) {

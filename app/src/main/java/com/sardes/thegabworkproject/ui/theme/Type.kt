@@ -22,13 +22,13 @@ val GWTypography = Typography(
 
     body1 = TextStyle(
         fontFamily = yanone,
-        fontWeight = FontWeight.Light,
+        fontWeight = FontWeight.Normal,
         fontSize = 16.sp
     ),
 
     body2 = TextStyle(
         fontFamily = yanone,
-        fontWeight = FontWeight.Medium,
+        fontWeight = FontWeight.Light,
         fontSize = 14.sp
     ),
 

@@ -58,12 +58,5 @@ data class CompteEntreprise(
             val urlPhoto: String? = null,
             val dateCandidature: Timestamp? = null,
         )
-
-//        data class EtudiantCandidat(
-//            val PostEmploiId: String,
-//            val ProfilEtudiantId: String,
-//            val dateSoumission: String,
-//        )
     }
-
 }

@@ -1,5 +1,7 @@
 package com.sardes.thegabworkproject.ui.screens.main.mainStandard.home
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -21,7 +23,7 @@ class HomeStandardViewModel(
     val hasUser: Boolean
         get() = repository.hasUser()
 
-    private val userId: String
+    val userId: String
         get() = repository.getUserId()
 
     fun getUserInformations(){
@@ -69,7 +71,74 @@ class HomeStandardViewModel(
         }
     }
 
+    fun addToBookmarks(
+        postId: String,
+        entrepriseId: String?,
+        postName: String?,
+        entrepriseName: String?,
+        urlLogo: String?,
+        salary: String?,
+        city: String?,
+        province: String?,
+        jobType: String?,
+        context: Context
+    ){
+        if (hasUser){
+            repository.addToBookmarks(
+                userId,
+                postId,
+                entrepriseId,
+                postName,
+                entrepriseName,
+                urlLogo,
+                salary,
+                city,
+                province,
+                jobType
+            ){
 
+                if(it){
+                    Toast.makeText(
+                        context,
+                        "Post sauvegardé",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    homeStandardUiState = homeStandardUiState.copy(addToBookmarksStatus = it)
+                }else{
+                    Toast.makeText(
+                        context,
+                        "Erreur lors de la sauvegarde du post",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+    }
+
+    fun removeFromBookmarks(postId: String?){
+        if (hasUser){
+            repository.removeFromBookmarks(userId, postId){
+                homeStandardUiState = homeStandardUiState.copy(removeFromBookmarksStatus = it)
+            }
+        }
+    }
+
+
+    fun loadAllBookmarks(){
+        if (hasUser){
+            getAllBookmarks()
+        }else{
+            homeStandardUiState = homeStandardUiState.copy(bookmarks = Ressources.Error(
+                throwable = Throwable(message = "Utilisateur non connecté")
+            ))
+        }
+    }
+
+    private fun getAllBookmarks() = viewModelScope.launch{
+            repository.getAllJobBookmarks(userId).collect{
+                homeStandardUiState = homeStandardUiState.copy(bookmarks = it)
+            }
+    }
 }
 
 data class HomeStandardUiState(
@@ -77,9 +146,12 @@ data class HomeStandardUiState(
     val userInformations: CompteStandard? = null,
     val postsList: Ressources<List<CompteEntreprise.Post>> = Ressources.Loading(),
     val fiveLatestPostsList: Ressources<List<CompteEntreprise.Post>> = Ressources.Loading(),
+    val bookmarks: Ressources<List<CompteStandard.JobBookmark>> = Ressources.Loading(),
 
     val entreprises: Ressources<List<CompteEntreprise>> = Ressources.Loading(),
 
     val selectedPost: CompteEntreprise.Post? = null,
 
+    val addToBookmarksStatus: Boolean = false,
+    val removeFromBookmarksStatus: Boolean = false,
 )

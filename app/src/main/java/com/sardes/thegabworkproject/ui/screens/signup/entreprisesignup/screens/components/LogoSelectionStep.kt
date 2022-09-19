@@ -1,5 +1,6 @@
 package com.sardes.thegabworkproject.ui.screens.signup.entreprisesignup.screens.components
 
+import android.annotation.SuppressLint
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -8,6 +9,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -19,15 +21,16 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.sardes.thegabworkproject.R
 import com.sardes.thegabworkproject.ui.screens.signup.entreprisesignup.EntrepriseAccountSignUpViewModel
-import com.sardes.thegabworkproject.ui.screens.signup.imageUri
 import com.sardes.thegabworkproject.ui.theme.GWTypography
 import kiwi.orbit.compose.ui.OrbitTheme
 import kiwi.orbit.compose.ui.controls.ButtonSecondary
 
+@SuppressLint("UnrememberedMutableState")
 @Composable
 fun LogoSelectionStep(
     viewModel: EntrepriseAccountSignUpViewModel?,
 ) {
+    var imageUri = mutableStateOf<Uri?>(null)
 
     val selectImage = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()

@@ -8,19 +8,22 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.sardes.thegabworkproject.R
-import com.sardes.thegabworkproject.ui.screens.signup.imageUri
 import com.sardes.thegabworkproject.ui.screens.signup.standardsignup.StandardSignUpViewModel
 import com.sardes.thegabworkproject.ui.theme.GWTypography
+import com.sardes.thegabworkproject.utilities.URIPathHelper
 import kiwi.orbit.compose.ui.OrbitTheme
 import kiwi.orbit.compose.ui.controls.ButtonSecondary
 import kiwi.orbit.compose.ui.controls.Text
@@ -28,11 +31,19 @@ import kiwi.orbit.compose.ui.controls.Text
 @Composable
 fun SelectPhotoStandardSignUp(viewModel: StandardSignUpViewModel?) {
 
+    val context = LocalContext.current
+    var imageUri = remember{ mutableStateOf<Uri?>(null)}
+
+    val uriPathHelper = URIPathHelper()
+    var uriF: Uri = imageUri.value!!
+    val filePath = uriPathHelper.getPath(context, viewModel?.signUpUiStateStandard?.photo!!)
+
     val selectImage = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
         imageUri.value = uri
     }
+
 
     Column(
         modifier = Modifier
@@ -42,7 +53,7 @@ fun SelectPhotoStandardSignUp(viewModel: StandardSignUpViewModel?) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight(0.89f)
+                .weight(1f)
                 .clip(RoundedCornerShape(24.dp))
                 .background(Color.LightGray)
         ) {
@@ -54,7 +65,7 @@ fun SelectPhotoStandardSignUp(viewModel: StandardSignUpViewModel?) {
                     contentDescription = "image",
                 )
 
-                viewModel?.onPhotoChange(imageUri.value)
+//                viewModel?.onPhotoChange(imageUri.value)
 
             } else {
                 Image(
@@ -70,11 +81,12 @@ fun SelectPhotoStandardSignUp(viewModel: StandardSignUpViewModel?) {
         ButtonSecondary(
             onClick = { selectImage.launch("image/*") },
             modifier = Modifier
+                .height(IntrinsicSize.Min)
                 .fillMaxWidth()
-        )
-        {
+                .padding(vertical = 7.dp)
+        ) {
             Text(
-                "Sélectionnez une photo de profil *",
+                "Sélectionnez une photo de profil * \n ${filePath ?: "Nothing for now"}",
                 style = GWTypography.h6,
                 textAlign = TextAlign.Center
             )

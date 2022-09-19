@@ -7,14 +7,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.sardes.thegabworkproject.navigation.StandardInterfaceScreen
-import com.sardes.thegabworkproject.navigation.StandardMessageScreen
+import com.sardes.thegabworkproject.navigation.StandardMessagesScreen
 import com.sardes.thegabworkproject.navigation.StandardPostScreen
 import com.sardes.thegabworkproject.ui.screens.main.mainStandard.components.PostDetailsScreen
 import com.sardes.thegabworkproject.ui.screens.main.mainStandard.home.HomeStandardScreen
 import com.sardes.thegabworkproject.ui.screens.main.mainStandard.home.HomeStandardViewModel
 import com.sardes.thegabworkproject.ui.screens.main.mainStandard.message.MessagesStandardScreen
 import com.sardes.thegabworkproject.ui.screens.main.mainStandard.message.MessagesStandardViewModel
-import com.sardes.thegabworkproject.ui.screens.main.mainStandard.message.conversation.ConversationScreen
+import com.sardes.thegabworkproject.ui.screens.main.mainStandard.message.conversation.StandardConversationScreen
 import com.sardes.thegabworkproject.ui.screens.main.mainStandard.profile.ProfileStandardScreen
 import com.sardes.thegabworkproject.ui.screens.main.mainStandard.profile.ProfileStandardViewModel
 import com.sardes.thegabworkproject.ui.screens.main.mainStandard.saves.SavesStandardScreen
@@ -46,7 +46,7 @@ fun StandardMainNavigation(
                     }
                 },
                 onLogoClick = { entrepriseId ->
-                    navController.navigate(StandardMessageScreen.StandardConversationScreen.route + "?id=$entrepriseId") {
+                    navController.navigate(StandardMessagesScreen.StandardConversationScreen.route + "?id=$entrepriseId") {
                         launchSingleTop = true
                     }
                 }
@@ -54,7 +54,7 @@ fun StandardMainNavigation(
         }
 
         composable(StandardInterfaceScreen.StandardSaves.route) {
-            SavesStandardScreen()
+            SavesStandardScreen(savesStandardViewModel, homeStandardViewModel)
         }
 
         composable(StandardInterfaceScreen.StandardSearch.route) {
@@ -66,7 +66,7 @@ fun StandardMainNavigation(
                 messagesStandardViewModel,
                 homeStandardViewModel,
                 onCardClick = { conversationId ->
-                    navController.navigate(StandardMessageScreen.StandardConversationScreen.route + "?id=$conversationId") {
+                    navController.navigate(StandardMessagesScreen.StandardConversationScreen.route + "?id=$conversationId") {
                         launchSingleTop = true
                     }
                 }
@@ -79,13 +79,13 @@ fun StandardMainNavigation(
 
 
         composable(
-            route = StandardMessageScreen.StandardConversationScreen.route + "?id={id}",
+            route = StandardMessagesScreen.StandardConversationScreen.route + "?id={id}",
             arguments = listOf(navArgument("id") {
                 type = NavType.StringType
                 defaultValue = ""
             })
         ) { entry ->
-            ConversationScreen(
+            StandardConversationScreen(
                 messagesStandardViewModel,
                 conversationId = entry.arguments?.getString("id") as String,
             )
@@ -100,8 +100,13 @@ fun StandardMainNavigation(
             })
         ) { entry ->
             PostDetailsScreen(
-                homeStandardViewModel = homeStandardViewModel,
+                viewModel = homeStandardViewModel,
                 postId = entry.arguments?.getString("id") as String,
+                onMessageClick = {entrepriseId ->
+                    navController.navigate(StandardMessagesScreen.StandardConversationScreen.route + "?id=$entrepriseId") {
+                        launchSingleTop = true
+                    }
+                }
             )
         }
     }

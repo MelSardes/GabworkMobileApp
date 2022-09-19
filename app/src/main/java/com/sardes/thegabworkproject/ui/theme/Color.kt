@@ -109,4 +109,9 @@ object GWpalette{
     val EauBlue     = Color(0xFFBDCDDB)
     val MaximumRed  = Color(0xFFD61F23)
     val ImperialRed = Color(0xFFE53140)
+
+    val RedStatus = Color(0xFFDC312D)
+    val GreenStatus = Color(0xFF0E9D57)
+    val LightRedStatus = Color(0xFFFFEDED)
+    val LightGreenStatus = Color(0xFFE8FDF2)
 }

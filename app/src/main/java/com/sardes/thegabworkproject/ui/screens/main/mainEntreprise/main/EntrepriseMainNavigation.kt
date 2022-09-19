@@ -7,11 +7,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.sardes.thegabworkproject.navigation.EntrepriseInterfaceScreen
+import com.sardes.thegabworkproject.navigation.EntrepriseMessagesScreen
 import com.sardes.thegabworkproject.navigation.EntreprisePostsScreen
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.home.HomeEntrepriseScreen
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.home.HomeEntrepriseViewModel
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.message.MessagesEntrepriseScreen
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.message.MessagesEntrepriseViewModel
+import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.message.conversation.EntrepriseConversationScreen
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.PostsEntrepriseScreen
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.PostsEntrepriseViewModel
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.applicants.ApplicantsScreen
@@ -88,12 +90,35 @@ fun EntrepriseMainNavigation(
 
 //        messagesEntrepriseScreen(navController)
         composable(EntrepriseInterfaceScreen.EntrepriseMessages.route) {
-            MessagesEntrepriseScreen(messagesViewModel)
+            MessagesEntrepriseScreen(
+                messagesViewModel,
+                homeViewModel,
+                onConversationClick = {conversationId ->
+                    navController.navigate(EntrepriseMessagesScreen.EntrepriseConversationScreen.route + "?id=$conversationId"){
+                        launchSingleTop = true
+                    }
+                }
+            )
         }
 
 //        profileEntrepriseScreen(navController)
         composable(EntrepriseInterfaceScreen.EntrepriseProfile.route) {
             ProfileEntrepriseScreen()
+        }
+
+
+
+        composable(
+            route = EntrepriseMessagesScreen.EntrepriseConversationScreen.route + "?id={id}",
+            arguments = listOf(navArgument("id"){
+                type = NavType.StringType
+                defaultValue = ""
+            })
+        ){entry ->
+            EntrepriseConversationScreen(
+                viewModel = messagesViewModel,
+                conversationId = entry.arguments?.getString("id") as String
+            )
         }
 
     }

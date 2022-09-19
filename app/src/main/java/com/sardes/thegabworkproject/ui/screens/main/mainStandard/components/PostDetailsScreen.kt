@@ -6,7 +6,11 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Tab
+import androidx.compose.material.TabRow
+import androidx.compose.material.TabRowDefaults
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -18,10 +22,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
-import com.google.android.material.R.drawable.mtrl_ic_error
+import androidx.compose.ui.zIndex
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.pagerTabIndicatorOffset
+import com.google.accompanist.pager.rememberPagerState
 import com.sardes.thegabworkproject.R
 import com.sardes.thegabworkproject.data.models.CompteEntreprise
 import com.sardes.thegabworkproject.ui.screens.main.mainStandard.home.HomeStandardViewModel
@@ -32,6 +40,7 @@ import com.sardes.thegabworkproject.ui.theme.GWpalette.Gunmetal
 import com.sardes.thegabworkproject.ui.theme.TailwindCSSColor
 import kiwi.orbit.compose.icons.Icons
 import kiwi.orbit.compose.ui.controls.IconButton
+import kotlinx.coroutines.launch
 import kiwi.orbit.compose.ui.R as OrbitR
 
 
@@ -40,19 +49,22 @@ import kiwi.orbit.compose.ui.R as OrbitR
 @Composable
 fun PostDetailsScreen(
     postId: String,
-    homeStandardViewModel: HomeStandardViewModel?,
-//    reviewer: CompteEntreprise.Post.Reviewer,
+    viewModel: HomeStandardViewModel?,
+    onMessageClick: (entrepriseId: String) -> Unit,
     onApply: () -> Unit = {},
 ) {
+    val context = LocalContext.current
 
-    val uiState = homeStandardViewModel?.homeStandardUiState
+    val uiState = viewModel?.homeStandardUiState
 
-    LaunchedEffect(key1 = Unit) {
-        homeStandardViewModel?.getPost(postId)
+    LaunchedEffect(Unit) {
+        viewModel?.getPost(postId)
     }
 
     Scaffold(
-        modifier = Modifier.background(Gunmetal),
+        modifier = Modifier
+            .background(Gunmetal)
+            .clip(RoundedCornerShape(topEnd = 24.dp, topStart = 24.dp)),
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
@@ -74,14 +86,35 @@ fun PostDetailsScreen(
                 },
                 actions = {
                     IconButton(
-                        onClick = { /*TODO*/ },
+                        onClick = {
+                            if (uiState?.selectedPost?.savers?.contains(viewModel.userId) == true) {
+                                viewModel.removeFromBookmarks(uiState.selectedPost.postId)
+                                viewModel.getPost(postId)
+
+                            } else {
+                                viewModel?.addToBookmarks(
+                                    postId = uiState?.selectedPost?.postId!!,
+                                    entrepriseId = uiState.selectedPost.entrepriseId,
+                                    postName = uiState.selectedPost.postName,
+                                    entrepriseName = uiState.selectedPost.entrepriseName,
+                                    urlLogo = uiState.selectedPost.urlLogo,
+                                    salary = uiState.selectedPost.salaire,
+                                    city = uiState.selectedPost.ville,
+                                    province = uiState.selectedPost.province,
+                                    jobType = uiState.selectedPost.typeDEmploi,
+                                    context
+                                )
+                                viewModel?.getPost(postId)
+                            }
+                        },
                         rippleRadius = 16.dp,
                     ) {
                         Icon(
                             painter = Icons.Bookmark,
                             contentDescription = null,
                             tint =
-                            GWpalette.CoolGrey
+                            if (uiState?.selectedPost?.savers?.contains(viewModel.userId) == true) TailwindCSSColor.Red500
+                            else GWpalette.CoolGrey
                         )
                     }
                     IconButton(
@@ -99,421 +132,56 @@ fun PostDetailsScreen(
         },
 
         content = {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.SpaceBetween
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clip(RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
+                    .background(Gunmetal),
             ) {
                 Content(
                     padding = it,
                     post = uiState?.selectedPost,
-//                    reviewer, TODO: ADD REVIEWS
-                    modifier = Modifier.fillMaxHeight(0.93f)
+                    modifier = Modifier.fillMaxSize()
                 )
 
-                Text(
-                    "POSTULER MAINTENANT",
-                    style = GWTypography.h4,
-                    textAlign = TextAlign.Center,
-                    color = Color.White,
+                Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(Gunmetal).weight(1f)
-                        .clickable { onApply.invoke() },
-                )
+                        .height(IntrinsicSize.Min)
+                        .align(Alignment.BottomCenter),
+                    verticalAlignment = Alignment.Bottom,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    IconButton(onClick = {
+                        onMessageClick.invoke(uiState?.selectedPost?.entrepriseId.toString())
+                    }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_message),
+                            contentDescription = null,
+                            tint = Color.White,
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(topEnd = 24.dp))
+                                .background(Gunmetal)
+                                .padding(10.dp)
+                        )
+                    }
 
+                    Text(
+                        "POSTULER MAINTENANT",
+                        style = GWTypography.h6,
+                        textAlign = TextAlign.Center,
+                        color = Color.White,
+                        modifier = Modifier
+                            .clickable { onApply.invoke() }
+                            .height(IntrinsicSize.Min)
+                            .clip(RoundedCornerShape(topStart = 40.dp))
+                            .background(Gunmetal)
+                            .padding(horizontal = 30.dp, vertical = 10.dp)
+                    )
+                }
             }
-
-
         }
     )
-}
-
-
-@Composable
-private fun Skills(post: CompteEntreprise.Post?, modifier: Modifier) {
-    Card(
-        shape = RoundedCornerShape(24.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
-        elevation = CardDefaults.cardElevation(8.dp),
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(20.dp),
-    ) {
-        Column(
-            modifier = Modifier
-                .padding(10.dp)
-                .fillMaxSize()
-        ) {
-            Text(
-                text = "Compétences",
-                style = GWTypography.h6,
-                color = Gunmetal
-            )
-            LazyColumn {
-                post?.competences?.forEach {
-                    item {
-                        Text(
-                            text = "• $it",
-                            style = GWTypography.body1.copy(fontWeight = FontWeight.Medium)
-                        )
-                        Spacer(modifier = Modifier.height(10.dp))
-                    }
-                }
-            }
-        }
-    }
-}
-
-@SuppressLint("PrivateResource")
-@Composable
-private fun Content(
-    padding: PaddingValues,
-    post: CompteEntreprise.Post?,
-    review: CompteEntreprise.Post.Review = CompteEntreprise.Post.Review(),
-    modifier: Modifier
-) {
-    var selectedTab by remember { mutableStateOf(2) }
-
-    Box(
-        modifier = modifier
-            .padding(padding)
-            .background(Gunmetal)
-            .clip(RoundedCornerShape(24.dp))
-            .background(Color.White)
-    ) {
-        Column(modifier = Modifier.fillMaxSize()) {
-            Card(
-                shape = RoundedCornerShape(24.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
-                elevation = CardDefaults.cardElevation(8.dp),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(270.dp),
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(15.dp),
-                    verticalArrangement = Arrangement.spacedBy(10.dp),
-                    horizontalAlignment = Alignment.Start
-                ) {
-
-                    Text(
-                        text = post?.postName ?: "",
-                        textAlign = TextAlign.Start,
-                        style = GWTypography.h3,
-                        color = Gunmetal,
-                        modifier = Modifier.weight(1f)
-                    )
-
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 10.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceAround,
-                    ) {
-                        Text(
-                            text = post?.domaine ?: "",
-                            textAlign = TextAlign.Center,
-                            maxLines = 1,
-                            style = GWTypography.body2,
-                            color = Color.White,
-                            modifier = Modifier
-                                .padding(end = 5.dp)
-                                .weight(1f)
-                                .clip(RoundedCornerShape(20.dp))
-                                .background(TailwindCSSColor.Pink900)
-                                .padding(5.dp)
-                        )
-
-                        Text(
-                            text = post?.typeDEmploi ?: "",
-                            textAlign = TextAlign.Center,
-                            maxLines = 1,
-                            style = GWTypography.body2,
-                            color = Color.White,
-                            modifier = Modifier
-                                .padding(horizontal = 5.dp)
-                                .weight(1f)
-                                .clip(RoundedCornerShape(20.dp))
-                                .background(TailwindCSSColor.Pink900)
-                                .padding(5.dp)
-                        )
-
-                        Text(
-                            text = post?.experience ?: "",
-                            textAlign = TextAlign.Center,
-                            style = GWTypography.body2,
-                            color = Color.White,
-                            modifier = Modifier
-                                .padding(start = 5.dp)
-                                .weight(1f)
-                                .clip(RoundedCornerShape(20.dp))
-                                .background(TailwindCSSColor.Pink900)
-                                .padding(5.dp)
-                        )
-                    }
-
-
-
-                    Text(
-                        text = (post?.salaire ?: "") + "F/mois",
-                        color = GWpalette.LackCoral,
-                        style = GWTypography.subtitle2,
-                    )
-
-                    Text(
-                        text = post?.ville + "/" + post?.province,
-                        style = GWTypography.subtitle2,
-                        color = GWpalette.CoolGrey
-                    )
-
-                    Text(
-                        text = if (post?.totalApplicants == 0) "Soyez le premier à postuler" else {
-                            post?.totalApplicants.toString() +
-                                    if (post?.totalApplicants == 1) "personne a déjà postulé"
-                                    else " personnes ont déjà postulé"
-                        },
-                        style = GWTypography.subtitle2,
-                        color = GWpalette.CoolGrey
-                    )
-
-
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        modifier = Modifier
-                            .weight(1f)
-                            .fillMaxWidth()
-                    ) {
-                        Row(
-                            horizontalArrangement = Arrangement.spacedBy(30.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Card(
-                                modifier = Modifier.size(60.dp),
-                                colors = CardDefaults.cardColors(Color.White),
-                                elevation = CardDefaults.cardElevation(
-                                    defaultElevation = 4.dp,
-                                    pressedElevation = 8.dp
-                                )
-                            ) {
-                                AsyncImage(
-                                    model = ImageRequest
-                                        .Builder(LocalContext.current)
-                                        .data(post?.urlLogo)
-                                        .crossfade(true)
-                                        .crossfade(1000)
-                                        .placeholder(R.drawable.ic_business_100)
-                                        .error(mtrl_ic_error)
-                                        .build(),
-                                    contentDescription = null,
-                                    contentScale = ContentScale.Crop,
-                                    modifier = Modifier
-                                        .fillMaxSize()
-                                        .clip(RoundedCornerShape(4.dp))
-                                )
-                            }
-
-                            Text(
-                                text = post?.entrepriseName ?: "",
-                                style = GWTypography.h6,
-                                color = Gunmetal
-                            )
-
-                        }
-
-                        Text(
-                            text = "Il y a 3 jours",
-                            style = GWTypography.body2,
-                            color = GWpalette.CoolGrey
-                        )
-                    }
-                }
-            }
-            Spacer(modifier = Modifier.height(20.dp))
-
-            Row(
-                modifier = Modifier
-                    .padding(horizontal = 12.dp)
-                    .clip(RoundedCornerShape(24.dp))
-                    .background(Color.LightGray)
-                    .fillMaxWidth()
-                    .height(44.dp),
-            ) {
-                TabButton(
-                    "A propos",
-                    { selectedTab = 1 },
-                    selected = selectedTab,
-                    myCurrent = 1,
-                    modifier = Modifier.weight(1f)
-                )
-                TabButton(
-                    "Compétences",
-                    { selectedTab = 2 },
-                    selected = selectedTab,
-                    myCurrent = 2,
-                    modifier = Modifier.weight(1f)
-                )
-                TabButton(
-                    "Commentaires",
-                    { selectedTab = 3 },
-                    selected = selectedTab,
-                    myCurrent = 3,
-                    modifier = Modifier.weight(1f)
-                )
-            }
-
-            when (selectedTab) {
-                1 -> About(post)
-                2 -> Skills(post = post, modifier = Modifier.weight(1f))
-                3 -> CardReview(review = review)
-            }
-        }
-
-
-/*
-                    item {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 10.dp, vertical = 5.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceAround,
-                        ) {
-                            Text(
-                                text = post?.domaine ?: "",
-                                textAlign = TextAlign.Center,
-                                maxLines = 1,
-                                style = GWTypography.body2,
-                                color = Color.White,
-                                modifier = Modifier
-                                    .padding(end = 5.dp)
-                                    .weight(1f)
-                                    .clip(RoundedCornerShape(20.dp))
-                                    .background(TailwindCSSColor.Pink900)
-                                    .padding(5.dp)
-                            )
-
-                            Text(
-                                text = post?.typeDEmploi ?: "",
-                                textAlign = TextAlign.Center,
-                                maxLines = 1,
-                                style = GWTypography.body2,
-                                color = Color.White,
-                                modifier = Modifier
-                                    .padding(horizontal = 5.dp)
-                                    .weight(1f)
-                                    .clip(RoundedCornerShape(20.dp))
-                                    .background(TailwindCSSColor.Pink900)
-                                    .padding(5.dp)
-                            )
-
-                            Text(
-                                text = post?.experience ?: "",
-                                textAlign = TextAlign.Center,
-                                style = GWTypography.body2,
-                                color = Color.White,
-                                modifier = Modifier
-                                    .padding(start = 5.dp)
-                                    .weight(1f)
-                                    .clip(RoundedCornerShape(20.dp))
-                                    .background(TailwindCSSColor.Pink900)
-                                    .padding(5.dp)
-                            )
-                        }
-
-                    }
-*/
-    }
-}
-
-@Composable
-private fun About(post: CompteEntreprise.Post?) {
-    LazyColumn {
-        item {
-            Card(
-                shape = RoundedCornerShape(24.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
-                elevation = CardDefaults.cardElevation(8.dp),
-                modifier = Modifier
-                    .padding(12.dp)
-                    .fillMaxWidth()
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(20.dp)
-                ) {
-                    Text(
-                        text = "Description",
-                        style = GWTypography.h6,
-                        color = Gunmetal
-                    )
-                    Spacer(modifier = Modifier.height(10.dp))
-                    Text(
-                        text = post?.descriptionEmploi ?: "",
-                        style = GWTypography.body1.copy(fontWeight = FontWeight.Medium),
-                        color = Gunmetal,
-                    )
-
-                }
-            }
-
-        }
-        item {
-            Card(
-                shape = RoundedCornerShape(24.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
-                elevation = CardDefaults.cardElevation(8.dp),
-                modifier = Modifier
-                    .padding(12.dp)
-                    .fillMaxWidth()
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(20.dp)
-                ) {
-                    Text(
-                        text = "Responsabilités",
-                        style = GWTypography.h6,
-                        color = Gunmetal
-                    )
-                    Spacer(modifier = Modifier.height(10.dp))
-                    post?.responsabilites?.forEach { responsibility ->
-                        Text(
-                            text = "- $responsibility",
-                            style = GWTypography.body1.copy(fontWeight = FontWeight.Medium),
-                            color = Gunmetal,
-                            modifier = Modifier.padding(bottom = 7.dp)
-                        )
-                    }
-                }
-            }
-        }
-    }
-
-}
-
-@Composable
-fun TabButton(text: String, select: () -> Unit, selected: Int, myCurrent: Int, modifier: Modifier) {
-    Button(
-        onClick = { select() },
-        shape = RoundedCornerShape(20.dp),
-        modifier = modifier.fillMaxHeight(),
-        elevation = null,
-        colors = if (selected == myCurrent) ButtonDefaults.buttonColors(
-            containerColor = Gunmetal,
-            contentColor = Color.White
-        ) else {
-            ButtonDefaults.buttonColors(
-                containerColor = Color.LightGray,
-                contentColor = Gunmetal
-            )
-        }
-    ) { Text(text, style = GWTypography.body1.copy(fontWeight = FontWeight.Medium)) }
 }
 
 
@@ -586,59 +254,261 @@ fun CardReview(review: CompteEntreprise.Post.Review) {
     }
 }
 
-//@Preview
+
+@OptIn(ExperimentalPagerApi::class)
 @Composable
-fun CardReviewPreview() {
-    CardReview(
-        review = CompteEntreprise.Post.Review(
-            urlPhoto = R.drawable.painted_paul.toString(),
-            reviewerName = "Morriss Morrisson",
-            reviewCotent = " 8evhp9 v98hvh n9phavspaos;bvx zxbósd'zlz.n zx szh'xc.u sf 9 GSVB " +
-                    "WS SBVYGSCEAIVU;W EV WEVG7WPVE  p9sgvb acbqa8 cqwertyu",
-            date = "Il y a 2 jours"
-        )
-    )
+fun Content(
+    padding: PaddingValues,
+    post: CompteEntreprise.Post?,
+    modifier: Modifier = Modifier
+) {
+
+    val tabItems = listOf("A propos", "Commentaires")
+
+    val pagerState = rememberPagerState()
+    val coroutineScope = rememberCoroutineScope()
+
+    var selectedTab by remember { mutableStateOf(1) }
+
+    LazyColumn(
+        modifier
+            .padding(padding)
+            .background(Color.White)
+    ) {
+        item {
+            Surface(
+                //        color = Gunmetal,
+                modifier = Modifier
+                    .clip(RoundedCornerShape(bottomEnd = 80.dp))
+                    .background(Gunmetal.copy(alpha = 0.9f))
+                    .fillMaxWidth()
+                    .height(IntrinsicSize.Min)
+                    .padding(20.dp)
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Gunmetal.copy(alpha = 0.9f)),
+                    verticalArrangement = Arrangement.SpaceBetween,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+                        Image(
+                            painter = painterResource(id = R.drawable.painted_paul),
+                            contentDescription = null,
+                            alignment = Alignment.Center,
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier
+                                .size(80.dp)
+                                .clip(RoundedCornerShape(24.dp))
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(14.dp))
+                    Column(
+                        verticalArrangement = Arrangement.SpaceEvenly,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(
+                            text = post?.postName.toString(),
+                            style = GWTypography.h4,
+                            color = Color.White
+                        )
+                        Text(
+                            text = post?.entrepriseName.toString(),
+                            style = GWTypography.subtitle1,
+                            color = EauBlue
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.height(20.dp))
+
+                    Row(horizontalArrangement = Arrangement.SpaceEvenly) {
+                        Text(
+                            text = post?.domaine.toString(),
+                            style = GWTypography.body1.copy(color = Color.White),
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                                .clip(CircleShape)
+                                .background(Color.White.copy(alpha = 0.1f))
+                                .padding(vertical = 8.dp)
+                                .weight(1f)
+                        )
+                        Spacer(modifier = Modifier.weight(0.1f))
+                        Text(
+                            text = post?.typeDEmploi.toString(),
+                            style = GWTypography.body1.copy(color = Color.White),
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                                .clip(CircleShape)
+                                .background(Color.White.copy(alpha = 0.1f))
+                                .padding(vertical = 8.dp)
+                                .weight(1f)
+                        )
+                        Spacer(modifier = Modifier.weight(0.1f))
+                        Text(
+                            text = post?.experience.toString(),
+                            style = GWTypography.body1.copy(color = Color.White),
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                                .clip(CircleShape)
+                                .background(Color.White.copy(alpha = 0.1f))
+                                .padding(vertical = 8.dp)
+                                .weight(1f)
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.height(24.dp))
+
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.padding(end = 20.dp)
+                    ) {
+                        Text(
+                            text = post?.salaire + "F/m",
+                            style = GWTypography.subtitle2,
+                            color = Color.White
+                        )
+                        Spacer(modifier = Modifier.weight(1f))
+                        Text(
+                            text = "${post?.ville}, ${post?.province}",
+                            style = GWTypography.subtitle2,
+                            color = Color.White
+                        )
+                    }
+                }
+            }
+        }
+
+        item {
+            TabRow(
+                selectedTabIndex = pagerState.currentPage,
+                backgroundColor = Gunmetal.copy(alpha = 0.8f),
+                modifier = Modifier
+                    .padding(all = 15.dp)
+                    .background(Color.Transparent)
+                    .clip(RoundedCornerShape(24.dp)),
+                indicator = { tabPositions ->
+                    TabRowDefaults.Indicator(
+                        Modifier
+                            .pagerTabIndicatorOffset(pagerState, tabPositions)
+                            .fillMaxSize()
+                            .padding(5.dp)
+                            .clip(RoundedCornerShape(24.dp))
+                            .zIndex(0.1f),
+                        color = Gunmetal
+                    )
+                }
+            ) {
+                tabItems.forEachIndexed { index, title ->
+                    Tab(
+                        text = {
+                            Text(
+                                text = title,
+                                style =
+                                if (pagerState.currentPage == index)
+                                    GWTypography.subtitle2.copy(color = Color.White)
+                                else GWTypography.body1.copy(color = EauBlue),
+                                modifier = Modifier.zIndex(1f),
+                            )
+                        },
+                        selected = pagerState.currentPage == index,
+                        modifier = Modifier
+                            .background(
+                                color = Color.Transparent,
+                                shape = RoundedCornerShape(24.dp)
+                            )
+                            .zIndex(1f),
+                        onClick = {
+                            coroutineScope.launch {
+                                pagerState.animateScrollToPage(index)
+                            }
+                        }
+                    )
+                }
+            }
+
+            HorizontalPager(
+                count = tabItems.size,
+                state = pagerState,
+                modifier = Modifier.fillMaxSize()
+            ) { page ->
+
+                when (page) {
+                    0 -> About(post)
+                    1 -> Comments(post)
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun Comments(post: CompteEntreprise.Post?) {
+    Box(modifier = Modifier.fillMaxSize()) {
+        Column(
+            modifier = Modifier.padding(24.dp),
+            verticalArrangement = Arrangement.spacedBy(15.dp)
+        ) {
+            post?.comments?.forEach {
+                CardReview(review = it)
+            }
+        }
+    }
+}
+
+@Composable
+private fun About(post: CompteEntreprise.Post?) {
+    Box(modifier = Modifier.fillMaxSize()) {
+        Column(modifier = Modifier.padding(24.dp)) {
+
+            Text(
+                "Description",
+                style = GWTypography.subtitle2.copy(color = GWpalette.LackCoral),
+                textDecoration = TextDecoration.Underline
+            )
+            Text(
+                post?.descriptionEmploi.toString(),
+                style = GWTypography.body1.copy(color = GWpalette.CoolGrey),
+                modifier = Modifier.padding(start = 20.dp)
+            )
+
+            Spacer(modifier = Modifier.height(30.dp))
+
+            Text(
+                "Responsabilités :",
+                style = GWTypography.subtitle2.copy(color = GWpalette.LackCoral),
+                textDecoration = TextDecoration.Underline
+            )
+            post?.responsabilites?.forEach {
+                Text(
+                    "• $it",
+                    style = GWTypography.body1.copy(color = GWpalette.CoolGrey),
+                    modifier = Modifier.padding(start = 20.dp)
+                )
+            }
+
+            Spacer(modifier = Modifier.height(30.dp))
+
+            Text(
+                "Compétences :",
+                style = GWTypography.subtitle2.copy(color = GWpalette.LackCoral),
+                textDecoration = TextDecoration.Underline
+            )
+            post?.competences?.forEach {
+                Text(
+                    "• $it",
+                    style = GWTypography.body1.copy(color = GWpalette.CoolGrey),
+                    modifier = Modifier.padding(start = 20.dp)
+                )
+            }
+        }
+    }
 }
 
 
-/*
-@Preview(name = "PostDetailsScreen", showSystemUi = true)
+@Preview
 @Composable
-private fun PreviewPostDetailsScreen() {
-    PostDetailsScreen(
-        CompteEntreprise.Post(
-            postName = "Developpeur Kotlin",
-            typeDEmploi = "Temps Plein",
-            adresse = "23 Rue des Légendes",
-            ville = "Sardesville",
-            province = "Haut-Ogooué",
-            experience = "Junior",
-            domaine = "IT",
-            actif = true,
-            salaire = "2000000",
-            entrepriseName = "Sardes Corp.",
-            descriptionEmploi = "xertcyvcbu wfwgvn uvvuhsv wsn shudv9 s9vdpn snpusvbo sp " +
-                    "svib ubsv psvpsabv svpvb spv sbvsbdsuv  spuhvsugv s vb sidvb s zpavpa v" +
-                    " pvbnjzk xni uiv pv [hvu vdvjbidvshib" +
-                    "qwertyuiop wetyuiop qwetyuiop qwtyuiop qwrtyuiop qwertyuiop qwertyuiop qwtyuiop" +
-                    "asdfghjkl asfghjkl asdfghjkl aghjkl zxcvbnm asdfghjkl aqwerthn xdtyu iknbv dtyu k" +
-                    " dvb njy trfv bnj ytrv bnmklk jbvcx serty uiknb vca ertyui kn g ewqasxcv bnm, lp ln bvd w.",
-            responsabilites = listOf(
-                "qwrtyuiop qwrtyuiop qwetyuiop qwetyuiop qwtyuiop qwtyuio qwrtyuiop qwetyuiop qwrtyuio",
-                "sjbvnoerv qwrtyuiop qwetyuiop qwetyuiop qwtyuiop qwtyuio qwrtyuiop qwetyuiop qwrtyuio",
-                "hvbwuvbwe qwrtyuiop qwetyuiop qwetyuiop qwtyuiop qwtyuio qwrtyuiop qwetyuiop qwrtyuio",
-                "onvuwueef qwrtyuiop qwetyuiop qwetyuiop qwtyuiop qwtyuio qwrtyuiop qwetyuiop qwrtyuio",
-                "piowbwbbe qwrtyuiop qwetyuiop qwetyuiop qwtyuiop qwtyuio qwrtyuiop qwetyuiop qwrtyuio",
-            ),
-            totalApplicants = 15
-        ),
-
-        reviewer = CompteEntreprise.Post.Reviewer(
-            urlPhoto = R.drawable.painted_paul.toString(),
-            name = "Morriss Morrisson",
-            review = " 8evhp9 v98hvh n9phavspaos;bvx zxbósd'zlz.n zx szh'xc.u sf 9 GSVB " +
-                    "WS SBVYGSCEAIVU;W EV WEVG7WPVE  p9sgvb acbqa8 cqwertyu",
-            date = "Il y a 2 jours"
-        )
-    )
-}*/
+fun PostDetailsScreenPreview() {
+    PostDetailsScreen("", null, {""}) {}
+}

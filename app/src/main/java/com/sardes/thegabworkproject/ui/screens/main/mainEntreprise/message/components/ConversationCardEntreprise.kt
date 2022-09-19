@@ -1,4 +1,4 @@
-package com.sardes.thegabworkproject.ui.screens.main.mainStandard.components.cards
+package com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.message.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -20,15 +20,15 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.sardes.thegabworkproject.R
 import com.sardes.thegabworkproject.data.models.Conversation
-import com.sardes.thegabworkproject.ui.screens.main.mainStandard.message.MessagesStandardViewModel
+import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.message.MessagesEntrepriseViewModel
 import com.sardes.thegabworkproject.ui.theme.GWTypography
 import com.sardes.thegabworkproject.ui.theme.GWpalette
 import kiwi.orbit.compose.ui.controls.Card as OrbitCard
 
 @Composable
-fun ConversationCard(
+fun ConversationEntrepriseCard(
     conversation: Conversation,
-    viewModel: MessagesStandardViewModel?,
+    viewModel: MessagesEntrepriseViewModel?,
     onCardClick: () -> Unit
 ) {
     OrbitCard(

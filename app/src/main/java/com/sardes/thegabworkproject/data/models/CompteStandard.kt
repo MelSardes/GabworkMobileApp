@@ -3,83 +3,86 @@ package com.sardes.thegabworkproject.data.models
 import com.google.firebase.Timestamp
 
 data class CompteStandard(
-    val userId: String = "",
-    val email: String = "",
+    val userId: String? = null,
+    val email: String? = null,
 
-    val nom: String = "",
-    val prenom: String = "",
-    val sexe: String = "",
-    val nationalite: String = "",
-    val dateNaissance: String = "",
+    val nom: String? = null,
+    val prenom: String? = null,
+    val sexe: String? = null,
+    val nationalite: String? = null,
+    val dateNaissance: String? = null,
 
-    val telephone: String = "",
-    val ville: String = "",
-    val adresse: String = "",
+    val telephone: String? = null,
+    val ville: String? = null,
+    val adresse: String? = null,
 
-    val urlPhoto: String = "",
+    val urlPhoto: String? = null,
 
     val dateCreationCompte: Timestamp = Timestamp.now(),
     val typeDeCompte: String = "Standard",
 ){
     data class JobBookmark(
-        val idBookmark: String = "",
-        val idPost: String = "",
-        val idEntreprise: String = "",
-        val nomEntreprise: String = "",
-        val urlLogoEntreprise: String = "",
-        val salaire: String = "",
-        val dateEnregistrement: Timestamp = Timestamp.now(),
-        val ville: String = "",
-        val province: String = "",
-        val typeDEmploi: String = "",
+        val postId: String? = null,
+        val entrepriseId: String? = null,
+        val postName: String? = null,
+        val entrepriseName: String? = null,
+        val urlLogo: String? = null,
+        val salary: String? = null,
+        val city: String? = null,
+        val province: String? = null,
+        val jobType: String? = null,
+        val saveDate: Timestamp = Timestamp.now(),
     )
 
     data class ServiceBookmark(
-        val idBookmark: String = "",
-        val idPost: String = "",
-        val idEntreprise: String = "",
-        val nomEntreprise: String = "",
-        val urlLogoEntreprise: String = "",
-        val salaire: String = "",
+        val idBookmark: String? = null,
+        val idPost: String? = null,
+        val idEntreprise: String? = null,
+        val nomEntreprise: String? = null,
+        val urlLogoEntreprise: String? = null,
+        val salaire: String? = null,
         val dateEnregistrement: Timestamp = Timestamp.now(),
-        val ville: String = "",
-        val province: String = "",
-        val typeDEmploi: String = "",
+        val ville: String? = null,
+        val province: String? = null,
+        val typeDEmploi: String? = null,
     )
 
     data class InternshipBookmark(
-        val idBookmark: String = "",
-        val idPost: String = "",
-        val idEntreprise: String = "",
-        val nomEntreprise: String = "",
-        val urlLogoEntreprise: String = "",
-//        val status: String = "",
-        val salaire: String = "",
+        val idBookmark: String? = null,
+        val idPost: String? = null,
+        val idEntreprise: String? = null,
+        val nomEntreprise: String? = null,
+        val urlLogoEntreprise: String? = null,
+//        val status: String? = null,
+        val salaire: String? = null,
         val dateEnregistrement: Timestamp = Timestamp.now(),
-        val ville: String = "",
-        val province: String = "",
-        val typeDEmploi: String = "",
+        val ville: String? = null,
+        val province: String? = null,
+        val typeDEmploi: String? = null,
     )
 
 
-    data class Candidature(
-        val candidatureId: String = "",
-        val postId: String = "",
-        val postName: String = "",
-        val entrepriseId: String = "",
-        val entrepriseName: String = "",
-        val descriptionPost: String = "",
-        val salaire: String = "",
-        val ville: String = "",
-        val province: String = "",
-        val domaine: String = "",
-        val experience: String = "",
-        val typeDEmploi: String = "",
-        val adresse: String = "",
-        val dateCandidature: Timestamp = Timestamp.now(),
-        val dateLimite: Timestamp? = null,
-        val prerequis: String = "",
-        val status: String = ""
+    data class Application(
+        val postId: String? = null,
+        val postName: String? = null,
+        val entrepriseName: String? = null,
+        val urlLogoEntreprise: String? = null,
+        val salary: String? = null,
+        val city: String? = null,
+        val jobType: String? = null,
+        val applicationDate: Timestamp = Timestamp.now(),
+        val status: String? = null
+    )
+
+    data class JobProposal(
+        val postId: String? = null,
+        val postName: String? = null,
+        val entrepriseName: String? = null,
+        val urlLogoEntreprise: String? = null,
+        val salary: String? = null,
+        val city: String? = null,
+        val beginDate : String? = null,
+        val status: String? = null
     )
 
 
@@ -91,18 +94,18 @@ data class NecessaryInformations(
     val education: List<Education> = emptyList(),
     val experience: List<Experience> = emptyList(),
     val preferencesDEmploi: List<String> = emptyList(),
-    val urlCV: String? = ""
+    val urlCV: String? = null
 )
 
 
 data class InternshipNeededInformations(
-    val universiteActuelle: String = "",
-    val cycleActuel: String = "",
-    val filliereActuelle: String = ""
+    val universiteActuelle: String? = null,
+    val cycleActuel: String? = null,
+    val filliereActuelle: String? = null
 )
 
 data class SeekerNecessaryInformations(
-    val metier: String = ""
+    val metier: String? = null
 )
 
 data class ParcoursEtudiant(

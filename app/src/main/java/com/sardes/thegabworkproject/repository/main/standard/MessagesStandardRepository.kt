@@ -7,6 +7,7 @@ import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.sardes.thegabworkproject.data.*
 import com.sardes.thegabworkproject.data.models.CompteEntreprise
 import com.sardes.thegabworkproject.data.models.CompteStandard
 import com.sardes.thegabworkproject.data.models.Conversation
@@ -16,11 +17,6 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 
-private const val COMPTES_STANDARD_REF = "ComptesStandard"
-private const val COMPTES_ENTREPRISE_REF = "ComptesEntreprise"
-private const val MESSAGES_REF = "Messages"
-private const val CONVERSATIONS_REF = "Conversations"
-private const val USERS_COLLECTION_REF = "Users"
 
 
 class MessagesStandardRepository {
@@ -206,9 +202,7 @@ class MessagesStandardRepository {
                 .document()
                 .id
 
-        val receiverMessageRef =
-
-            when (receiverAccountType) {
+        val receiverMessageRef = when (receiverAccountType) {
                 "Entreprise" ->
                     entrepriseRef
                         .document(receiverID)
@@ -227,8 +221,7 @@ class MessagesStandardRepository {
             }
 
 
-        val senderMessageRef =
-            standardRef
+        val senderMessageRef = standardRef
                 .document(UID)
                 .collection(CONVERSATIONS_REF)
                 .document(receiverID)
@@ -236,15 +229,13 @@ class MessagesStandardRepository {
                 .document(senderMessageId)
 
 
-        val senderConversationRef =
-            standardRef
+        val senderConversationRef = standardRef
                 .document(UID)
                 .collection(CONVERSATIONS_REF)
                 .document(receiverID)
 
 
-        val receiverConversationRef =
-            when (receiverAccountType) {
+        val receiverConversationRef = when (receiverAccountType) {
                 "Standard" ->
                     standardRef
                         .document(receiverID)
@@ -279,6 +270,7 @@ class MessagesStandardRepository {
             }
     }
 
+/*
     fun updateConversation(
         UID: String,
         receiverID: String,
@@ -363,6 +355,7 @@ class MessagesStandardRepository {
             batch.update(receiverConversationRef, "latMessageSender", UID)
         }
     }
+*/
 
 
     fun getStandardInformations(

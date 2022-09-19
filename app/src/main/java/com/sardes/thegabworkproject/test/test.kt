@@ -1,43 +1,63 @@
 package com.sardes.thegabworkproject.test
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import com.sardes.thegabworkproject.ui.screens.signup.standardsignup.StandardSignUpViewModel
-import com.sardes.thegabworkproject.ui.screens.signup.standardsignup.SignupUiStateStandard
+import com.sardes.thegabworkproject.ui.theme.GWTypography
+import kiwi.orbit.compose.ui.controls.ButtonSecondary
+import kiwi.orbit.compose.ui.controls.Text
 
 
-@SuppressLint("MaterialDesignInsteadOrbitDesign")
+
+@SuppressLint("MaterialDesignInsteadOrbitDesign", "UnrememberedMutableState")
 @Preview(showBackground = true)
 @Composable
 fun Test(
-    uiState: SignupUiStateStandard? = null,
-    viewModel: StandardSignUpViewModel? = null,
-    focusRequester: FocusRequester = FocusRequester.Default
 ) {
 
+    var fileUri = mutableStateOf<Uri?>(null)
 
-    LazyColumn(
-        verticalArrangement = Arrangement.Center,
-        modifier = Modifier.padding(30.dp)
-    ) {
+    val uriPathFinder = UriPathFinder()
+    val context = LocalContext.current
 
-        item {
-
-        }
+    val path = fileUri.value?.let { uriPathFinder.getPath(context, it) }
 
 
-
-        item {
-
-        }
+    val selectFile = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        fileUri.value = uri
     }
 
+    Column() {
+        Text("Path :")
+        Text(text = fileUri.toString())
+
+        ButtonSecondary(
+            onClick = { selectFile.launch("*/*") },
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            Text(
+                "Choose a file",
+                style = GWTypography.h6,
+                textAlign = TextAlign.Center
+            )
+        }
+
+    }
+
+
 }
+
+
 

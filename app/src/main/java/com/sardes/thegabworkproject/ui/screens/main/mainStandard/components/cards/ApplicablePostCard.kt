@@ -22,11 +22,13 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.sardes.thegabworkproject.R
 import com.sardes.thegabworkproject.data.models.CompteEntreprise
+import com.sardes.thegabworkproject.ui.screens.main.mainStandard.home.HomeStandardViewModel
 import com.sardes.thegabworkproject.ui.theme.GWTypography
 import com.sardes.thegabworkproject.ui.theme.GWpalette
 import com.sardes.thegabworkproject.ui.theme.GWpalette.CoolGrey
 import com.sardes.thegabworkproject.ui.theme.GWpalette.Gunmetal
 import com.sardes.thegabworkproject.ui.theme.TailwindCSSColor
+import com.sardes.thegabworkproject.ui.theme.TailwindCSSColor.Red500
 import kiwi.orbit.compose.icons.Icons
 import kiwi.orbit.compose.ui.controls.IconButton
 import kiwi.orbit.compose.ui.controls.Text as OrbitText
@@ -35,15 +37,18 @@ import kiwi.orbit.compose.ui.controls.Text as OrbitText
 @Composable
 fun ApplicablePostCard(
     post: CompteEntreprise.Post?,
+    viewModel: HomeStandardViewModel?,
     onCardClick: () -> Unit = {},
     onLogoClick: () -> Unit = {},
 ) {
+    val context = LocalContext.current
+
     Card(
         shape = RoundedCornerShape(10.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White),
         modifier = Modifier
             .padding(20.dp)
-//            .fillMaxWidth()
+            .width(380.dp)
             .height(190.dp)
             .clickable { onCardClick.invoke() },
         elevation = CardDefaults.cardElevation(8.dp),
@@ -70,10 +75,33 @@ fun ApplicablePostCard(
                 )
 
                 IconButton(
-                    onClick = { /*TODO*/ },
+                    onClick = {
+                        if (post?.savers?.contains(viewModel?.userId)!!) {
+                            viewModel?.removeFromBookmarks(post.postId)
+                        } else {
+                            viewModel?.addToBookmarks(
+                                postId = post.postId,
+                                entrepriseId = post.entrepriseId,
+                                postName = post.postName,
+                                entrepriseName = post.entrepriseName,
+                                urlLogo = post.urlLogo,
+                                salary = post.salaire,
+                                city = post.ville,
+                                province = post.province,
+                                jobType = post.typeDEmploi,
+                                context
+                            )
+                        }
+                    },
                     rippleRadius = 16.dp,
                 ) {
-                    Icon(painter = Icons.Bookmark, contentDescription = null, tint = CoolGrey)
+                    Icon(
+                        painter = Icons.Bookmark,
+                        contentDescription = null,
+                        tint =
+                        if (post?.savers?.contains(viewModel?.userId) == true) Red500
+                        else CoolGrey
+                    )
                 }
             }
 
@@ -213,6 +241,7 @@ private fun PreviewApplicablePostCard() {
             domaine = "IT",
             actif = true,
             salaire = "2000000"
-        )
+        ),
+        null
     ) {}
 }

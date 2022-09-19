@@ -79,6 +79,7 @@ fun HomeStandardScreen(
                         item {
                             ApplicablePostCard(
                                 post = it,
+                                viewModel = homeStandardViewModel,
                                 onCardClick = { onPostClick(it.postId) },
                                 onLogoClick = { onLogoClick(it.entrepriseId) }
                             )

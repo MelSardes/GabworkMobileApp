@@ -1,4 +1,4 @@
-package com.sardes.thegabworkproject.ui.screens.main.mainStandard.message.conversation
+package com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.message.conversation
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
@@ -19,9 +19,9 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.sardes.thegabworkproject.repository.ressources.Ressources
-import com.sardes.thegabworkproject.ui.screens.main.mainStandard.message.MessagesStandardViewModel
+import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.message.MessagesEntrepriseViewModel
+import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.message.components.MessageTextFieldEntreprise
 import com.sardes.thegabworkproject.ui.screens.main.mainStandard.message.components.MessageCard
-import com.sardes.thegabworkproject.ui.screens.main.mainStandard.message.components.MessageTextField
 import com.sardes.thegabworkproject.ui.theme.GWTypography
 import com.sardes.thegabworkproject.ui.theme.GWpalette.CoolGrey
 import com.sardes.thegabworkproject.ui.theme.GWpalette.Gunmetal
@@ -29,11 +29,11 @@ import com.sardes.thegabworkproject.ui.theme.GWpalette.Gunmetal
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("MaterialDesignInsteadOrbitDesign")
 @Composable
-fun ConversationScreen(
-    viewModel: MessagesStandardViewModel?,
+fun EntrepriseConversationScreen(
+    viewModel: MessagesEntrepriseViewModel?,
     conversationId: String,
 ) {
-    val uiState = viewModel?.standardMessagesUiState
+    val uiState = viewModel?.entrepriseMessagesUiState
     LaunchedEffect(Unit) {
         viewModel?.getUserAccountType(conversationId)
     }
@@ -57,11 +57,14 @@ fun ConversationScreen(
         viewModel?.loadAllMessages(conversationId)
     }
 
+    LaunchedEffect(Unit) {
+        viewModel?.getUserInformations()
+    }
 
     Scaffold(
         containerColor = Gunmetal,
-        topBar = { ConversationTopBar(messagesUiState = uiState) },
-        bottomBar = { MessageTextField(viewModel, uiState) }
+        topBar = { ConversationTopBarEntreprise(messagesUiState = uiState) },
+        bottomBar = { MessageTextFieldEntreprise(viewModel, uiState) }
     ) {
         Box(
             contentAlignment = Alignment.Center,
@@ -96,7 +99,7 @@ fun ConversationScreen(
                                         .wrapContentSize(align = Alignment.Center)
                                 )
                                 androidx.compose.material.Text(
-                                    text = "CHARGEMENT DE LA CONVERSATION...",
+                                    text = "RÉCUPÉRATION DE LA CONVERSATION...",
                                     style = GWTypography.h4,
                                 )
                             }
@@ -141,7 +144,6 @@ fun ConversationScreen(
                             )
                         }
                     }
-
                 }
             }
         }

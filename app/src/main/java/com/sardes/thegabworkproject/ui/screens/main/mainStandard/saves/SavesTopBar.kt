@@ -1,4 +1,4 @@
-package com.sardes.thegabworkproject.ui.screens.main.mainStandard.message.conversation
+package com.sardes.thegabworkproject.ui.screens.main.mainStandard.saves
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,7 +11,7 @@ import androidx.compose.ui.res.painterResource
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.sardes.thegabworkproject.R.drawable
-import com.sardes.thegabworkproject.ui.screens.main.mainStandard.message.StandardMessagesUiState
+import com.sardes.thegabworkproject.ui.screens.main.mainStandard.home.HomeStandardUiState
 import com.sardes.thegabworkproject.ui.theme.GWTypography
 import com.sardes.thegabworkproject.ui.theme.GWpalette
 import kiwi.orbit.compose.ui.R
@@ -19,35 +19,11 @@ import kiwi.orbit.compose.ui.R
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("MaterialDesignInsteadOrbitDesign")
 @Composable
-fun ConversationTopBar(messagesUiState: StandardMessagesUiState?) {
-
-    val name = when (messagesUiState?.chatUserType?.account) {
-        "Standard" -> {
-            messagesUiState.chatWithStandard?.nom + messagesUiState.chatWithStandard?.prenom
-        }
-        "Entreprise" -> {
-            messagesUiState.chatWithEntreprise?.nom
-        }
-        else -> "Erreur!"
-    }
-
-    val url = when (messagesUiState?.chatUserType?.account) {
-        "Standard" -> {
-            messagesUiState.chatWithStandard?.urlPhoto
-        }
-        "Entreprise" -> {
-            messagesUiState.chatWithEntreprise?.urlLogo
-        }
-        else -> "Erreur"
-    }
-
-
-
-
+fun SavesTopBar(homeStandardUiState: HomeStandardUiState?) {
     CenterAlignedTopAppBar(
         title = {
             Text(
-                text = name ?: "Null error!",
+                text = "Gabworkspace",
                 color = GWpalette.EauBlue,
                 style = GWTypography.h6
             )
@@ -69,7 +45,7 @@ fun ConversationTopBar(messagesUiState: StandardMessagesUiState?) {
                 AsyncImage(
                     model = ImageRequest
                         .Builder(LocalContext.current)
-                        .data(url)
+                        .data(homeStandardUiState?.userInformations?.urlPhoto)
                         .crossfade(true)
                         .crossfade(1000)
                         .placeholder(drawable.ic_image)
@@ -81,6 +57,7 @@ fun ConversationTopBar(messagesUiState: StandardMessagesUiState?) {
                 )
             }
         }
+
     )
 }
 

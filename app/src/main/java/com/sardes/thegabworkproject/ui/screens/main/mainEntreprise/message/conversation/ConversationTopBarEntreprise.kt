@@ -1,4 +1,4 @@
-package com.sardes.thegabworkproject.ui.screens.main.mainStandard.message.conversation
+package com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.message.conversation
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,7 +11,7 @@ import androidx.compose.ui.res.painterResource
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.sardes.thegabworkproject.R.drawable
-import com.sardes.thegabworkproject.ui.screens.main.mainStandard.message.StandardMessagesUiState
+import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.message.EntrepriseMessagesUiState
 import com.sardes.thegabworkproject.ui.theme.GWTypography
 import com.sardes.thegabworkproject.ui.theme.GWpalette
 import kiwi.orbit.compose.ui.R
@@ -19,7 +19,7 @@ import kiwi.orbit.compose.ui.R
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("MaterialDesignInsteadOrbitDesign")
 @Composable
-fun ConversationTopBar(messagesUiState: StandardMessagesUiState?) {
+fun ConversationTopBarEntreprise(messagesUiState: EntrepriseMessagesUiState?) {
 
     val name = when (messagesUiState?.chatUserType?.account) {
         "Standard" -> {
@@ -81,6 +81,7 @@ fun ConversationTopBar(messagesUiState: StandardMessagesUiState?) {
                 )
             }
         }
+
     )
 }
 
