@@ -47,7 +47,7 @@ fun StandardSignUpStart(
                     .background(Color.White)
             ) {
 
-                Hero("COMPTE DEMANDEUR", R.drawable.painted_paul)
+                Hero("COMPTE STANDARD", R.drawable.painted_paul)
 
                 Text(
                     "Avec ce compte, vous pourrez : \n" +

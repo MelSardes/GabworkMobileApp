@@ -14,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -23,7 +22,6 @@ import coil.compose.rememberAsyncImagePainter
 import com.sardes.thegabworkproject.R
 import com.sardes.thegabworkproject.ui.screens.signup.standardsignup.StandardSignUpViewModel
 import com.sardes.thegabworkproject.ui.theme.GWTypography
-import com.sardes.thegabworkproject.utilities.URIPathHelper
 import kiwi.orbit.compose.ui.OrbitTheme
 import kiwi.orbit.compose.ui.controls.ButtonSecondary
 import kiwi.orbit.compose.ui.controls.Text
@@ -31,12 +29,8 @@ import kiwi.orbit.compose.ui.controls.Text
 @Composable
 fun SelectPhotoStandardSignUp(viewModel: StandardSignUpViewModel?) {
 
-    val context = LocalContext.current
     var imageUri = remember{ mutableStateOf<Uri?>(null)}
 
-    val uriPathHelper = URIPathHelper()
-    var uriF: Uri = imageUri.value!!
-    val filePath = uriPathHelper.getPath(context, viewModel?.signUpUiStateStandard?.photo!!)
 
     val selectImage = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
@@ -65,7 +59,7 @@ fun SelectPhotoStandardSignUp(viewModel: StandardSignUpViewModel?) {
                     contentDescription = "image",
                 )
 
-//                viewModel?.onPhotoChange(imageUri.value)
+                viewModel?.onPhotoChange(imageUri.value)
 
             } else {
                 Image(
@@ -86,7 +80,7 @@ fun SelectPhotoStandardSignUp(viewModel: StandardSignUpViewModel?) {
                 .padding(vertical = 7.dp)
         ) {
             Text(
-                "Sélectionnez une photo de profil * \n ${filePath ?: "Nothing for now"}",
+                "Sélectionnez une photo de profil *",
                 style = GWTypography.h6,
                 textAlign = TextAlign.Center
             )

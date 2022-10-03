@@ -9,13 +9,13 @@ import com.sardes.thegabworkproject.data.models.CompteEntreprise
 import com.sardes.thegabworkproject.data.models.CompteStandard
 import com.sardes.thegabworkproject.data.models.Conversation
 import com.sardes.thegabworkproject.data.models.UserType
+import com.sardes.thegabworkproject.repository.main.MessagesRepository
 import com.sardes.thegabworkproject.repository.main.standard.MainStandardRepository
-import com.sardes.thegabworkproject.repository.main.standard.MessagesStandardRepository
 import com.sardes.thegabworkproject.repository.ressources.Ressources
 import kotlinx.coroutines.launch
 
 class MessagesStandardViewModel(
-    private val repository: MessagesStandardRepository = MessagesStandardRepository(),
+    private val repository: MessagesRepository = MessagesRepository(),
     private val mainRepository: MainStandardRepository = MainStandardRepository()
 ) : ViewModel() {
 
@@ -115,7 +115,7 @@ class MessagesStandardViewModel(
             receiverName = receiverName,
             receiverAccountType = receiverAccountType,
             senderUrlPhoto = standardMessagesUiState.userInformations?.urlPhoto,
-            senderName = standardMessagesUiState.userInformations?.nom,
+            senderName = standardMessagesUiState.userInformations?.name,
             content = standardMessagesUiState.messageContent!!,
             receiverUrlPhoto = receiverUrlPhoto,
         ) {
@@ -150,9 +150,9 @@ class MessagesStandardViewModel(
                 when (standardMessagesUiState.chatUserType?.account) {
                     "Standard" ->
                         createConversation(
-                            receiverName = standardMessagesUiState.chatWithStandard?.nom.toString(),
+                            receiverName = standardMessagesUiState.chatWithStandard?.name.toString(),
                             receiverID = standardMessagesUiState.chatWithStandard?.userId.toString(),
-                            receiverAccountType = standardMessagesUiState.chatWithStandard?.typeDeCompte.toString(),
+                            receiverAccountType = standardMessagesUiState.chatWithStandard?.accountType.toString(),
                             receiverUrlPhoto = standardMessagesUiState.chatWithStandard?.urlPhoto.toString()
                         )
 
@@ -168,9 +168,9 @@ class MessagesStandardViewModel(
             } else {
                 when (standardMessagesUiState.chatUserType?.account) {
                     "Standard" -> createConversation(
-                        receiverName = standardMessagesUiState.chatWithStandard?.nom.toString(),
+                        receiverName = standardMessagesUiState.chatWithStandard?.name.toString(),
                         receiverID = standardMessagesUiState.chatWithStandard?.userId.toString(),
-                        receiverAccountType = standardMessagesUiState.chatWithStandard?.typeDeCompte.toString(),
+                        receiverAccountType = standardMessagesUiState.chatWithStandard?.accountType.toString(),
                         receiverUrlPhoto = standardMessagesUiState.chatWithStandard?.urlPhoto.toString()
                     )
 

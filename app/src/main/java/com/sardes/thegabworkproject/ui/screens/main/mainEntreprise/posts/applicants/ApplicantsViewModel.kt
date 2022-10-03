@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseUser
 import com.sardes.thegabworkproject.data.models.CompteEntreprise
+import com.sardes.thegabworkproject.data.models.CompteStandard
 import com.sardes.thegabworkproject.repository.main.entreprise.MainEntrepriseRepository
 import com.sardes.thegabworkproject.repository.ressources.Ressources
 import kotlinx.coroutines.launch
@@ -41,7 +42,7 @@ class ApplicantsViewModel (
 //-------------------------------------------------------------------
     fun getPostApplicants(postId: String) = viewModelScope.launch {
         repository.getPostApplicants(postId).collect{
-            applicantsUiState = applicantsUiState.copy(applicantsList = it)
+            applicantsUiState = applicantsUiState.copy(applicantList = it)
         }
     }
 }
@@ -56,6 +57,6 @@ data class ApplicantsUiState(
 
     val selectedPost: CompteEntreprise.Post? = null,
 
-    val applicantsList: Ressources<List<CompteEntreprise.Post.Candidat>> = Ressources.Loading()
+    val applicantList: Ressources<List<CompteStandard.Application>> = Ressources.Loading()
 
 )

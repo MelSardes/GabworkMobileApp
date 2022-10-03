@@ -50,7 +50,7 @@ fun StandardVerifyInformationsStep(
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight(0.9f)
+                .weight(1f)
                 .clip(RoundedCornerShape(24.dp))
                 .background(Color.White),
             contentPadding = PaddingValues(30.dp)
@@ -119,7 +119,7 @@ fun StandardVerifyInformationsStep(
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight(1f),
+                .height(IntrinsicSize.Min),
             backgroundColor = Green500,
             onClick = { viewModel?.createUser(context) }
         ) {
@@ -127,7 +127,8 @@ fun StandardVerifyInformationsStep(
                 text = "Soumettre l'inscription",
                 color = Color.White,
                 style = GWTypography.h6,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(vertical = 8.dp)
             )
         }
 
@@ -139,5 +140,4 @@ fun StandardVerifyInformationsStep(
 @Composable
 fun StandardVerifyInformationsStepPreview() {
     StandardVerifyInformationsStep(false, null, null, context = LocalContext.current)
-
 }

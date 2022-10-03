@@ -9,13 +9,13 @@ import com.sardes.thegabworkproject.data.models.CompteEntreprise
 import com.sardes.thegabworkproject.data.models.CompteStandard
 import com.sardes.thegabworkproject.data.models.Conversation
 import com.sardes.thegabworkproject.data.models.UserType
-import com.sardes.thegabworkproject.repository.main.entreprise.MessagesEntrepriseRepository
+import com.sardes.thegabworkproject.repository.main.MessagesRepository
 import com.sardes.thegabworkproject.repository.main.standard.MainStandardRepository
 import com.sardes.thegabworkproject.repository.ressources.Ressources
 import kotlinx.coroutines.launch
 
 class MessagesEntrepriseViewModel(
-    private val repository: MessagesEntrepriseRepository = MessagesEntrepriseRepository(),
+    private val repository: MessagesRepository = MessagesRepository(),
     private val mainRepository: MainStandardRepository = MainStandardRepository()
 
 ) : ViewModel() {
@@ -110,9 +110,9 @@ class MessagesEntrepriseViewModel(
                 when (entrepriseMessagesUiState.chatUserType?.account) {
                     "Standard" ->
                         createConversation(
-                            receiverName = entrepriseMessagesUiState.chatWithStandard?.nom.toString(),
+                            receiverName = entrepriseMessagesUiState.chatWithStandard?.name.toString(),
                             receiverID = entrepriseMessagesUiState.chatWithStandard?.userId.toString(),
-                            receiverAccountType = entrepriseMessagesUiState.chatWithStandard?.typeDeCompte.toString(),
+                            receiverAccountType = entrepriseMessagesUiState.chatWithStandard?.accountType.toString(),
                             receiverUrlPhoto = entrepriseMessagesUiState.chatWithStandard?.urlPhoto.toString()
                         )
 
@@ -128,9 +128,9 @@ class MessagesEntrepriseViewModel(
             } else {
                 when (entrepriseMessagesUiState.chatUserType?.account) {
                     "Standard" -> createConversation(
-                        receiverName = entrepriseMessagesUiState.chatWithStandard?.nom.toString(),
+                        receiverName = entrepriseMessagesUiState.chatWithStandard?.name.toString(),
                         receiverID = entrepriseMessagesUiState.chatWithStandard?.userId.toString(),
-                        receiverAccountType = entrepriseMessagesUiState.chatWithStandard?.typeDeCompte.toString(),
+                        receiverAccountType = entrepriseMessagesUiState.chatWithStandard?.accountType.toString(),
                         receiverUrlPhoto = entrepriseMessagesUiState.chatWithStandard?.urlPhoto.toString()
                     )
 
@@ -160,7 +160,7 @@ class MessagesEntrepriseViewModel(
             receiverName = receiverName,
             receiverAccountType = receiverAccountType,
             senderUrlPhoto = entrepriseMessagesUiState.userInformations?.urlPhoto,
-            senderName = entrepriseMessagesUiState.userInformations?.nom,
+            senderName = entrepriseMessagesUiState.userInformations?.name,
             content = entrepriseMessagesUiState.messageContent!!,
             receiverUrlPhoto = receiverUrlPhoto,
         ) {

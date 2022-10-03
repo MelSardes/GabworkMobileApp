@@ -28,9 +28,9 @@ import kiwi.orbit.compose.ui.controls.TextField
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun StandardPersonalInformations(
-    uiState: SignupUiStateStandard? = null,
-    viewModel: StandardSignUpViewModel? = null,
-    focusRequester: FocusRequester = FocusRequester.Default,
+    uiState: SignupUiStateStandard?,
+    viewModel: StandardSignUpViewModel?,
+    focusRequester: FocusRequester,
     date: MutableState<String>,
     datePickerDialog: DatePickerDialog,
 ) {
@@ -52,7 +52,7 @@ fun StandardPersonalInformations(
         item {
             TextFieldAuthItem(
                 label = "Nom *",
-                info = "Votre nom de famill complet",
+                info = "Votre nom de famille complet",
                 value = uiState?.nom ?: "",
                 valueChange = { viewModel?.onNomChange(it) }
             )

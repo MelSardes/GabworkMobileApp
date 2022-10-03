@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name" translatable="false">Gabwork</string>
     <string name="look_for" translatable="false">Que cherche t-on aujourd\'hui ?</string>
     <string name="select_account_type" translatable="false">Sélectionnez le type de compte que vous voulez créer</string>
@@ -31,4 +31,6 @@
     <string name="fcv">Franceville</string>
     <string name="description_USTM">Inaugurée en 1986 par le feu Président EL HADJ OMAR BONGO ONDIMBA, l\'USTM est le premier établissement scientifique du Gabon qui forme aussi bien dans le domaine technologique que celui des sciences fondamentales. Depuis 2007, les formations sont arrimées au système LMD et l\'institution délivre des diplômes allant du DUT au Doctorat.</string>
     <string name="school_logo">School logo</string>
+    <string name="complete_profile" tools:ignore="MissingTranslation">Compléter le profil maintenant</string>
+    <string name="cd_back">back</string>
 </resources>

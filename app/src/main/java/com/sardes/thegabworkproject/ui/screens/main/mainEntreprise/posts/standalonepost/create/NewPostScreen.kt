@@ -24,6 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.home.HomeEntrepriseViewModel
 import kiwi.orbit.compose.ui.controls.ButtonBundleMedium
@@ -46,6 +47,9 @@ fun NewPostScreen(
     val homeUiState = homeEntrepriseViewModel?.homeEntrepriseUiState
     val scope = rememberCoroutineScope()
 
+    LaunchedEffect(Unit){
+        homeEntrepriseViewModel?.loadInformations()
+    }
 
     var skill by remember { mutableStateOf("") }
     val skillList = remember { mutableStateListOf<String>() }
@@ -480,5 +484,17 @@ fun SelectFieldScreenInner() {
                 }
             }
         }
+    }
+}
+
+
+@Preview
+@Composable
+fun NewPostScreenPreview() {
+    NewPostScreen(
+        postViewModel = NewPostViewModel(),
+        homeEntrepriseViewModel = HomeEntrepriseViewModel()
+    ) {
+
     }
 }

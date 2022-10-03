@@ -31,7 +31,8 @@ import java.util.*
 @Composable
 fun StandardSignUpScreen(
     viewModel: StandardSignUpViewModel?,
-    navToStandardInterface: () -> Unit = {},
+    afterSignUp: (userId: String) -> Unit
+//    navToStandardInterface: () -> Unit = {},
 ) {
 
     val standardUiState = viewModel?.signUpUiStateStandard
@@ -91,7 +92,7 @@ fun StandardSignUpScreen(
         CircularProgressIndicator(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(100.dp),
+                .padding(200.dp),
             color = Green500
         )
     } else {
@@ -100,7 +101,7 @@ fun StandardSignUpScreen(
                 .fillMaxSize(),
             color = Red500
         ) {
-            Column(modifier = Modifier.fillMaxSize()) {
+            Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.SpaceBetween) {
 
                 //===============================================
                 //                # HEADER
@@ -113,7 +114,7 @@ fun StandardSignUpScreen(
                 //===============================================
                 Column(
                     modifier = Modifier
-                        .fillMaxHeight(1f)
+                        .weight(1f)
                         .clip(RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
                         .background(
                             when (step) {
@@ -142,12 +143,13 @@ fun StandardSignUpScreen(
                                     )
                                 }
                             }
-                        )
+                        ),
+                    verticalArrangement = Arrangement.SpaceBetween
                 ) {
 
                     Card(
                         modifier = Modifier
-                            .weight(0.92f)
+                            .weight(1f)
                             .fillMaxWidth(),
                         backgroundColor = Color.White,
                         shape = RoundedCornerShape(24.dp)
@@ -221,7 +223,6 @@ fun StandardSignUpScreen(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .weight(0.06f)
                     ) {
                         when (step) {
                             1 -> {
@@ -229,13 +230,13 @@ fun StandardSignUpScreen(
                                     backgroundColor = LightGray,
                                     modifier = Modifier
                                         .fillMaxWidth(0.5f)
-                                        .fillMaxHeight(),
                                 ) {
                                     Text(
                                         text = "Précédent",
                                         color = Gunmetal,
                                         style = GWTypography.h6,
-                                        textAlign = TextAlign.Center
+                                        textAlign = TextAlign.Center,
+                                        modifier = Modifier.padding(vertical = 5.dp)
                                     )
                                 }
 
@@ -244,15 +245,15 @@ fun StandardSignUpScreen(
                                 Card(
                                     backgroundColor = Red500,
                                     modifier = Modifier
-                                        .fillMaxWidth(0.5f)
-                                        .fillMaxHeight(),
+                                        .fillMaxWidth(0.5f),
                                     onClick = { step -= 1 },
                                 ) {
                                     Text(
                                         text = "Précédent",
                                         color = Color.White,
                                         style = GWTypography.h6,
-                                        textAlign = TextAlign.Center
+                                        textAlign = TextAlign.Center,
+                                        modifier = Modifier.padding(vertical = 5.dp)
                                     )
                                 }
 
@@ -265,13 +266,13 @@ fun StandardSignUpScreen(
                                     backgroundColor = LightGray,
                                     modifier = Modifier
                                         .fillMaxWidth(1f)
-                                        .fillMaxHeight(),
                                 ) {
                                     Text(
                                         text = "Suivant",
                                         color = Color.White,
                                         style = GWTypography.h6,
-                                        textAlign = TextAlign.Center
+                                        textAlign = TextAlign.Center,
+                                        modifier = Modifier.padding(vertical = 5.dp)
                                     )
                                 }
                             }
@@ -279,15 +280,15 @@ fun StandardSignUpScreen(
                                 Card(
                                     backgroundColor = Green500,
                                     modifier = Modifier
-                                        .fillMaxWidth(1f)
-                                        .fillMaxHeight(),
+                                        .fillMaxWidth(1f),
                                     onClick = { step += 1 }
                                 ) {
                                     Text(
                                         text = "Suivant",
                                         color = Color.White,
                                         style = GWTypography.h6,
-                                        textAlign = TextAlign.Center
+                                        textAlign = TextAlign.Center,
+                                        modifier = Modifier.padding(vertical = 5.dp)
                                     )
                                 }
                             }
@@ -299,15 +300,14 @@ fun StandardSignUpScreen(
 
         LaunchedEffect(key1 = viewModel?.hasUser) {
             if (viewModel?.hasUser == true) {
-                navToStandardInterface.invoke()
+                afterSignUp.invoke(viewModel.userId)
             }
         }
-
     }
 }
 
 @Preview(name = "StandardSignUpScreen", showBackground = true, showSystemUi = true)
 @Composable
 private fun PreviewStandardSignUpScreen() {
-    StandardSignUpScreen(null)
+    StandardSignUpScreen(null){}
 }

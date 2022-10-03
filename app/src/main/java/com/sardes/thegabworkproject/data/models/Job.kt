@@ -1,9 +1,9 @@
 package com.sardes.thegabworkproject.data.models
 
-data class Metier(
-    val nom: String,
+data class Job(
+    val name: String,
     val description: String? = null,
-    val secteur: String? = null,
+    val activityArea: String? = null,
 )
 
 

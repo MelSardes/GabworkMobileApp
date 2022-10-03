@@ -1,155 +1,382 @@
 package com.sardes.thegabworkproject.data.provider
 
 import com.sardes.thegabworkproject.R
-import com.sardes.thegabworkproject.data.models.SecteurDActivite
+import com.sardes.thegabworkproject.data.models.ActivityArea
 
 object ActivityAreaDataProvider {
 
 
 
     val secteurs = mutableListOf(
-        SecteurDActivite(
+        ActivityArea(
             id = 0,
-            nom = "Agronomie et alimentation",
+            name = "Aéronautique",
             description = "Lorem ipsum dolor sit amet consectetur, adipisicing elit." +
                     " Possimus reiciendis provident enim accusantium quasi " +
                     "perspiciatis doloribus ab quibusdam consequuntur perferendis?\n",
-            imageId = R.drawable.black_businessman_in_blue_suit_waving_hello
+            imageId = R.drawable.airplane
         ),
 
-        SecteurDActivite(
+        ActivityArea(
             id = 1,
-            nom = "Artisanat",
+            name = "Agronomie et alimentation",
             description = "Lorem ipsum dolor sit amet consectetur, adipisicing elit." +
                     " Possimus reiciendis provident enim accusantium quasi " +
                     "perspiciatis doloribus ab quibusdam consequuntur perferendis?\n",
-            imageId = R.drawable.black_businessman_in_blue_suit_waving_hello
+            imageId = R.drawable.president_with_a_farmer
         ),
 
-        SecteurDActivite(
+        ActivityArea(
             id = 2,
-            nom = "Audiovisuel et spectacle",
+            name = "Artisanat",
             description = "Lorem ipsum dolor sit amet consectetur, adipisicing elit." +
                     " Possimus reiciendis provident enim accusantium quasi " +
                     "perspiciatis doloribus ab quibusdam consequuntur perferendis?\n",
-            imageId = R.drawable.black_businessman_in_blue_suit_waving_hello
+            imageId = R.drawable.working_on_wood
         ),
 
-        SecteurDActivite(
+        ActivityArea(
             id = 3,
-            nom = "Bâtiment",
+            name = "Audiovisuel, cinéma",
             description = "Lorem ipsum dolor sit amet consectetur, adipisicing elit." +
                     " Possimus reiciendis provident enim accusantium quasi " +
                     "perspiciatis doloribus ab quibusdam consequuntur perferendis?\n",
-            imageId = R.drawable.black_businessman_in_blue_suit_waving_hello
+            imageId = R.drawable.audiovisuel
         ),
 
-        SecteurDActivite(
+        ActivityArea(
             id = 4,
-            nom = "Culture",
+            name = "Audit, comptabilité, gestion",
             description = "Lorem ipsum dolor sit amet consectetur, adipisicing elit." +
                     " Possimus reiciendis provident enim accusantium quasi " +
                     "perspiciatis doloribus ab quibusdam consequuntur perferendis?\n",
-            imageId = R.drawable.black_businessman_in_blue_suit_waving_hello
+            imageId = R.drawable.comptabilite
         ),
 
-        SecteurDActivite(
+        ActivityArea(
             id = 5,
-            nom = "Commerce",
+            name = "Automobile",
             description = "Lorem ipsum dolor sit amet consectetur, adipisicing elit." +
                     " Possimus reiciendis provident enim accusantium quasi " +
                     "perspiciatis doloribus ab quibusdam consequuntur perferendis?\n",
-            imageId = R.drawable.black_businessman_in_blue_suit_waving_hello
+            imageId = R.drawable.automobile
         ),
 
-        SecteurDActivite(
+        ActivityArea(
             id = 6,
-            nom = "Droit",
+            name = "Banque, assurance",
             description = "Lorem ipsum dolor sit amet consectetur, adipisicing elit." +
                     " Possimus reiciendis provident enim accusantium quasi " +
                     "perspiciatis doloribus ab quibusdam consequuntur perferendis?\n",
-            imageId = R.drawable.black_businessman_in_blue_suit_waving_hello
+            imageId = R.drawable.bank
         ),
 
-        SecteurDActivite(
+        ActivityArea(
             id = 7,
-            nom = "Éducation",
+            name = "Bâtiment, travaux publics",
             description = "Lorem ipsum dolor sit amet consectetur, adipisicing elit." +
                     " Possimus reiciendis provident enim accusantium quasi " +
                     "perspiciatis doloribus ab quibusdam consequuntur perferendis?\n",
             imageId = R.drawable.black_businessman_in_blue_suit_waving_hello
         ),
 
-        SecteurDActivite(
+        ActivityArea(
             id = 8,
-            nom = "Finances et gestion",
+            name = " Biologie, chimie, pharmacie",
             description = "Lorem ipsum dolor sit amet consectetur, adipisicing elit." +
                     " Possimus reiciendis provident enim accusantium quasi " +
                     "perspiciatis doloribus ab quibusdam consequuntur perferendis?\n",
             imageId = R.drawable.black_businessman_in_blue_suit_waving_hello
         ),
 
-        SecteurDActivite(
+        ActivityArea(
             id = 9,
-            nom = "Politique",
+            name = "Commerce, distribution",
             description = "Lorem ipsum dolor sit amet consectetur, adipisicing elit." +
                     " Possimus reiciendis provident enim accusantium quasi " +
                     "perspiciatis doloribus ab quibusdam consequuntur perferendis?\n",
             imageId = R.drawable.black_businessman_in_blue_suit_waving_hello
         ),
 
-        SecteurDActivite(
+        ActivityArea(
             id = 10,
-            nom = "Scientifique",
+            name = "Communication",
             description = "Lorem ipsum dolor sit amet consectetur, adipisicing elit." +
                     " Possimus reiciendis provident enim accusantium quasi " +
                     "perspiciatis doloribus ab quibusdam consequuntur perferendis?\n",
             imageId = R.drawable.black_businessman_in_blue_suit_waving_hello
         ),
 
-        SecteurDActivite(
+        ActivityArea(
             id = 11,
-            nom = "Santé",
+            name = "Création, métiers d'art",
             description = "Lorem ipsum dolor sit amet consectetur, adipisicing elit." +
                     " Possimus reiciendis provident enim accusantium quasi " +
                     "perspiciatis doloribus ab quibusdam consequuntur perferendis?\n",
             imageId = R.drawable.black_businessman_in_blue_suit_waving_hello
         ),
 
-        SecteurDActivite(
+        ActivityArea(
             id = 12,
-            nom = "Sécurité",
+            name = "Culture, patrimoine",
             description = "Lorem ipsum dolor sit amet consectetur, adipisicing elit." +
                     " Possimus reiciendis provident enim accusantium quasi " +
                     "perspiciatis doloribus ab quibusdam consequuntur perferendis?\n",
             imageId = R.drawable.black_businessman_in_blue_suit_waving_hello
         ),
 
-        SecteurDActivite(
+        ActivityArea(
             id = 13,
-            nom = "Sport",
+            name = "Documentation, bibliothèque",
             description = "Lorem ipsum dolor sit amet consectetur, adipisicing elit." +
                     " Possimus reiciendis provident enim accusantium quasi " +
                     "perspiciatis doloribus ab quibusdam consequuntur perferendis?\n",
             imageId = R.drawable.black_businessman_in_blue_suit_waving_hello
         ),
 
-        SecteurDActivite(
+        ActivityArea(
             id = 14,
-            nom = "Technologies",
+            name = "Droit",
             description = "Lorem ipsum dolor sit amet consectetur, adipisicing elit." +
                     " Possimus reiciendis provident enim accusantium quasi " +
                     "perspiciatis doloribus ab quibusdam consequuntur perferendis?\n",
             imageId = R.drawable.black_businessman_in_blue_suit_waving_hello
         ),
 
-        SecteurDActivite(
+        ActivityArea(
             id = 15,
-            nom = "Transports et logistique",
+            name = "Edition, livre",
             description = "Lorem ipsum dolor sit amet consectetur, adipisicing elit." +
                     " Possimus reiciendis provident enim accusantium quasi " +
                     "perspiciatis doloribus ab quibusdam consequuntur perferendis?\n",
             imageId = R.drawable.black_businessman_in_blue_suit_waving_hello
-        )
+        ),
+
+        ActivityArea(
+            id = 16,
+            name = "Enseignement",
+            description = "Lorem ipsum dolor sit amet consectetur, adipisicing elit." +
+                    " Possimus reiciendis provident enim accusantium quasi " +
+                    "perspiciatis doloribus ab quibusdam consequuntur perferendis?\n",
+            imageId = R.drawable.black_businessman_in_blue_suit_waving_hello
+        ),
+
+        ActivityArea(
+            id = 17,
+            name = "Environnement",
+            description = "Lorem ipsum dolor sit amet consectetur, adipisicing elit." +
+                    " Possimus reiciendis provident enim accusantium quasi " +
+                    "perspiciatis doloribus ab quibusdam consequuntur perferendis?\n",
+            imageId = R.drawable.black_businessman_in_blue_suit_waving_hello
+        ),
+
+        ActivityArea(
+            id = 18,
+            name = "Ferroviaire",
+            description = "Lorem ipsum dolor sit amet consectetur, adipisicing elit." +
+                    " Possimus reiciendis provident enim accusantium quasi " +
+                    "perspiciatis doloribus ab quibusdam consequuntur perferendis?\n",
+            imageId = R.drawable.black_businessman_in_blue_suit_waving_hello
+        ),
+
+        ActivityArea(
+            id = 19,
+            name = "Foires, salons et congrès",
+            description = "Lorem ipsum dolor sit amet consectetur, adipisicing elit." +
+                    " Possimus reiciendis provident enim accusantium quasi " +
+                    "perspiciatis doloribus ab quibusdam consequuntur perferendis?\n",
+            imageId = R.drawable.black_businessman_in_blue_suit_waving_hello
+        ),
+
+        ActivityArea(
+            id = 20,
+            name = "Hôtellerie, restauration",
+            description = "Lorem ipsum dolor sit amet consectetur, adipisicing elit." +
+                    " Possimus reiciendis provident enim accusantium quasi " +
+                    "perspiciatis doloribus ab quibusdam consequuntur perferendis?\n",
+            imageId = R.drawable.black_businessman_in_blue_suit_waving_hello
+        ),
+
+        ActivityArea(
+            id = 21,
+            name = "Immobilier",
+            description = "Lorem ipsum dolor sit amet consectetur, adipisicing elit." +
+                    " Possimus reiciendis provident enim accusantium quasi " +
+                    "perspiciatis doloribus ab quibusdam consequuntur perferendis?\n",
+            imageId = R.drawable.black_businessman_in_blue_suit_waving_hello
+        ),
+
+        ActivityArea(
+            id = 22,
+            name = "Industrie",
+            description = "Lorem ipsum dolor sit amet consectetur, adipisicing elit." +
+                    " Possimus reiciendis provident enim accusantium quasi " +
+                    "perspiciatis doloribus ab quibusdam consequuntur perferendis?\n",
+            imageId = R.drawable.black_businessman_in_blue_suit_waving_hello
+        ),
+
+        ActivityArea(
+            id = 23,
+            name = "Informatique, télécoms, Web",
+            description = "Lorem ipsum dolor sit amet consectetur, adipisicing elit." +
+                    " Possimus reiciendis provident enim accusantium quasi " +
+                    "perspiciatis doloribus ab quibusdam consequuntur perferendis?\n",
+            imageId = R.drawable.black_businessman_in_blue_suit_waving_hello
+        ),
+
+        ActivityArea(
+            id = 24,
+            name = "jeux vidéo",
+            description = "Lorem ipsum dolor sit amet consectetur, adipisicing elit." +
+                    " Possimus reiciendis provident enim accusantium quasi " +
+                    "perspiciatis doloribus ab quibusdam consequuntur perferendis?\n",
+            imageId = R.drawable.black_businessman_in_blue_suit_waving_hello
+        ),
+
+        ActivityArea(
+            id = 25,
+            name = "Journalisme",
+            description = "Lorem ipsum dolor sit amet consectetur, adipisicing elit." +
+                    " Possimus reiciendis provident enim accusantium quasi " +
+                    "perspiciatis doloribus ab quibusdam consequuntur perferendis?\n",
+            imageId = R.drawable.black_businessman_in_blue_suit_waving_hello
+        ),
+
+        ActivityArea(
+            id = 26,
+            name = "Langues",
+            description = "Lorem ipsum dolor sit amet consectetur, adipisicing elit." +
+                    " Possimus reiciendis provident enim accusantium quasi " +
+                    "perspiciatis doloribus ab quibusdam consequuntur perferendis?\n",
+            imageId = R.drawable.black_businessman_in_blue_suit_waving_hello
+        ),
+
+        ActivityArea(
+            id = 27,
+            name = "Luxe",
+            description = "Lorem ipsum dolor sit amet consectetur, adipisicing elit." +
+                    " Possimus reiciendis provident enim accusantium quasi " +
+                    "perspiciatis doloribus ab quibusdam consequuntur perferendis?\n",
+            imageId = R.drawable.black_businessman_in_blue_suit_waving_hello
+        ),
+
+        ActivityArea(
+            id = 28,
+            name = "Marketing, publicité",
+            description = "Lorem ipsum dolor sit amet consectetur, adipisicing elit." +
+                    " Possimus reiciendis provident enim accusantium quasi " +
+                    "perspiciatis doloribus ab quibusdam consequuntur perferendis?\n",
+            imageId = R.drawable.black_businessman_in_blue_suit_waving_hello
+        ),
+
+        ActivityArea(
+            id = 29,
+            name = "Médical",
+            description = "Lorem ipsum dolor sit amet consectetur, adipisicing elit." +
+                    " Possimus reiciendis provident enim accusantium quasi " +
+                    "perspiciatis doloribus ab quibusdam consequuntur perferendis?\n",
+            imageId = R.drawable.black_businessman_in_blue_suit_waving_hello
+        ),
+
+        ActivityArea(
+            id = 30,
+            name = "Mode-textile",
+            description = "Lorem ipsum dolor sit amet consectetur, adipisicing elit." +
+                    " Possimus reiciendis provident enim accusantium quasi " +
+                    "perspiciatis doloribus ab quibusdam consequuntur perferendis?\n",
+            imageId = R.drawable.black_businessman_in_blue_suit_waving_hello
+        ),
+
+        ActivityArea(
+            id = 31,
+            name = "Paramédical",
+            description = "Lorem ipsum dolor sit amet consectetur, adipisicing elit." +
+                    " Possimus reiciendis provident enim accusantium quasi " +
+                    "perspiciatis doloribus ab quibusdam consequuntur perferendis?\n",
+            imageId = R.drawable.black_businessman_in_blue_suit_waving_hello
+        ),
+
+        ActivityArea(
+            id = 32,
+            name = "Propreté et services associés",
+            description = "Lorem ipsum dolor sit amet consectetur, adipisicing elit." +
+                    " Possimus reiciendis provident enim accusantium quasi " +
+                    "perspiciatis doloribus ab quibusdam consequuntur perferendis?\n",
+            imageId = R.drawable.black_businessman_in_blue_suit_waving_hello
+        ),
+
+        ActivityArea(
+            id = 33,
+            name = "Psychologie",
+            description = "Lorem ipsum dolor sit amet consectetur, adipisicing elit." +
+                    " Possimus reiciendis provident enim accusantium quasi " +
+                    "perspiciatis doloribus ab quibusdam consequuntur perferendis?\n",
+            imageId = R.drawable.black_businessman_in_blue_suit_waving_hello
+        ),
+
+        ActivityArea(
+            id = 34,
+            name = "Ressources humaines",
+            description = "Lorem ipsum dolor sit amet consectetur, adipisicing elit." +
+                    " Possimus reiciendis provident enim accusantium quasi " +
+                    "perspiciatis doloribus ab quibusdam consequuntur perferendis?\n",
+            imageId = R.drawable.black_businessman_in_blue_suit_waving_hello
+        ),
+
+        ActivityArea(
+            id = 35,
+            name = "Sciences humaines et sociales",
+            description = "Lorem ipsum dolor sit amet consectetur, adipisicing elit." +
+                    " Possimus reiciendis provident enim accusantium quasi " +
+                    "perspiciatis doloribus ab quibusdam consequuntur perferendis?\n",
+            imageId = R.drawable.black_businessman_in_blue_suit_waving_hello
+        ),
+
+        ActivityArea(
+            id = 36,
+            name = "Secrétariat",
+            description = "Lorem ipsum dolor sit amet consectetur, adipisicing elit." +
+                    " Possimus reiciendis provident enim accusantium quasi " +
+                    "perspiciatis doloribus ab quibusdam consequuntur perferendis?\n",
+            imageId = R.drawable.black_businessman_in_blue_suit_waving_hello
+        ),
+
+        ActivityArea(
+            id = 37,
+            name = "Spectacle - Métiers de la scène",
+            description = "Lorem ipsum dolor sit amet consectetur, adipisicing elit." +
+                    " Possimus reiciendis provident enim accusantium quasi " +
+                    "perspiciatis doloribus ab quibusdam consequuntur perferendis?\n",
+            imageId = R.drawable.black_businessman_in_blue_suit_waving_hello
+        ),
+
+        ActivityArea(
+            id = 38,
+            name = "Sport",
+            description = "Lorem ipsum dolor sit amet consectetur, adipisicing elit." +
+                    " Possimus reiciendis provident enim accusantium quasi " +
+                    "perspiciatis doloribus ab quibusdam consequuntur perferendis?\n",
+            imageId = R.drawable.black_businessman_in_blue_suit_waving_hello
+        ),
+
+        ActivityArea(
+            id = 39,
+            name = "Transport-Logistique",
+            description = "Lorem ipsum dolor sit amet consectetur, adipisicing elit." +
+                    " Possimus reiciendis provident enim accusantium quasi " +
+                    "perspiciatis doloribus ab quibusdam consequuntur perferendis?\n",
+            imageId = R.drawable.black_businessman_in_blue_suit_waving_hello
+        ),
+
+        ActivityArea(
+            id = 40,
+            name = "Tourisme",
+            description = "Lorem ipsum dolor sit amet consectetur, adipisicing elit." +
+                    " Possimus reiciendis provident enim accusantium quasi " +
+                    "perspiciatis doloribus ab quibusdam consequuntur perferendis?\n",
+            imageId = R.drawable.black_businessman_in_blue_suit_waving_hello
+        ),
+
+
     )
 }

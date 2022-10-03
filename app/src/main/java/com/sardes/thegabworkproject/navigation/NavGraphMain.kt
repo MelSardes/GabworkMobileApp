@@ -17,6 +17,7 @@ import com.sardes.thegabworkproject.ui.screens.main.mainStandard.main.StandardMa
 import com.sardes.thegabworkproject.ui.screens.signup.entreprisesignup.EntrepriseAccountSignUpViewModel
 import com.sardes.thegabworkproject.ui.screens.signup.entreprisesignup.screens.EntrepriseAccountSignUpScreen
 import com.sardes.thegabworkproject.ui.screens.signup.standardsignup.StandardSignUpViewModel
+import com.sardes.thegabworkproject.ui.screens.signup.standardsignup.screens.AfterSignUpMessage
 import com.sardes.thegabworkproject.ui.screens.signup.standardsignup.screens.StandardSignUpScreen
 import com.sardes.thegabworkproject.ui.screens.signup.standardsignup.screens.StandardSignUpStart
 import com.sardes.thegabworkproject.ui.screens.splash.SplashScreen
@@ -39,6 +40,7 @@ sealed class AuthInterfaceScreen(val route: String) {
 
     object StandardStartSignUpScreen : AuthInterfaceScreen("standardStartSignUpScreen")
     object StandardSignUpScreen : AuthInterfaceScreen("standardSignUpScreen")
+    object StandardScreenAfterSignUp : AuthInterfaceScreen("standardScreenAfterSignUp")
 }
 
 sealed class HomeInterfaceScreen(val route: String) {
@@ -82,7 +84,9 @@ sealed class EntrepriseInterfaceScreen(var route: String, var icon: Int, var tit
 sealed class StandardInterfaceScreen(val route: String, val icon: Int) {
     object StandardMain : StandardInterfaceScreen("standardInterface/Main", 0)
 
-    object StandardHome : StandardInterfaceScreen("standardInterface/standardHome", R.drawable.ic_home)
+    object StandardHome :
+        StandardInterfaceScreen("standardInterface/standardHome", R.drawable.ic_home)
+
     object StandardSaves : StandardInterfaceScreen(
         "standardInterface/standardBookmarks",
         kiwi.orbit.compose.ui.R.drawable.ic_orbit_bookmark
@@ -99,14 +103,14 @@ sealed class StandardInterfaceScreen(val route: String, val icon: Int) {
 }
 
 
-sealed class StandardPostScreen(val route: String){
-    object DetailsPostScreen: StandardPostScreen("StandardApplicationPost")
+sealed class StandardPostScreen(val route: String) {
+    object DetailsPostScreen : StandardPostScreen("StandardApplicationPost")
 }
 
-sealed class StandardMessagesScreen(val route: String){
-    object StandardConversationScreen: StandardMessagesScreen("standardInterface/standardMessages/Conversation")
+sealed class StandardMessagesScreen(val route: String) {
+    object StandardConversationScreen :
+        StandardMessagesScreen("standardInterface/standardMessages/Conversation")
 }
-
 
 
 sealed class EntrepriseHomeScreen(val route: String) {
@@ -175,7 +179,7 @@ fun NavGraphMain(
 
         entrepriseInterfaceGraph()
 
-        StandardInterfaceGraph()
+        standardInterfaceGraph()
     }
 }
 
@@ -214,9 +218,9 @@ fun NavGraphBuilder.authInterfaceGraph(
                 },
 
                 navToStandardInterface = {
-                    navController.navigate(Interface.StandardInterface.route){
+                    navController.navigate(Interface.StandardInterface.route) {
                         launchSingleTop = true
-                        popUpTo(route = AuthInterfaceScreen.LoginScreen.route){
+                        popUpTo(route = AuthInterfaceScreen.LoginScreen.route) {
                             inclusive = true
                         }
                     }
@@ -225,7 +229,7 @@ fun NavGraphBuilder.authInterfaceGraph(
         }
     }
 
-    composable(route = AuthInterfaceScreen.SignUpSelectScreen.route){
+    composable(route = AuthInterfaceScreen.SignUpSelectScreen.route) {
         SelectSignUpAccount(
             onNavToEntrepriseSignUpAccount = {
                 navController.navigate(AuthInterfaceScreen.EntrepriseStartSignUpScreen.route) {
@@ -234,7 +238,7 @@ fun NavGraphBuilder.authInterfaceGraph(
             },
 
             onNavToStandardSignUpAccount = {
-                navController.navigate(AuthInterfaceScreen.StandardStartSignUpScreen.route){
+                navController.navigate(AuthInterfaceScreen.StandardStartSignUpScreen.route) {
                     launchSingleTop = true
                 }
             }
@@ -244,26 +248,34 @@ fun NavGraphBuilder.authInterfaceGraph(
 
 
 
-    composable(route = AuthInterfaceScreen.StandardStartSignUpScreen.route){
+    composable(route = AuthInterfaceScreen.StandardStartSignUpScreen.route) {
         StandardSignUpStart(
             onNavToLoginPage = {
-                navController.navigate(AuthInterfaceScreen.LoginScreen.route){launchSingleTop = true}
+                navController.navigate(AuthInterfaceScreen.LoginScreen.route) {
+                    launchSingleTop = true
+                }
             },
 
             startSigningUp = {
-                navController.navigate(AuthInterfaceScreen.StandardSignUpScreen.route){launchSingleTop = true}
+                navController.navigate(AuthInterfaceScreen.StandardSignUpScreen.route) {
+                    launchSingleTop = true
+                }
             }
         )
     }
 
-    composable(route = AuthInterfaceScreen.EntrepriseStartSignUpScreen.route){
+    composable(route = AuthInterfaceScreen.EntrepriseStartSignUpScreen.route) {
         StandardSignUpStart(
             onNavToLoginPage = {
-                navController.navigate(AuthInterfaceScreen.LoginScreen.route){launchSingleTop = true}
+                navController.navigate(AuthInterfaceScreen.LoginScreen.route) {
+                    launchSingleTop = true
+                }
             },
 
             startSigningUp = {
-                navController.navigate(AuthInterfaceScreen.EntrepriseSignUpScreen.route){launchSingleTop = true}
+                navController.navigate(AuthInterfaceScreen.EntrepriseSignUpScreen.route) {
+                    launchSingleTop = true
+                }
             }
         )
     }
@@ -273,10 +285,11 @@ fun NavGraphBuilder.authInterfaceGraph(
 
 
 
-    composable(route = AuthInterfaceScreen.StandardSignUpScreen.route){
+    composable(route = AuthInterfaceScreen.StandardSignUpScreen.route) {
         StandardSignUpScreen(
             viewModel = standardSignUpViewModel,
 
+/*
             navToStandardInterface = {
                 navController.navigate(Interface.StandardInterface.route){
                     popUpTo(AuthInterfaceScreen.StandardSignUpScreen.route){
@@ -284,6 +297,27 @@ fun NavGraphBuilder.authInterfaceGraph(
                     }
                 }
             }
+*/
+            afterSignUp = {
+                navController.navigate(AuthInterfaceScreen.StandardScreenAfterSignUp.route) {
+                    popUpTo(AuthInterfaceScreen.StandardSignUpScreen.route)
+                }
+            }
+        )
+    }
+
+
+
+    composable(route = AuthInterfaceScreen.StandardScreenAfterSignUp.route) {
+        AfterSignUpMessage(
+            navToHome = {
+                navController.navigate(Interface.StandardInterface.route) {
+                    popUpTo(AuthInterfaceScreen.StandardSignUpScreen.route) {
+                        inclusive = true
+                    }
+                }
+            },
+            goCompleteProfile = {navController.navigate("CompleteProfile")}
         )
     }
 
@@ -313,12 +347,12 @@ fun NavGraphBuilder.entrepriseInterfaceGraph() {
     }
 }
 
-fun NavGraphBuilder.StandardInterfaceGraph(){
+fun NavGraphBuilder.standardInterfaceGraph() {
     navigation(
         route = Interface.StandardInterface.route,
         startDestination = StandardInterfaceScreen.StandardMain.route
-    ){
-        composable(StandardInterfaceScreen.StandardMain.route){
+    ) {
+        composable(StandardInterfaceScreen.StandardMain.route) {
             StandardMainPage()
         }
     }
@@ -355,14 +389,14 @@ private fun NavGraphBuilder.addSplashScreen(
                 }
             },
             navToLogin = {
-                navController.navigate(AuthInterfaceScreen.LoginScreen.route){
+                navController.navigate(AuthInterfaceScreen.LoginScreen.route) {
                     popUpTo(HomeInterfaceScreen.Splash.route) { inclusive = true }
                 }
             },
             loginViewModel = loginViewModel,
             navToStandardInterface = {
-                navController.navigate(AuthInterfaceScreen.StandardSignUpScreen.route){
-                    popUpTo(HomeInterfaceScreen.Splash.route){inclusive = true}
+                navController.navigate(AuthInterfaceScreen.StandardSignUpScreen.route) {
+                    popUpTo(HomeInterfaceScreen.Splash.route) { inclusive = true }
                 }
             }
         )

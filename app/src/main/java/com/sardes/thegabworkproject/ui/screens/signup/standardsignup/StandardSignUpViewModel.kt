@@ -10,8 +10,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseUser
-import com.sardes.thegabworkproject.data.models.Education
-import com.sardes.thegabworkproject.data.models.Experience
+import com.sardes.thegabworkproject.data.models.CompteStandard
 import com.sardes.thegabworkproject.data.models.Skill
 import com.sardes.thegabworkproject.repository.signuprepository.StandardSignUpRepository
 import com.sardes.thegabworkproject.repository.signuprepository.common.CommonSignUpRepository
@@ -25,6 +24,8 @@ class StandardSignUpViewModel(
 
     val hasUser: Boolean
         get() = commonSignUpRepository.hasUser()
+
+    val userId = commonSignUpRepository.getUserId()
 
     private val user: FirebaseUser?
         get() = commonSignUpRepository.user()
@@ -96,7 +97,7 @@ class StandardSignUpViewModel(
                 nom                 = signUpUiStateStandard.nom,
                 prenom              = signUpUiStateStandard.prenom,
                 email               = signUpUiStateStandard.email,
-                ville              = signUpUiStateStandard.ville,
+                ville               = signUpUiStateStandard.ville,
                 sexe                = signUpUiStateStandard.sexe,
                 nationalite         = signUpUiStateStandard.nationalite,
                 adresse             = signUpUiStateStandard.adresse,
@@ -182,11 +183,11 @@ class StandardSignUpViewModel(
         signUpUiStateStandard = signUpUiStateStandard.copy(photo = photo)
     }
 
-    fun onEducationChange(education: List<Education>){
+    fun onEducationChange(education: List<CompteStandard.Education>){
         signUpUiStateStandard = signUpUiStateStandard.copy(education = education)
     }
 
-    fun onExperienceChange(experience: List<Experience>){
+    fun onExperienceChange(experience: List<CompteStandard.Experience>){
         signUpUiStateStandard = signUpUiStateStandard.copy(experience = experience)
     }
     fun onDateNaissanceChange(dateNaissance: String){
@@ -209,8 +210,8 @@ data class SignupUiStateStandard(
     val HQH         : String = "",
     val langues     : List<String> = emptyList(),
     val competences : List<Skill> = emptyList(),
-    val education   : List<Education> = emptyList(),
-    val experience  : List<Experience> = emptyList(),
+    val education   : List<CompteStandard.Education> = emptyList(),
+    val experience  : List<CompteStandard.Experience> = emptyList(),
     val sexe        : String = "",
     val telephone   : String = "",
     val email       : String = "",

@@ -23,7 +23,7 @@ fun StandardTopBar(homeStandardUiState: HomeStandardUiState?) {
     CenterAlignedTopAppBar(
         title = {
             Text(
-                text = "${homeStandardUiState?.userInformations?.nom}",
+                text = "${homeStandardUiState?.userInformations?.name}",
                 color = GWpalette.EauBlue,
                 style = GWTypography.h6
             )

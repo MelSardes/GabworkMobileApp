@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 
 class HomeEntrepriseViewModel(
     private val repository: MainEntrepriseRepository = MainEntrepriseRepository()
-): ViewModel(){
+) : ViewModel() {
 
     var homeEntrepriseUiState by mutableStateOf(HomeEntrepriseUiState())
 
@@ -24,7 +24,11 @@ class HomeEntrepriseViewModel(
         get() = repository.getUserId()
 
 
-    fun getEntrepriseInformations(){
+    fun loadInformations() {
+        getEntrepriseInformations()
+    }
+
+    private fun getEntrepriseInformations() {
         if (hasUser) {
             if (entrepriseId.isNotBlank()) {
                 homeEntrepriseUiState = homeEntrepriseUiState.copy(isLoading = true)
@@ -39,27 +43,29 @@ class HomeEntrepriseViewModel(
         }
     }
 
-    fun loadActivePosts(){
-        if (hasUser){
+    fun loadActivePosts() {
+        if (hasUser) {
             if (entrepriseId.isNotBlank())
                 getActivePosts(entrepriseId)
-        }
-        else{
-            homeEntrepriseUiState = homeEntrepriseUiState.copy(homePostList = Ressources.Error(
-                throwable = Throwable(message = "Utilisateur non connecté")
-            ))
+        } else {
+            homeEntrepriseUiState = homeEntrepriseUiState.copy(
+                homePostList = Ressources.Error(
+                    throwable = Throwable(message = "Utilisateur non connecté")
+                )
+            )
         }
     }
 
-    private fun getActivePosts(entrepriseId : String) = viewModelScope.launch {
-        repository.getActivePosts(entrepriseId).collect{
+    private fun getActivePosts(entrepriseId: String) = viewModelScope.launch {
+        repository.getActivePosts(entrepriseId).collect {
             homeEntrepriseUiState = homeEntrepriseUiState.copy(homePostList = it)
         }
     }
+
 }
 
 data class HomeEntrepriseUiState(
     val isLoading: Boolean = false,
     val entrepriseInformations: CompteEntreprise? = null,
     val homePostList: Ressources<List<CompteEntreprise.Post>> = Ressources.Loading(),
-    )
+)

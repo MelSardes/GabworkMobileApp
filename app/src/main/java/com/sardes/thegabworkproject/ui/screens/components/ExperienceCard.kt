@@ -11,7 +11,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.sardes.thegabworkproject.data.models.Experience
+import com.sardes.thegabworkproject.data.models.CompteStandard
 import com.sardes.thegabworkproject.ui.theme.GWTypography
 import com.sardes.thegabworkproject.ui.theme.GWpalette
 import kiwi.orbit.compose.ui.controls.Card
@@ -20,7 +20,7 @@ import kiwi.orbit.compose.ui.controls.Text as OrbitText
 @Composable
 fun ExperienceCard(
     cardModifier: Modifier = Modifier,
-    experience: Experience
+    experience: CompteStandard.Experience
 ) {
 
     Card(
@@ -96,7 +96,7 @@ private fun PreviewExperienceCard() {
     ExperienceCard(
         cardModifier = Modifier
             .width(400.dp),
-        experience = Experience(
+        experience = CompteStandard.Experience(
             "SARDES CORP.",
             "Développeur Kotlin",
             "Temps plein",

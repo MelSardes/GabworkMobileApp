@@ -112,6 +112,6 @@ private fun PreviewSeekerPreferences() {
     JobPreferences(
         null,
         FocusRequester.Default,
-        emptyList<String>() as MutableList<String>
+        emptyList<String>().toMutableStateList()
     )
 }

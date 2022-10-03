@@ -3,6 +3,7 @@ package com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.search.compo
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.MaterialTheme.typography
@@ -15,6 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.sardes.thegabworkproject.ui.theme.GWpalette
 
 @SuppressLint("MaterialDesignInsteadOrbitDesign")
 @Composable
@@ -47,7 +49,15 @@ fun EntrepriseSearchBar(
                     modifier = Modifier.padding(8.dp),
                     style = typography.h6.copy(fontSize = 14.sp),
                 )
-            }
+            },
+            colors = TextFieldDefaults.textFieldColors(
+                backgroundColor = Color.LightGray,
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                textColor = GWpalette.DarkLiver,
+            ),
+            shape = CircleShape
+
         )
     }
 }

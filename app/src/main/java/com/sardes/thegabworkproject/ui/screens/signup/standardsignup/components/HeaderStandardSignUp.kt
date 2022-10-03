@@ -16,7 +16,7 @@ import kiwi.orbit.compose.ui.controls.Text as OrbitText
 fun HeaderStandardSignUp(stepIndicator: Int) {
     Column(
         modifier = Modifier
-            .fillMaxHeight(0.14f)
+            .height(IntrinsicSize.Min)
             .padding(horizontal = 20.dp, vertical = 10.dp)
     ) {
 //            HEADER

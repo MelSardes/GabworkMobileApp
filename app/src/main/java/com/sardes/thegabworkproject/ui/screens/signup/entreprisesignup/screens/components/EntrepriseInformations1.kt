@@ -38,7 +38,7 @@ fun EntrepriseInformations1(
     focusRequester: FocusRequester = FocusRequester.Default,
 ) {
     var activityAreaexpanded by remember { mutableStateOf(false) }
-    var selectedOptionactivityAreaText by remember { mutableStateOf(ActivityAreaDataProvider.secteurs[0].nom) }
+    var selectedOptionactivityAreaText by remember { mutableStateOf(ActivityAreaDataProvider.secteurs[0].name) }
 
     var city by remember { mutableStateOf("") }
     val selectedCities = remember { mutableStateListOf<String>() }
@@ -96,12 +96,12 @@ fun EntrepriseInformations1(
                     ActivityAreaDataProvider.secteurs.forEach { selectionOption ->
                         DropdownMenuItem(
                             onClick = {
-                                selectedOptionactivityAreaText = selectionOption.nom
+                                selectedOptionactivityAreaText = selectionOption.name
                                 activityAreaexpanded = false
                             }
                         ) {
-                            OrbitText(text = selectionOption.nom)
-                            viewModel?.onActivityAreaChange(selectionOption.nom)
+                            OrbitText(text = selectionOption.name)
+                            viewModel?.onActivityAreaChange(selectionOption.name)
                         }
                     }
                 }

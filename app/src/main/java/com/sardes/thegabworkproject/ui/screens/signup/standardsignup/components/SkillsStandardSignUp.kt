@@ -136,104 +136,6 @@ fun SkillsStandardSignUp(
 
             Spacer(modifier = Modifier.height(50.dp))
 
-/*
-        item {
-            Column {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.Bottom
-                ) {
-                    ExposedDropdownMenuBox(
-                        expanded = expandedGabworkSkill,
-                        onExpandedChange = {
-                            expandedGabworkSkill = !expandedGabworkSkill
-                        },
-                        modifier = Modifier.weight(1f)
-                    ) {
-                        TextField(
-                            readOnly = true,
-                            value = selectedOptionGabworkSkill,
-                            onValueChange = { },
-                            label = { OrbitText("Nos propositions") },
-                            trailingIcon = {
-                                ExposedDropdownMenuDefaults.TrailingIcon(
-                                    expanded = expandedGabworkSkill
-                                )
-                            },
-                            modifier = Modifier.fillMaxWidth()
-                        )
-                        ExposedDropdownMenu(
-                            modifier = Modifier.background(Color.Transparent),
-                            expanded = expandedGabworkSkill,
-                            onDismissRequest = { expandedGabworkSkill = false }
-                        ) {
-                            competences.forEach { selectionOption ->
-                                DropdownMenuItem(
-                                    onClick = {
-                                        selectedOptionGabworkSkill = selectionOption.nomCompetence
-                                        expandedGabworkSkill = false
-                                    }
-                                ) {
-                                    OrbitText(text = selectionOption.nomCompetence)
-    //                            viewModel?.onActivityAreaChange(selectionOption.nom)
-//                                    gabworkSkill = selectedOptionGabworkSkill
-                                }
-                            }
-                        }
-                    }
-
-                    ButtonLinkPrimary(
-                        onClick = { skills.add( Skill(selectedOptionGabworkSkill, selectedOptionGabworkSkillLevel) ) },
-                        modifier = Modifier
-                    ) {
-                        Text(text = "Ajouter")
-                    }
-                }
-
-
-                ExposedDropdownMenuBox(
-                    expanded = expandedGabworkSkillLevel,
-                    onExpandedChange = {
-                        expandedGabworkSkillLevel = !expandedGabworkSkillLevel
-                    },
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    TextField(
-                        readOnly = true,
-                        value = selectedOptionGabworkSkillLevel,
-                        onValueChange = { },
-                        label = { OrbitText("Niveau de compétence") },
-                        trailingIcon = {
-                            ExposedDropdownMenuDefaults.TrailingIcon(
-                                expanded = expandedGabworkSkillLevel
-                            )
-                        },
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                    ExposedDropdownMenu(
-                        modifier = Modifier.background(Color.Transparent),
-                        expanded = expandedGabworkSkillLevel,
-                        onDismissRequest = { expandedGabworkSkillLevel = false }
-                    ) {
-                        skillLevels.forEach { selectionOption ->
-                            DropdownMenuItem(
-                                onClick = {
-                                    selectedOptionGabworkSkillLevel = selectionOption
-                                    expandedGabworkSkillLevel = false
-                                }
-                            ) {
-                                OrbitText(text = selectionOption)
-//                            viewModel?.onActivityAreaChange(selectionOption.nom)
-//                                gabworkSkillLevel = selectedOptionGabworkSkillLevel
-                            }
-                        }
-                    }
-                }
-            }
-
-        }
-*/
-
 
         LazyColumn {
 
@@ -266,5 +168,5 @@ fun SkillsStandardSignUp(
 @Preview(name = "SkillsSeekerSignUp", showSystemUi = false, showBackground = true)
 @Composable
 private fun PreviewSkillsSeekerSignUp() {
-    SkillsStandardSignUp(null, null, FocusRequester.Default, emptyList<Skill>() as MutableList<Skill>)
+    SkillsStandardSignUp(null, null, FocusRequester.Default, emptyList<Skill>().toMutableStateList())
 }

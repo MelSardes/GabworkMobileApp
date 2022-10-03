@@ -5,7 +5,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -21,27 +20,28 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.sardes.thegabworkproject.data.models.ActivityArea
 import com.sardes.thegabworkproject.data.provider.ActivityAreaDataProvider
-import com.sardes.thegabworkproject.data.models.SecteurDActivite
+import com.sardes.thegabworkproject.ui.theme.GWTypography
 import com.sardes.thegabworkproject.ui.theme.extensions.generateDominantColorState
 import com.sardes.thegabworkproject.ui.theme.modifiers.horizontalGradientBackground
 import com.sardes.thegabworkproject.ui.verticalgrid.VerticalGrid
 
 @Composable
-fun GabworkSearchGrid() {
+fun GabworkSearchGrid(onClick: (index: Int) -> Unit) {
     val items = remember { ActivityAreaDataProvider.secteurs }
     //This is not Lazy at the moment Soon we will have LazyLayout coming then will
     //Update it so we have better performance
     VerticalGrid {
         items.forEach {
-            SearchGridItem(it)
+            SearchGridItem(it, onClick = {onClick.invoke(it.id)})
         }
     }
 }
 
 @SuppressLint("MaterialDesignInsteadOrbitDesign")
 @Composable
-fun SearchGridItem(area: SecteurDActivite) {
+fun SearchGridItem(area: ActivityArea, onClick: () -> Unit) {
     val context = LocalContext.current
     val imageBitmap = ImageBitmap.imageResource(context.resources, area.imageId).asAndroidBitmap()
     val swatch = remember(area.id) { imageBitmap.generateDominantColorState() }
@@ -50,7 +50,7 @@ fun SearchGridItem(area: SecteurDActivite) {
     Row(
         modifier = Modifier
             .padding(8.dp)
-            .clickable(onClick = { /* TODO: DO SOMETHING FOR NAVIGATION */
+            .clickable(onClick = { onClick.invoke()
                 //Disclaimer: We should pass event top level and there should startActivity
 //                context.startActivity(SpotifyDetailActivity.newIntent(context, album))
             })
@@ -60,9 +60,9 @@ fun SearchGridItem(area: SecteurDActivite) {
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
-            text = area.nom,
-            style = typography.body2,
-            modifier = Modifier.padding(8.dp).fillMaxWidth(0.5f)
+            text = area.name,
+            style = GWTypography.body1,
+            modifier = Modifier.padding(start = 8.dp, top = 8.dp).fillMaxWidth(0.6f)
         )
         Image(
             painter = painterResource(id = area.imageId),
@@ -71,7 +71,7 @@ fun SearchGridItem(area: SecteurDActivite) {
             modifier = Modifier
                 .size(70.dp)
                 .align(Alignment.Bottom)
-                .graphicsLayer(translationX = 30f, rotationZ = 32f, shadowElevation = 16f)
+                .graphicsLayer(translationX = 25f, rotationZ = 30f, shadowElevation = 16f)
         )
     }
 }

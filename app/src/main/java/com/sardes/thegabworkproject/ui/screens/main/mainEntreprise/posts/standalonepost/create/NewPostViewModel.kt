@@ -27,10 +27,6 @@ class NewPostViewModel(
         postUiState = postUiState.copy(postName = postName)
     }
 
-    fun onDateCreationPostChange(dateCreationPost: Timestamp) {
-        postUiState = postUiState.copy(dateCreationPost = dateCreationPost)
-    }
-
     fun onDescriptionEmploiChange(descriptionEmploi: String) {
         postUiState = postUiState.copy(descriptionEmploi = descriptionEmploi)
     }
@@ -70,13 +66,6 @@ class NewPostViewModel(
     fun onDomaineChange(domaine: String) {
         postUiState = postUiState.copy(domaine = domaine)
     }
-    fun onTotalApplicantsChange(domaine: String) {
-        postUiState = postUiState.copy(domaine = domaine)
-    }
-
-    fun onCommentsChange(comments: List<CompteEntreprise.Post.Review>) {
-        postUiState = postUiState.copy(comments = comments)
-    }
 
 
     fun addPost(entrepriseName: String, urlLogo: String?) {
@@ -107,17 +96,17 @@ class NewPostViewModel(
     private fun setEditFields(post: CompteEntreprise.Post) {
         postUiState = postUiState.copy(
             postName = post.postName,
-            descriptionEmploi = post.descriptionEmploi,
-            salaire = post.salaire,
-            typeEmploi = post.typeDEmploi,
-            adresse = post.adresse,
-            ville = post.ville,
+            descriptionEmploi = post.description,
+            salaire = post.salary,
+            typeEmploi = post.jobType,
+            adresse = post.address,
+            ville = post.city,
             province = post.province,
-            domaine = post.domaine,
+            domaine = post.domain,
             experience = post.experience,
-            dateLimite = post.dateLimite,
-            competences = post.competences,
-            reponsabilites = post.responsabilites,
+            dateLimite = post.limit,
+            competences = post.skills,
+            reponsabilites = post.responsibilities,
         )
     }
 

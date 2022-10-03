@@ -1,20 +1,22 @@
 package com.sardes.thegabworkproject.test
 
 import android.annotation.SuppressLint
-import android.net.Uri
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.sardes.thegabworkproject.ui.theme.GWTypography
-import kiwi.orbit.compose.ui.controls.ButtonSecondary
-import kiwi.orbit.compose.ui.controls.Text
+import androidx.compose.ui.unit.dp
+import com.sardes.thegabworkproject.R
+import com.sardes.thegabworkproject.data.provider.GabworkDataProvider
+import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.search.components.EntrepriseSearchBar
+import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.search.components.GabworkSearchGrid
+import com.sardes.thegabworkproject.ui.theme.modifiers.horizontalGradientBackground
 
 
 
@@ -22,38 +24,39 @@ import kiwi.orbit.compose.ui.controls.Text
 @Preview(showBackground = true)
 @Composable
 fun Test(
+    onAreaClick: () -> Unit = {}
 ) {
 
-    var fileUri = mutableStateOf<Uri?>(null)
+    val scrollState = rememberScrollState(0)
+    val surfaceGradient = GabworkDataProvider.gabworkSurfaceGradient(isSystemInDarkTheme())
 
-    val uriPathFinder = UriPathFinder()
-    val context = LocalContext.current
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .horizontalGradientBackground(surfaceGradient)
+    ) {
 
-    val path = fileUri.value?.let { uriPathFinder.getPath(context, it) }
-
-
-    val selectFile = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.GetContent()
-    ) { uri: Uri? ->
-        fileUri.value = uri
-    }
-
-    Column() {
-        Text("Path :")
-        Text(text = fileUri.toString())
-
-        ButtonSecondary(
-            onClick = { selectFile.launch("*/*") },
+        Image(
+            painter = painterResource(id = R.drawable.search_rafiki_2),
+            contentDescription = null,
             modifier = Modifier
+//                .padding(top = 80.dp, bottom = 40.dp)
                 .fillMaxWidth()
-        ) {
-            Text(
-                "Choose a file",
-                style = GWTypography.h6,
-                textAlign = TextAlign.Center
-            )
-        }
+                .alpha(1f - scrollState.value / 200)
+        )
 
+        Column(
+            modifier = Modifier.verticalScroll(scrollState)
+        ) {
+            Spacer(modifier = Modifier.height(200.dp))
+            Column(modifier = Modifier.horizontalGradientBackground(surfaceGradient)) {
+                EntrepriseSearchBar()
+                GabworkSearchGrid{
+                    onAreaClick.invoke()
+                }
+            }
+            Spacer(modifier = Modifier.height(50.dp))
+        }
     }
 
 

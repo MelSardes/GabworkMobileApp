@@ -22,7 +22,8 @@ import com.sardes.thegabworkproject.ui.theme.modifiers.horizontalGradientBackgro
 @SuppressLint("MaterialDesignInsteadOrbitDesign")
 @Composable
 fun SearchEntrepriseScreen(
-    searchViewModel:SearchEntrepriseViewModel = SearchEntrepriseViewModel()
+    searchViewModel:SearchEntrepriseViewModel = SearchEntrepriseViewModel(),
+
 ) {
     val scrollState = rememberScrollState(0)
     val surfaceGradient = GabworkDataProvider.gabworkSurfaceGradient(isSystemInDarkTheme())
@@ -48,7 +49,7 @@ fun SearchEntrepriseScreen(
             Spacer(modifier = Modifier.height(180.dp))
             Column(modifier = Modifier.horizontalGradientBackground(surfaceGradient)) {
                 EntrepriseSearchBar()
-                GabworkSearchGrid()
+                GabworkSearchGrid(){}
             }
             Spacer(modifier = Modifier.height(50.dp))
         }

@@ -24,18 +24,19 @@ data class CompteEntreprise(
         val entrepriseId: String = "",
         val entrepriseName: String = "",
         val urlLogo: String? = null,
-        val dateCreationPost: Timestamp = Timestamp.now(),
-        val descriptionEmploi: String = "",
-        val salaire: String = "",
-        val ville: String = "",
+        val creationDate: Timestamp = Timestamp.now(),
+        val description: String = "",
+        val salary: String = "",
+        val city: String = "",
         val province: String = "",
-        val domaine: String = "",
+        val domain: String = "",
         val experience: String = "",
-        val typeDEmploi: String = "",
-        val adresse: String = "",
-        val dateLimite: Timestamp? = null,
-        val competences: List<String> = emptyList(),
-        val responsabilites: List<String> = emptyList(),
+        val jobType: String = "",
+        val address: String = "",
+        val limit: Timestamp? = null,
+        val skills: List<String> = emptyList(),
+        val responsibilities: List<String> = emptyList(),
+
         val comments: List<Review> = emptyList(),
         val savers: List<String> = emptyList(),
         val totalApplicants: Int = 0,
@@ -45,18 +46,17 @@ data class CompteEntreprise(
             val reviewerId: String? = null,
             val urlPhoto: String? = null,
             val reviewerName: String? = null,
-            val reviewCotent: String? = null,
-            val date: String? = null,
+            val reviewContent: String? = null,
+            val date: Timestamp? = null,
         )
 
-
-        data class Candidat(
+        data class Applicant(
             val PostId: String = "",
-            val candidatId: String = "",
-            val nomComplet: String = "",
-            val occupation: String = "",
+            val applicantId: String = "",
+            val name: String = "",
+            val job: String = "",
             val urlPhoto: String? = null,
-            val dateCandidature: Timestamp? = null,
+            val applyDate: Timestamp? = null,
         )
     }
 }

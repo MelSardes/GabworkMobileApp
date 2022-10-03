@@ -1,4 +1,4 @@
-package com.sardes.thegabworkproject.repository.main.standard
+package com.sardes.thegabworkproject.repository.main
 
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.callbackFlow
 
 
 
-class MessagesStandardRepository {
+class MessagesRepository {
     fun user() = Firebase.auth.currentUser
     fun hasUser(): Boolean = Firebase.auth.currentUser != null
 

@@ -10,7 +10,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.sardes.thegabworkproject.data.models.Education
+import com.sardes.thegabworkproject.data.models.CompteStandard
 import com.sardes.thegabworkproject.ui.theme.GWTypography
 import com.sardes.thegabworkproject.ui.theme.GWpalette
 import kiwi.orbit.compose.ui.controls.Card
@@ -19,13 +19,13 @@ import kiwi.orbit.compose.ui.controls.Text
 
 @Composable
 fun EducationCard(
-    cardModifier: Modifier = Modifier,
+    modifier: Modifier = Modifier,
 //    @DrawableRes logo: Int,
-    education: Education,
+    education: CompteStandard.Education,
 ) {
 
     Card(
-        cardModifier.width(400.dp),
+        modifier.width(400.dp),
         backgroundColor = Color.White,
         shape = RoundedCornerShape(8.dp),
         elevation = 8.dp
@@ -55,7 +55,7 @@ fun EducationCard(
 
                 Text(
                     education.ville,
-                    style = GWTypography.body2,
+                    style = GWTypography.body1,
                     textAlign = TextAlign.End
                 )
 
@@ -93,7 +93,7 @@ fun EducationCard(
 
                 Text(
                     text = "${education.dateDebut} - ${education.dateFin}",
-                    style = GWTypography.body2,
+                    style = GWTypography.body1,
                     color = GWpalette.CoolGrey
                 )
 
@@ -119,8 +119,8 @@ fun EducationCard(
     @Composable
     private fun PreviewEducationCard() {
         EducationCard(
-            cardModifier = Modifier,
-            education = Education(
+            modifier = Modifier,
+            education = CompteStandard.Education(
                 "INPTIC",
                 "DUT Génnie Informatique",
                 "Informatique",

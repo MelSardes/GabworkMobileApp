@@ -9,6 +9,11 @@ import androidx.navigation.navArgument
 import com.sardes.thegabworkproject.navigation.StandardInterfaceScreen
 import com.sardes.thegabworkproject.navigation.StandardMessagesScreen
 import com.sardes.thegabworkproject.navigation.StandardPostScreen
+import com.sardes.thegabworkproject.ui.screens.components.ActivityAreaDetailScreen
+import com.sardes.thegabworkproject.ui.screens.main.SearchViewModel
+import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.search.components.GabworkSearchGrid
+import com.sardes.thegabworkproject.ui.screens.main.mainStandard.components.ApplicationRequiredInformationsMessage
+import com.sardes.thegabworkproject.ui.screens.main.mainStandard.components.CompleteProfile
 import com.sardes.thegabworkproject.ui.screens.main.mainStandard.components.PostDetailsScreen
 import com.sardes.thegabworkproject.ui.screens.main.mainStandard.home.HomeStandardScreen
 import com.sardes.thegabworkproject.ui.screens.main.mainStandard.home.HomeStandardViewModel
@@ -20,14 +25,13 @@ import com.sardes.thegabworkproject.ui.screens.main.mainStandard.profile.Profile
 import com.sardes.thegabworkproject.ui.screens.main.mainStandard.saves.SavesStandardScreen
 import com.sardes.thegabworkproject.ui.screens.main.mainStandard.saves.SavesStandardViewModel
 import com.sardes.thegabworkproject.ui.screens.main.mainStandard.search.SearchStandardScreen
-import com.sardes.thegabworkproject.ui.screens.main.mainStandard.search.SearchStandardViewModel
 
 @Composable
 fun StandardMainNavigation(
     navController: NavHostController,
     homeStandardViewModel: HomeStandardViewModel?,
     savesStandardViewModel    : SavesStandardViewModel?,
-    searchStandardViewModel   : SearchStandardViewModel?,
+    searchViewModel: SearchViewModel,
     messagesStandardViewModel: MessagesStandardViewModel?,
     profileStandardViewModel  : ProfileStandardViewModel?
 ) {
@@ -58,7 +62,34 @@ fun StandardMainNavigation(
         }
 
         composable(StandardInterfaceScreen.StandardSearch.route) {
-            SearchStandardScreen()
+            SearchStandardScreen(
+                searchViewModel,
+                homeStandardViewModel,
+                navToDiscover = {
+                    navController.navigate("Discover")
+                }
+            )
+        }
+        
+        composable("Discover"){
+            GabworkSearchGrid {index ->
+                navController.navigate("AreaDetails?index=$index")
+            }
+        }
+
+        composable(
+            "AreaDetails?index={index}",
+            arguments = listOf(navArgument("index") {
+                type = NavType.IntType
+                defaultValue = 0
+            })
+        ) { entry ->
+            ActivityAreaDetailScreen(
+                index = entry.arguments?.getInt("id") as Int,
+                viewModel = SearchViewModel()
+            ) { postId ->
+                navController.navigate(StandardPostScreen.DetailsPostScreen.route + "?id=$postId")
+            }
         }
 
         composable(StandardInterfaceScreen.StandardMessages.route) {
@@ -77,6 +108,15 @@ fun StandardMainNavigation(
             ProfileStandardScreen()
         }
 
+
+        composable(route = "CompleteProfile"){
+            CompleteProfile(
+                viewModel = homeStandardViewModel,
+                onFinish = {
+                    navController.navigate(StandardInterfaceScreen.StandardHome.route){popUpTo("CompleteProfile")}
+                }
+            )
+        }
 
         composable(
             route = StandardMessagesScreen.StandardConversationScreen.route + "?id={id}",
@@ -106,8 +146,23 @@ fun StandardMainNavigation(
                     navController.navigate(StandardMessagesScreen.StandardConversationScreen.route + "?id=$entrepriseId") {
                         launchSingleTop = true
                     }
+                },
+                completeAccount = {
+                    navController.navigate("completeAccountMessage"){launchSingleTop = true}
                 }
             )
+        }
+
+        composable(route = "completeAccountMessage"){
+            ApplicationRequiredInformationsMessage(
+                navToComplete = {navController.navigate("CompleteProfile")}
+            )
+        }
+
+        composable("CompleteProfile"){
+            CompleteProfile(viewModel = homeStandardViewModel) {
+                navController.navigate(StandardInterfaceScreen.StandardHome.route)
+            }
         }
     }
 }

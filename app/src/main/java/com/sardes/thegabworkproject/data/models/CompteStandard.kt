@@ -5,22 +5,55 @@ import com.google.firebase.Timestamp
 data class CompteStandard(
     val userId: String? = null,
     val email: String? = null,
-
-    val nom: String? = null,
-    val prenom: String? = null,
-    val sexe: String? = null,
-    val nationalite: String? = null,
-    val dateNaissance: String? = null,
-
-    val telephone: String? = null,
-    val ville: String? = null,
-    val adresse: String? = null,
-
+    val name: String? = null,
+    val forename: String? = null,
+    val sex: String? = null,
+    val nationality: String? = null,
+    val bornDate: String? = null,
+    val phone: String? = null,
+    val city: String? = null,
+    val address: String? = null,
     val urlPhoto: String? = null,
 
-    val dateCreationCompte: Timestamp = Timestamp.now(),
-    val typeDeCompte: String = "Standard",
+    val isComplete: Int = 0,
+    val isInternshipComplete: Int = 0,
+
+    val accountCreationDate: Timestamp = Timestamp.now(),
+    val accountType: String = "Standard",
+
+    val preferredJob: String? = null,
+
+    val languages: List<String> = emptyList(),
+    val wishJobs: List<String> = emptyList(),
+    val urlCV: String? = null,
+ 
+
+    val actualSchool: String? = null,
+    val cycleActuel: String? = null,
+    val filliereActuelle: String? = null
 ){
+
+    data class Education(
+        val etablissement: String,
+        val diplome: String,
+        val domaine: String,
+        val description: String,
+        val ville: String,
+        val dateDebut: String,
+        val dateFin: String,
+    )
+
+    data class Experience(
+        val entreprise: String,
+        val position: String,
+        val typeDEmploi: String,
+        val description: String,
+        val ville: String,
+        val dateDebut: String,
+        val dateFin: String,
+    )
+
+
     data class JobBookmark(
         val postId: String? = null,
         val entrepriseId: String? = null,
@@ -64,6 +97,8 @@ data class CompteStandard(
 
     data class Application(
         val postId: String? = null,
+        val applicantId: String = "",
+        val applicantName: String = "",
         val postName: String? = null,
         val entrepriseName: String? = null,
         val urlLogoEntreprise: String? = null,
@@ -71,7 +106,10 @@ data class CompteStandard(
         val city: String? = null,
         val jobType: String? = null,
         val applicationDate: Timestamp = Timestamp.now(),
-        val status: String? = null
+        val urlPhoto: String? = null,
+        val status: String? = null,
+        val statusMessage: String? = null,
+        val coverLetter: String? = null
     )
 
     data class JobProposal(
@@ -84,51 +122,31 @@ data class CompteStandard(
         val beginDate : String? = null,
         val status: String? = null
     )
-
-
 }
 
+/*
 data class NecessaryInformations(
-    val langues: List<String> = emptyList(),
-    val competences: List<Skill> = emptyList(),
+    val languages: List<String> = emptyList(),
+    val skills: List<Skill> = emptyList(),
     val education: List<Education> = emptyList(),
     val experience: List<Experience> = emptyList(),
-    val preferencesDEmploi: List<String> = emptyList(),
+    val preferredJob: List<String> = emptyList(),
     val urlCV: String? = null
 )
+*/
 
 
+/*
 data class InternshipNeededInformations(
-    val universiteActuelle: String? = null,
+    val actualSchool: String? = null,
     val cycleActuel: String? = null,
     val filliereActuelle: String? = null
 )
+*/
 
+/*
 data class SeekerNecessaryInformations(
-    val metier: String? = null
+    val preferredJob: String? = null
 )
-
-data class ParcoursEtudiant(
-    val idCompteEtudiant: Int,
-    val idUniversite: Int,
-    val intituleDiplome: String,
-    val fichierDiplomeScanne: String,
-    val filliere: String?,
-    val dateDebut: String?,
-    val dateFin: String?,
-    val diplomePrepare: String,
-    val dateObtentionDiplome:String?,
-)
-
-
-data class ExperienceStandard(
-    val idExperienceEtudiant : Int,
-    val idProfilEtudiant : Int,
-    val titrePostOccupe : Int,
-    val nomEntreprise : Int,
-    val idVille: Int,
-    val description: Int,
-    val dateDdebut : String?,
-    val dateFin : String?,
-)
+*/
 

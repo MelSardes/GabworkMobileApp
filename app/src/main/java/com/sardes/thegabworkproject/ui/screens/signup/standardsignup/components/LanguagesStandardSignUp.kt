@@ -70,7 +70,7 @@ fun LanguagesStandardSignUp(
                             selectedLanguageAreaText = selectionOption
                             itemExpanded = false
 
-                            selectedLanguages?.add(selectedLanguageAreaText)
+                            selectedLanguages.add(selectedLanguageAreaText)
                             viewModel?.onLanguesChange(selectedLanguages)
                         }
                     ) {
@@ -91,7 +91,7 @@ fun LanguagesStandardSignUp(
 
                 if (selectedLanguages.isEmpty()) {
                     Text(
-                        text = "Vous n'avez encore sélectionner aucune langue",
+                        text = "Veuillez sélectionner une langue",
                         style = GWTypography.body1.copy(fontWeight = FontWeight.Bold),
                         color = GWpalette.EauBlue
                     )
@@ -132,5 +132,5 @@ fun LanguagesStandardSignUp(
 @Preview(name = "LanguagesStandardSignUp", showBackground = true)
 @Composable
 private fun PreviewLanguagesStandardSignUp() {
-    LanguagesStandardSignUp(selectedLanguages = emptyList<String>() as MutableList<String>)
+    LanguagesStandardSignUp(selectedLanguages = emptyList<String>().toMutableStateList())
 }

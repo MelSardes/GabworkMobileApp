@@ -24,12 +24,12 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.sardes.thegabworkproject.R
-import com.sardes.thegabworkproject.data.models.CompteEntreprise
+import com.sardes.thegabworkproject.data.models.CompteStandard
 
 @SuppressLint("MaterialDesignInsteadOrbitDesign")
 @Composable
 fun SeekerCardComponent(
-    candidat: CompteEntreprise.Post.Candidat,
+    applicant: CompteStandard.Application,
 ) {
     Box(modifier = Modifier.fillMaxWidth()) {
         Card(
@@ -51,7 +51,7 @@ fun SeekerCardComponent(
                 ) {
                     AsyncImage(
                         model = ImageRequest.Builder(LocalContext.current)
-                            .data(candidat.urlPhoto)
+                            .data(applicant.urlPhoto)
                             .crossfade(true)
                             .placeholder(R.drawable.account_box_80)
                             .build(),
@@ -63,14 +63,14 @@ fun SeekerCardComponent(
                     )
                     Column {
                         Text(
-                            text = candidat.nomComplet,
+                            text = applicant.applicantName,
                             style = typography.h6,
                             modifier = Modifier.padding(horizontal = 8.dp),
                             overflow = TextOverflow.Ellipsis,
                             maxLines = 1
                         )
                         Text(
-                            text = candidat.occupation,
+                            text = applicant.postName ?: "Erreur",
                             color = Color.Black.copy(alpha = 0.5f),
                             style = typography.body2,
                             modifier = Modifier.padding(horizontal = 8.dp)
@@ -137,9 +137,9 @@ fun SeekerCardComponent(
 @Composable
 private fun PreviewSeekerCardComponent() {
     SeekerCardComponent(
-        candidat = CompteEntreprise.Post.Candidat(
-            nomComplet = "Mel SARDES",
-            occupation = "Developpeur Android"
+        applicant = CompteStandard.Application(
+             applicantName = "Mel SARDES",
+             postName = "Developpeur Android",
         )
     )
 }

@@ -33,7 +33,8 @@ fun HomeStandardScreen(
 
     LaunchedEffect(Unit) {
         homeStandardViewModel?.getUserInformations()
-
+    }
+    LaunchedEffect(Unit) {
         homeStandardViewModel?.loadFiveLatestPosts()
     }
 
@@ -59,7 +60,7 @@ fun HomeStandardScreen(
                         ) {
                             Column(modifier = Modifier.fillMaxSize()) {
                                 Text(text = "HOME")
-                                Text(text = " AAHO AG EAGOHLVDS IUSLD W;IU I VS BZBBKLWYIEB")
+                                Text(text = homeUiState.userInformations?.isComplete.toString())
                                 Button(onClick = { /*TODO*/ }) {
                                     Text(text = "Rechercher ...")
                                 }
@@ -68,7 +69,7 @@ fun HomeStandardScreen(
                     }
                     item {
                         Text(
-                            text = "Denières offres d'emploi",
+                            text = "Denières offres d'emploi ${homeUiState.userInformations?.isComplete}",
                             style = GWTypography.h6,
                             color = Gunmetal,
                             modifier = Modifier.padding(start = 30.dp)

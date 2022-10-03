@@ -6,7 +6,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.sardes.thegabworkproject.data.models.Experience
+import com.sardes.thegabworkproject.data.models.CompteStandard
 import com.sardes.thegabworkproject.ui.composition.TextFieldAuthItem
 import com.sardes.thegabworkproject.ui.screens.components.ExperienceCard
 import com.sardes.thegabworkproject.ui.screens.signup.standardsignup.StandardSignUpViewModel
@@ -17,7 +17,7 @@ import kiwi.orbit.compose.ui.controls.Text
 @Composable
 fun ExperienceStandardSignUp(
     viewModel: StandardSignUpViewModel?,
-    experiences: MutableList<Experience>
+    experiences: MutableList<CompteStandard.Experience>
 ) {
 
     var companyName by remember { mutableStateOf("") }
@@ -32,135 +32,152 @@ fun ExperienceStandardSignUp(
 
 
 
-
-    LazyColumn(
-        modifier = Modifier
-            .padding(horizontal = 30.dp)
-            .fillMaxSize()
-    ) {
-        item {
-            TextFieldAuthItem(
-                label = "Nom de l'entreprise",
-                info = "Entreprise dans laquelle vous avez travaillé",
-                value = companyName,
-                valueChange = { companyName = it }
+    Column(modifier = Modifier.fillMaxSize()) {
+        ExperienceCard(
+            Modifier
+                .fillMaxWidth()
+                .height(IntrinsicSize.Min),
+            experience = CompteStandard.Experience(
+                entreprise = companyName,
+                position = position,
+                typeDEmploi = jobType,
+                description = description,
+                ville = city,
+                dateDebut = startDate,
+                dateFin = endDate
             )
-        }
-        item {
-            TextFieldAuthItem(
-                label = "Position",
-                info = "Post occupé",
-                value = position,
-                valueChange = { position = it }
-            )
-        }
+        )
 
-
-        item {
-            SegmentedSwitch(
-                optionFirst = { Text("Temps plein") },
-                optionSecond = { Text("Temps partiel") },
-                selectedIndex = selectedIndex,
-                onOptionClick = { index ->
-                    jobType = if (index == 1) "Temps partiel" else "Temps plein"
-                    selectedIndex = index.takeIf { index != selectedIndex }
-                },
-                label = { Text("Type d'emploi") },
-            )
-
-            Spacer(modifier = Modifier.height(10.dp))
-        }
-
-
-
-        item {
-            TextFieldAuthItem(
-                label = "description",
-                info = "Informations supplémentaire",
-                value = description,
-                valueChange = { description = it }
-            )
-        }
-        item {
-            TextFieldAuthItem(
-                label = "Ville",
-                info = "Où se situe l'entreprise",
-                value = city,
-                valueChange = { city = it }
-            )
-        }
-        item {
-            TextFieldAuthItem(
-                label = "Date de début",
-                info = "Format mm-aaaa",
-                value = startDate,
-                valueChange = { startDate = it }
-            )
-        }
-        item {
-            TextFieldAuthItem(
-                label = "Date de fin",
-                info = "Format mm-aaaa",
-                value = endDate,
-                valueChange = { endDate = it }
-            )
-        }
-
-
-        item {
-            Spacer(modifier = Modifier.height(20.dp))
-
-
-            ButtonPrimary(onClick = {
-
-                if (
-                    city.isNotBlank() &&
-                    jobType.isNotBlank() &&
-                    position.isNotBlank() &&
-                    startDate.isNotBlank() &&
-                    description.isNotBlank() &&
-                    companyName.isNotBlank() &&
-                    endDate.isNotBlank()) {
-
-                    experiences.add(
-                        Experience(
-                            companyName,
-                            position,
-                            jobType,
-                            description,
-                            city,
-                            startDate,
-                            endDate
-                        )
-                    )
-                }
-
-                viewModel?.onExperienceChange(experiences)
-
-                companyName = ""
-                position = ""
-                jobType = ""
-                description = ""
-                city = ""
-                startDate = ""
-                startDate = ""
-                endDate = ""
-
-            }) {
-                Text(text = "Ajouter")
-            }
-            Spacer(modifier = Modifier.height(50.dp))
-        }
-
-        experiences.forEach { experience ->
+        LazyColumn(
+            modifier = Modifier
+                .padding(horizontal = 30.dp)
+                .fillMaxSize()
+        ) {
             item {
-                ExperienceCard(
-                    Modifier
-                        .fillMaxWidth()
-                        .width(400.dp),
-                    experience = experience
+                TextFieldAuthItem(
+                    label = "Nom de l'entreprise",
+                    info = "Entreprise dans laquelle vous avez travaillé",
+                    value = companyName,
+                    valueChange = { companyName = it }
                 )
-                Spacer(modifier = Modifier.height(100.dp))
+            }
+            item {
+                TextFieldAuthItem(
+                    label = "Position",
+                    info = "Post occupé",
+                    value = position,
+                    valueChange = { position = it }
+                )
+            }
+
+
+            item {
+                SegmentedSwitch(
+                    optionFirst = { Text("Temps plein") },
+                    optionSecond = { Text("Temps partiel") },
+                    selectedIndex = selectedIndex,
+                    onOptionClick = { index ->
+                        jobType = if (index == 1) "Temps partiel" else "Temps plein"
+                        selectedIndex = index.takeIf { index != selectedIndex }
+                    },
+                    label = { Text("Type d'emploi") },
+                )
+
+                Spacer(modifier = Modifier.height(10.dp))
+            }
+
+
+
+            item {
+                TextFieldAuthItem(
+                    label = "description",
+                    info = "Informations supplémentaire",
+                    value = description,
+                    valueChange = { description = it }
+                )
+            }
+            item {
+                TextFieldAuthItem(
+                    label = "Ville",
+                    info = "Où se situe l'entreprise",
+                    value = city,
+                    valueChange = { city = it }
+                )
+            }
+            item {
+                TextFieldAuthItem(
+                    label = "Date de début",
+                    info = "Format mm-aaaa",
+                    value = startDate,
+                    valueChange = { startDate = it }
+                )
+            }
+            item {
+                TextFieldAuthItem(
+                    label = "Date de fin",
+                    info = "Format mm-aaaa",
+                    value = endDate,
+                    valueChange = { endDate = it }
+                )
+            }
+
+
+            item {
+                Spacer(modifier = Modifier.height(20.dp))
+
+
+                ButtonPrimary(onClick = {
+
+                    if (
+                        city.isNotBlank() &&
+                        jobType.isNotBlank() &&
+                        position.isNotBlank() &&
+                        startDate.isNotBlank() &&
+                        description.isNotBlank() &&
+                        companyName.isNotBlank() &&
+                        endDate.isNotBlank()
+                    ) {
+
+                        experiences.add(
+                            CompteStandard.Experience(
+                                companyName,
+                                position,
+                                jobType,
+                                description,
+                                city,
+                                startDate,
+                                endDate
+                            )
+                        )
+                    }
+
+                    viewModel?.onExperienceChange(experiences)
+
+                    companyName = ""
+                    position = ""
+                    jobType = ""
+                    description = ""
+                    city = ""
+                    startDate = ""
+                    startDate = ""
+                    endDate = ""
+
+                }) {
+                    Text(text = "Ajouter")
+                }
+                Spacer(modifier = Modifier.height(50.dp))
+            }
+
+            experiences.forEach { experience ->
+                item {
+                    ExperienceCard(
+                        Modifier
+                            .fillMaxWidth()
+                            .width(400.dp),
+                        experience = experience
+                    )
+                    Spacer(modifier = Modifier.height(100.dp))
+                }
             }
         }
     }
@@ -171,5 +188,5 @@ fun ExperienceStandardSignUp(
 @Preview(name = "ExperienceStandardSignUp", showBackground = true)
 @Composable
 private fun PreviewExperienceStandardSignUp() {
-    ExperienceStandardSignUp(null, emptyList<Experience>() as MutableList<Experience>)
+    ExperienceStandardSignUp(null, emptyList<CompteStandard.Experience>().toMutableStateList())
 }

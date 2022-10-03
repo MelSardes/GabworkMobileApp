@@ -23,7 +23,7 @@ fun ConversationTopBarEntreprise(messagesUiState: EntrepriseMessagesUiState?) {
 
     val name = when (messagesUiState?.chatUserType?.account) {
         "Standard" -> {
-            messagesUiState.chatWithStandard?.nom + messagesUiState.chatWithStandard?.prenom
+            messagesUiState.chatWithStandard?.name + messagesUiState.chatWithStandard?.forename
         }
         "Entreprise" -> {
             messagesUiState.chatWithEntreprise?.nom

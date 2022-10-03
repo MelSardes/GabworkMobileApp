@@ -86,7 +86,7 @@ fun PostCardComponent(
                 horizontalArrangement = Arrangement.SpaceAround,
             ) {
                 Text(
-                    text = post?.domaine ?: "",
+                    text = post?.domain ?: "",
                     textAlign = TextAlign.Center,
                     maxLines = 1,
                     style = MaterialTheme.typography.body2,
@@ -100,7 +100,7 @@ fun PostCardComponent(
                 )
 
                 Text(
-                    text = post?.typeDEmploi ?: "",
+                    text = post?.jobType ?: "",
                     textAlign = TextAlign.Center,
                     maxLines = 1,
                     style = MaterialTheme.typography.body2,
@@ -136,13 +136,13 @@ fun PostCardComponent(
                 horizontalArrangement = Arrangement.SpaceAround,
             ) {
                 Text(
-                    text = (post?.salaire ?: "") + "F/mois",
+                    text = (post?.salary ?: "") + "F/mois",
                     color = GWpalette.LackCoral,
                     style = MaterialTheme.typography.body2,
                 )
 
                 Text(
-                    text = post?.ville + "/" + post?.province,
+                    text = post?.city + "/" + post?.province,
                     style = MaterialTheme.typography.body2,
                     color = GWpalette.CoolGrey
                 )
@@ -158,14 +158,14 @@ fun PreviewPostCard() {
     PostCardComponent(
         post = CompteEntreprise.Post(
             postName = "Developpeur Mobile",
-            typeDEmploi = "Temps Plein",
-            adresse = "23 Rue des Légendes",
-            ville = "Sardesville",
+            jobType = "Temps Plein",
+            address = "23 Rue des Légendes",
+            city = "Sardesville",
             province = "Haut-Ogooué",
             experience = "Junior",
-            domaine = "IT",
+            domain = "IT",
             actif = true,
-            salaire = "2000000"
+            salary = "2000000"
         )
     ) {}
 

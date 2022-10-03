@@ -47,7 +47,7 @@ fun ApplicantsScreen(
 
             Text(text = "Tous les candidats à ce post")
 
-            when (applicantsUiState.applicantsList) {
+            when (applicantsUiState.applicantList) {
                 is Ressources.Loading -> {
                     CircularProgressIndicator(
                         modifier = Modifier
@@ -58,8 +58,8 @@ fun ApplicantsScreen(
 
                 is Ressources.Success -> {
                     LazyColumn(contentPadding = PaddingValues(20.dp)) {
-                        if (applicantsUiState.applicantsList.data?.isEmpty() == false) {
-                            items(applicantsUiState.applicantsList.data) { candidat ->
+                        if (applicantsUiState.applicantList.data?.isEmpty() == false) {
+                            items(applicantsUiState.applicantList.data) { candidat ->
                                 SeekerCardComponent(candidat)
                             }
                         }else{
@@ -71,7 +71,7 @@ fun ApplicantsScreen(
                 }
                 else -> {
                     Text(
-                        text = applicantsUiState.applicantsList.throwable?.localizedMessage
+                        text = applicantsUiState.applicantList.throwable?.localizedMessage
                             ?: "OOPS!\nUne erreur s'est produite",
                         color = Color.Red
                     )

@@ -77,7 +77,7 @@ fun ApplicablePostCard(
                 IconButton(
                     onClick = {
                         if (post?.savers?.contains(viewModel?.userId)!!) {
-                            viewModel?.removeFromBookmarks(post.postId)
+                            viewModel?.removeFromBookmarks(post.postId, context)
                         } else {
                             viewModel?.addToBookmarks(
                                 postId = post.postId,
@@ -85,10 +85,10 @@ fun ApplicablePostCard(
                                 postName = post.postName,
                                 entrepriseName = post.entrepriseName,
                                 urlLogo = post.urlLogo,
-                                salary = post.salaire,
-                                city = post.ville,
+                                salary = post.salary,
+                                city = post.city,
                                 province = post.province,
-                                jobType = post.typeDEmploi,
+                                jobType = post.jobType,
                                 context
                             )
                         }
@@ -113,7 +113,7 @@ fun ApplicablePostCard(
                 horizontalArrangement = Arrangement.SpaceAround,
             ) {
                 OrbitText(
-                    text = post?.domaine ?: "",
+                    text = post?.domain ?: "",
                     textAlign = TextAlign.Center,
                     maxLines = 1,
                     style = GWTypography.body2,
@@ -127,7 +127,7 @@ fun ApplicablePostCard(
                 )
 
                 OrbitText(
-                    text = post?.typeDEmploi ?: "",
+                    text = post?.jobType ?: "",
                     textAlign = TextAlign.Center,
                     maxLines = 1,
                     style = GWTypography.body2,
@@ -163,13 +163,13 @@ fun ApplicablePostCard(
                 horizontalArrangement = Arrangement.SpaceAround,
             ) {
                 OrbitText(
-                    text = (post?.salaire ?: "") + "F/mois",
+                    text = (post?.salary ?: "") + "F/mois",
                     color = GWpalette.LackCoral,
                     style = GWTypography.body2,
                 )
 
                 OrbitText(
-                    text = post?.ville + "/" + post?.province,
+                    text = post?.city + "/" + post?.province,
                     style = GWTypography.body2,
                     color = CoolGrey
                 )
@@ -233,14 +233,14 @@ private fun PreviewApplicablePostCard() {
     ApplicablePostCard(
         CompteEntreprise.Post(
             postName = "Developpeur Mobile",
-            typeDEmploi = "Temps Plein",
-            adresse = "23 Rue des Légendes",
-            ville = "Sardesville",
+            jobType = "Temps Plein",
+            address = "23 Rue des Légendes",
+            city = "Sardesville",
             province = "Haut-Ogooué",
             experience = "Junior",
-            domaine = "IT",
+            domain = "IT",
             actif = true,
-            salaire = "2000000"
+            salary = "2000000"
         ),
         null
     ) {}

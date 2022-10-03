@@ -8,24 +8,28 @@ import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.sardes.thegabworkproject.data.*
 import com.sardes.thegabworkproject.data.models.CompteEntreprise
+import com.sardes.thegabworkproject.data.models.CompteStandard
 import com.sardes.thegabworkproject.repository.ressources.Ressources
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 
 
-private const val COMPTES_ENTREPRISE_REF = "ComptesEntreprise"
-const val POSTS_COLLECTION_REF = "Posts"
 const val CANDIDATS_COLLECTION_REF = "Candidats"
 
 class MainEntrepriseRepository {
+
+    private val db = Firebase.firestore
 
     fun user() = Firebase.auth.currentUser
     fun hasUser(): Boolean = Firebase.auth.currentUser != null
 
     fun getUserId(): String = Firebase.auth.currentUser?.uid.orEmpty()
 
+    private val standardRef: CollectionReference = Firebase
+        .firestore.collection(COMPTES_STANDARD_REF)
 
     //    REFER A USER WITH ENTREPRISE ACCOUNT
     private val comptesEntrepriseRef: DocumentReference = Firebase
@@ -195,18 +199,18 @@ class MainEntrepriseRepository {
             entrepriseId = entrepriseId,
             entrepriseName = entrepriseName,
             urlLogo = urlLogo,
-            dateCreationPost = dateCreationPost,
-            descriptionEmploi = descriptionEmploi,
-            salaire = salaire,
-            ville = ville,
+            creationDate = dateCreationPost,
+            description = descriptionEmploi,
+            salary = salaire,
+            city = ville,
             province = province,
-            domaine = domaine,
+            domain = domaine,
             experience = experience,
-            typeDEmploi = typeDEmploi,
-            adresse = adresse,
-            dateLimite = dateLimite,
-            competences = competences,
-            responsabilites = responsabilites,
+            jobType = typeDEmploi,
+            address = adresse,
+            limit = dateLimite,
+            skills = competences,
+            responsibilities = responsabilites,
         )
 
         postsRef
@@ -219,19 +223,22 @@ class MainEntrepriseRepository {
 
 
     fun getPostApplicants(postId: String): Flow<Ressources<List
-    <CompteEntreprise.Post.Candidat>>> = callbackFlow {
+    <CompteStandard.Application>>> = callbackFlow {
 
         var snapshotStateListener: ListenerRegistration? = null
 
+        val applicantInPostRef = postsRef
+            .document(postId)
+            .collection(APPLICANTS_REF)
+
         try {
-            snapshotStateListener = candidatsRef
-                .orderBy("dateCandidature", Query.Direction.ASCENDING)
-                .whereEqualTo("postId", postId)
+            snapshotStateListener = applicantInPostRef
+                .orderBy("applyDate", Query.Direction.ASCENDING)
                 .addSnapshotListener { snapshot, e ->
                     val response = if (snapshot != null) {
-                        val candidat =
-                            snapshot.toObjects(CompteEntreprise.Post.Candidat::class.java)
-                        Ressources.Success(data = candidat)
+                        val applicants =
+                            snapshot.toObjects(CompteStandard.Application::class.java)
+                        Ressources.Success(data = applicants)
                     } else {
                         Ressources.Error(throwable = e?.cause)
                     }
@@ -251,16 +258,72 @@ class MainEntrepriseRepository {
     fun getApplicantProfile(
         applicantId: String,
         onError: (Throwable) -> Unit,
-        onSuccess: (CompteEntreprise.Post.Candidat?) -> Unit,
+        onSuccess: (CompteEntreprise.Post.Applicant?) -> Unit,
     ) {
         candidatsRef
             .document(applicantId)
             .get()
             .addOnSuccessListener {
-                onSuccess.invoke(it?.toObject(CompteEntreprise.Post.Candidat::class.java))
+                onSuccess.invoke(it?.toObject(CompteEntreprise.Post.Applicant::class.java))
             }
             .addOnFailureListener { reslut ->
                 reslut.cause?.let { onError.invoke(it) }
             }
     }
+
+    fun updateApplication(
+        postId: String,
+        userId: String,
+        status: String,
+        message: String,
+        onComplete: (Boolean) -> Unit
+    ){
+
+        val statusField = "status"
+        val messageField = "message"
+
+        val applicantInPostRef = postsRef
+            .document(postId)
+            .collection(APPLICANTS_REF)
+            .document(userId)
+
+        val applicantInApplicantRef = standardRef
+            .document(userId)
+            .collection(APPLICATIONS_REF)
+            .document(postId)
+
+
+        db.runBatch { batch ->
+            batch.update(applicantInApplicantRef, messageField, message)
+            batch.update(applicantInApplicantRef, statusField, status)
+
+            batch.update(applicantInPostRef, messageField, message)
+            batch.update(applicantInPostRef, statusField, status)
+        }.addOnCompleteListener{result ->
+            onComplete.invoke(result.isSuccessful)
+        }
+    }
+
+
+    fun getApplication(
+        userId: String,
+        postId: String,
+        onError: (Throwable) -> Unit,
+        onSuccess: (CompteStandard.Application?) -> Unit
+    ){
+        postsRef
+            .document(postId)
+            .collection(APPLICANTS_REF)
+            .document(userId)
+            .get()
+            .addOnSuccessListener {
+                onSuccess.invoke(it?.toObject(CompteStandard.Application::class.java))
+            }
+            .addOnFailureListener{result ->
+                result.cause?.let{ onError.invoke(it)}
+            }
+    }
+
+
+
 }
