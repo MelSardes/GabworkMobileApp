@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 
 
-const val CANDIDATS_COLLECTION_REF = "Candidats"
+const val CANDIDATS_COLLECTION_REF = "Applicants"
 
 class MainEntrepriseRepository {
 
@@ -84,7 +84,7 @@ class MainEntrepriseRepository {
 
         try {
             snapshotStateListener = postsRef
-                .orderBy("dateCreationPost")
+                .orderBy("creationDate")
                 .whereEqualTo("entrepriseId", entrepriseId)
                 .whereEqualTo("actif", true)
                 .addSnapshotListener { snapshot, e ->
@@ -116,7 +116,7 @@ class MainEntrepriseRepository {
 
         try {
             snapshotStateListener = postsRef
-                .orderBy("dateCreationPost")
+                .orderBy("creationDate")
                 .whereEqualTo("entrepriseId", entrepriseId)
                 .whereEqualTo("actif", false)
                 .addSnapshotListener { snapshot, e ->
@@ -148,7 +148,7 @@ class MainEntrepriseRepository {
 
         try {
             snapshotStateListener = postsRef
-                .orderBy("dateCreationPost")
+                .orderBy("creationDate")
                 .whereEqualTo("entrepriseId", entrepriseId)
                 .addSnapshotListener { snapshot, e ->
                     val response = if (snapshot != null) {
@@ -159,7 +159,6 @@ class MainEntrepriseRepository {
                         Ressources.Error(throwable = e?.cause)
                     }
                     trySend(response)
-
                 }
         } catch (e: Exception) {
             trySend(Ressources.Error(e.cause))
@@ -233,6 +232,38 @@ class MainEntrepriseRepository {
 
         try {
             snapshotStateListener = applicantInPostRef
+                .orderBy("applyDate", Query.Direction.ASCENDING)
+                .addSnapshotListener { snapshot, e ->
+                    val response = if (snapshot != null) {
+                        val applicants =
+                            snapshot.toObjects(CompteStandard.Application::class.java)
+                        Ressources.Success(data = applicants)
+                    } else {
+                        Ressources.Error(throwable = e?.cause)
+                    }
+                    trySend(response)
+                }
+        } catch (e: Exception) {
+            trySend(Ressources.Error(e.cause))
+            e.printStackTrace()
+        }
+
+        awaitClose {
+            snapshotStateListener?.remove()
+        }
+    }
+
+    fun getLastApplicants(): Flow<Ressources<List
+    <CompteStandard.Application>>> = callbackFlow {
+
+        var snapshotStateListener: ListenerRegistration? = null
+
+        val applicantsRef = postsRef
+            .document()
+            .collection(APPLICANTS_REF)
+
+        try {
+            snapshotStateListener = applicantsRef
                 .orderBy("applyDate", Query.Direction.ASCENDING)
                 .addSnapshotListener { snapshot, e ->
                     val response = if (snapshot != null) {

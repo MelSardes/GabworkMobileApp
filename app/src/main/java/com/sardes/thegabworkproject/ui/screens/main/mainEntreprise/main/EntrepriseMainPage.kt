@@ -1,7 +1,9 @@
 package com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.main
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
@@ -9,12 +11,17 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.sardes.thegabworkproject.navigation.EntrepriseInterfaceScreen
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.home.HomeEntrepriseViewModel
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.message.MessagesEntrepriseViewModel
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.PostsEntrepriseViewModel
@@ -33,11 +40,31 @@ fun EntrepriseMainPage() {
     val messagesViewModel = viewModel(modelClass = MessagesEntrepriseViewModel::class.java)
     val applicantsViewModel = viewModel(modelClass = ApplicantsViewModel::class.java)
 
+    val bottomBarState = rememberSaveable { (mutableStateOf(true)) }
+
+    // Subscribe to navBackStackEntry, required to get current route
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+
+
+    when (navBackStackEntry?.destination?.route) {
+        EntrepriseInterfaceScreen.EntrepriseHome.route -> bottomBarState.value = true
+        EntrepriseInterfaceScreen.EntreprisePosts.route -> bottomBarState.value = true
+        EntrepriseInterfaceScreen.EntrepriseSearch.route -> bottomBarState.value = true
+        EntrepriseInterfaceScreen.EntrepriseMessages.route -> bottomBarState.value = true
+        EntrepriseInterfaceScreen.EntrepriseProfile.route -> bottomBarState.value = true
+        else -> bottomBarState.value = false
+    }
+
+
     Scaffold(
-        backgroundColor = GWpalette.EauBlue,
-        bottomBar = { EntrepriseBottomNavigationBar(navController) },
+        bottomBar = { EntrepriseBottomNavigationBar(navController, bottomBarState) },
         content = { padding ->
-            Box(modifier = Modifier.padding(padding).clip(RoundedCornerShape(bottomEnd = 24.dp, bottomStart = 24.dp))) {
+            Box(modifier = Modifier
+                .padding(padding)
+                .background(GWpalette.Gunmetal)
+                .fillMaxSize()
+                .clip(RoundedCornerShape(bottomEnd = 24.dp, bottomStart = 24.dp))
+            ) {
                 EntrepriseMainNavigation(
                     navController,
                     homeViewModel,

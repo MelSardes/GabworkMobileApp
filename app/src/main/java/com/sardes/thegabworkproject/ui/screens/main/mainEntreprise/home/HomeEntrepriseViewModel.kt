@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sardes.thegabworkproject.data.models.CompteEntreprise
+import com.sardes.thegabworkproject.data.models.CompteStandard
 import com.sardes.thegabworkproject.repository.main.entreprise.MainEntrepriseRepository
 import com.sardes.thegabworkproject.repository.ressources.Ressources
 import kotlinx.coroutines.launch
@@ -62,10 +63,30 @@ class HomeEntrepriseViewModel(
         }
     }
 
+
+    fun loadApplications() {
+        if (hasUser) {
+            getApplications()
+        } else {
+            homeEntrepriseUiState = homeEntrepriseUiState.copy(
+                applicants = Ressources.Error(
+                    throwable = Throwable(message = "Utilisateur non connecté")
+                )
+            )
+        }
+    }
+
+    private fun getApplications() = viewModelScope.launch {
+        repository.getLastApplicants().collect{
+            homeEntrepriseUiState = homeEntrepriseUiState.copy(applicants = it)
+        }
+    }
+
 }
 
 data class HomeEntrepriseUiState(
     val isLoading: Boolean = false,
     val entrepriseInformations: CompteEntreprise? = null,
     val homePostList: Ressources<List<CompteEntreprise.Post>> = Ressources.Loading(),
+    val applicants: Ressources<List<CompteStandard.Application>> = Ressources.Loading()
 )

@@ -6,11 +6,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.TopAppBar
+import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -40,6 +41,8 @@ import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.compone
 import com.sardes.thegabworkproject.ui.theme.AppBarCollapsedHeight
 import com.sardes.thegabworkproject.ui.theme.AppBarExpendedHeight
 import com.sardes.thegabworkproject.ui.theme.BlueFlag
+import com.sardes.thegabworkproject.ui.theme.GWpalette.Gunmetal
+import kiwi.orbit.compose.ui.controls.Scaffold
 import kotlin.math.max
 import kotlin.math.min
 
@@ -47,24 +50,84 @@ import kotlin.math.min
 @Composable
 fun HomeEntrepriseScreen(
     homeEntrepriseViewModel: HomeEntrepriseViewModel?,
-    onPostClick: (id: String) -> Unit = {},
+    onPostClick: (id: String) -> Unit,
 ) {
 
     val homeUiState = homeEntrepriseViewModel?.homeEntrepriseUiState ?: HomeEntrepriseUiState()
-    val scrollState = rememberLazyListState()
+//    val scrollState = rememberLazyListState()
 
-    LaunchedEffect(key1 = Unit) {
+    LaunchedEffect(Unit) {
         homeEntrepriseViewModel?.loadActivePosts()
     }
 
-    Box(modifier = Modifier.background(Color.White)) {
-        Content(homeUiState, scrollState, onPostClick)
+/*
+    LaunchedEffect(Unit){
+        homeEntrepriseViewModel?.loadApplications()
+    }
+*/
 
-        ParallaxToolbar(
-            scrollState,
-            homeUiState.entrepriseInformations?.urlLogo.toString(),
-            homeUiState.entrepriseInformations?.nom.toString()
-        )
+    Scaffold(
+        backgroundColor = Gunmetal,
+        topBar = { },
+    ) { padding ->
+        Box(
+            modifier = Modifier
+                .background(Gunmetal)
+                .clip(RoundedCornerShape(24.dp))
+                .fillMaxSize()
+                .padding(padding)
+                .background(Color.White)
+        ) {
+            LazyColumn(
+                modifier = Modifier,
+                verticalArrangement = Arrangement.spacedBy(5.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                item {
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(200.dp)
+                    ) {
+                        Column(modifier = Modifier.fillMaxSize()) {
+                            Text(text = "HOME")
+                            Button(onClick = { /*TODO*/ }) {
+                                Text(text = "Rechercher ...")
+                            }
+                        }
+                    }
+                }
+
+                item {
+                    Text(text = "Posts vacants")
+                }
+
+                homeUiState.homePostList.data?.forEach {
+                    item {
+                        PostCardComponent(it) { onPostClick(it.postId) }
+                    }
+                }
+/*
+
+                item {
+                    Text(
+                        text = "Ils ont recement postulé",
+                        style = GWTypography.h6,
+                        color = Gunmetal,
+                        modifier = Modifier.padding(start = 30.dp)
+                    )
+                }
+
+                homeUiState.applicants.data?.forEach {
+                    item {
+                        SeekerCardComponent(applicant = it)
+                    }
+                }
+*/
+
+
+            }
+        }
     }
 }
 
@@ -221,7 +284,9 @@ fun ParallaxToolbar(
                 .placeholder(R.drawable.ic_person)
                 .build(),
             contentDescription = null,
-            modifier = Modifier.size(38.dp).clip(shape = CircleShape),
+            modifier = Modifier
+                .size(38.dp)
+                .clip(shape = CircleShape),
             contentScale = ContentScale.Crop,
         )
 
@@ -232,5 +297,5 @@ fun ParallaxToolbar(
 @Preview
 @Composable
 fun HomePreview() {
-    HomeEntrepriseScreen(null){}
+    HomeEntrepriseScreen(null) {}
 }

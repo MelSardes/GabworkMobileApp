@@ -157,7 +157,7 @@ sealed class EntrepriseProfileScreen(val route: String) {
 
 @Composable
 fun NavGraphMain(
-    loginViewModel: LoginViewModel? = null,
+    loginViewModel: LoginViewModel?,
     entrepriseAccountSignUpViewModel: EntrepriseAccountSignUpViewModel,
     standardSignUpViewModel: StandardSignUpViewModel?
 ) {

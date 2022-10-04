@@ -121,7 +121,7 @@ fun SavesStandardScreen(
                     when(page){
                         0 -> SavesSection(viewModel = homeViewModel, uiState = uiState)
                         1 -> ProposalsSection()
-                        2 -> ApplicationsSection()
+                        2 -> ApplicationsSection(viewModel = homeViewModel, uiState = uiState)
                     }
                 }
             }

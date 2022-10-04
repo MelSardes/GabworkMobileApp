@@ -1,8 +1,6 @@
 package com.sardes.thegabworkproject.ui.screens.main.mainStandard.saves
 
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -25,21 +23,30 @@ fun SavesSection(
     uiState: HomeStandardUiState?,
 ) {
 
-    LaunchedEffect(Unit){
+    LaunchedEffect(Unit) {
         viewModel?.loadAllBookmarks()
     }
 
     Surface(modifier = Modifier.fillMaxSize()) {
         when (uiState?.bookmarks) {
-            is Ressources.Loading -> LazyColumn {
-                items(count = 4) {
-                    AnimatedShimmer()
+            is Ressources.Loading ->
+                LazyColumn(modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(all = 10.dp)
+                ) {
+                    items(count = 4) {
+                        Spacer(modifier = Modifier.height(20.dp))
+                        AnimatedShimmer()
+                    }
                 }
-            }
             is Ressources.Success -> LazyColumn(horizontalAlignment = Alignment.CenterHorizontally) {
                 item {
                     Text(
-                        text = "Vous avez déjà postulé à 8 offres d'emploi",
+                        text =
+                        if(uiState.bookmarks.data.isNullOrEmpty())
+                         "${uiState.bookmarks.data?.size} posts sauvegardés"
+                        else
+                            "C'est encore vide içi",
                         style = GWTypography.h4
                     )
                 }

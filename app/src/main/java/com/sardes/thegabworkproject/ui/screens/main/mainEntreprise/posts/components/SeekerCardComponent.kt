@@ -1,6 +1,7 @@
 package com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.posts.components
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -15,8 +16,10 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -31,21 +34,39 @@ import com.sardes.thegabworkproject.data.models.CompteStandard
 fun SeekerCardComponent(
     applicant: CompteStandard.Application,
 ) {
-    Box(modifier = Modifier.fillMaxWidth()) {
-        Card(
-            elevation = 4.dp,
-            backgroundColor = Color.White,
-            modifier = Modifier
-                .fillMaxWidth()
-                .clip(RoundedCornerShape(12.dp))
-                .padding(8.dp)
-                .clickable(onClick = {})
-        ) {
-            Column(verticalArrangement = Arrangement.SpaceBetween) {
+//    Box(modifier = Modifier) {
+    Card(
+        elevation = 4.dp,
+//            backgroundColor = Color.White,
+        modifier = Modifier
+//                .fillMaxSize()
+            .width(380.dp)
+            .height(165.dp)
+            .clip(RoundedCornerShape(14.dp))
+            .background(Color.White)
+//            .padding(vertical = 17.dp, horizontal = 14.dp)
+            .clickable(onClick = {})
+    ) {
+        Box(modifier = Modifier.fillMaxSize()) {
+            Image(
+                painter = painterResource(id = R.drawable.lines_background),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize()
+            )
+
+
+            Column(
+                verticalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(White.copy(alpha = 0.7f))
+                    .padding(vertical = 17.dp, horizontal = 14.dp)
+            ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
-                        .padding(end = 10.dp)
+//                        .padding(end = 10.dp)
                         .fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
@@ -57,7 +78,7 @@ fun SeekerCardComponent(
                             .build(),
                         contentDescription = null,
                         modifier = Modifier
-                            .size(80.dp)
+                            .size(62.dp)
                             .clip(RoundedCornerShape(3.dp)),
                         contentScale = ContentScale.Crop
                     )
@@ -130,16 +151,18 @@ fun SeekerCardComponent(
                 }
             }
         }
+
     }
 }
+//}
 
 @Preview(name = "SeekerCardComponent")
 @Composable
 private fun PreviewSeekerCardComponent() {
     SeekerCardComponent(
         applicant = CompteStandard.Application(
-             applicantName = "Mel SARDES",
-             postName = "Developpeur Android",
+            applicantName = "Mel SARDES",
+            postName = "Developpeur Android",
         )
     )
 }
