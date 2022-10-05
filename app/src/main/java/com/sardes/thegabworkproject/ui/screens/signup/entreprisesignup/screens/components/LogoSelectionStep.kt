@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -30,7 +31,7 @@ import kiwi.orbit.compose.ui.controls.ButtonSecondary
 fun LogoSelectionStep(
     viewModel: EntrepriseAccountSignUpViewModel?,
 ) {
-    var imageUri = mutableStateOf<Uri?>(null)
+    var imageUri = remember { mutableStateOf<Uri?>(null) }
 
     val selectImage = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
