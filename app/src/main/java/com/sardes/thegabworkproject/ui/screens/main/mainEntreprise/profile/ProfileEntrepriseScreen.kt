@@ -47,7 +47,7 @@ import kotlin.math.min
 @SuppressLint("MaterialDesignInsteadOrbitDesign")
 @Composable
 fun ProfileEntrepriseScreen(
-    profileViewModel: ProfileEntrepriseViewModel? = ProfileEntrepriseViewModel(),
+    profileViewModel: ProfileEntrepriseViewModel?,
 ) {
     val scrollState = rememberLazyListState()
 
@@ -340,5 +340,5 @@ fun InfoColumn(@DrawableRes iconResouce: Int, text1: String, text2: String) {
 @Preview(showSystemUi = true, device = "id:pixel_3")
 @Composable
 fun ScreenConcept() {
-    ProfileEntrepriseScreen()
+    ProfileEntrepriseScreen(null)
 }

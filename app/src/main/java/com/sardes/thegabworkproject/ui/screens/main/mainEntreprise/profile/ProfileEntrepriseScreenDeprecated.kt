@@ -18,7 +18,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -29,7 +28,7 @@ import kotlinx.coroutines.launch
 @SuppressLint("MaterialDesignInsteadOrbitDesign", "UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun ProfileEntrepriseScreenDeprecated(
-    profileViewModel: ProfileEntrepriseViewModel? = ProfileEntrepriseViewModel()
+    profileViewModel: ProfileEntrepriseViewModel?
 ) {
     val informationsUiState = profileViewModel?.informationsUiState ?: InformationsUiState()
 
@@ -282,9 +281,3 @@ fun Drawer() {
     }
 }
 
-
-@Preview(device = "id:TECNO POP3")
-@Composable
-fun PreviewProfileEntrepriseScreen() {
-    ProfileEntrepriseScreenDeprecated()
-}

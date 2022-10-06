@@ -15,6 +15,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sardes.thegabworkproject.data.provider.GabworkDataProvider
+import com.sardes.thegabworkproject.ui.screens.main.SearchViewModel
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.search.components.EntrepriseSearchBar
 import com.sardes.thegabworkproject.ui.screens.main.mainEntreprise.search.components.GabworkSearchGrid
 import com.sardes.thegabworkproject.ui.theme.modifiers.horizontalGradientBackground
@@ -22,7 +23,7 @@ import com.sardes.thegabworkproject.ui.theme.modifiers.horizontalGradientBackgro
 @SuppressLint("MaterialDesignInsteadOrbitDesign")
 @Composable
 fun SearchEntrepriseScreen(
-    searchViewModel:SearchEntrepriseViewModel = SearchEntrepriseViewModel(),
+    searchViewModel:SearchViewModel?,
 
 ) {
     val scrollState = rememberScrollState(0)
@@ -62,5 +63,5 @@ fun SearchEntrepriseScreen(
 @Preview(name = "PIXEL",device = "id:pixel", showBackground = true, showSystemUi = true)
 @Composable
 private fun PreviewSearchEntrepriseScreen() {
-    SearchEntrepriseScreen()
+    SearchEntrepriseScreen(null)
 }

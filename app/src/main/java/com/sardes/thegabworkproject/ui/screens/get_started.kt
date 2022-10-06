@@ -29,7 +29,7 @@ import com.sardes.thegabworkproject.ui.theme.*
 @SuppressLint("MaterialDesignInsteadOrbitDesign")
 @Composable
 fun GetStartedScreen(
-    loginViewModel: LoginViewModel? = null,
+    loginViewModel: LoginViewModel?,
     onNavToMainPage:() -> Unit,
     onNavigateToLoginOrRegisterPage:() -> Unit
 ) {

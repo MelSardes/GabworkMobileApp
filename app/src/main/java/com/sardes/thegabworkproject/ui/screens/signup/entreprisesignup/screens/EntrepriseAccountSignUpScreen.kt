@@ -13,7 +13,6 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color.Companion.LightGray
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sardes.thegabworkproject.ui.screens.signup.entreprisesignup.EntrepriseAccountSignUpViewModel
 import com.sardes.thegabworkproject.ui.screens.signup.entreprisesignup.screens.components.*
@@ -25,10 +24,10 @@ import kiwi.orbit.compose.ui.controls.Surface
 import kiwi.orbit.compose.ui.controls.Text
 
 @SuppressLint("MaterialDesignInsteadOrbitDesign")
-@Preview
+//@Preview
 @Composable
 fun EntrepriseAccountSignUpScreen(
-    viewModel: EntrepriseAccountSignUpViewModel? = null,
+    viewModel: EntrepriseAccountSignUpViewModel?,
     navToEntrepriseInterface: () -> Unit = {},
 ) {
 

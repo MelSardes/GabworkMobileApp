@@ -370,7 +370,7 @@ private fun NavGraphBuilder.homeInterfaceGraph(
         addSplashScreen(navController = navController, loginViewModel)
 
         composable(HomeInterfaceScreen.GetStarted.route) {
-            GetStartedScreen(onNavToMainPage = { /*TODO*/ }) {
+            GetStartedScreen(onNavToMainPage = { /*TODO*/ }, loginViewModel = loginViewModel) {
 
             }
         }

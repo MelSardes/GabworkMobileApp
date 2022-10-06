@@ -16,8 +16,8 @@ import com.sardes.thegabworkproject.ui.screens.signup.standardsignup.StandardSig
 
 @Composable
 fun OtherDetailsStandardSignUp(
-    uiState: SignupUiStateStandard? = null,
-    viewModel: StandardSignUpViewModel? = null,
+    uiState: SignupUiStateStandard?,
+    viewModel: StandardSignUpViewModel?,
     focusRequester: FocusRequester = FocusRequester.Default
 ) {
     LazyColumn(
@@ -87,5 +87,5 @@ fun OtherDetailsStandardSignUp(
 @Preview(name = "PersonalInformationsSeekerSignUp", showBackground = true)
 @Composable
 private fun PreviewPersonalInformationsSeekerSignUp() {
-    OtherDetailsStandardSignUp()
+    OtherDetailsStandardSignUp(null, null)
 }

@@ -33,7 +33,8 @@ fun StandardMainNavigation(
     savesStandardViewModel    : SavesStandardViewModel?,
     searchViewModel: SearchViewModel,
     messagesStandardViewModel: MessagesStandardViewModel?,
-    profileStandardViewModel  : ProfileStandardViewModel?
+    profileStandardViewModel  : ProfileStandardViewModel?,
+
 ) {
 
     NavHost(
@@ -86,7 +87,7 @@ fun StandardMainNavigation(
         ) { entry ->
             ActivityAreaDetailScreen(
                 index = entry.arguments?.getInt("id") as Int,
-                viewModel = SearchViewModel()
+                viewModel = searchViewModel
             ) { postId ->
                 navController.navigate(StandardPostScreen.DetailsPostScreen.route + "?id=$postId")
             }
@@ -105,7 +106,7 @@ fun StandardMainNavigation(
         }
 
         composable(StandardInterfaceScreen.StandardProfile.route) {
-            ProfileStandardScreen()
+            ProfileStandardScreen(profileStandardViewModel)
         }
 
 

@@ -7,7 +7,7 @@ import kiwi.orbit.compose.ui.controls.Scaffold
 
 @SuppressLint("MaterialDesignInsteadOrbitDesign")
 @Composable
-fun ProfileStandardScreen(profileStandardViewModel: ProfileStandardViewModel? = null) {
+fun ProfileStandardScreen(profileStandardViewModel: ProfileStandardViewModel?) {
     Scaffold(
 
         topBar = { },

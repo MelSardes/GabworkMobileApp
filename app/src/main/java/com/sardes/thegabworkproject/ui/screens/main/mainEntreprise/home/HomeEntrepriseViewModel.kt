@@ -25,11 +25,8 @@ class HomeEntrepriseViewModel(
         get() = repository.getUserId()
 
 
-    fun loadInformations() {
-        getEntrepriseInformations()
-    }
 
-    private fun getEntrepriseInformations() {
+     fun loadInformations() {
         if (hasUser) {
             if (entrepriseId.isNotBlank()) {
                 homeEntrepriseUiState = homeEntrepriseUiState.copy(isLoading = true)

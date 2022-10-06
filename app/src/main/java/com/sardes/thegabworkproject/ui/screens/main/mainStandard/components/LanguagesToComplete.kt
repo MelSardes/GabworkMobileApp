@@ -30,8 +30,8 @@ import kiwi.orbit.compose.ui.controls.TextField
 @SuppressLint("MaterialDesignInsteadOrbitDesign")
 @Composable
 fun LanguagesToComplete(
-    uiState: HomeStandardUiState? = null,
-    viewModel: HomeStandardViewModel? = null,
+    uiState: HomeStandardUiState?,
+    viewModel: HomeStandardViewModel?,
     selectedLanguages: MutableList<String>
 ) {
     var itemExpanded by remember { mutableStateOf(false) }
@@ -131,5 +131,5 @@ fun LanguagesToComplete(
 @Preview(name = "LanguagesStandardSignUp", showBackground = true)
 @Composable
 private fun PreviewLanguagesStandardSignUp() {
-    LanguagesToComplete(selectedLanguages = emptyList<String>().toMutableStateList())
+    LanguagesToComplete(null, null, selectedLanguages = emptyList<String>().toMutableStateList())
 }

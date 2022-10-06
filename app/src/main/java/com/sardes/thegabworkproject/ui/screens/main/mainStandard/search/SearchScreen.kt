@@ -58,7 +58,7 @@ import kotlinx.coroutines.launch
 @SuppressLint("UnrememberedMutableState")
 @Composable
 fun SearchStandardScreen(
-    viewModel: SearchViewModel? = null,
+    viewModel: SearchViewModel?,
     homeViewModel: HomeStandardViewModel?,
     navToDiscover: () -> Unit
 ) {
@@ -353,8 +353,8 @@ fun SearchSomeItems(
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun SearchResults(
-    uiState: SearchViewModel.SearchUiState? = null,
-    homeViewModel: HomeStandardViewModel? = null,
+    uiState: SearchViewModel.SearchUiState?,
+    homeViewModel: HomeStandardViewModel?,
     query: String = "son"
 ) {
 
